@@ -5,8 +5,7 @@ const app = express();
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 5000 : process.env.PORT
 const io = require('socket.io').listen(app.listen(port))
-
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 if (isDeveloping) {
@@ -18,8 +17,10 @@ if (isDeveloping) {
   });
 
   io.sockets.on('connection', function response(socket) {
-    console.log('connected client')
+    socket.on('deviceType' , (data) => {
+        console.log(`connected ${data.type} client`)
+      })
   })
 }
 
-console.log('server is running on http://localhost:' + port)
+console.log('server is running on http://localhost:' + port);
