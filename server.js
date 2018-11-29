@@ -15,10 +15,28 @@ if (isDeveloping) {
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
-
+  var roomIndex = 1
+  var roomArr = []
   io.sockets.on('connection', function response(socket) {
+
+    // Check device type 
     socket.on('deviceType' , (data) => {
-        console.log(`connected ${data.type} client`)
+        if (data.type === 'desktop') {
+          var roomName = `room-${roomIndex}`
+          socket.join(roomName)
+          console.log(`connected ${data.type} client in room ${roomIndex}`)
+          roomArr.push(roomName)
+          socket.rooms = roomArr
+          roomIndex++
+          console.log(socket.rooms)
+          // if(io.nsps['/'].adapter.rooms["room-"+roomIndex] && io.nsps['/'].adapter.rooms["room-"+roomIndex].length > 1) roomIndex++;
+          // socket.join("room-"+roomIndex);
+        }
+        
+        if (data.type === 'mobile') {
+          // Send this event to everyone in the room.
+          io.sockets.in("room-"+roomIndex).emit('connectToRoom', "You are in room no. "+roomIndex);
+        }
       })
   })
 }

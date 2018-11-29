@@ -4,9 +4,17 @@ import io from 'socket.io-client'
 const socket = io.connect()
 
 class Mobile extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+        room: 'hello'
+    }
+  }
 
   componentWillMount() {
     this.sendDeviceType()
+    this.getCurrentRoom()
   }
 
   sendDeviceType = () => {
@@ -16,14 +24,24 @@ class Mobile extends Component {
     })
   }
 
+  getCurrentRoom = () => {
+    socket.on('connectToRoom',(data) => {
+        console.log(data)
+        this.setState({room : data})
+     });
+  }
+
   render() {
+    const { room } = this.state
+
     return (
       <div className="App App-Mobile">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <p>
-            Mobile
+            Mobile - {room}
           </p>
+          
         </header>
       </div>
     )
