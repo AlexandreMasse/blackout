@@ -17,6 +17,17 @@ if (isDeveloping) {
   });
   var roomIndex = 1
   var roomArr = []
+  var codeArr = []
+
+  let generateCode = function() {
+    var minCode = 1000
+    var maxCode = 9999
+    for (var i = minCode; i <= maxCode; i++) {
+      codeArr.push(i)
+    }
+  }
+  generateCode()
+
   io.sockets.on('connection', function response(socket) {
 
     // Check device type 
