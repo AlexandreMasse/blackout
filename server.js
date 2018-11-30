@@ -8,6 +8,14 @@ const io = require('socket.io').listen(app.listen(port))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+Object.prototype.getKeyByValue = function( value ) {
+  for( var prop in this ) {
+      if( this.hasOwnProperty( prop ) ) {
+           if( this[ prop ] === value )
+               return prop;
+      }
+  }
+}
 if (isDeveloping) {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
@@ -17,7 +25,10 @@ if (isDeveloping) {
   });
   var roomIndex = 0
   var roomArr = []
+  var activeRoomArr = []
+  var passwordArr = []
   var codeArr = []
+  var obj = {}
 
   let generateCodeArr = function() {
     var minCode = 1000
@@ -26,29 +37,46 @@ if (isDeveloping) {
       codeArr.push(i)
     }
   }
+
   let getRandomCode = function(arr) {
     return arr[Math.floor(Math.random()*arr.length)]
   }
+
   let createCode = function() {
     var codePlayer = getRandomCode(codeArr)
     var codePlayerIndex = codeArr.indexOf(codePlayer)
     codeArr.splice( codePlayerIndex, 1 )
-
-    return {code: codePlayer}
+    
+    passwordArr.push(codePlayer)
+    return codePlayer
   }
 
-  let createUsersCode = function() {
+  let createUsersCode = function(roomName) {
     let player1 = createCode()
     let player2 = createCode()
-
-    console.log(player1)
-    console.log(player2)
+    obj = {
+      [player1]: roomName,
+      [player2]: roomName
+    }
+    console.log(obj)
+    // console.log(player1)
+    // console.log(player2) 
+    activeRoomArr.push(obj)
+    console.log(activeRoomArr)
   }
 
   generateCodeArr()
  
-
   io.sockets.on('connection', function response(socket) {
+    
+    let checkUserCode = () => {
+      socket.on('sendCode', (data) => {
+        console.log(data)
+        // activeRoomArr.forEach(element, () => {
+  
+        // })  
+      })
+    }
 
     // Check device type 
     socket.on('deviceType', (data) => {
@@ -58,13 +86,13 @@ if (isDeveloping) {
           socket.join(roomName)
           roomArr.push(roomName)
           // socket.rooms = roomName
-          createUsersCode()
+          createUsersCode(roomName)
           console.log(`connected ${data.type} client in room ${roomIndex}`)
         }
         
         if (data.type === 'mobile') {
           let roomName = `room-${roomIndex}`
-          console.log(roomName)
+          // console.log(roomName)
           console.log(io.nsps['/'].adapter.rooms[roomName])
           if(io.nsps['/'].adapter.rooms[roomName] && io.nsps['/'].adapter.rooms[roomName].length > 2) {
             console.log('la room est pleine')
@@ -76,6 +104,16 @@ if (isDeveloping) {
           }
         }
       })
+      // Receive code from Mobile
+      socket.on('sendCode', (data) => {
+        console.log(data)
+        // data.key
+        console.log(obj)
+        obj.getKeyByValue(data.key)
+        console.log(obj.getKeyByValue(data.key))
+        // passwordArr.includes
+      })
+      // checkUserCode()
   })
 }
 

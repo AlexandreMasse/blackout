@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import io from 'socket.io-client'
+import { cpus } from 'os';
 const socket = io.connect()
 
 class Mobile extends Component {
@@ -8,13 +9,15 @@ class Mobile extends Component {
     super(props)
 
     this.state = {
-        room: 'hello'
+        room: 'hello',
+        code: 'null'
     }
   }
 
   componentWillMount() {
     this.sendDeviceType()
     this.getCurrentRoom()
+    this.checkUserConnection()
   }
 
   sendDeviceType = () => {
@@ -31,6 +34,33 @@ class Mobile extends Component {
      });
   }
 
+  handleChange = (e) => {
+    // console.log(e.target.value)
+    const value = e.target.value 
+    this.setState({
+      code: value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    let code = this.state.code
+    if(code !== null && code !== '') {
+      console.log(code)
+      socket.emit('sendCode' ,{
+        key: code
+      })
+    } else {
+      console.log('le code est vide')
+    }
+  }
+
+  checkUserConnection = () => {
+    socket.on('access',(data) => {
+      console.log(data)
+    })
+  }
+
   render() {
     const { room } = this.state
 
@@ -40,7 +70,9 @@ class Mobile extends Component {
           <p>
             Mobile - {room}
           </p>
-          
+          <form className="commentForm" onSubmit={this.handleSubmit}>
+            <input type="text" onChange={this.handleChange}  value={this.state.code} />
+          </form>
         </header>
       </div>
     )

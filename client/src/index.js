@@ -5,7 +5,7 @@ import {MobileApp, DesktopApp} from './components'
 import * as serviceWorker from './serviceWorker'
 import {isXs, isMobile} from './utils'
 
-const App = isXs() && isMobile ? <MobileApp /> : <DesktopApp />
+const App = isXs() && isMobile() ? <MobileApp /> : <DesktopApp />
 
 ReactDOM.render(App, document.getElementById('root'))
 
