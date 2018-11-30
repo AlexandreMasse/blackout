@@ -37,7 +37,6 @@ class Mobile extends Component {
     return (
       <div className="App App-Mobile">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <p>
             Mobile - {room}
           </p>
