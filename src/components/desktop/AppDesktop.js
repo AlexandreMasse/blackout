@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { testAction } from '../../store/actions/testAction'
+import { desktopAction } from '../../redux/actions/desktop/desktopAction'
 import logo from '../../logo.svg';
 import {TestComponent} from "./components/index";
 
@@ -36,13 +36,13 @@ class AppDesktop extends Component {
 
 const mapStateToProps = state => {
   return {
-    text: state.test.text,
+    text: state.desktop.text,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    testAction: (text) => dispatch(testAction({text}))
+    testAction: (text) => dispatch(desktopAction({text}))
   }
 }
 

@@ -1,4 +1,4 @@
-import actionTypes from '../actions/actionTypes'
+import desktopActionTypes from '../../actions/desktop/desktopActionTypes'
 
 const initialState = {
     text: ''
@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.TEST_ACTION:
+        case desktopActionTypes.DESKTOP_ACTION:
             return {
                 ...state,
                 text: action.payload.text
