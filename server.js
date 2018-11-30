@@ -15,7 +15,7 @@ if (isDeveloping) {
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
-  var roomIndex = 1
+  var roomIndex = 0
   var roomArr = []
   var codeArr = []
 
@@ -29,45 +29,54 @@ if (isDeveloping) {
   let getRandomCode = function(arr) {
     return arr[Math.floor(Math.random()*arr.length)]
   }
-  generateCodeArr()
-  var code = getRandomCode(codeArr)
-  var codeIndex = codeArr.indexOf(code)
-  
-  let createUserCode = function() {
-    
+  let createCode = function() {
+    var codePlayer = getRandomCode(codeArr)
+    var codePlayerIndex = codeArr.indexOf(codePlayer)
+    codeArr.splice( codePlayerIndex, 1 )
+
+    return {code: codePlayer}
   }
-  console.log(code)
-  console.log(codeIndex)
+
+  let createUsersCode = function() {
+    let player1 = createCode()
+    let player2 = createCode()
+
+    console.log(player1)
+    console.log(player2)
+  }
+
+  generateCodeArr()
+ 
 
   io.sockets.on('connection', function response(socket) {
 
     // Check device type 
     socket.on('deviceType', (data) => {
         if (data.type === 'desktop') {
+          roomIndex++
           var roomName = `room-${roomIndex}`
           socket.join(roomName)
-          console.log(`connected ${data.type} client in room ${roomIndex}`)
           roomArr.push(roomName)
-          // socket.rooms = roomArr
-          roomIndex++
+          // socket.rooms = roomName
+          createUsersCode()
+          console.log(`connected ${data.type} client in room ${roomIndex}`)
         }
         
         if (data.type === 'mobile') {
-          console.log('hui hui')
-          console.log("room-"+roomIndex)
-          
-          // check user connected in room 
-          if(io.nsps['/'].adapter.rooms["room-"+roomIndex] && io.nsps['/'].adapter.rooms["room-"+roomIndex].length > 1) {
+          let roomName = `room-${roomIndex}`
+          console.log(roomName)
+          console.log(io.nsps['/'].adapter.rooms[roomName])
+          if(io.nsps['/'].adapter.rooms[roomName] && io.nsps['/'].adapter.rooms[roomName].length > 2) {
             console.log('la room est pleine')
-            io.sockets.in("room-"+roomIndex).emit('connectToRoom', "Une erreur s'est produite")
+            socket.emit('connectToRoom', "Une erreur s'est produite")
           } else {
             // Send this event to everyone in the room.
-            socket.join("room-"+roomIndex)
-            io.sockets.in("room-"+roomIndex).emit('connectToRoom', "You are in room no. "+roomIndex);
+            socket.join(roomName)
+            socket.emit('connectToRoom', "You are in room no. "+roomIndex)
           }
         }
       })
   })
 }
 
-console.log('server is running on http://localhost:' + port);
+console.log('server is running on http://localhost:' + port)
