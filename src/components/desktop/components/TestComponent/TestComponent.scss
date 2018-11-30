@@ -1,0 +1,9 @@
+@import "../../../../stylesheets/global";
+
+.test-component {
+  & > {
+    p {
+      color: $colortest;
+    }
+  }
+}

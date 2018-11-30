@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import configureStore from './store/redux';
-import './index.scss';
-import App from './App';
+import './stylesheets/index.scss';
+import AppDesktop from './components/desktop/AppDesktop';
+import AppMobile from './components/mobile/AppMobile';
 import * as serviceWorker from './serviceWorker';
+
+const App = window.innerWidth > 764 ? AppDesktop : AppMobile
 
 ReactDOM.render(
     <Provider store={configureStore()}>
-        <App />
+        <App/>
     </Provider>,
     document.getElementById('root')
 );

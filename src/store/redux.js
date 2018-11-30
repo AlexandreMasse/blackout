@@ -1,18 +1,18 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import testReducer from './reducers/testReducer';
+import test from './reducers/testReducer';
 
 export default function configureStore(initialState = {}) {
 
-    const reducers = combineReducers({
-        testReducer
+    const combinedReducers = combineReducers({
+        test
     })
 
+    const enhancer = composeWithDevTools(applyMiddleware(thunk))
+
     return createStore(
-        reducers,
-        composeWithDevTools(
-            applyMiddleware(thunk),
-        )
+        combinedReducers,
+        enhancer
     );
 }

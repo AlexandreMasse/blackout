@@ -1,0 +1,9 @@
+@import "../../../../stylesheets/global";
+
+.mobile-component {
+  & > {
+    p {
+      color: #91ff9e;
+    }
+  }
+}

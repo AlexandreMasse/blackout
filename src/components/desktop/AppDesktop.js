@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { testAction } from './store/actions/testAction'
-import logo from './logo.svg';
-import './App.scss';
+import { testAction } from '../../store/actions/testAction'
+import logo from '../../logo.svg';
+import {TestComponent} from "./components/index";
 
-class App extends Component {
+// css
+import './AppDesktop.scss';
+
+class AppDesktop extends Component {
 
   testAction = () => {
     this.props.testAction()
@@ -16,13 +19,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="app-desktop">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <input type="text" onChange={this.onInputChange}/>
           <div className="input-result">
             <p onClick={this.testAction}>{this.props.text}</p>
           </div>
+          <TestComponent/>
         </header>
       </div>
     );
@@ -32,7 +36,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    text: state.testReducer.text,
+    text: state.test.text,
   }
 }
 
@@ -42,4 +46,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(AppDesktop);

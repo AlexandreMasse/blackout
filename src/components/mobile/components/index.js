@@ -1,0 +1,1 @@
+export {default as MobileComponent} from './MobileComponent/MobileComponent'

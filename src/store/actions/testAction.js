@@ -1,6 +1,8 @@
+import actionTypes from './actionTypes'
+
 export const testAction = (payload) => dispatch => {
  dispatch({
-  type: 'TEST_ACTION',
+  type: actionTypes.TEST_ACTION,
   payload
  })
 }

@@ -1,0 +1,17 @@
+@import "../../stylesheets/global";
+
+.app-mobile {
+  min-height: 100vh;
+  background-color: #282c34;
+
+  & > {
+
+    p {
+      margin-top: 0;
+      color: #9284d3;
+    }
+
+
+  }
+
+}
