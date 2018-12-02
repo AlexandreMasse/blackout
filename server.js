@@ -24,7 +24,6 @@ server.listen(app.get('port'), function () {
     })
     var roomIndex = 0
     var roomArr = []
-    var passwordArr = []
     var codeArr = []
     var activeCodeObj = {}
   
@@ -44,7 +43,6 @@ server.listen(app.get('port'), function () {
       var codePlayer = getRandomCode(codeArr)
       var codePlayerIndex = codeArr.indexOf(codePlayer)
       codeArr.splice( codePlayerIndex, 1 )
-      passwordArr.push(codePlayer)
       return codePlayer
     }
   
