@@ -1,120 +1,104 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const _ = require('underscore')
 const path = require('path');
 const app = express();
+const localStorage = require('localStorage')
+const nodeCookie = require('node-cookie')
+var server = require('http').createServer(app)
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 5000 : process.env.PORT
-const io = require('socket.io').listen(app.listen(port))
+// const io = require('socket.io').listen(app.listen(port))
+var io = require('socket.io')(server, { wsEngine: 'ws' })
+app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
-Object.prototype.getKeyByValue = function( value ) {
-  for( var prop in this ) {
-      if( this.hasOwnProperty( prop ) ) {
-           if( this[ prop ] === value )
-               return prop;
-      }
-  }
-}
-if (isDeveloping) {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-  var roomIndex = 0
-  var roomArr = []
-  var activeRoomArr = []
-  var passwordArr = []
-  var codeArr = []
-  var obj = {}
-
-  let generateCodeArr = function() {
-    var minCode = 1000
-    var maxCode = 9999
-    for (var i = minCode; i <= maxCode; i++) {
-      codeArr.push(i)
-    }
-  }
-
-  let getRandomCode = function(arr) {
-    return arr[Math.floor(Math.random()*arr.length)]
-  }
-
-  let createCode = function() {
-    var codePlayer = getRandomCode(codeArr)
-    var codePlayerIndex = codeArr.indexOf(codePlayer)
-    codeArr.splice( codePlayerIndex, 1 )
-    
-    passwordArr.push(codePlayer)
-    return codePlayer
-  }
-
-  let createUsersCode = function(roomName) {
-    let player1 = createCode()
-    let player2 = createCode()
-    obj = {
-      [player1]: roomName,
-      [player2]: roomName
-    }
-    console.log(obj)
-    // console.log(player1)
-    // console.log(player2) 
-    activeRoomArr.push(obj)
-    console.log(activeRoomArr)
-  }
-
-  generateCodeArr()
- 
-  io.sockets.on('connection', function response(socket) {
-    
-    let checkUserCode = () => {
-      socket.on('sendCode', (data) => {
-        console.log(data)
-        // activeRoomArr.forEach(element, () => {
+server.listen(app.get('port'), function () {
+  console.log('----- SERVER STARTED -----')
+  if (isDeveloping) {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Handle React routing, return all requests to React app
+    app.get('*', function(req, res) {
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    })
+    var roomIndex = 0
+    var roomArr = []
+    var passwordArr = []
+    var codeArr = []
+    var activeCodeObj = {}
   
-        // })  
+    let generateCodeArr = function() {
+      var minCode = 1000
+      var maxCode = 9999
+      for (var i = minCode; i <= maxCode; i++) {
+        codeArr.push(i)
+      }
+    }
+  
+    let getRandomCode = function(arr) {
+      return arr[Math.floor(Math.random()*arr.length)]
+    }
+  
+    let createCode = function() {
+      var codePlayer = getRandomCode(codeArr)
+      var codePlayerIndex = codeArr.indexOf(codePlayer)
+      codeArr.splice( codePlayerIndex, 1 )
+      passwordArr.push(codePlayer)
+      return codePlayer
+    }
+  
+    let createUsersCode = function(roomName) {
+      let player1 = createCode()
+      let player2 = createCode()
+      activeCodeObj[ player1 ] = `${roomName}_player1`
+      activeCodeObj[ player2 ] = `${roomName}_player2`
+      console.log(activeCodeObj)
+    }
+
+    let checkUserCode = (socket) => {
+      socket.on('sendCode', (data) => {
+        console.log('hello', data.key)
+        let code = data.key
+        if(activeCodeObj[code]) {
+          console.log(activeCodeObj[code])
+          let roomNameData = activeCodeObj[code]
+          var parts = roomNameData.split('_', 2)
+          let roomName = parts[0]
+          let userId = parts[1]
+          localStorage.setItem('room', roomName)
+          socket.join(roomName)
+          socket.emit('connectToRoom', `Hello ${userId} you are in ${roomName}`)
+          delete activeCodeObj[code]
+        } else {
+          console.log('mdp nom définit')
+          socket.emit('connectToRoom', "Une erreur s'est produite")
+        }
       })
     }
 
-    // Check device type 
-    socket.on('deviceType', (data) => {
-        if (data.type === 'desktop') {
-          roomIndex++
-          var roomName = `room-${roomIndex}`
-          socket.join(roomName)
-          roomArr.push(roomName)
-          // socket.rooms = roomName
-          createUsersCode(roomName)
-          console.log(`connected ${data.type} client in room ${roomIndex}`)
-        }
-        
-        if (data.type === 'mobile') {
-          let roomName = `room-${roomIndex}`
-          // console.log(roomName)
-          console.log(io.nsps['/'].adapter.rooms[roomName])
-          if(io.nsps['/'].adapter.rooms[roomName] && io.nsps['/'].adapter.rooms[roomName].length > 2) {
-            console.log('la room est pleine')
-            socket.emit('connectToRoom', "Une erreur s'est produite")
-          } else {
-            // Send this event to everyone in the room.
+    generateCodeArr()
+   
+    io.sockets.on('connection', function response(socket) {
+      // Check device type 
+      socket.on('deviceType', (data) => {
+          if (data.type === 'desktop') {
+            roomIndex++
+            var roomName = `room-${roomIndex}`
             socket.join(roomName)
-            socket.emit('connectToRoom', "You are in room no. "+roomIndex)
+            roomArr.push(roomName)
+            // socket.rooms = roomName
+            createUsersCode(roomName)
+            console.log(`connected ${data.type} client in room ${roomIndex}`)
           }
-        }
-      })
-      // Receive code from Mobile
-      socket.on('sendCode', (data) => {
-        console.log(data)
-        // data.key
-        console.log(obj)
-        obj.getKeyByValue(data.key)
-        console.log(obj.getKeyByValue(data.key))
-        // passwordArr.includes
-      })
-      // checkUserCode()
-  })
-}
+          
+          if (data.type === 'mobile') {
+            checkUserCode(socket)
+          }
+        })
+    })
+  }
+})
 
-console.log('server is running on http://localhost:' + port)
+
+// console.log('server is running on http://localhost:' + port)

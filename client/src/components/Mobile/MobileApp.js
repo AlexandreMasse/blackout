@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
 import io from 'socket.io-client'
-import { cpus } from 'os';
 const socket = io.connect()
 
 class Mobile extends Component {
@@ -47,7 +46,7 @@ class Mobile extends Component {
     let code = this.state.code
     if(code !== null && code !== '') {
       console.log(code)
-      socket.emit('sendCode' ,{
+      socket.emit('sendCode', {
         key: code
       })
     } else {
