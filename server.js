@@ -52,11 +52,16 @@ server.listen(app.get('port'), function () {
       return codePlayer
     }
   
-    let createUsersCode = function(roomName) {
+    let createUsersCode = function(roomName, socket) {
       let player1 = createCode()
       let player2 = createCode()
       activeCodeObj[ player1 ] = `${roomName}_player1`
       activeCodeObj[ player2 ] = `${roomName}_player2`
+
+      socket.emit('setCode', {
+        code1: player1,
+        code2: player2,
+      })
       console.log(activeCodeObj)
     }
 
@@ -74,7 +79,11 @@ server.listen(app.get('port'), function () {
           socket.username = userId
           socket.join(roomName)
           socket.rooms = roomName
-          socket.emit('connectToRoom', `Hello ${userId} you are in ${roomName}`)
+          // socket.emit('connectToRoom', `Hello ${userId} you are in ${roomName}`)
+          io.to(roomName).emit('connectToRoom',{
+            room: roomName,
+            userId: userId
+          })
           delete activeCodeObj[code]
         } else {
           console.log('mdp nom définit')
@@ -82,6 +91,11 @@ server.listen(app.get('port'), function () {
         }
       })
     }
+
+
+    // let getUserConnected = (socket) => {
+    //   socket.emit('connectToRoom', `Hello ${userId}`)
+    // }
 
     let userDisconnected = (socket) => {
       socket.on('disconnect', function () {
@@ -104,7 +118,7 @@ server.listen(app.get('port'), function () {
             socket.join(roomName)
             roomArr.push(roomName)
             // socket.rooms = roomName
-            createUsersCode(roomName)
+            createUsersCode(roomName, socket)
             console.log(`connected ${data.type} client in room ${roomIndex}`)
 
             // disconnection

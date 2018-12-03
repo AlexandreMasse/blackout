@@ -10,6 +10,7 @@ class Mobile extends Component {
 
     this.state = {
         room: 'hello',
+        userId: null,
         code: 'null'
     }
   }
@@ -30,13 +31,12 @@ class Mobile extends Component {
 
   getCurrentRoom = () => {
     socket.on('connectToRoom',(data) => {
-        console.log(data)
-        this.setState({room : data})
-     });
+        this.setState({room : data.room})
+        this.setState({userId : data.userId})
+     })
   }
 
   handleChange = (e) => {
-    // console.log(e.target.value)
     const value = e.target.value 
     this.setState({
       code: value
@@ -69,13 +69,13 @@ class Mobile extends Component {
   }
 
   render() {
-    const { room } = this.state
+    const { room, userId } = this.state
 
     return (
       <div className="App App-Mobile">
         <header className="App-header">
           <p>
-            Mobile - {room}
+            Mobile - hello {userId} welcome in {room}
           </p>
           <form className="commentForm" onSubmit={this.handleSubmit}>
             <input type="text" onChange={this.handleChange}  value={this.state.code} />
