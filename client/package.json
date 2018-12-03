@@ -28,7 +28,6 @@
   "eslintConfig": {
     "extends": "standard"
   },
-  "proxy": "http://localhost:5000/",
   "browserslist": [
     ">0.2%",
     "not dead",

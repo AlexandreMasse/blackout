@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
+import './index.css'
 import io from 'socket.io-client'
+// const socket = io.connect()
+const socket = io.connect("http://localhost:80")
 
-//css
-import './MobileApp.scss'
-
-const socket = io.connect()
-
-class MobileApp extends Component {
+class Mobile extends Component {
   constructor (props) {
     super(props)
 
@@ -81,8 +78,7 @@ class MobileApp extends Component {
             Mobile - {room}
           </p>
           <form className="commentForm" onSubmit={this.handleSubmit}>
-            <input type="text" onChange={this.handleChange} value={this.state.code} />
-            <input type="submit" value="Submit"/>
+            <input type="text" onChange={this.handleChange}  value={this.state.code} />
           </form>
         </header>
       </div>
@@ -90,14 +86,5 @@ class MobileApp extends Component {
   }
 }
 
-
-const mapStateToProps = state => {
-  return {}
-}
-
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(MobileApp)
+export default Mobile
 

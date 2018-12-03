@@ -6,11 +6,9 @@ const app = express();
 const localStorage = require('localStorage')
 const nodeCookie = require('node-cookie')
 var server = require('http').createServer(app)
-const isDeveloping = process.env.NODE_ENV !== 'production'
-const port = process.env.PORT || 5000
 // const io = require('socket.io').listen(app.listen(port))
 var io = require('socket.io')(server, { wsEngine: 'ws' })
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 80);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 server.listen(app.get('port'), function () {
