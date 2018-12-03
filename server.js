@@ -45,11 +45,19 @@ server.listen(app.get('port'), function () {
       return arr[Math.floor(Math.random()*arr.length)]
     }
   
+    // let createCode = function() {
+    //   var codePlayer = getRandomCode(codeArr)
+    //   var codePlayerIndex = codeArr.indexOf(codePlayer)
+    //   codeArr.splice( codePlayerIndex, 1 )
+    //   return codePlayer
+    // }
     let createCode = function() {
-      var codePlayer = getRandomCode(codeArr)
-      var codePlayerIndex = codeArr.indexOf(codePlayer)
-      codeArr.splice( codePlayerIndex, 1 )
-      return codePlayer
+      // var codePlayer = getRandomCode(codeArr)
+      // var codePlayerIndex = codeArr.indexOf(codePlayer)
+      // codeArr.splice( codePlayerIndex, 1 )
+      
+      var code = codeArr.splice(Math.floor(codeArr.length*Math.random()), 1);
+      return code.length ? code[0] : null;
     }
   
     let createUsersCode = function(roomName, socket) {
@@ -58,7 +66,7 @@ server.listen(app.get('port'), function () {
       activeCodeObj[ player1 ] = `${roomName}_player1`
       activeCodeObj[ player2 ] = `${roomName}_player2`
 
-      socket.emit('setCode', {
+      socket.emit('setCode', { 
         code1: player1,
         code2: player2,
       })
@@ -77,8 +85,10 @@ server.listen(app.get('port'), function () {
           let userId = parts[1]
           localStorage.setItem('room', roomName)
           socket.username = userId
+          socket.room = roomName
+          socket.code = code
           socket.join(roomName)
-          socket.rooms = roomName
+          socket.room = roomName
           // socket.emit('connectToRoom', `Hello ${userId} you are in ${roomName}`)
           io.to(roomName).emit('connectToRoom',{
             room: roomName,
@@ -91,17 +101,22 @@ server.listen(app.get('port'), function () {
         }
       })
     }
-
-
     // let getUserConnected = (socket) => {
     //   socket.emit('connectToRoom', `Hello ${userId}`)
     // }
 
     let userDisconnected = (socket) => {
       socket.on('disconnect', function () {
-        console.log(socket.username)
-        console.log(socket.rooms)
-        console.log('user disconnected')
+        // console.log(socket.username)
+        // console.log(socket.room)
+        // console.log(socket.code)
+        let code = socket.code 
+        codeArr.push(code)
+        io.to(socket.room).emit('disconnectToRoom', {
+          room: socket.room,
+          userId: socket.username
+        })
+        console.log('user mobile disconnected')
       })
     }
 
@@ -117,14 +132,15 @@ server.listen(app.get('port'), function () {
             var roomName = `room-${roomIndex}`
             socket.join(roomName)
             roomArr.push(roomName)
-            // socket.rooms = roomName
+            socket.room = roomName
             createUsersCode(roomName, socket)
             console.log(`connected ${data.type} client in room ${roomIndex}`)
 
             // disconnection
             socket.on('disconnect', function () {
-              console.log(socket)
+              // console.log(socket)
               console.log('user disconnected')
+              let roomName = socket.room
               console.log(roomName)
               var index = roomArr.indexOf(roomName)
               if (index > -1) {
@@ -132,15 +148,12 @@ server.listen(app.get('port'), function () {
               }
               console.log(roomArr)
               // var clients = io.sockets.clients('room'); // all users from room `room`
-              var usersInRoom = io.of('/').in(roomName).clients;
-              console.log(usersInRoom)
-              socket.emit('userDisconnected', usersInRoom)
-              // usersInRoom.forEach(user => {
-              //   user.leave(roomName)
-              // })
-              console.log(usersInRoom)
-              // console.log(io.nsps['/'].adapter.rooms[roomName].length)
-              // io.emit('user disconnected')
+              // var usersInRoom = io.of('/').in(socket.room).clients
+              // console.log(usersInRoom)
+              io.to(socket.room).emit('userDisconnected',
+                'perte de la connection'
+               // users: usersInRoom
+              )
             })
           }
           

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 // import logo from './logo.svg'
 import './DesktopApp.scss'
 import io from 'socket.io-client'
-// const socket = io.connect()
 const socket = io.connect("http://localhost:8888")
 
 
@@ -23,6 +22,7 @@ class DesktopApp extends Component {
     this.sendDeviceType()
     this.getCode()
     this.getConnectedUser()
+    this.getDisconnectedUser()
   }
 
   sendDeviceType = () => {
@@ -44,6 +44,15 @@ class DesktopApp extends Component {
       let player = data.userId
       if (player === 'player1') this.setState({player1: true})
       if (player === 'player2') this.setState({player2: true})
+    })
+  }
+
+  getDisconnectedUser = () => {
+    socket.on('disconnectToRoom', (data) => {
+      console.log(data)
+      let player = data.userId
+      if (player === 'player1') this.setState({player1: false})
+      if (player === 'player2') this.setState({player2: false})
     })
   }
   render() {

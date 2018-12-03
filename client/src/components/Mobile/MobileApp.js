@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './MobileApp.scss'
 import io from 'socket.io-client'
-// const socket = io.connect()
 const socket = io.connect("http://localhost:8888")
 
 class MobileApp extends Component {
@@ -33,6 +32,19 @@ class MobileApp extends Component {
     socket.on('connectToRoom',(data) => {
         this.setState({room : data.room})
         this.setState({userId : data.userId})
+        let now = new Date()
+        let time = now.getTime()
+        time += 3600 * 1000
+        now.setTime(time)
+        document.cookie = 
+        'room=' + data.room + 
+        '; expires=' + now.toUTCString() + 
+        '; path=/'
+      
+        document.cookie = 
+        'userId=' + data.userId + 
+        '; expires=' + now.toUTCString() + 
+        '; path=/'
      })
   }
 
