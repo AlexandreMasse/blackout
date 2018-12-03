@@ -21,6 +21,7 @@ class MobileApp extends Component {
     this.sendDeviceType()
     this.getCurrentRoom()
     this.checkUserConnection()
+    this.disconnected()
   }
 
   sendDeviceType = () => {
@@ -42,6 +43,12 @@ class MobileApp extends Component {
     const value = e.target.value 
     this.setState({
       code: value
+    })
+  }
+  
+  disconnected = () => {
+    socket.on('userDisconnected' , (data) => {
+      console.log(data)
     })
   }
 

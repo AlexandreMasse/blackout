@@ -65,7 +65,9 @@ server.listen(app.get('port'), function () {
           let roomName = parts[0]
           let userId = parts[1]
           localStorage.setItem('room', roomName)
+          socket.username = userId
           socket.join(roomName)
+          socket.rooms = roomName
           socket.emit('connectToRoom', `Hello ${userId} you are in ${roomName}`)
           delete activeCodeObj[code]
         } else {
@@ -75,23 +77,56 @@ server.listen(app.get('port'), function () {
       })
     }
 
+    let userDisconnected = (socket) => {
+      socket.on('disconnect', function () {
+        console.log(socket.username)
+        console.log(socket.rooms)
+        console.log('user disconnected')
+      })
+    }
+
     generateCodeArr()
    
     io.sockets.on('connection', function response(socket) {
       // Check device type 
+      var cookie=socket.handshake.headers['cookie']
+      // console.log(cookie)
       socket.on('deviceType', (data) => {
           if (data.type === 'desktop') {
-            roomIndex++
+            roomIndex++ 
             var roomName = `room-${roomIndex}`
             socket.join(roomName)
             roomArr.push(roomName)
             // socket.rooms = roomName
             createUsersCode(roomName)
             console.log(`connected ${data.type} client in room ${roomIndex}`)
+
+            // disconnection
+            socket.on('disconnect', function () {
+              console.log(socket)
+              console.log('user disconnected')
+              console.log(roomName)
+              var index = roomArr.indexOf(roomName)
+              if (index > -1) {
+                roomArr.splice(index, 1)
+              }
+              console.log(roomArr)
+              // var clients = io.sockets.clients('room'); // all users from room `room`
+              var usersInRoom = io.of('/').in(roomName).clients;
+              console.log(usersInRoom)
+              socket.emit('userDisconnected', usersInRoom)
+              // usersInRoom.forEach(user => {
+              //   user.leave(roomName)
+              // })
+              console.log(usersInRoom)
+              // console.log(io.nsps['/'].adapter.rooms[roomName].length)
+              // io.emit('user disconnected')
+            })
           }
           
           if (data.type === 'mobile') {
             checkUserCode(socket)
+            userDisconnected(socket)
           }
         })
     })
