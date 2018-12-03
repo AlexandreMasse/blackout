@@ -8,7 +8,7 @@ const nodeCookie = require('node-cookie')
 var server = require('http').createServer(app)
 // const io = require('socket.io').listen(app.listen(port))
 var io = require('socket.io')(server, { wsEngine: 'ws' })
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 8888);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 server.listen(app.get('port'), function () {

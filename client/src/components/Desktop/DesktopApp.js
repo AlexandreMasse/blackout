@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 // import logo from './logo.svg'
-import './index.css'
+import './DesktopApp.scss'
 import io from 'socket.io-client'
 // const socket = io.connect()
-const socket = io.connect("http://localhost:80")
+const socket = io.connect("http://localhost:8888")
 
 
-class Desktop extends Component {
+class DesktopApp extends Component {
   constructor (props) {
     super(props)
 
@@ -52,7 +52,7 @@ class Desktop extends Component {
     const succeed2 = player2 ? 'succed' : ' '
 
     return (
-      <div className="App App-Desktop">
+      <div className="App desktop-app">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <p>
@@ -70,5 +70,5 @@ class Desktop extends Component {
   }
 }
 
-export default Desktop
+export default DesktopApp
 

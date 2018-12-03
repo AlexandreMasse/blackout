@@ -8,15 +8,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "node-sass": "^4.10.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5",
-    "node-sass": "^4.10.0",
     "react-redux": "^5.1.1",
+    "react-scripts": "2.0.5",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
-   "devDependencies": {
+  "devDependencies": {
     "redux-devtools-extension": "^2.13.7"
   },
   "scripts": {

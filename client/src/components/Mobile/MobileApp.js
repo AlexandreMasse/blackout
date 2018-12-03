@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import './index.css'
+import './MobileApp.scss'
 import io from 'socket.io-client'
 // const socket = io.connect()
-const socket = io.connect("http://localhost:80")
+const socket = io.connect("http://localhost:8888")
 
-class Mobile extends Component {
+class MobileApp extends Component {
   constructor (props) {
     super(props)
 
@@ -72,7 +72,7 @@ class Mobile extends Component {
     const { room, userId } = this.state
 
     return (
-      <div className="App App-Mobile">
+      <div className="App mobile-app">
         <header className="App-header">
           <p>
             Mobile - hello {userId} welcome in {room}
@@ -86,5 +86,5 @@ class Mobile extends Component {
   }
 }
 
-export default Mobile
+export default MobileApp
 
