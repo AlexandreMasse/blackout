@@ -7,7 +7,7 @@ const localStorage = require('localStorage')
 const nodeCookie = require('node-cookie')
 var server = require('http').createServer(app)
 const isDeveloping = process.env.NODE_ENV !== 'production'
-const port = isDeveloping ? 5000 : process.env.PORT
+const port = process.env.PORT || 5000
 // const io = require('socket.io').listen(app.listen(port))
 var io = require('socket.io')(server, { wsEngine: 'ws' })
 app.set('port', process.env.PORT || 5000);
@@ -15,7 +15,15 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')
-  if (isDeveloping) {
+  // if (isDeveloping) {
+    if (process.env.NODE_ENV === 'production') {
+      // Serve any static files
+      app.use(express.static(path.join(__dirname, 'client/build')));
+      // Handle React routing, return all requests to React app
+      app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+      })
+    }
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'client/build')));
     // Handle React routing, return all requests to React app
@@ -130,8 +138,6 @@ server.listen(app.get('port'), function () {
           }
         })
     })
-  }
+  // }
 })
-
-
 // console.log('server is running on http://localhost:' + port)
