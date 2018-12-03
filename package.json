@@ -1,9 +1,9 @@
 {
-  "name": "create-react-app-express",
+  "name": "blackout-server",
   "version": "1.0.0",
-  "description": "Server for Neutrality project",
+  "description": "Server for blackout project",
   "author": {
-    "name": "Net neutrality",
+    "name": "Blackout",
     "email": "ndoulou.jean@gmail.com"
   },
   "license": "MIT",

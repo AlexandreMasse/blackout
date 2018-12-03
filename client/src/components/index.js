@@ -1,2 +1,2 @@
-export { default as MobileApp } from './Mobile/MobileApp'
-export { default as DesktopApp } from './Desktop/DesktopApp'
+export { default as MobileApp } from './mobile/MobileApp'
+export { default as DesktopApp } from './desktop/DesktopApp'

@@ -1,11 +1,23 @@
 {
-  "name": "my-app",
+  "name": "blackout-client",
   "version": "0.1.0",
+  "description": "Client for blackout project",
+  "author": {
+    "name": "Blackout",
+    "email": "alexandre.masse94@gmail.com"
+  },
   "license": "MIT",
   "dependencies": {
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "node-sass": "^4.10.0",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+   "devDependencies": {
+    "redux-devtools-extension": "^2.13.7"
   },
   "scripts": {
     "start": "react-scripts start",
