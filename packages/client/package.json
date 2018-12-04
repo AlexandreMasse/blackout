@@ -1,0 +1,38 @@
+{
+  "name": "blackout-client",
+  "version": "0.1.0",
+  "description": "Client for blackout project",
+  "author": {
+    "name": "Blackout",
+    "email": "alexandre.masse94@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-sass": "^4.10.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.1",
+    "react-scripts": "2.0.5",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.1.1"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
