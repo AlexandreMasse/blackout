@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './MobileApp.scss'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import {wsEmitPassword} from '../../redux/actions/websockets/websocketsAction'
 // const socket = io.connect(process.env.REACT_APP_SERVER_URL)
 import {socket} from '../../redux/actions/websockets/websocketsAction'
