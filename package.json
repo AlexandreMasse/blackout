@@ -1,15 +1,12 @@
 {
   "name": "root",
-  "private": true,
   "scripts": {
-    "client": "cd packages/client && npm start",
-    "server": "cd packages/server && nodemon server.js",
+    "client": "cd client && npm start",
+    "server": "cd server && yarn server",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "dev:server": "cd packages/client && npm build && cd .. && npm start"
 	},
   "devDependencies": {
-    "lerna": "^3.5.1",
-    "nodemon": "^1.18.7",
     "concurrently": "^4.1.0"
   }
 }
