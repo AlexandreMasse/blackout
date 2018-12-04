@@ -1,33 +1,30 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const _ = require('underscore')
 const path = require('path');
 const app = express();
-const localStorage = require('localStorage')
-const nodeCookie = require('node-cookie')
 var server = require('http').createServer(app)
+// const Room = require('./modules/Room')
+import Room from './modules/Room'
 // const io = require('socket.io').listen(app.listen(port))
 var io = require('socket.io')(server, { wsEngine: 'ws' })
 app.set('port', process.env.PORT || 8888);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  })
+}
+
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')
-  // if (isDeveloping) {
-    if (process.env.NODE_ENV === 'production') {
-      // Serve any static files
-      app.use(express.static(path.join(__dirname, 'client/build')));
-      // Handle React routing, return all requests to React app
-      app.get('*', function(req, res) {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-      })
-    }
-    // Serve any static files
-    app.use(express.static(path.join(__dirname, 'client/build')));
-    // Handle React routing, return all requests to React app
-    app.get('*', function(req, res) {
-      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    })
+  let room = new Room()
+  console.log(room)
+  // console.log(room.codeArr)
     var roomIndex = 0
     var roomArr = []
     var codeArr = []
