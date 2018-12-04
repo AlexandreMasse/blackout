@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 // import logo from './logo.svg'
 import './DesktopApp.scss'
-import io from 'socket.io-client'
-const socket = io.connect("http://localhost:8888")
+
+import {socket} from '../../redux/actions/websockets/websocketsAction'
 
 
 class DesktopApp extends Component {

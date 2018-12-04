@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './MobileApp.scss'
 import io from 'socket.io-client'
-const socket = io.connect("http://localhost:8888")
+import {wsEmitPassword} from '../../redux/actions/websockets/websocketsAction'
+// const socket = io.connect(process.env.REACT_APP_SERVER_URL)
+import {socket} from '../../redux/actions/websockets/websocketsAction'
 
 class MobileApp extends Component {
   constructor (props) {
@@ -66,9 +69,10 @@ class MobileApp extends Component {
     let code = this.state.code
     if(code !== null && code !== '') {
       console.log(code)
-      socket.emit('sendCode', {
-        key: code
-      })
+      // socket.emit('sendCode', {
+      //   key: code
+      // })
+     this.props.wsEmitPassword(code)
     } else {
       console.log('le code est vide')
     }
@@ -91,6 +95,7 @@ class MobileApp extends Component {
           </p>
           <form className="commentForm" onSubmit={this.handleSubmit}>
             <input type="text" onChange={this.handleChange}  value={this.state.code} />
+              <input type="submit" value={"Submit"}/>
           </form>
         </header>
       </div>
@@ -98,5 +103,17 @@ class MobileApp extends Component {
   }
 }
 
-export default MobileApp
+
+
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      wsEmitPassword: (code) => dispatch(wsEmitPassword({code}))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(MobileApp);
 

@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import desktop from './reducers/desktop/desktopReducer';
 import mobile from './reducers/mobile/mobileReducer';
+import {emit, init as websocketsInit} from './actions/websockets/websocketsAction';
 
 export default function configureStore(type, initialState = {}) {
 
@@ -18,10 +19,14 @@ export default function configureStore(type, initialState = {}) {
          })
     }
 
-    const enhancer = composeWithDevTools(applyMiddleware(thunk))
+    const enhancer = composeWithDevTools(applyMiddleware(thunk.withExtraArgument({emit})))
 
-    return createStore(
+    const store = createStore(
         combinedReducers,
         enhancer
     );
+
+    websocketsInit(store)
+
+    return store
 }
