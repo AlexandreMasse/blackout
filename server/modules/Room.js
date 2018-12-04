@@ -19,16 +19,16 @@ export default class Room {
         console.log(`connected client in room ${this.roomIndex}`)
     }
 
-    destroy(socket) {
+    destroy(io, socket) {
         socket.on('disconnect', () => {
             console.log('user disconnected')
             let roomId = socket.room
             console.log(roomId)
-            var index = roomArr.indexOf(roomId)
+            var index = this.roomArr.indexOf(roomId)
             if (index > -1) {
-                roomArr.splice(index, 1)
+                this.roomArr.splice(index, 1)
             }
-            console.log(roomArr)
+            console.log(this.roomArr)
             // var clients = io.sockets.clients('room'); // all users from room `room`
             // var usersInRoom = io.of('/').in(socket.room).clients
             // console.log(usersInRoom)

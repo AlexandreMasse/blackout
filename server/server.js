@@ -121,26 +121,26 @@ server.listen(app.get('port'), function () {
       socket.on('deviceType', (data) => {
           if (data.type === 'desktop') {
             room.create(socket)
-
+            room.destroy(io ,socket)
             // disconnection
-            socket.on('disconnect', function () {
-              // console.log(socket)
-              console.log('user disconnected')
-              let roomName = socket.room
-              console.log(roomName)
-              var index = roomArr.indexOf(roomName)
-              if (index > -1) {
-                roomArr.splice(index, 1)
-              }
-              console.log(roomArr)
-              // var clients = io.sockets.clients('room'); // all users from room `room`
-              // var usersInRoom = io.of('/').in(socket.room).clients
-              // console.log(usersInRoom)
-              io.to(socket.room).emit('userDisconnected',
-                'perte de la connection'
-               // users: usersInRoom
-              )
-            })
+            // socket.on('disconnect', function () {
+            //   // console.log(socket)
+            //   console.log('user disconnected')
+            //   let roomName = socket.room
+            //   console.log(roomName)
+            //   var index = roomArr.indexOf(roomName)
+            //   if (index > -1) {
+            //     roomArr.splice(index, 1)
+            //   }
+            //   console.log(roomArr)
+            //   // var clients = io.sockets.clients('room'); // all users from room `room`
+            //   // var usersInRoom = io.of('/').in(socket.room).clients
+            //   // console.log(usersInRoom)
+            //   io.to(socket.room).emit('userDisconnected',
+            //     'perte de la connection'
+            //    // users: usersInRoom
+            //   )
+            // })
           }
           
           if (data.type === 'mobile') {
