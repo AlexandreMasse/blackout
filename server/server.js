@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 var server = require('http').createServer(app)
-// const Room = require('./modules/Room')
 import Room from './modules/Room'
+import Password from './modules/Password'
 // const io = require('socket.io').listen(app.listen(port))
 var io = require('socket.io')(server, { wsEngine: 'ws' })
 app.set('port', process.env.PORT || 8888);
@@ -22,9 +22,9 @@ if (process.env.NODE_ENV === 'production') {
 
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')
-  let room = new Room()
-  console.log(room)
-  // console.log(room.codeArr)
+    let password = new Password()
+    // console.log(password)
+
     var roomIndex = 0
     var roomArr = []
     var codeArr = []
@@ -38,21 +38,8 @@ server.listen(app.get('port'), function () {
       }
     }
   
-    let getRandomCode = function(arr) {
-      return arr[Math.floor(Math.random()*arr.length)]
-    }
-  
-    // let createCode = function() {
-    //   var codePlayer = getRandomCode(codeArr)
-    //   var codePlayerIndex = codeArr.indexOf(codePlayer)
-    //   codeArr.splice( codePlayerIndex, 1 )
-    //   return codePlayer
-    // }
+
     let createCode = function() {
-      // var codePlayer = getRandomCode(codeArr)
-      // var codePlayerIndex = codeArr.indexOf(codePlayer)
-      // codeArr.splice( codePlayerIndex, 1 )
-      
       var code = codeArr.splice(Math.floor(codeArr.length*Math.random()), 1);
       return code.length ? code[0] : null;
     }
@@ -66,7 +53,15 @@ server.listen(app.get('port'), function () {
       socket.emit('setCode', { 
         code1: player1,
         code2: player2,
+        roomId: roomName
       })
+      
+      // socket.emit('createRoom', { 
+      //   code1: player1,
+      //   code2: player2,
+      //   roomId: roomName
+      // })
+
       console.log(activeCodeObj)
     }
 
@@ -80,7 +75,6 @@ server.listen(app.get('port'), function () {
           var parts = roomNameData.split('_', 2)
           let roomName = parts[0]
           let userId = parts[1]
-          localStorage.setItem('room', roomName)
           socket.username = userId
           socket.room = roomName
           socket.code = code
@@ -119,19 +113,14 @@ server.listen(app.get('port'), function () {
 
     generateCodeArr()
    
+    let room = new Room()
+    room.init()
     io.sockets.on('connection', function response(socket) {
+
       // Check device type 
-      var cookie=socket.handshake.headers['cookie']
-      // console.log(cookie)
       socket.on('deviceType', (data) => {
           if (data.type === 'desktop') {
-            roomIndex++ 
-            var roomName = `room-${roomIndex}`
-            socket.join(roomName)
-            roomArr.push(roomName)
-            socket.room = roomName
-            createUsersCode(roomName, socket)
-            console.log(`connected ${data.type} client in room ${roomIndex}`)
+            room.create(socket)
 
             // disconnection
             socket.on('disconnect', function () {
