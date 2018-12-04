@@ -7,7 +7,7 @@ export default class User {
 
     }
 
-    connect() {
+    connect(io, socket) {
         socket.on('sendCode', (data) => {
             console.log('hello', data.key)
             let code = data.key
@@ -34,7 +34,7 @@ export default class User {
         })
     }
 
-    disconnect() {
+    disconnect(io, socket) {
         socket.on('disconnect', () => {
             // console.log(socket.username)
             // console.log(socket.room)

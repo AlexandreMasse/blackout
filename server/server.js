@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 var server = require('http').createServer(app)
 import Room from './modules/Room'
+import User from './modules/User'
 import Password from './modules/Password'
 // const io = require('socket.io').listen(app.listen(port))
 var io = require('socket.io')(server, { wsEngine: 'ws' })
@@ -23,21 +24,13 @@ if (process.env.NODE_ENV === 'production') {
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')
     let password = new Password()
-    // console.log(password)
+    console.log(password)
 
     var roomIndex = 0
     var roomArr = []
     var codeArr = []
     var activeCodeObj = {}
-  
-    let generateCodeArr = function() {
-      var minCode = 1000
-      var maxCode = 9999
-      for (var i = minCode; i <= maxCode; i++) {
-        codeArr.push(i)
-      }
-    }
-  
+
 
     let createCode = function() {
       var code = codeArr.splice(Math.floor(codeArr.length*Math.random()), 1);
@@ -110,10 +103,9 @@ server.listen(app.get('port'), function () {
         console.log('user mobile disconnected')
       })
     }
-
-    generateCodeArr()
    
     let room = new Room()
+    let user = new User()
     room.init()
     io.sockets.on('connection', function response(socket) {
 
@@ -128,6 +120,7 @@ server.listen(app.get('port'), function () {
           }
           
           if (data.type === 'mobile') {
+            // user.connect(io, socket)
             checkUserCode(socket)
             userDisconnected(socket)
           }
