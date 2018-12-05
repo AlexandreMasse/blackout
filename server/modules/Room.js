@@ -32,7 +32,7 @@ export default class Room {
             'perte de la connection'
             )
             io.of('/').in(roomId).clients((error, socketIds) => {
-                if (error) throw error;
+                if (error) throw error
                 socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(socket))
             })
         })

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { getCookie } from '../../utils/getCookie'
 import './MobileApp.scss'
 // import io from 'socket.io-client'
 import {wsEmitPassword} from '../../redux/actions/websockets/websocketsAction'
@@ -22,6 +23,7 @@ class MobileApp extends Component {
     this.getCurrentRoom()
     this.checkUserConnection()
     this.disconnected()
+    this.sendCookie()
   }
 
   sendDeviceType = () => {
@@ -29,6 +31,17 @@ class MobileApp extends Component {
     socket.emit('deviceType',{
         type:'mobile'
     })
+  }
+
+  sendCookie = () => {
+    let cookieRoomID = getCookie('room')
+    let cookieUserId = getCookie('userId')
+    if (cookieRoomID && cookieUserId) {
+      socket.emit('sendCookie' , {
+        userId: cookieUserId,
+        roomId: cookieUserId
+      })
+    }
   }
 
   getCurrentRoom = () => {

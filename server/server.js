@@ -39,6 +39,9 @@ server.listen(app.get('port'), function () {
           // user connection
           user.connect(io, socket)
           
+          // user reconnection
+          // user.reconnect(io, socket)
+          
           // user disconnect
           user.disconnect(io, socket)
         }
