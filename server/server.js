@@ -28,21 +28,14 @@ server.listen(app.get('port'), function () {
     // Check device type 
     socket.on('deviceType', (data) => {
         if (data.type === 'desktop') {
-          // room create
           room.create(socket)
-          
-          // destroy room
           room.destroy(io ,socket)
         }
         
         if (data.type === 'mobile') {
-          // user connection
           user.connect(io, socket)
-          
           // user reconnection
           // user.reconnect(io, socket)
-          
-          // user disconnect
           user.disconnect(io, socket)
         }
     })
