@@ -2,7 +2,7 @@ import mobileActionTypes from '../../actions/mobile/mobileActionTypes'
 
 const initialState = {
     textMobile: '',
-    roomId: ''
+    roomId: null,
 }
 
 export default (state = initialState, action) => {

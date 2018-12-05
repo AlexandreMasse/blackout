@@ -2,29 +2,62 @@ import {DESKTOP_ACTION} from '../../actions/desktop/desktopActionTypes'
 import {websocketsOnActionTypes} from '../../actions/websockets/websocketsActionTypes'
 
 const initialState = {
-    textDesktop: 'test',
     roomId: null,
     password1: null,
     password2: null,
+    users: [
+        {
+            id: "player1",
+            isConnected: false
+        },
+        {
+            id: "player2",
+            isConnected: false
+        }
+    ]
 }
 
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case DESKTOP_ACTION:
-            return {
-                ...state,
-                textDesktop: action.payload.text
-            }
 
         // socket action
 
         case websocketsOnActionTypes.WEBSOCKET_ON_CREATE_ROOM:
+            const {roomId, password1, password2} = action.payload
             return {
                 ...state,
-                roomId: action.roomId,
-                password1: action.password1,
-                password2: action.password2,
+                roomId,
+                password1,
+                password2,
+            }
+        case websocketsOnActionTypes.WEBSOCKET_ON_CONNECT_TO_ROOM:
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if (user.id === action.payload.userId) {
+                        return {
+                            ...user,
+                            isConnected: true
+                        }
+                    } else {
+                        return user;
+                    }
+                }),
+            }
+        case websocketsOnActionTypes.WEBSOCKET_ON_DISCONNECT_TO_ROOM:
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if (user.id === action.payload.userId) {
+                        return {
+                            ...user,
+                            isConnected: false
+                        }
+                    } else {
+                        return user;
+                    }
+                }),
             }
 
         // default

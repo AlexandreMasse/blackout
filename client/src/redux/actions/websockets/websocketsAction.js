@@ -8,11 +8,12 @@ export const socket = io.connect(process.env.REACT_APP_SERVER_URL)
 // init
 
 export const init = ( store ) => {
-  Object.keys( websocketsOnActionTypes )
-    .forEach( type => socket.on(websocketsOnActionTypes[type], ( payload ) =>
-       store.dispatch({ type, payload })
-    )
-  );
+    for(let typeKey in websocketsOnActionTypes) {
+        const typeValue = websocketsOnActionTypes[typeKey]
+        socket.on(typeValue, (payload) =>
+            store.dispatch({type:typeValue, payload})
+        )
+    }
 };
 
 // emit

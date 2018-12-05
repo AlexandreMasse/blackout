@@ -15,7 +15,7 @@
       font-size: calc(10px + 2vmin);
       color: white;
 
-      .succed {
+      .connected {
         color: green
       }
 
@@ -29,10 +29,10 @@
 
         @keyframes App-logo-spin {
           0% {
-            transform: rotate(0deg) translate(300px) rotate(0deg);
+            transform: rotate(0deg) translate(270px) rotate(0deg);
           }
           100% {
-            transform: rotate(360deg) translate(300px) rotate(360deg);
+            transform: rotate(360deg) translate(270px) rotate(360deg * 2);
           }
         }
       }
