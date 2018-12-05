@@ -21,8 +21,8 @@ if (process.env.NODE_ENV === 'production') {
 
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')   
-  let room = new Room()
-  let user = new User()
+  const room = new Room()
+  const user = new User()
   room.init()
   io.sockets.on('connection', function response(socket) {
     // Check device type 

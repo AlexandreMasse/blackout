@@ -1,4 +1,5 @@
-import {} from ''
+import * as THREE from 'three'
+import GLTFLoader from 'three-gltf-loader'
 
 let _assets = []
 
@@ -17,20 +18,37 @@ export default class AssetsManager {
     }
 
     init = () => {
-        let hdrCubemaps = {};
-        _assets = assetsToLoad.map((o)=> {
-            const ext = getExtension(o.url);
-            const file = getAsset(o.id);
-            let texture;
+        let hdrCubemaps = {}
+        _assets = assetsToLoad.map((o) => {
+            const ext = getExtension(o.url)
+            const file = getAsset(o.id)
+            let texture
+
+        switch(ext) {
+			case 'jpg':
+			case 'png':
+				// texture = new GLTexture(file);
+				return {
+					id:o.id,
+					file:texture
+				};
+                break;
+            }
         })
 
+        if(_assets.length > 0) {
+            console.debug('ASSETS:')
+            console.table(_assets)	
+        }
     }
+
+    get = (mId) => {
+        return _assets.find((a) => {
+            return a.id === mId
+        }).file
+    }
+
 }
-
-// Assets.js
-
-// import assetsToLoad from './asset-list';
-// import alfrid, { GLTexture, GLCubeTexture, Mesh, ObjLoader } from 'alfrid';
 
 // const Assets = {};
 // let _assets = [];
@@ -46,7 +64,7 @@ export default class AssetsManager {
 
 // Assets.init = function() {
 // 	let hdrCubemaps = {};
-// 	_assets = assetsToLoad.map((o)=> {
+// 	_assets = assetsToLoad.map((o) => {
 // 		const ext = getExtension(o.url);
 // 		const file = getAsset(o.id);
 // 		let texture;
