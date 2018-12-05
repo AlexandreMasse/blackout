@@ -1,16 +1,34 @@
-import desktopActionTypes from '../../actions/desktop/desktopActionTypes'
+import {DESKTOP_ACTION} from '../../actions/desktop/desktopActionTypes'
+import {websocketsOnActionTypes} from '../../actions/websockets/websocketsActionTypes'
 
 const initialState = {
-    text: ''
+    textDesktop: 'test',
+    roomId: null,
+    password1: null,
+    password2: null,
 }
+
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case desktopActionTypes.DESKTOP_ACTION:
+        case DESKTOP_ACTION:
             return {
                 ...state,
-                text: action.payload.text
+                textDesktop: action.payload.text
             }
+
+        // socket action
+
+        case websocketsOnActionTypes.WEBSOCKET_ON_CREATE_ROOM:
+            return {
+                ...state,
+                roomId: action.roomId,
+                password1: action.password1,
+                password2: action.password2,
+            }
+
+        // default
+
         default:
             return state
     }

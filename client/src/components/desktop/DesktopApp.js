@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 // import logo from './logo.svg'
+import {socket, wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
+
+import {desktopAction} from '../../redux/actions/desktop/desktopAction'
+
 import './DesktopApp.scss'
-
-import {socket} from '../../redux/actions/websockets/websocketsAction'
-
 
 class DesktopApp extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
         password1: null,
         password2: null,
@@ -27,9 +28,10 @@ class DesktopApp extends Component {
 
   sendDeviceType = () => {
     console.log('desktop type')  
-    socket.emit('deviceType', {
-        type:'desktop'
-    })
+    // socket.emit('deviceType', {
+    //     type:'desktop'
+    // })
+    this.props.wsEmitDeviceType("desktop")
   }
 
   getCode = () => {
@@ -55,6 +57,12 @@ class DesktopApp extends Component {
       if (player === 'player2') this.setState({player2: false})
     })
   }
+
+  inputChange = (e) => {
+    console.log(e.target.value)
+      this.props.myFunction(e.target.value)
+  }
+
   render() {
     const { password1, password2, player1, player2 } = this.state
     const succeed = player1 ? 'succed' : ' '
@@ -73,11 +81,28 @@ class DesktopApp extends Component {
           <p className={succeed2}>
             code 2 : {password2}
           </p>
+
+            <input type="text" onChange={this.inputChange}/>
+          <p>{this.props.text}</p>
         </header>
       </div>
     )
   }
 }
 
-export default DesktopApp
+
+const mapStateToProps = state => {
+  return {
+    text: state.desktop.textDesktop
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
+    myFunction: (text) => dispatch(desktopAction({text}))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(DesktopApp);
 

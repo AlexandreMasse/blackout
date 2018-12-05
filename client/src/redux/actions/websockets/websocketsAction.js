@@ -9,7 +9,7 @@ export const socket = io.connect(process.env.REACT_APP_SERVER_URL)
 
 export const init = ( store ) => {
   Object.keys( websocketsOnActionTypes )
-    .forEach( type => socket.on( type, ( payload ) =>
+    .forEach( type => socket.on(websocketsOnActionTypes[type], ( payload ) =>
        store.dispatch({ type, payload })
     )
   );
@@ -17,12 +17,18 @@ export const init = ( store ) => {
 
 // emit
 
-export const emit = (type, payload) => socket.emit(type, payload)
+export const emit = (type, payload, roomId) => roomId ? socket.to(roomId).emit(type, payload) : socket.emit(type, payload)
 
 // actions
 
 export const wsEmitPassword = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_PASSWORD, {
         key: payload.code,
+    });
+}
+
+export const wsEmitDeviceType = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_DEVICE_TYPE, {
+        type: payload.type,
     });
 }

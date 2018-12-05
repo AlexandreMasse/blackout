@@ -1,8 +1,8 @@
-import desktopActionTypes from './desktopActionTypes'
+import {DESKTOP_ACTION} from './desktopActionTypes'
 
-export const desktopAction = (payload) => (dispatch, getState) => {
+export const desktopAction = (payload) => (dispatch) => {
  dispatch({
-  type: desktopActionTypes.DESKTOP_ACTION,
+  type: DESKTOP_ACTION,
   payload
  })
 }

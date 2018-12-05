@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getCookie } from '../../utils/getCookie'
 import './MobileApp.scss'
 // import io from 'socket.io-client'
-import {wsEmitPassword} from '../../redux/actions/websockets/websocketsAction'
+import {wsEmitPassword, wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
 // const socket = io.connect(process.env.REACT_APP_SERVER_URL)
 import {socket} from '../../redux/actions/websockets/websocketsAction'
 
@@ -27,10 +27,11 @@ class MobileApp extends Component {
   }
 
   sendDeviceType = () => {
-    console.log('mobile type')  
-    socket.emit('deviceType',{
-        type:'mobile'
-    })
+    console.log('mobile type')
+    // socket.emit('deviceType',{
+    //     type:'mobile'
+    // })
+    this.props.wsEmitDeviceType('mobile')
   }
 
   sendCookie = () => {
@@ -121,7 +122,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      wsEmitPassword: (code) => dispatch(wsEmitPassword({code}))
+      wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
+      wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type}))
   }
 }
 
