@@ -48,7 +48,7 @@ export default class User {
             let code = socket.code 
             password.passwordArr.push(code)
             io.to(socket.room).emit('disconnectToRoom', {
-            room: socket.room,
+            roomId: socket.room,
             userId: socket.username
             })
             console.log('user mobile disconnected')
