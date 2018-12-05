@@ -82,10 +82,7 @@ class MobileApp extends Component {
     let code = this.state.code
     if(code !== null && code !== '') {
       console.log(code)
-      // socket.emit('sendCode', {
-      //   key: code
-      // })
-     this.props.wsEmitPassword(code)
+      this.props.wsEmitPassword(code)
     } else {
       console.log('le code est vide')
     }

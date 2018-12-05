@@ -1,6 +1,6 @@
 export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_TEST: "WEBSOCKET_EMIT_TEST",
-    WEBSOCKET_EMIT_PASSWORD: "sendCode"
+    WEBSOCKET_EMIT_PASSWORD: "password"
 }
 
 export const websocketsOnActionTypes = {

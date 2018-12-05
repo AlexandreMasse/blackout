@@ -5,7 +5,7 @@ export default class User {
     }
 
     connect(io, socket) {
-        socket.on('sendCode', (data) => {
+        socket.on('password', (data) => {
             console.log('hello', data.key)
             let code = data.key
             if(password.activePasswordObj[code]) {
