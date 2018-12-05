@@ -46,14 +46,14 @@ class MobileApp extends Component {
 
   getCurrentRoom = () => {
     socket.on('connectToRoom',(data) => {
-        this.setState({room : data.room})
+        this.setState({room : data.roomId})
         this.setState({userId : data.userId})
         let now = new Date()
         let time = now.getTime()
         time += 3600 * 1000
         now.setTime(time)
         document.cookie = 
-        'room=' + data.room + 
+        'room=' + data.roomId + 
         '; expires=' + now.toUTCString() + 
         '; path=/'
       

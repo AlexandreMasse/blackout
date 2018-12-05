@@ -19,7 +19,7 @@ export default class User {
                 socket.code = code
                 socket.join(roomId)
                 io.to(roomId).emit('connectToRoom', {
-                room: roomId,
+                roomId: roomId,
                 userId: userId
                 })
                 delete password.activePasswordObj[code]
@@ -37,7 +37,7 @@ export default class User {
                 socket.room = data.roomId
                 socket.join(data.roomId)
                 io.to(data.roomId).emit('connectToRoom', {
-                room: data.roomId,
+                roomId: data.roomId,
                 userId: data.userId
             })
         })
