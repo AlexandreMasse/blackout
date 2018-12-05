@@ -3,7 +3,6 @@ import Password from './Password'
 export default class Room {
 
     init() {
-        console.log('hm')
         this.roomIndex = 0
         this.roomArr = []
         this.password = new Password()
@@ -29,13 +28,13 @@ export default class Room {
                 this.roomArr.splice(index, 1)
             }
             console.log(this.roomArr)
-            // var clients = io.sockets.clients('room'); // all users from room `room`
-            // var usersInRoom = io.of('/').in(socket.room).clients
-            // console.log(usersInRoom)
-            io.to(socket.room).emit('userDisconnected',
-                'perte de la connection'
-                // users: usersInRoom
+            io.to(roomId).emit('userDisconnected',
+            'perte de la connection'
             )
+            io.of('/').in(roomId).clients((error, socketIds) => {
+                if (error) throw error;
+                socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(socket))
+            })
         })
     }
 }
