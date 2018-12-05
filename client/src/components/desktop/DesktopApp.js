@@ -10,8 +10,8 @@ class DesktopApp extends Component {
     super(props)
 
     this.state = {
-        code1: null,
-        code2: null,
+        password1: null,
+        password2: null,
         player1: false,
         player2: false,
     }
@@ -33,9 +33,9 @@ class DesktopApp extends Component {
   }
 
   getCode = () => {
-    socket.on('setCode',(data) => {
-      this.setState({code1 : data.code1})
-      this.setState({code2 : data.code2})
+    socket.on('createRoom',(data) => {
+      this.setState({password1 : data.password1})
+      this.setState({password2 : data.password2})
     })
   }
   getConnectedUser = () => {
@@ -56,7 +56,7 @@ class DesktopApp extends Component {
     })
   }
   render() {
-    const { code1, code2, player1, player2 } = this.state
+    const { password1, password2, player1, player2 } = this.state
     const succeed = player1 ? 'succed' : ' '
     const succeed2 = player2 ? 'succed' : ' '
 
@@ -68,10 +68,10 @@ class DesktopApp extends Component {
             Desktop
           </p>
           <p className={succeed}>
-            code 1 : {code1}
+            code 1 : {password1}
           </p>
           <p className={succeed2}>
-            code 2 : {code2}
+            code 2 : {password2}
           </p>
         </header>
       </div>

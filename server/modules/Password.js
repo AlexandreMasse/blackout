@@ -23,15 +23,16 @@ export default class Password {
         return code.length ? code[0] : null
     }
 
-    createUsersPassword(roomName, socket) {
+    createUsersPassword(roomId, socket) {
         let player1 = this.createPassword()
         let player2 = this.createPassword()
-        Password.activePasswordObj[ player1 ] = `${roomName}_player1`
-        Password.activePasswordObj[ player2 ] = `${roomName}_player2`
+        Password.activePasswordObj[ player1 ] = `${roomId}_player1`
+        Password.activePasswordObj[ player2 ] = `${roomId}_player2`
   
-        socket.emit('setCode', { 
-          code1: player1,
-          code2: player2,
+        socket.emit('createRoom', {
+          roomId: roomId, 
+          password1: player1,
+          password2: player2,
         })
         console.log(Password.activePasswordObj)
       }
