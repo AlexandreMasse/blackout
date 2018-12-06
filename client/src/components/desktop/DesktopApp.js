@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
 import classNames from 'classnames'
 // assets
-import logo from './logo.svg'
+// import logo from './logo.svg'
 // style
 import './DesktopApp.scss'
 import Cursor from "./components/Cursor/Cursor";
@@ -21,15 +21,15 @@ class DesktopApp extends Component {
       <div className="App desktop-app">
         {(isPlayer1Connected || isPlayer2Connected) && <Cursor/>}
         <header className="App-header">
-           {/*<img src={logo} className="App-logo" alt="logo"/>*/}
+           {/* <img src={logo} className="App-logo" alt="logo"/> */}
           <p>
             Desktop
           </p>
           <p className={classNames({"connected":isPlayer1Connected})}>
-            code 1 : {password1}
+            Joueur 1 : {password1}
           </p>
           <p className={classNames({"connected":isPlayer2Connected})}>
-            code 2 : {password2}
+            Joueur 2 : {password2}
           </p>
         </header>
       </div>
