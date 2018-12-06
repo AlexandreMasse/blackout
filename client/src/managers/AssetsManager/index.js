@@ -1,15 +1,21 @@
 import * as THREE from 'three'
+<<<<<<< HEAD
 import GLTFLoader from 'three-gltf-loader'
 
 let _assets = []
+=======
+import {Texture, RGBFormat} from 'three'
+import {assetsToLoad} from '../../assets/asset-list'
+>>>>>>> loader manager
 
 export default class AssetsManager {
     constructor() {
-
+        this._assets = []
+        this.init()
     }   
     
     getAsset = (id) => {
-        return assets.find( (a) => a.id === id).file
+        return window.assets.find( (a) => a.id === id).file
     }
 
     getExtension = (mFile)  => {
@@ -18,6 +24,7 @@ export default class AssetsManager {
     }
 
     init = () => {
+<<<<<<< HEAD
         let hdrCubemaps = {}
         _assets = assetsToLoad.map((o) => {
             const ext = getExtension(o.url)
@@ -40,6 +47,43 @@ export default class AssetsManager {
             console.debug('ASSETS:')
             console.table(_assets)	
         }
+=======
+        // let hdrCubemaps = {}
+        this._assets = assetsToLoad.map((o) => {
+            console.log(o)
+            const ext = this.getExtension(o.url)
+            const file = this.getAsset(o.id)
+
+            console.log(ext)
+            console.log(file)
+            // let texture;
+            const texture = new Texture( file )
+            texture.needsUpdate = true;
+            texture.format = RGBFormat;
+            return {
+                id:o.id,
+                file:texture
+            }
+        })
+
+        let loaderObj = {
+            "jpg" : new THREE.TextureLoader()
+        }
+
+        console.log(Object.keys(loaderObj))
+        console.log('salut')
+
+        if(this._assets.length > 0) {
+		    console.debug('ASSETS:')
+		    console.table(this._assets)
+	    }
+    }
+
+    get = (mId) => {
+        return this._assets.find((a) => {
+            return a.id === mId
+        }).file
+>>>>>>> loader manager
     }
 
     get = (mId) => {

@@ -21,6 +21,7 @@
     "three-gltf-loader": "^1.99.0"
   },
   "devDependencies": {
+    "assets-loader": "^0.5.2",
     "redux-devtools-extension": "^2.13.7"
   },
   "scripts": {

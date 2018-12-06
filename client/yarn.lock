@@ -1301,6 +1301,11 @@ assert@^1.1.1:
   dependencies:
     util "0.10.3"
 
+assets-loader@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/assets-loader/-/assets-loader-0.5.2.tgz#189cb2b443e0d81f3c2b0be966a9d6414e85c636"
+  integrity sha512-vu0YgeQ8aw3iubnYeYgy41tn7iky00CM/lIEzFWLXwb8yshGgiJ36fXX14mrrb5Ik6ub5TTDbiS3NxW60re0Ug==
+
 assign-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"

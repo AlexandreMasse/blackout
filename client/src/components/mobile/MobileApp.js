@@ -1,8 +1,11 @@
 import React,{ Component, Fragment} from 'react'
 import { connect } from 'react-redux'
-import { getCookie } from '../../utils/getCookie'
+import { getCookie } from '../../utils'
 import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/websocketsAction'
 import {socket} from '../../redux/actions/websockets/websocketsAction'
+// import {AssetsManager} from '../../managers'
+// import {assetsToLoad}  from '../../assets/asset-list.js'
+// import AssetsLoader from 'assets-loader'
 
 import './MobileApp.scss'
 
@@ -18,7 +21,34 @@ class MobileApp extends Component {
   componentWillMount() {
     this.props.wsEmitDeviceType('mobile')
     this.disconnected()
+    // this.initAssetLoader()
   }
+
+  sendDeviceType = () => {
+    console.log('mobile type')  
+    socket.emit('deviceType',{
+        type:'mobile'
+    })
+  }
+
+  // initAssetLoader = () => {
+  //   if (assetsToLoad.length > 0) {
+  //     new AssetsLoader({
+  //       assets:assetsToLoad
+  //     }).on('error', function (error) {
+  //       console.error(error)
+  //     }).on('progress', function (p) {
+  //       console.log('Progress : ', p)
+  //     }).on('complete',this.onComplete)
+  //     .start()
+  //   }
+  // }
+
+  // onComplete = (o) => {
+  //   console.log('cool', o)
+  //   window.assets = o
+  //   new AssetsManager()
+  // }
 
   reconnect = () => {
     let cookieRoomID = getCookie('room')
