@@ -12,11 +12,19 @@
     .cursor-pointer {
       position: absolute;
       border-radius: 50%;
-      background-color: rgba(255, 84, 77, 0.71);
+
       top: calc(50% - 30px);
       left: calc(50% - 30px);
       width: 60px;
       height: 60px;
+
+      &.player-1 {
+        background-color: rgba(255, 84, 77, 0.70);
+      }
+
+      &.player-2 {
+        background-color: rgba(118, 252, 255, 0.70);
+      }
     }
   }
 }

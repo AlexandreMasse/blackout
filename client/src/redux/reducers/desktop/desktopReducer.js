@@ -8,10 +8,12 @@ const initialState = {
     {
       id: "player1",
       isConnected: false,
+      position: {}
     },
     {
       id: "player2",
-      isConnected: false
+      isConnected: false,
+      position:{}
     }
   ],
   position: {}
@@ -63,7 +65,16 @@ export default (state = initialState, action) => {
       const {position, userId} = action.payload
       return {
         ...state,
-        position
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              position
+            }
+          } else {
+            return user;
+          }
+        }),
       }
 
     // default

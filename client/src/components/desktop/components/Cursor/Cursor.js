@@ -54,13 +54,29 @@ class Cursor extends Component {
   } 
 
   render() {
-    const x = this.props.x * (window.innerWidth * .5)
-    const y = this.props.y * (window.innerHeight * .5)
+    const {isPlayer1Connected, isPlayer2Connected} = this.props
+
+    const player1Position = {
+      x:this.props.player1Position.x * (window.innerWidth * .5),
+      y: this.props.player1Position.y * (window.innerHeight * .5)
+    }
+    const player2Position = {
+      x:this.props.player2Position.x * (window.innerWidth * .5),
+      y: this.props.player2Position.y * (window.innerHeight * .5)
+    }
+
     return (
       <div className="cursor">
-        <div className="cursor-pointer" style={{
-          transform: `translate3d(${x}px,${y}px,0)`
-        }}/>
+        {isPlayer1Connected &&
+          <div className="cursor-pointer player-1" style={{
+            transform: `translate3d(${player1Position.x}px,${player1Position.y}px,0)`
+          }}/>
+        }
+        {isPlayer2Connected &&
+          <div className="cursor-pointer player-2" style={{
+            transform: `translate3d(${player2Position.x}px,${player2Position.y}px,0)`
+          }}/>
+        }
       </div>
     )
   }
@@ -71,8 +87,11 @@ class Cursor extends Component {
 
 const mapStateToProps = state => {
   return {
-    x: state.desktop.position.x,
-    y: state.desktop.position.y,
+    player1Position: state.desktop.users.find(user => user.id === "player1").position,
+    player2Position: state.desktop.users.find(user => user.id === "player2").position,
+    isPlayer1Connected: state.desktop.users.find(user => user.id === "player1").isConnected,
+    isPlayer2Connected: state.desktop.users.find(user => user.id === "player2").isConnected
+
   }
 }
 
