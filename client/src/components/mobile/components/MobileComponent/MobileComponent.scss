@@ -1,9 +1,31 @@
 @import "../../../../stylesheets/global";
 
 .mobile-component {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(146, 255, 250, 0.31);
+
   & > {
     p {
       color: #91ff9e;
+    }
+
+    .cursor {
+      //position: absolute;
+      //width: 50px;
+      //height: 50px;
+      border-radius: 50%;
+      background-color: rgba(255, 84, 77, 0.71);
+      //transform: translateX(-50%) translateY(-50%);
+
+      position: absolute;
+      top: calc(50% - 30px);
+      left: calc(50% - 30px);
+      width: 60px;
+      height: 60px;
     }
   }
 }

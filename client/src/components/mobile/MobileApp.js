@@ -8,6 +8,7 @@ import {socket} from '../../redux/actions/websockets/websocketsAction'
 // import AssetsLoader from 'assets-loader'
 
 import './MobileApp.scss'
+import MobileComponent from "./components/MobileComponent/MobileComponent";
 
 class MobileApp extends Component {
   constructor (props) {
@@ -124,6 +125,7 @@ class MobileApp extends Component {
             <input type="text" onChange={this.handleChange} value={this.state.code} />
               <input type="submit" value={"Submit"}/>
           </form>
+          <MobileComponent/>
         </header>
       </div>
     )
