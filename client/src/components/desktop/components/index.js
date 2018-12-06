@@ -1,1 +1,1 @@
-export {default as TestComponent} from './TestComponent/Cursor'
+export {default as Cursor} from './Cursor/Cursor'

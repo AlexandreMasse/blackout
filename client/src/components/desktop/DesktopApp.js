@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import logo from './logo.svg'
 // style
 import './DesktopApp.scss'
-import Cursor from "./components/TestComponent/Cursor";
+import Cursor from "./components/Cursor/Cursor";
 
 class DesktopApp extends Component {
 
