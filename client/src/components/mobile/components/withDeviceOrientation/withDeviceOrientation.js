@@ -12,13 +12,13 @@ const withDeviceOrientation = (WrappedComponent) => {
       this.MAX_Y_ANGLE = 24;
 
       this.loopUpdateTimer = 0;
-      this.position = [];
+      this.position = {x:0,y:0};
       this.latestAlpha = 0;
       this.baseAlpha = null;
       this.touching = false;
 
       this.state = {
-        positionListened: []
+        positionListened: this.position
       }
     }
 
@@ -71,11 +71,9 @@ const withDeviceOrientation = (WrappedComponent) => {
       x *= 0.01;
       y *= 0.01;
 
-      this.position[0] = x;
-      this.position[1] = y;
+      this.position.x = x;
+      this.position.y = y;
     }
-
-
 
     handleTouchStartEvent = (e) => {
       e.preventDefault();
@@ -97,7 +95,7 @@ const withDeviceOrientation = (WrappedComponent) => {
         //send position
         // io.emit('position', this.position);
         this.setState({
-          positionListened: [this.position[0], this.position[1]],
+          positionListened: {x: this.position.x, y: this.position.y},
         })
         this.loopUpdateTimer = setTimeout(this.update, 16);
       }

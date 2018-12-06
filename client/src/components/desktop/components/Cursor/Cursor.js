@@ -21,8 +21,8 @@ class Cursor extends Component {
 
 const mapStateToProps = state => {
   return {
-    x: state.desktop.position[0],
-    y: state.desktop.position[1],
+    x: state.desktop.position.x,
+    y: state.desktop.position.y,
   }
 }
 

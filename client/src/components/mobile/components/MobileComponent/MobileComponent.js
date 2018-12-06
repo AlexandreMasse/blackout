@@ -13,8 +13,8 @@ class MobileComponent extends Component {
   }
 
   render() {
-    const x = this.props.deviceOrientationPosition[0] * (window.innerWidth * .5);
-    const y = this.props.deviceOrientationPosition[1] * (window.innerHeight * .5);
+    const x = this.props.deviceOrientationPosition.x * (window.innerWidth * .5);
+    const y = this.props.deviceOrientationPosition.y * (window.innerHeight * .5);
 
     this.props.wsEmitPosition(this.props.deviceOrientationPosition)
 
