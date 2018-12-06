@@ -10,9 +10,9 @@ export const socket = io.connect(process.env.REACT_APP_SERVER_URL)
 export const init = ( store ) => {
     for(let typeKey in websocketsOnActionTypes) {
         const typeValue = websocketsOnActionTypes[typeKey]
-        socket.on(typeValue, (payload) =>
+        socket.on(typeValue, (payload) => {
             store.dispatch({type:typeValue, payload})
-        )
+        })
     }
 };
 
@@ -31,5 +31,12 @@ export const wsEmitPassword = (payload) => (dispatch, getState, {emit}) => {
 export const wsEmitDeviceType = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_DEVICE_TYPE, {
         type: payload.type,
+    });
+}
+
+export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_RECONNECT, {
+        userId: payload.userId,
+        roomId: payload.roomId,
     });
 }

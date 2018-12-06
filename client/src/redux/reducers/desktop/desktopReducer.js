@@ -1,4 +1,3 @@
-import {DESKTOP_ACTION} from '../../actions/desktop/desktopActionTypes'
 import {websocketsOnActionTypes} from '../../actions/websockets/websocketsActionTypes'
 
 const initialState = {

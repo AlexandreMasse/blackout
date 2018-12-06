@@ -31,8 +31,8 @@ export default class User {
     }
 
     reconnect(io, socket) {
-        socket.on('sendCookie' , (data) => {
-            console.log(data)
+        socket.on('reconnect' , (data) => {
+            console.log("on sendCookie", data)
             socket.username = data.userId
                 socket.room = data.roomId
                 socket.join(data.roomId)

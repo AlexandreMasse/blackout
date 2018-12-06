@@ -1,74 +1,56 @@
-import React, { Component } from 'react'
+import React,{ Component, Fragment} from 'react'
 import { connect } from 'react-redux'
 import { getCookie } from '../../utils/getCookie'
-import './MobileApp.scss'
-// import io from 'socket.io-client'
-import {wsEmitPassword, wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
-// const socket = io.connect(process.env.REACT_APP_SERVER_URL)
+import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/websocketsAction'
 import {socket} from '../../redux/actions/websockets/websocketsAction'
+
+import './MobileApp.scss'
 
 class MobileApp extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-        room: 'hello',
-        userId: null,
-        code: 'null'
+        password: ''
     }
   }
 
   componentWillMount() {
-    this.sendDeviceType()
-    this.getCurrentRoom()
-    this.checkUserConnection()
-    this.disconnected()
-    this.sendCookie()
-  }
-
-  sendDeviceType = () => {
-    console.log('mobile type')
-    // socket.emit('deviceType',{
-    //     type:'mobile'
-    // })
     this.props.wsEmitDeviceType('mobile')
+    this.disconnected()
   }
 
-  sendCookie = () => {
+  reconnect = () => {
     let cookieRoomID = getCookie('room')
     let cookieUserId = getCookie('userId')
     if (cookieRoomID && cookieUserId) {
-      socket.emit('sendCookie' , {
+      socket.emit('reconnect', {
         userId: cookieUserId,
         roomId: cookieUserId
       })
     }
   }
 
-  getCurrentRoom = () => {
-    socket.on('connectToRoom',(data) => {
-        this.setState({room : data.roomId})
-        this.setState({userId : data.userId})
-        let now = new Date()
-        let time = now.getTime()
-        time += 3600 * 1000
-        now.setTime(time)
-        document.cookie = 
-        'room=' + data.roomId + 
-        '; expires=' + now.toUTCString() + 
-        '; path=/'
-      
-        document.cookie = 
-        'userId=' + data.userId + 
-        '; expires=' + now.toUTCString() + 
-        '; path=/'
-     })
+  setCookie = (userId, roomId) => {
+      let now = new Date()
+      let time = now.getTime()
+      time += 3600 * 1000
+      now.setTime(time)
+      document.cookie =
+          'room=' + roomId +
+          '; expires=' + now.toUTCString() +
+          '; path=/'
+
+      document.cookie =
+          'userId=' + userId +
+          '; expires=' + now.toUTCString() +
+          '; path=/'
   }
 
   handleChange = (e) => {
     const value = e.target.value 
     this.setState({
-      code: value
+      password: value
     })
   }
   
@@ -80,32 +62,36 @@ class MobileApp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    let code = this.state.code
-    if(code !== null && code !== '') {
-      console.log(code)
-      this.props.wsEmitPassword(code)
+    let password = this.state.password
+    if(password !== null && password !== '') {
+      this.props.wsEmitPassword(password)
     } else {
-      console.log('le code est vide')
+      console.log('le password est vide')
     }
   }
 
-  checkUserConnection = () => {
-    socket.on('access',(data) => {
-      console.log(data)
-    })
+  componentWillReceiveProps(nextProps, nextContext) {
+    // setCookie when user isConnected
+    if(nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
+      this.setCookie(nextProps.userId, nextProps.roomId)
+    }
   }
 
   render() {
-    const { room, userId } = this.state
-
+    const { roomId, userId, isConnected } = this.props
     return (
-      <div className="App mobile-app">
-        <header className="App-header">
-          <p>
-            Mobile - hello {userId} welcome in {room}
-          </p>
+      <div className="app mobile-app">
+        <header className="app-header">
+            {isConnected ? (
+                <>
+                  <p>Hello <span>{userId}</span></p>
+                  <p>Welcome in <span>{roomId}</span></p>
+                </>
+            ) : (
+                <p>Connect to the experience !</p>
+            )}
           <form className="commentForm" onSubmit={this.handleSubmit}>
-            <input type="text" onChange={this.handleChange}  value={this.state.code} />
+            <input type="text" onChange={this.handleChange} value={this.state.code} />
               <input type="submit" value={"Submit"}/>
           </form>
         </header>
@@ -114,16 +100,19 @@ class MobileApp extends Component {
   }
 }
 
-
-
 const mapStateToProps = state => {
-  return {}
+  return {
+    userId: state.mobile.userId,
+    roomId: state.mobile.roomId,
+    isConnected: state.mobile.isConnected
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
       wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
-      wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type}))
+      wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
+      wsEmitReconnection: (userId, roomId) => dispatch(wsEmitReconnection({userId, roomId})),
   }
 }
 

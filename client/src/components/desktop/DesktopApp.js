@@ -18,7 +18,7 @@ class DesktopApp extends Component {
     return (
       <div className="App desktop-app">
         <header className="App-header">
-           <img src={logo} className="App-logo" alt="logo"/>
+           {/*<img src={logo} className="App-logo" alt="logo"/>*/}
           <p>
             Desktop
           </p>
