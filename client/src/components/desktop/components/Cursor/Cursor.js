@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as PIXI from 'pixi.js'
-
+import {TweenMax, Back} from 'gsap'
 import bureau from '../../../../assets/desktop/img/bureau.png'
 // import light from '../../../../assets/desktop/img/rond_flou.png'
 
@@ -21,7 +21,6 @@ class Cursor extends Component {
     document.body.appendChild(app.view)
   
     let bg = PIXI.Sprite.fromImage(bureau)
-    // let flashLight = PIXI.Sprite.fromImage(light)
     bg.width  = 1920
     bg.height = 1080
 
@@ -40,44 +39,61 @@ class Cursor extends Component {
     }
 
     // CIRCLE MASK
-    var mask = new PIXI.Graphics()
-    mask.beginFill('0xffffff')
-    mask.drawCircle(0, 0, maskRadius)
-    mask.endFill()
+    this.mask = new PIXI.Graphics()
+    this.mask.beginFill('0xffffff')
+    this.mask.drawCircle(0, 0, maskRadius)
+    this.mask.endFill()
 
-    mask.position.x = width/2
-    mask.position.y = height/2
+    this.mask.position.x = width/2
+    this.mask.position.y = height/2
 
-    bg.mask = mask
-    app.stage.addChild(mask)
+    bg.mask = this.mask
+    app.stage.addChild(this.mask)
     app.stage.addChild(bg)
+  }
+
+  createFlashLight = () => {
+
+  }
+
+  moveFlashLight = () => {
+    
   } 
 
   render() {
-    const {isPlayer1Connected, isPlayer2Connected} = this.props
+    // const {isPlayer1Connected, isPlayer2Connected} = this.props
 
-    const player1Position = {
-      x:this.props.player1Position.x * (window.innerWidth * .5),
-      y: this.props.player1Position.y * (window.innerHeight * .5)
-    }
-    const player2Position = {
-      x:this.props.player2Position.x * (window.innerWidth * .5),
-      y: this.props.player2Position.y * (window.innerHeight * .5)
-    }
+    // const player1Position = {
+    //   x:this.props.player1Position.x * (window.innerWidth * .5),
+    //   y: this.props.player1Position.y * (window.innerHeight * .5)
+    // }
+    // const player2Position = {
+    //   x:this.props.player2Position.x * (window.innerWidth * .5),
+    //   y: this.props.player2Position.y * (window.innerHeight * .5)
+    // }
+
+    // return (
+      // <div className="cursor">
+      //   {isPlayer1Connected &&
+      //     <div className="cursor-pointer player-1" style={{
+      //       transform: `translate3d(${player1Position.x}px,${player1Position.y}px,0)`
+      //     }}/>
+      //   }
+      //   {isPlayer2Connected &&
+      //     <div className="cursor-pointer player-2" style={{
+      //       transform: `translate3d(${player2Position.x}px,${player2Position.y}px,0)`
+      //     }}/>
+      //   }
+      // </div>
+    const x = this.props.x * (window.innerWidth * .5)
+    const y = this.props.y * (window.innerHeight * .5)
+    let newPositionX = x + (window.innerWidth / 2)
+    let newPositionY = y + (window.innerHeight / 2)
+
+    TweenMax.to(this.mask, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
 
     return (
-      <div className="cursor">
-        {isPlayer1Connected &&
-          <div className="cursor-pointer player-1" style={{
-            transform: `translate3d(${player1Position.x}px,${player1Position.y}px,0)`
-          }}/>
-        }
-        {isPlayer2Connected &&
-          <div className="cursor-pointer player-2" style={{
-            transform: `translate3d(${player2Position.x}px,${player2Position.y}px,0)`
-          }}/>
-        }
-      </div>
+      null
     )
   }
 
