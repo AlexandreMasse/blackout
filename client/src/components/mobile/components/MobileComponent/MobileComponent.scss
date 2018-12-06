@@ -7,6 +7,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(146, 255, 250, 0.31);
+  //pointer-events: none;
 
   & > {
     p {
@@ -14,18 +15,28 @@
     }
 
     .cursor {
-      //position: absolute;
-      //width: 50px;
-      //height: 50px;
+      position: absolute;
       border-radius: 50%;
       background-color: rgba(255, 84, 77, 0.71);
-      //transform: translateX(-50%) translateY(-50%);
-
-      position: absolute;
       top: calc(50% - 30px);
       left: calc(50% - 30px);
       width: 60px;
       height: 60px;
+    }
+
+    .power-button {
+      position: absolute;
+      transform: translateX(-50%);
+      left: 50%;
+      bottom: 50px;
+      width: 100px;
+      height: 100px;
+      background-color: rgba(155, 255, 131, 0.59);
+
+      &:hover {
+        opacity: 0.5;
+      }
+
     }
   }
 }

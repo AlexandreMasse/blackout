@@ -99,36 +99,35 @@ const withDeviceOrientation = (WrappedComponent) => {
         this.setState({
           positionListened: [this.position[0], this.position[1]],
         })
-        this.loopUpdateTimer = setTimeout(this.update, 15);
+        this.loopUpdateTimer = setTimeout(this.update, 16);
       }
     }
 
-    // We need to check for DeviceOrientation support because some devices do not
-    // support it. For example, phones with no gyro.
-    componentWillMount() {
 
+    initEventListener = (wrappedComponentRef) => {
+      const touchElement = wrappedComponentRef.querySelector('.power-button')
       if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', this.handleDeviceOrientation, false);
 
-        window.addEventListener('touchstart', this.handleTouchStartEvent, {
+        touchElement.addEventListener('touchstart', this.handleTouchStartEvent, {
             capture: true,
             passive: false
           }
         );
 
-        window.addEventListener('mousedown', this.handleTouchStartEvent, {
+        touchElement.addEventListener('mousedown', this.handleTouchStartEvent, {
             capture: true,
             passive: false
           }
         );
 
-        window.addEventListener('touchend', this.handleTouchEndEvent, {
+        touchElement.addEventListener('touchend', this.handleTouchEndEvent, {
             capture: true,
             passive: false
           }
         );
 
-        window.addEventListener('mouseup', this.handleTouchEndEvent, {
+        touchElement.addEventListener('mouseup', this.handleTouchEndEvent, {
             capture: true,
             passive: false
           }
@@ -138,13 +137,19 @@ const withDeviceOrientation = (WrappedComponent) => {
       }
     }
 
+    // We need to check for DeviceOrientation support because some devices do not
+    // support it. For example, phones with no gyro.
+    componentWillMount() {
+
+    }
+
     shouldComponentUpdate() {
       return this.touching
     }
 
     render() {
       return (
-        <WrappedComponent {...this.props} deviceOrientationPosition={this.state.positionListened}/>
+        <WrappedComponent {...this.props} deviceOrientationPosition={this.state.positionListened} handleRef={this.initEventListener}/>
       );
     }
   }

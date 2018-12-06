@@ -13,7 +13,8 @@ const initialState = {
             id: "player2",
             isConnected: false
         }
-    ]
+    ],
+    position:[0,0]
 }
 
 
@@ -58,6 +59,11 @@ export default (state = initialState, action) => {
                     }
                 }),
             }
+      case websocketsOnActionTypes.WEBSOCKET_ON_POSITION:
+        return {
+          ...state,
+          position: action.payload.position
+        }
 
         // default
 

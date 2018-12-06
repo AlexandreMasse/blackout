@@ -54,4 +54,14 @@ export default class User {
             console.log('user mobile disconnected')
         })
     }
+
+    position(io,socket) {
+        socket.on('position', (data) => {
+            console.log("data position", data);
+            io.to(socket.room).emit('position', {
+            position: data.position,
+            userId: socket.username
+            })
+        })
+    }
 }

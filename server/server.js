@@ -24,6 +24,7 @@ server.listen(app.get('port'), function () {
   const room = new Room()
   const user = new User()
   room.init()
+
   io.sockets.on('connection', function response(socket) {
     // Check device type 
     socket.on('deviceType', (data) => {
@@ -37,6 +38,7 @@ server.listen(app.get('port'), function () {
           // user reconnection
           // user.reconnect(io, socket)
           user.disconnect(io, socket)
+          user.position(io, socket)
         }
     })
   })

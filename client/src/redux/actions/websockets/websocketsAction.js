@@ -18,7 +18,7 @@ export const init = ( store ) => {
 
 // emit
 
-export const emit = (type, payload, roomId) => roomId ? socket.to(roomId).emit(type, payload) : socket.emit(type, payload)
+export const emit = (type, payload) => socket.emit(type, payload)
 
 // actions
 
@@ -40,3 +40,11 @@ export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
         roomId: payload.roomId,
     });
 }
+
+
+export const wsEmitPosition = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_POSITION, {
+        position: payload.position,
+    });
+}
+

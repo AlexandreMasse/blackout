@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import logo from './logo.svg'
 // style
 import './DesktopApp.scss'
+import Cursor from "./components/TestComponent/Cursor";
 
 class DesktopApp extends Component {
 
@@ -13,10 +14,12 @@ class DesktopApp extends Component {
     this.props.wsEmitDeviceType("desktop")
   }
 
+
   render() {
     const { password1, password2, isPlayer1Connected, isPlayer2Connected } = this.props
     return (
       <div className="App desktop-app">
+        {(isPlayer1Connected || isPlayer2Connected) && <Cursor/>}
         <header className="App-header">
            {/*<img src={logo} className="App-logo" alt="logo"/>*/}
           <p>
