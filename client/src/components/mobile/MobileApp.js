@@ -124,7 +124,7 @@ class MobileApp extends Component {
               <>
                 <p>Connect to the experience !</p>
                 <form className="commentForm" onSubmit={this.handleSubmit}>
-                  <input type="text" onChange={this.handleChange} value={this.state.password}/>
+                  <input type="number" onChange={this.handleChange} value={this.state.password}/>
                   <input type="submit" value={"Submit"}/>
                 </form>
               </>

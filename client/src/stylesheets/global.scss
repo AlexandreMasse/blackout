@@ -1,2 +1,14 @@
 $colortest: #85fff0;
-$font-scopevariable: "scopevariable"
+$font-scopevariable: "scopevariable";
+
+
+@mixin keyframe-fade-in {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

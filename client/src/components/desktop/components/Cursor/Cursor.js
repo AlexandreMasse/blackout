@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as PIXI from 'pixi.js'
 import {TweenMax, Back, RoughEase} from 'gsap'
@@ -8,20 +8,33 @@ import './Cursor.scss'
 let bg = PIXI.Sprite.fromImage(bureau)
 
 class Cursor extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      init: false
+    }
+  }
+
   componentWillMount() {
-    this.initApp()
+    // this.initApp()
   }
   componentDidMount() {
     this.showLight()
   }
 
-  initApp = () => {
-    let width = window.innerWidth
-    let height = window.innerHeight
-    let maskRadius = 140
+  handleRef = (ref) => {
+    this.initApp(ref)
+  }
+
+  initApp = (ref) => {
+    let width = ref.clientWidth
+    let height = ref.clientHeight
+    let maskRadius = 120
     let maskRadius2 = 160
+
     var app = new PIXI.Application(width, height, {transparent:true, resolution: 1})
-    document.body.appendChild(app.view)
+    ref.appendChild(app.view)
   
     let bg2 = PIXI.Sprite.fromImage(bureau)
     bg.width  = 1920
@@ -84,6 +97,8 @@ class Cursor extends Component {
     app.stage.addChild(this.mask2)
     app.stage.addChild(bg)
     app.stage.addChild(bg2)
+
+    this.setState({init:true})
   }
 
   showLight = () => {
@@ -130,10 +145,11 @@ class Cursor extends Component {
   } 
 
   render() {
-    this.moveFlashLight()
-    
+
+    {this.state.init && this.moveFlashLight()}
+
     return (
-      null
+      <div className="cursor" ref={this.handleRef}/>
     )
   }
 }
