@@ -1,0 +1,40 @@
+@import "../../../../stylesheets/global";
+
+.keyboard {
+
+  $width: 280px;
+
+  width: $width;
+  & > {
+    .board {
+      width: 100%;
+      border: 2px white solid;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .key {
+        position: relative;
+        width: calc(100% / 3);
+        height: $width / 3;
+        background-color: black;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.31);
+        //transition: all 0.2s ease;
+
+        &:active {
+          color: red;
+          background-color: white;
+        }
+
+        p {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin: 0;
+          font-size: 25px;
+          transform: translateX(-50%) translateY(-50%);
+        }
+      }
+    }
+  }
+}

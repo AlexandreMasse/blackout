@@ -9,6 +9,7 @@ import AssetsLoader from 'assets-loader'
 
 import './MobileApp.scss'
 import MobileComponent from "./components/MobileComponent/MobileComponent";
+import Keyboard from "./components/Keyboard/Keyboard";
 
 class MobileApp extends Component {
   constructor (props) {
@@ -92,7 +93,7 @@ class MobileApp extends Component {
     })
   }
 
-  handleSubmit = (e) => {
+  submit = (e) => {
     e.preventDefault()
     let password = this.state.password
     if(password !== null && password !== '') {
@@ -100,6 +101,13 @@ class MobileApp extends Component {
     } else {
       console.log('le password est vide')
     }
+  }
+
+  handleKeyBoardPress = (key) => {
+    this.setState({ password: this.state.password + key});
+  }
+  handleKeyBoardPressDelete = (key) => {
+    this.setState({ password: ''});
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -122,10 +130,10 @@ class MobileApp extends Component {
                 </>
             ) : (
               <>
-                <p>Connect to the experience !</p>
                 <form className="commentForm" onSubmit={this.handleSubmit}>
                   <input type="number" onChange={this.handleChange} value={this.state.password}/>
-                  <input type="submit" value={"Submit"}/>
+                   <Keyboard handleKeyPress={this.handleKeyBoardPress} handleDelete={this.handleKeyBoardPressDelete} handleSubmit={this.submit}/>
+                  {/*<input type="submit" value={"Submit"}/>*/}
                 </form>
               </>
             )}
