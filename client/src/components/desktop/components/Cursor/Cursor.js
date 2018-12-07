@@ -30,7 +30,7 @@ class Cursor extends Component {
   initApp = (ref) => {
     let width = ref.clientWidth
     let height = ref.clientHeight
-    let maskRadius = 120
+    let maskRadius = 140
     let maskRadius2 = 160
 
     var app = new PIXI.Application(width, height, {transparent:true, resolution: 1})
@@ -114,7 +114,7 @@ class Cursor extends Component {
   }
 
   moveFlashLight = () => {
-    TweenMax.to(bg, 2, {alpha:(Math.random() - 0.1) * 1.2, ease:RoughEase.ease.config(), repeat: -1, yoyo: true })
+     TweenMax.to(bg, 2, {alpha:(Math.random() - 0.1) * 1.2, ease:RoughEase.ease.config()})
 
     if (this.props.isPlayer1Connected) {
       const player1Position = {

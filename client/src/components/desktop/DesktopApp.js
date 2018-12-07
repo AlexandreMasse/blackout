@@ -4,6 +4,7 @@ import {wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
 import classNames from 'classnames'
 import Cursor from "./components/Cursor/Cursor";
 import {CSSTransition} from 'react-transition-group';
+import logotype from "../../assets/video/logotype.mp4"
 
 // style
 import './DesktopApp.scss'
@@ -31,7 +32,9 @@ class DesktopApp extends Component {
         <CSSTransition classNames={"fade"} in={!(isPlayer1Connected && isPlayer2Connected)} appear={true} timeout={{enter:0, exit: 2500 }} mountOnEnter={true} unmountOnExit={true}>
           <div className="step-connexion">
             <div className="intro">
-              <p>Bienvenue sur Blackout</p>
+              <video width="350" autoPlay loop muted={true}>
+                <source src={logotype} type="video/mp4"/>
+              </video>
               <p>Prenez votre mobile et connectez vous à l'expérience !</p>
             </div>
             <div className="codes">
