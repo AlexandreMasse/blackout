@@ -22,7 +22,7 @@ class MobileApp extends Component {
   componentWillMount() {
     this.props.wsEmitDeviceType('mobile')
     this.disconnected()
-    this.initAssetLoader()
+    // this.initAssetLoader()
   }
 
   sendDeviceType = () => {
@@ -46,9 +46,10 @@ class MobileApp extends Component {
   }
 
   onComplete = (assets) => {
-    console.log('cool', assets)
-    // window.assets = o
-    new AssetsManager(assets)
+    // console.log('cool', assets)
+    if(assets.length > 0) {
+      new AssetsManager(assets)
+    }
   }
 
   reconnect = () => {

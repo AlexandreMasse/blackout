@@ -19,6 +19,7 @@ class DesktopApp extends Component {
     const { password1, password2, isPlayer1Connected, isPlayer2Connected } = this.props
     return (
       <div className="App desktop-app">
+        {/* <Cursor/> */}
         {(isPlayer1Connected && isPlayer2Connected) && <Cursor/>}
         <header className="App-header">
            {/* <img src={logo} className="App-logo" alt="logo"/> */}

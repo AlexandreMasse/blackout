@@ -24,8 +24,8 @@ export default class AssetsManager {
             console.log(o)
             const ext = this.getExtension(o.url)
             const file = this.getAsset(o.id)
-            console.log(ext)
-            console.log(file)
+            // console.log(ext)
+            // console.log(file)
             let texture;
             let sound;
             let video;
@@ -37,41 +37,38 @@ export default class AssetsManager {
                     texture.needsUpdate = true
                     texture.format = RGBFormat
 
-                    return {
-                        id:o.id,
-                        file:texture
-                    }
-                    break;
-
+                return {
+                    id:o.id,
+                    file:texture
+                }
 
                 case 'mp3':
                     sound = new Howl({
                         src: [file]
                     })
-                    return {
-                        id:o.id,
-                        file:sound
-                    }
-                    break;
+
+                return {
+                    id:o.id,
+                    file:sound
+                }
 
                 case 'mp4':
                     video = file
-                    return {
-                        id:o.id,
-                        file:video
-                    }
-                    break;
+                return {
+                    id:o.id,
+                    file:video
+                }
 
                 default:
                     console.log('plus d asset à loader')
             }
         })
 
-        let loaderObj = {
-            "jpg" : new THREE.TextureLoader()
-        }
+        // let loaderObj = {
+        //     "jpg" : new THREE.TextureLoader()
+        // }
 
-        console.log(Object.keys(loaderObj))
+        // console.log(Object.keys(loaderObj))
 
         if(this._assets.length > 0) {
 		    console.debug('ASSETS:')

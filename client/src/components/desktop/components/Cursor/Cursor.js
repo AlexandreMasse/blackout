@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { connect } from 'react-redux';
 import * as PIXI from 'pixi.js'
-import {TweenMax, Back} from 'gsap'
+import {TweenMax, Back, RoughEase} from 'gsap'
 import bureau from '../../../../assets/desktop/img/bureau.png'
-
 //css
 import './Cursor.scss'
+let bg = PIXI.Sprite.fromImage(bureau)
 
 class Cursor extends Component {
   componentWillMount() {
@@ -18,15 +18,15 @@ class Cursor extends Component {
   initApp = () => {
     let width = window.innerWidth
     let height = window.innerHeight
-    let maskRadius = 120
+    let maskRadius = 140
+    let maskRadius2 = 160
     var app = new PIXI.Application(width, height, {transparent:true, resolution: 1})
     document.body.appendChild(app.view)
   
-    let bg = PIXI.Sprite.fromImage(bureau)
+    let bg2 = PIXI.Sprite.fromImage(bureau)
     bg.width  = 1920
     bg.height = 1080
     
-    let bg2 = PIXI.Sprite.fromImage(bureau)
     bg2.width  = 1920
     bg2.height = 1080
 
@@ -64,18 +64,22 @@ class Cursor extends Component {
     // CIRCLE MASK
     this.mask2 = new PIXI.Graphics()
     this.mask2.beginFill('0xffffff')
-    this.mask2.drawCircle(0, 0, maskRadius)
+    this.mask2.drawCircle(0, 0, maskRadius2)
     this.mask2.endFill()
 
-    this.mask2.position.x = width/2
-    this.mask2.position.y = height/2
-
+    this.mask2Position =  {
+      x: width/2,
+      y: height/2
+    }
+    this.mask2.position.x = this.mask2Position.x
+    this.mask2.position.y = this.mask2Position.y
+    
     this.mask1.visible = false
     this.mask2.visible = false
 
     bg.mask = this.mask1
     bg2.mask = this.mask2
-
+  
     app.stage.addChild(this.mask1)
     app.stage.addChild(this.mask2)
     app.stage.addChild(bg)
@@ -95,7 +99,8 @@ class Cursor extends Component {
   }
 
   moveFlashLight = () => {
-    console.log('yo')
+    TweenMax.to(bg, 2, {alpha:(Math.random() - 0.1) * 1.2, ease:RoughEase.ease.config(), repeat: -1, yoyo: true })
+
     if (this.props.isPlayer1Connected) {
       const player1Position = {
         x:this.props.player1Position.x * (window.innerWidth * .5),
@@ -112,46 +117,21 @@ class Cursor extends Component {
         x:this.props.player2Position.x * (window.innerWidth * .5),
         y: this.props.player2Position.y * (window.innerHeight * .5)
       }
-      let newPositionX = player2Position.x + (window.innerWidth / 2)
-      let newPositionY = player2Position.y + (window.innerHeight / 2)
+      let newPositionX = player2Position.x + (window.innerWidth/2)
+      let newPositionY = player2Position.y + (window.innerHeight/2)
 
       TweenMax.to(this.mask2, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
+      // console.log(bg2.alpha)
+      // this.mask2Position = {
+      //   x:this.mask2.x,
+      //   y:this.mask2.y,
+      // }
     }
   } 
 
   render() {
     this.moveFlashLight()
-    // const {isPlayer1Connected, isPlayer2Connected} = this.props
-
-    // const player1Position = {
-    //   x:this.props.player1Position.x * (window.innerWidth * .5),
-    //   y: this.props.player1Position.y * (window.innerHeight * .5)
-    // }
-    // const player2Position = {
-    //   x:this.props.player2Position.x * (window.innerWidth * .5),
-    //   y: this.props.player2Position.y * (window.innerHeight * .5)
-    // }
-
-    // return (
-    //   <div className="cursor">
-    //     {isPlayer1Connected &&
-    //       <div className="cursor-pointer player-1" style={{
-    //         transform: `translate3d(${player1Position.x}px,${player1Position.y}px,0)`
-    //       }}/>
-    //     }
-    //     {isPlayer2Connected &&
-    //       <div className="cursor-pointer player-2" style={{
-    //         transform: `translate3d(${player2Position.x}px,${player2Position.y}px,0)`
-    //       }}/>
-    //     }
-    //   </div>
-    // const x = this.props.x * (window.innerWidth * .5)
-    // const y = this.props.y * (window.innerHeight * .5)
-    // let newPositionX = x + (window.innerWidth / 2)
-    // let newPositionY = y + (window.innerHeight / 2)
-
-    // TweenMax.to(this.mask, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
-
+    
     return (
       null
     )
