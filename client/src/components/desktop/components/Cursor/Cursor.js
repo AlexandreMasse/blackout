@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as PIXI from 'pixi.js'
 import {TweenMax, Back} from 'gsap'
 import bureau from '../../../../assets/desktop/img/bureau.png'
-// import light from '../../../../assets/desktop/img/rond_flou.png'
 
 //css
 import './Cursor.scss'
@@ -11,6 +10,9 @@ import './Cursor.scss'
 class Cursor extends Component {
   componentWillMount() {
     this.initApp()
+  }
+  componentDidMount() {
+    this.showLight()
   }
 
   initApp = () => {
@@ -23,44 +25,102 @@ class Cursor extends Component {
     let bg = PIXI.Sprite.fromImage(bureau)
     bg.width  = 1920
     bg.height = 1080
+    
+    let bg2 = PIXI.Sprite.fromImage(bureau)
+    bg2.width  = 1920
+    bg2.height = 1080
 
     let imageRatio = bg.width / bg.height
     let containerRatio = width / height
     if(containerRatio > imageRatio) {
         bg.height = bg.height / (bg.width / width)
+        bg2.height = bg2.height / (bg2.width / width)
         bg.width = width
+        bg2.width = width
         bg.position.x = 0
+        bg2.position.x = 0
         bg.position.y = (height - bg.height) / 2
+        bg2.position.y = (height - bg2.height) / 2
     }else{
         bg.width = bg.width / (bg.height / height)
+        bg2.width = bg2.width / (bg2.height / height)
         bg.height = height
+        bg2.height = height
         bg.position.y = 0
+        bg2.position.y = 0
         bg.position.x = (width - bg.width) / 2
+        bg2.position.x = (width - bg2.width) / 2
     }
 
     // CIRCLE MASK
-    this.mask = new PIXI.Graphics()
-    this.mask.beginFill('0xffffff')
-    this.mask.drawCircle(0, 0, maskRadius)
-    this.mask.endFill()
+    this.mask1 = new PIXI.Graphics()
+    this.mask1.beginFill('0xffffff')
+    this.mask1.drawCircle(0, 0, maskRadius)
+    this.mask1.endFill()
 
-    this.mask.position.x = width/2
-    this.mask.position.y = height/2
+    this.mask1.position.x = width/2
+    this.mask1.position.y = height/2
+ 
+    // CIRCLE MASK
+    this.mask2 = new PIXI.Graphics()
+    this.mask2.beginFill('0xffffff')
+    this.mask2.drawCircle(0, 0, maskRadius)
+    this.mask2.endFill()
 
-    bg.mask = this.mask
-    app.stage.addChild(this.mask)
+    this.mask2.position.x = width/2
+    this.mask2.position.y = height/2
+
+    this.mask1.visible = false
+    this.mask2.visible = false
+
+    bg.mask = this.mask1
+    bg2.mask = this.mask2
+
+    app.stage.addChild(this.mask1)
+    app.stage.addChild(this.mask2)
     app.stage.addChild(bg)
+    app.stage.addChild(bg2)
   }
 
-  createFlashLight = () => {
+  showLight = () => {
+    if(this.props.isPlayer1Connected) {
+      console.log('player 1')
+      this.mask1.visible = true
+    }
 
+    if(this.props.isPlayer2Connected) {
+      console.log('player 2')
+      this.mask2.visible = true
+    }
   }
 
   moveFlashLight = () => {
-    
+    console.log('yo')
+    if (this.props.isPlayer1Connected) {
+      const player1Position = {
+        x:this.props.player1Position.x * (window.innerWidth * .5),
+        y: this.props.player1Position.y * (window.innerHeight * .5)
+      }
+      let newPositionX = player1Position.x + (window.innerWidth / 2)
+      let newPositionY = player1Position.y + (window.innerHeight / 2)
+
+      TweenMax.to(this.mask1, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
+    }
+
+    if (this.props.isPlayer2Connected) {
+      const player2Position = {
+        x:this.props.player2Position.x * (window.innerWidth * .5),
+        y: this.props.player2Position.y * (window.innerHeight * .5)
+      }
+      let newPositionX = player2Position.x + (window.innerWidth / 2)
+      let newPositionY = player2Position.y + (window.innerHeight / 2)
+
+      TweenMax.to(this.mask2, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
+    }
   } 
 
   render() {
+    this.moveFlashLight()
     // const {isPlayer1Connected, isPlayer2Connected} = this.props
 
     // const player1Position = {
@@ -73,31 +133,29 @@ class Cursor extends Component {
     // }
 
     // return (
-      // <div className="cursor">
-      //   {isPlayer1Connected &&
-      //     <div className="cursor-pointer player-1" style={{
-      //       transform: `translate3d(${player1Position.x}px,${player1Position.y}px,0)`
-      //     }}/>
-      //   }
-      //   {isPlayer2Connected &&
-      //     <div className="cursor-pointer player-2" style={{
-      //       transform: `translate3d(${player2Position.x}px,${player2Position.y}px,0)`
-      //     }}/>
-      //   }
-      // </div>
-    const x = this.props.x * (window.innerWidth * .5)
-    const y = this.props.y * (window.innerHeight * .5)
-    let newPositionX = x + (window.innerWidth / 2)
-    let newPositionY = y + (window.innerHeight / 2)
+    //   <div className="cursor">
+    //     {isPlayer1Connected &&
+    //       <div className="cursor-pointer player-1" style={{
+    //         transform: `translate3d(${player1Position.x}px,${player1Position.y}px,0)`
+    //       }}/>
+    //     }
+    //     {isPlayer2Connected &&
+    //       <div className="cursor-pointer player-2" style={{
+    //         transform: `translate3d(${player2Position.x}px,${player2Position.y}px,0)`
+    //       }}/>
+    //     }
+    //   </div>
+    // const x = this.props.x * (window.innerWidth * .5)
+    // const y = this.props.y * (window.innerHeight * .5)
+    // let newPositionX = x + (window.innerWidth / 2)
+    // let newPositionY = y + (window.innerHeight / 2)
 
-    TweenMax.to(this.mask, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
+    // TweenMax.to(this.mask, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
 
     return (
       null
     )
   }
-
-
 }
 
 
