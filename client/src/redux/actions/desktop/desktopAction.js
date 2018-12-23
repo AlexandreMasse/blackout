@@ -1,8 +1,8 @@
-import {DESKTOP_ACTION} from './desktopActionTypes'
+import {SET_APP_LOADED} from './desktopActionTypes'
 
-// export const desktopAction = (payload) => (dispatch) => {
-//  dispatch({
-//   type: DESKTOP_ACTION,
-//   payload
-//  })
-// }
+export const setAppLoaded = (payload) => (dispatch) => {
+ dispatch({
+  type: SET_APP_LOADED,
+  payload
+ })
+}

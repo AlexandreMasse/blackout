@@ -1,6 +1,10 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
+
+import {setAppLoaded} from '../../redux/actions/desktop/desktopAction'
+
+
 import classNames from 'classnames'
 import Cursor from "./components/Cursor/Cursor";
 import {CSSTransition} from 'react-transition-group';
@@ -22,41 +26,55 @@ class DesktopApp extends Component {
   }
 
   assetLoaded = () => {
-    load.any(assetsToLoad, ev =>  {
+    load.any(assetsToLoad, ev => {
       console.log(`Progress: ${ev.progress}`)
     }).then(assets => {
-        window.assets = assets
-        console.log(assets)
-        this.setState({isLoaded: true})
+      window.assets = assets
+      console.log(assets)
+      this.props.setAppLoaded()
     })
   }
 
   render() {
-    const {password1, password2, isPlayer1Connected, isPlayer2Connected} = this.props
-    return (
-      <div className="App desktop-app">
+    const {password1, password2, isPlayer1Connected, isPlayer2Connected, isLoaded} = this.props
+    if (!isLoaded) {
+      return (
+        <div className="loading">
+          <p>Loading experience...</p>
+        </div>
+      )
+    } else {
 
-         <CSSTransition classNames={"fade"} in={isPlayer1Connected && isPlayer2Connected} timeout={4500} mountOnEnter={true}>
-           <Cursor/>
-         </CSSTransition>
+      return (
+        <div className="App desktop-app">
 
-        <CSSTransition classNames={"fade"} in={!(isPlayer1Connected && isPlayer2Connected)} appear={true} timeout={{enter:0, exit: 2500 }} mountOnEnter={true} unmountOnExit={true}>
-          <div className="step-connexion">
-            <div className="intro">
-              <video width="350" autoPlay loop muted={true}>
-                <source src={logotype} type="video/mp4"/>
-              </video>
-              <p>Prenez votre mobile et connectez vous à l'expérience !</p>
-            </div>
-            <div className="codes">
-              <p className={classNames("player1", {"connected": isPlayer1Connected})}>{password1}</p>
-              <p className={classNames("player2", {"connected": isPlayer2Connected})}>{password2}</p>
-            </div>
-          </div>
+          <CSSTransition classNames={"fade"} in={isPlayer1Connected && isPlayer2Connected} timeout={4500}
+                         mountOnEnter={true}>
+            <Cursor/>
           </CSSTransition>
 
-      </div>
-    )
+          <CSSTransition classNames={"fade"} in={!(isPlayer1Connected && isPlayer2Connected)} appear={true}
+                         timeout={{enter: 0, exit: 2500}} mountOnEnter={true} unmountOnExit={true}>
+            <div className="step-connexion">
+              <div className="intro">
+                <video width="350" autoPlay loop muted={true}>
+                  <source src={logotype} type="video/mp4"/>
+                </video>
+                <p>Prenez votre mobile et connectez vous à l'expérience !</p>
+              </div>
+              <div className="codes">
+                <p className={classNames("player1", {"connected": isPlayer1Connected})}>{password1}</p>
+                <p className={classNames("player2", {"connected": isPlayer2Connected})}>{password2}</p>
+              </div>
+            </div>
+          </CSSTransition>
+
+        </div>
+      )
+
+    }
+
+
   }
 }
 
@@ -73,6 +91,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
+    setAppLoaded: () => dispatch(setAppLoaded()),
   }
 }
 

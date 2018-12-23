@@ -1,1 +1,1 @@
-export const DESKTOP_ACTION = "DESKTOP_ACTION"
+export const SET_APP_LOADED = "SET_APP_LOADED"

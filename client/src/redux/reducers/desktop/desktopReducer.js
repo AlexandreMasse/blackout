@@ -1,4 +1,5 @@
 import {websocketsOnActionTypes} from '../../actions/websockets/websocketsActionTypes'
+import {SET_APP_LOADED} from '../../actions/desktop/desktopActionTypes'
 
 const initialState = {
   app: {
@@ -25,6 +26,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+
+    // app action
+    case SET_APP_LOADED:
+      return {
+        ...state,
+        app: {
+          isLoaded: true
+        }
+      }
 
     // socket action
 
