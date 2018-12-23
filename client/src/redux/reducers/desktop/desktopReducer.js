@@ -1,6 +1,9 @@
 import {websocketsOnActionTypes} from '../../actions/websockets/websocketsActionTypes'
 
 const initialState = {
+  app: {
+    isLoaded: false
+  },
   roomId: null,
   password1: null,
   password2: null,

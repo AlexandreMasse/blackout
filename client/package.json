@@ -22,10 +22,11 @@
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.1.1",
     "three": "^0.99.0",
-    "three-gltf-loader": "^1.99.0"
+    "is-promise": "^2.1.0",
+    "object-assign": "^4.1.1",
+    "xhr": "^2.4.1"
   },
   "devDependencies": {
-    "assets-loader": "^0.5.2",
     "howler": "^2.0.15",
     "redux-devtools-extension": "^2.13.7"
   },

@@ -1,11 +1,8 @@
-import React,{ Component, Fragment} from 'react'
+import React,{ Component} from 'react'
 import { connect } from 'react-redux'
 import { getCookie } from '../../utils'
 import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/websocketsAction'
 import {socket} from '../../redux/actions/websockets/websocketsAction'
-import {AssetsManager} from '../../managers'
-import {assetsToLoad}  from '../../assets/asset-list.js'
-import AssetsLoader from 'assets-loader'
 
 import './MobileApp.scss'
 import MobileComponent from "./components/MobileComponent/MobileComponent";
@@ -23,7 +20,6 @@ class MobileApp extends Component {
   componentWillMount() {
     this.props.wsEmitDeviceType('mobile')
     this.disconnected()
-    // this.initAssetLoader()
   }
 
   sendDeviceType = () => {
@@ -31,26 +27,6 @@ class MobileApp extends Component {
     socket.emit('deviceType',{
         type:'mobile'
     })
-  }
-
-  initAssetLoader = () => {
-    if (assetsToLoad.length > 0) {
-      new AssetsLoader({
-        assets:assetsToLoad
-      }).on('error', function (error) {
-        console.error(error)
-      }).on('progress', function (p) {
-        console.log('Progress : ', p)
-      }).on('complete',this.onComplete)
-      .start()
-    }
-  }
-
-  onComplete = (assets) => {
-    // console.log('cool', assets)
-    if(assets.length > 0) {
-      new AssetsManager(assets)
-    }
   }
 
   reconnect = () => {
