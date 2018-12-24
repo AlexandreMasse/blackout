@@ -4,6 +4,8 @@ import { getCookie } from '../../utils'
 import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/websocketsAction'
 import {socket} from '../../redux/actions/websockets/websocketsAction'
 
+import NoSleep from 'nosleep.js'
+
 import './MobileApp.scss'
 import MobileComponent from "./components/MobileComponent/MobileComponent";
 import Keyboard from "./components/Keyboard/Keyboard";
@@ -74,9 +76,21 @@ class MobileApp extends Component {
     let password = this.state.password
     if(password !== null && password !== '') {
       this.props.wsEmitPassword(password)
+      this.setFullscreen()
+      this.setNoSleep()
     } else {
       console.log('le password est vide')
     }
+  }
+
+  setFullscreen = () => {
+      const elem = document.documentElement
+      elem.requestFullscreen()
+  }
+  
+  setNoSleep = () => {
+    const noSleep = new NoSleep()
+    noSleep.enable()
   }
 
   handleKeyBoardPress = (key) => {
@@ -135,5 +149,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(MobileApp);
+export default connect(mapStateToProps,mapDispatchToProps)(MobileApp)
 
