@@ -4,11 +4,23 @@ import {websocketsOnActionTypes} from "../../actions/websockets/websocketsAction
 const initialState = {
     roomId: null,
     userId: null,
-    isConnected: false
+    isConnected: false,
+    currentStep: null
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
+
+        // mobile action
+
+        case mobileActionTypes.SET_CURRENT_STEP:
+            return {
+                ...state,
+                currentStep: action.currentStep
+            }
+
+        // websocket actions
+
         case websocketsOnActionTypes.WEBSOCKET_ON_CONNECT_TO_ROOM:
             const {roomId, userId} = action.payload
             return {

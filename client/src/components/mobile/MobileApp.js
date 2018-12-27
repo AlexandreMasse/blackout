@@ -1,34 +1,27 @@
 import React,{ Component} from 'react'
+//Redux
 import { connect } from 'react-redux'
-import { getCookie } from '../../utils'
 import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/websocketsAction'
+import {setCurrentStep} from '../../redux/actions/mobile/mobileAction'
 import {socket} from '../../redux/actions/websockets/websocketsAction'
-
-import NoSleep from 'nosleep.js'
-
+//Step
+import {IntroStep, CursorStep, stepTypes} from './steps'
+//Lib
+import { getCookie } from '../../utils'
+//Style
 import './MobileApp.scss'
-import MobileComponent from "./components/MobileComponent/MobileComponent";
-import Keyboard from "./components/Keyboard/Keyboard";
+
 
 class MobileApp extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-        password: ''
-    }
-  }
-
-  componentWillMount() {
     this.props.wsEmitDeviceType('mobile')
-    this.disconnected()
+    this.props.setCurrentStep(stepTypes.INTRO)
   }
 
-  sendDeviceType = () => {
-    console.log('mobile type')  
-    socket.emit('deviceType',{
-        type:'mobile'
-    })
+  componentDidMount() {
+    this.disconnected()
   }
 
   reconnect = () => {
@@ -57,47 +50,11 @@ class MobileApp extends Component {
           '; expires=' + now.toUTCString() +
           '; path=/'
   }
-
-  handleChange = (e) => {
-    const value = e.target.value 
-    this.setState({
-      password: value
-    })
-  }
   
   disconnected = () => {
-    socket.on('userDisconnected' , (data) => {
+    socket.on('userDisconnected', (data) => {
       console.log(data)
     })
-  }
-
-  submit = (e) => {
-    e.preventDefault()
-    let password = this.state.password
-    if(password !== null && password !== '') {
-      this.props.wsEmitPassword(password)
-      this.setFullscreen()
-      this.setNoSleep()
-    } else {
-      console.log('le password est vide')
-    }
-  }
-
-  setFullscreen = () => {
-      const elem = document.documentElement
-      elem.requestFullscreen()
-  }
-  
-  setNoSleep = () => {
-    const noSleep = new NoSleep()
-    noSleep.enable()
-  }
-
-  handleKeyBoardPress = (key) => {
-    this.setState({ password: this.state.password + key});
-  }
-  handleKeyBoardPressDelete = (key) => {
-    this.setState({ password: ''});
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -107,27 +64,22 @@ class MobileApp extends Component {
     }
   }
 
+  renderSteps = () => {
+    switch (this.props.currentStep) {
+      case stepTypes.INTRO:
+        return <IntroStep/>
+      case stepTypes.CURSOR:
+        return <CursorStep/>
+      default:
+        return null
+    }
+  }
+
+
   render() {
-    const { roomId, userId, isConnected } = this.props
     return (
       <div className="app mobile-app">
-        <header className="app-header">
-            {isConnected ? (
-                <>
-                  <p>Hello <span>{userId}</span></p>
-                  <p>Welcome in <span>{roomId}</span></p>
-                  <MobileComponent/>
-                </>
-            ) : (
-              <>
-                <form className="commentForm" onSubmit={this.handleSubmit}>
-                  <input type="number" onChange={this.handleChange} value={this.state.password}/>
-                   <Keyboard handleKeyPress={this.handleKeyBoardPress} handleDelete={this.handleKeyBoardPressDelete} handleSubmit={this.submit}/>
-                  {/*<input type="submit" value={"Submit"}/>*/}
-                </form>
-              </>
-            )}
-        </header>
+        {this.renderSteps()}
       </div>
     )
   }
@@ -137,7 +89,8 @@ const mapStateToProps = state => {
   return {
     userId: state.mobile.userId,
     roomId: state.mobile.roomId,
-    isConnected: state.mobile.isConnected
+    isConnected: state.mobile.isConnected,
+    currentStep: state.mobile.currentStep
   }
 }
 
@@ -145,6 +98,7 @@ const mapDispatchToProps = dispatch => {
   return {
       wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
       wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
+      setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
       wsEmitReconnection: (userId, roomId) => dispatch(wsEmitReconnection({userId, roomId})),
   }
 }

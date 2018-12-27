@@ -1,1 +1,1 @@
-export {default as MobileComponent} from './MobileComponent/MobileComponent'
+export {default as Keyboard} from './Keyboard/Keyboard'

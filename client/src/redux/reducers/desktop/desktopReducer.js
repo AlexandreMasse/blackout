@@ -27,8 +27,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
-
     // app action
+
     case SET_APP_LOADED:
       return {
         ...state,

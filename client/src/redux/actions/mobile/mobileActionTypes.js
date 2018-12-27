@@ -1,5 +1,5 @@
 const desktopActionTypes = {
-    MOBILE_ACTION: "MOBILE_ACTION"
+    SET_CURRENT_STEP: "SET_CURRENT_STEP"
 }
 
 export default desktopActionTypes

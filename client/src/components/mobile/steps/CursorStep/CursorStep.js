@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import withDeviceOrientation from '../withDeviceOrientation/withDeviceOrientation'
+import withDeviceOrientation from '../../components/withDeviceOrientation/withDeviceOrientation'
 import {wsEmitPosition} from '../../../../redux/actions/websockets/websocketsAction'
 
 //css
-import './MobileComponent.scss'
+import './CursorStep.scss'
 
-class MobileComponent extends Component {
+class CursorStep extends Component {
 
   handleRef = (el) => {
     this.props.handleRef(el)
@@ -19,7 +19,7 @@ class MobileComponent extends Component {
     this.props.wsEmitPosition(this.props.deviceOrientationPosition)
 
     return (
-      <div className="mobile-component" ref={this.handleRef}>
+      <div className="cursor-step" ref={this.handleRef}>
         <div className="cursor" style={{
           transform: `translate3d(${x}px,${y}px,0)`
         }}/>
@@ -40,4 +40,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withDeviceOrientation(MobileComponent));
+export default connect(mapStateToProps,mapDispatchToProps)(withDeviceOrientation(CursorStep));

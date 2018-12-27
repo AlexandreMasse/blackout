@@ -1,8 +1,8 @@
 import mobileActionTypes from './mobileActionTypes'
 
-export const mobileAction = (payload) => (dispatch, getState, {emit}) => {
+export const setCurrentStep = (currentStep) => (dispatch, getState, {emit}) => {
  dispatch({
-  type: mobileActionTypes.MOBILE_ACTION,
-  payload
+  type: mobileActionTypes.SET_CURRENT_STEP,
+  currentStep
  })
 }
