@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 //redux
 import {connect} from 'react-redux';
-import {wsEmitDeviceType, wsEmitPassword} from "../../../../redux/actions/websockets/websocketsAction";
+import {wsEmitDeviceType, wsEmitPassword} from "../../../../redux/actions/websockets/mobile/websocketsAction";
 import {setCurrentStep} from "../../../../redux/actions/mobile/mobileAction";
 //components
 import {Keyboard} from "../../components";

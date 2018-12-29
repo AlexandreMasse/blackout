@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {wsEmitDeviceType} from '../../redux/actions/websockets/websocketsAction'
+import {wsEmitDeviceType} from '../../redux/actions/websockets/desktop/websocketsAction'
 
 import {setAppLoaded} from '../../redux/actions/desktop/desktopAction'
 

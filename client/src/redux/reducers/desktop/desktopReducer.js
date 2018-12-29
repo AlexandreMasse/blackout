@@ -1,4 +1,4 @@
-import {websocketsOnActionTypes} from '../../actions/websockets/websocketsActionTypes'
+import {websocketsOnActionTypes} from '../../actions/websockets/desktop/websocketsActionTypes'
 import {SET_APP_LOADED} from '../../actions/desktop/desktopActionTypes'
 
 const initialState = {

@@ -1,5 +1,5 @@
 import mobileActionTypes from '../../actions/mobile/mobileActionTypes'
-import {websocketsOnActionTypes} from "../../actions/websockets/websocketsActionTypes";
+import {websocketsOnActionTypes} from "../../actions/websockets/mobile/websocketsActionTypes";
 
 const initialState = {
     roomId: null,

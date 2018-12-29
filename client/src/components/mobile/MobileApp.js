@@ -1,9 +1,9 @@
 import React,{ Component} from 'react'
 //Redux
 import { connect } from 'react-redux'
-import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/websocketsAction'
+import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/mobile/websocketsAction'
 import {setCurrentStep} from '../../redux/actions/mobile/mobileAction'
-import {socket} from '../../redux/actions/websockets/websocketsAction'
+import {socket} from '../../redux/actions/websockets/mobile/websocketsAction'
 //Step
 import {IntroStep, CursorStep, stepTypes} from './steps'
 //Lib
