@@ -66,6 +66,7 @@ class MobileApp extends Component {
     if(nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
       this.setCookie(nextProps.userId, nextProps.roomId)
     }
+    if(nextProps.phoneData) console.log("phoneData", nextProps.phoneData);
   }
 
   renderSteps = () => {
