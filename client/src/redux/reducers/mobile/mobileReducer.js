@@ -5,7 +5,8 @@ const initialState = {
     roomId: null,
     userId: null,
     isConnected: false,
-    currentStep: null
+    currentStep: null,
+    phoneData: null,
 }
 
 export default (state = initialState, action) => {
@@ -17,6 +18,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 currentStep: action.currentStep
+            }
+
+        case mobileActionTypes.SET_PHONE_DATA:
+            return {
+                ...state,
+                phoneData: action.phoneData
             }
 
         // websocket actions

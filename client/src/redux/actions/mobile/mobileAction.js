@@ -6,3 +6,10 @@ export const setCurrentStep = (currentStep) => (dispatch, getState, {emit}) => {
   currentStep
  })
 }
+
+export const setPhoneData = (phoneData) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: mobileActionTypes.SET_PHONE_DATA,
+  phoneData
+ })
+}
