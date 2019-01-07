@@ -18,10 +18,10 @@ class MobileApp extends Component {
 
     this.props.wsEmitDeviceType('mobile')
 
-    const phoneData = getPhoneData()
-    console.log("phoneData", phoneData);
-    this.props.setPhoneData(phoneData)
-    this.props.wsEmitPhoneData(phoneData)
+    getPhoneData().then(data => {
+      this.props.setPhoneData(data)
+      this.props.wsEmitPhoneData(data)
+    })
 
     this.props.setCurrentStep(stepTypes.INTRO)
   }

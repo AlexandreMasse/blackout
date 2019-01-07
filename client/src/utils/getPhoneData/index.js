@@ -52,7 +52,13 @@ const getScore = (releaseDate) => {
   return dateObject.getTime()
 }
 
-export const getPhoneData = () => {
+export const getOperator = async (data) => {
+    const response = await fetch('http://ipinfo.io/json');
+    const json = await response.json();
+    return json;
+}
+
+export const getPhoneData = async () => {
   const data = {
     os: null,
     osVersionNumber: null,
@@ -73,9 +79,7 @@ export const getPhoneData = () => {
 
   data.height = window.innerHeight
 
-  //TODO: operator
-
-  //TODO: wip score
+  data.operator = await getOperator()
 
   data.score = getScore(data.osReleaseDate)
 
