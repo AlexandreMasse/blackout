@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {wsEmitDeviceType} from '../../redux/actions/websockets/desktop/websocketsAction'
-
 import {setAppLoaded} from '../../redux/actions/desktop/desktopAction'
-
-import {Loading, Connexion} from "./components"
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../../assets/desktop/asset-list'
+import {Loading} from "./components"
+//steps
+import {ConnexionStep} from "./steps"
 // style
 import './DesktopApp.scss'
 
@@ -40,7 +40,7 @@ class DesktopApp extends Component {
     {!isLoaded ? (
       <Loading />
     ) : (
-      <Connexion />
+      <ConnexionStep />
     )}
     </div>
     )

@@ -39,6 +39,7 @@ server.listen(app.get('port'), function () {
           // user.reconnect(io, socket)
           user.disconnect(io, socket)
           user.position(io, socket)
+          user.phoneData(io, socket)
         }
     })
   })

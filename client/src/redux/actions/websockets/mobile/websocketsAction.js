@@ -34,6 +34,13 @@ export const wsEmitDeviceType = (payload) => (dispatch, getState, {emit}) => {
     });
 }
 
+export const wsEmitPhoneData = (payload) => (dispatch, getState, {emit}) => {
+    console.log("emit phone data", payload.data);
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_PHONE_DATA, {
+        phoneData: payload.data,
+    });
+}
+
 export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_RECONNECT, {
         userId: payload.userId,

@@ -75,7 +75,7 @@ export const getPhoneData = () => {
 
   //TODO: operator
 
-  //TODO: score
+  //TODO: wip score
 
   data.score = getScore(data.osReleaseDate)
 

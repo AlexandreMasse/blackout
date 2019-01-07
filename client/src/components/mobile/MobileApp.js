@@ -1,7 +1,7 @@
 import React,{ Component} from 'react'
 //Redux
 import { connect } from 'react-redux'
-import {wsEmitPassword, wsEmitDeviceType, wsEmitReconnection} from '../../redux/actions/websockets/mobile/websocketsAction'
+import {wsEmitPassword, wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../../redux/actions/websockets/mobile/websocketsAction'
 import {setCurrentStep, setPhoneData} from '../../redux/actions/mobile/mobileAction'
 import {socket} from '../../redux/actions/websockets/mobile/websocketsAction'
 //Step
@@ -17,10 +17,12 @@ class MobileApp extends Component {
     super(props)
 
     this.props.wsEmitDeviceType('mobile')
-    //TODO wsEmitPhoneScore
-    //TODO setPhoneData
-    console.log(getPhoneData());
-    this.props.setPhoneData(getPhoneData())
+
+    const phoneData = getPhoneData()
+    console.log("phoneData", phoneData);
+    this.props.setPhoneData(phoneData)
+    this.props.wsEmitPhoneData(phoneData)
+
     this.props.setCurrentStep(stepTypes.INTRO)
   }
 
@@ -66,7 +68,6 @@ class MobileApp extends Component {
     if(nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
       this.setCookie(nextProps.userId, nextProps.roomId)
     }
-    if(nextProps.phoneData) console.log("phoneData", nextProps.phoneData);
   }
 
   renderSteps = () => {
@@ -104,8 +105,9 @@ const mapDispatchToProps = dispatch => {
   return {
       setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
       setPhoneData: (phoneData) => dispatch(setPhoneData(phoneData)),
-      wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
       wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
+      wsEmitPhoneData: (data) => dispatch(wsEmitPhoneData({data})),
+      wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
       wsEmitReconnection: (userId, roomId) => dispatch(wsEmitReconnection({userId, roomId})),
   }
 }

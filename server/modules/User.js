@@ -2,16 +2,17 @@ import password from './Password'
 
 export default class User {
     constructor() {
+        this.phoneDataObject = {}
     }
 
-    connect(io, socket) {
+    connect = (io, socket) => {
         socket.on('password', (data) => {
             console.log('hello', data.key)
             let code = data.key
             if(password.activePasswordObj[code]) {
                 console.log(password.activePasswordObj[code])
                 let roomNameData = password.activePasswordObj[code]
-                var parts = roomNameData.split('_', 2)
+                let parts = roomNameData.split('_', 2)
                 let roomId = parts[0]
                 let userId = parts[1]
                 socket.username = userId
@@ -22,6 +23,11 @@ export default class User {
                 roomId: roomId,
                 userId: userId
                 })
+                //Emit phone data after connexion
+                io.to(socket.room).emit('phoneData', {
+                    phoneData: this.phoneDataObject,
+                    userId: socket.username
+                })
                 delete password.activePasswordObj[code]
             } else {
                 console.log('mdp nom définit')
@@ -30,7 +36,7 @@ export default class User {
         })
     }
 
-    reconnect(io, socket) {
+    reconnect = (io, socket) => {
         socket.on('reconnect' , (data) => {
             console.log("on sendCookie", data)
             socket.username = data.userId
@@ -43,7 +49,7 @@ export default class User {
         })
     }
 
-    disconnect(io, socket) {
+    disconnect = (io, socket) => {
         socket.on('disconnect', () => {
             let code = socket.code 
             password.passwordArr.push(code)
@@ -55,7 +61,19 @@ export default class User {
         })
     }
 
-    position(io,socket) {
+    phoneData = (io,socket) => {
+        socket.on('phoneData', (data) => {
+             console.log("on phoneData", data)
+             console.log("socket.room", socket.room)
+            this.phoneDataObject = data.phoneData
+            // io.to(socket.room).emit('phoneData', {
+            //     phoneData: data.phoneData,
+            //     userId: socket.username
+            // })
+        })
+    }
+
+    position = (io,socket) => {
         socket.on('position', (data) => {
             io.to(socket.room).emit('position', {
             position: data.position,

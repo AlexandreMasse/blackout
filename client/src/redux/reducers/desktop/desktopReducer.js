@@ -12,15 +12,16 @@ const initialState = {
     {
       id: "player1",
       isConnected: false,
-      position: {}
+      position: null,
+      phoneData: null
     },
     {
       id: "player2",
       isConnected: false,
-      position:{}
+      position:null,
+      phoneData: null
     }
   ],
-  position: {}
 }
 
 
@@ -29,17 +30,18 @@ export default (state = initialState, action) => {
 
     // app action
 
-    case SET_APP_LOADED:
+    case SET_APP_LOADED: {
       return {
         ...state,
         app: {
           isLoaded: true
         }
       }
+    }
 
     // socket action
 
-    case websocketsOnActionTypes.WEBSOCKET_ON_CREATE_ROOM:
+    case websocketsOnActionTypes.WEBSOCKET_ON_CREATE_ROOM: {
       const {roomId, password1, password2} = action.payload
       return {
         ...state,
@@ -47,7 +49,9 @@ export default (state = initialState, action) => {
         password1,
         password2,
       }
-    case websocketsOnActionTypes.WEBSOCKET_ON_CONNECT_TO_ROOM:
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_CONNECT_TO_ROOM: {
       return {
         ...state,
         users: state.users.map(user => {
@@ -61,8 +65,28 @@ export default (state = initialState, action) => {
           }
         }),
       }
-    case websocketsOnActionTypes.WEBSOCKET_ON_DISCONNECT_TO_ROOM:
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_PHONE_DATA: {
+      const  {phoneData, userId} = action.payload
+      console.log(action);
       return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              phoneData
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_DISCONNECT_TO_ROOM: {
+       return {
         ...state,
         users: state.users.map(user => {
           if (user.id === action.payload.userId) {
@@ -75,7 +99,9 @@ export default (state = initialState, action) => {
           }
         }),
       }
-    case websocketsOnActionTypes.WEBSOCKET_ON_POSITION:
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_POSITION: {
       const {position, userId} = action.payload
       return {
         ...state,
@@ -90,6 +116,7 @@ export default (state = initialState, action) => {
           }
         }),
       }
+    }
 
     // default
 
