@@ -1,6 +1,7 @@
-$colortest: #85fff0;
-$font-scopevariable: "scopevariable";
-
+@import "./variables.scss";
+.bold {
+  font-weight: 500;
+}
 
 @mixin keyframe-fade-in {
   @keyframes fade-in {

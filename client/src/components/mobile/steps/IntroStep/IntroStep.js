@@ -67,19 +67,41 @@ class IntroStep extends Component {
     const { roomId, userId, isConnected} = this.props
 
     return (
-      <div className="intro-step" >
+      <div className="intro" >
         {isConnected ? (
           <>
             <p>Hello <span>{userId}</span></p>
             <p>Welcome in <span>{roomId}</span></p>
           </>
         ) : (
-          <form>
+          <>
+          <div className='intro__infos'>
+            <span className='intro__infos__logoContainer'>
+              <svg className="intro__infos__logo" viewBox="0 0 227 32">
+                <use xlinkHref="#icon-logo" />
+              </svg>
+            </span>
+            <p className='intro__infos__paragraph'>
+              <span className="bold">Blackout</span> est un jeu collaboratif qui fait participer deux joueurs
+            </p>
+            <p className='intro__infos__paragraph'>
+              Pour lancer une partie, <br/> rendez-vous sur <span className="bold">blackout.io</span>  à partir d’un ordinateur.
+            </p>
+            <span className="intro__infos__viewmore">Entrez le code</span>
+            <span className="intro__infos__viewmoreIcon">
+              <svg className="intro__infos__arrow" viewBox="0 0 21 32">
+                <use xlinkHref="#icon-arrow" />
+              </svg>
+            </span>
+          </div>
+          <form className='intro__infos__form'>
             <input disabled={true} type="number" value={this.state.password}/>
             <Keyboard handleKeyPress={this.handleKeyBoardPress} handleDelete={this.handleKeyBoardPressDelete}
                       handleSubmit={this.submit}/>
             {/*<input type="submit" value={"Submit"}/>*/}
+            
           </form>
+          </>
         )}
       </div>
     );
