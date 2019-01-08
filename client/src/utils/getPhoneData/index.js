@@ -38,8 +38,6 @@ const getOsReleaseDate = (os, osVersionNumber) => {
   const firstVersionNumber = Number(versionNumberKeys[0])
   const lastVersionNumber = Number(versionNumberKeys[versionNumberKeys.length - 1])
 
-  console.table({osVersionNumberRounded, firstVersionString, lastVersionString, firstVersionNumber, lastVersionNumber});
-
   if (osVersionNumberRounded <= firstVersionNumber) { // inferior
     return currentOsReleaseDates[firstVersionString]
   } else if (

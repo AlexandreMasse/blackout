@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import withDeviceOrientation from '../../components/withDeviceOrientation/withDeviceOrientation'
-import {wsEmitPosition} from '../../../../redux/actions/websockets/mobile/websocketsAction'
+import {wsEmitPosition} from '../../../redux/actions/websockets/websocketsAction'
 
 //css
 import './CursorStep.scss'

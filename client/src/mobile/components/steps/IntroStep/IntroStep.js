@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 //redux
 import {connect} from 'react-redux';
-import {wsEmitDeviceType, wsEmitPassword} from "../../../../redux/actions/websockets/mobile/websocketsAction";
-import {setCurrentStep} from "../../../../redux/actions/mobile/mobileAction";
+import {wsEmitDeviceType, wsEmitPassword} from "../../../redux/actions/websockets/websocketsAction";
+import {setCurrentStep} from "../../../redux/actions/mobileAction";
 //components
 import {Keyboard} from "../../components";
 //step
-import {stepTypes} from '../'
+import {stepTypes} from '..'
 //lib
 import NoSleep from "nosleep.js";
 

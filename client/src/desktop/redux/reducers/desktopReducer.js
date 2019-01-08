@@ -1,5 +1,5 @@
-import {websocketsOnActionTypes} from '../../actions/websockets/desktop/websocketsActionTypes'
-import {SET_APP_LOADED} from '../../actions/desktop/desktopActionTypes'
+import {websocketsOnActionTypes} from '../actions/websockets/websocketsActionTypes'
+import {SET_APP_LOADED} from '../actions/desktopActionTypes'
 
 const initialState = {
   app: {

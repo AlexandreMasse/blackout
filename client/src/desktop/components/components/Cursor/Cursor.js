@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as PIXI from 'pixi.js'
 import {TweenMax, Back, RoughEase} from 'gsap'
-import bureau from '../../../../assets/desktop/img/bureau.png'
+import bureau from '../../../assets/img/bureau.png'
 //css
 import './Cursor.scss'
 let bg = PIXI.Sprite.fromImage(bureau)

@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {wsEmitDeviceType} from '../../redux/actions/websockets/desktop/websocketsAction'
-import {setAppLoaded} from '../../redux/actions/desktop/desktopAction'
+import { Provider } from 'react-redux'
+import configureStore from '../redux/store'
+import {wsEmitDeviceType} from '../redux/actions/websockets/websocketsAction'
+import {setAppLoaded} from '../redux/actions/desktopAction'
 import load from '../../vendors/assets-loader'
-import {assetsToLoad} from '../../assets/desktop/asset-list'
+import {assetsToLoad} from '../assets/asset-list'
 import {Loading} from "./components"
 //steps
 import {ConnexionStep} from "./steps"
@@ -36,13 +38,13 @@ class DesktopApp extends Component {
   render() {
     const {isLoaded} = this.props
     return (
-    <div className="App desktop-app desktop-app--loading">
-    {!isLoaded ? (
-      <Loading />
-    ) : (
-      <ConnexionStep />
-    )}
-    </div>
+      <div className="App desktop-app desktop-app--loading">
+        {!isLoaded ? (
+          <Loading/>
+        ) : (
+          <ConnexionStep/>
+        )}
+      </div>
     )
   }
 }
@@ -60,5 +62,11 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DesktopApp)
+const DesktopAppConnected = connect(mapStateToProps, mapDispatchToProps)(DesktopApp)
+
+export default () => (
+  <Provider store={configureStore()}>
+    <DesktopAppConnected/>
+  </Provider>
+)
 

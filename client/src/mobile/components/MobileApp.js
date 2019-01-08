@@ -1,9 +1,11 @@
 import React,{ Component} from 'react'
 //Redux
+import { Provider } from 'react-redux'
+import configureStore from '../redux/store'
 import { connect } from 'react-redux'
-import {wsEmitPassword, wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../../redux/actions/websockets/mobile/websocketsAction'
-import {setCurrentStep, setPhoneData} from '../../redux/actions/mobile/mobileAction'
-import {socket} from '../../redux/actions/websockets/mobile/websocketsAction'
+import {wsEmitPassword, wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
+import {setCurrentStep, setPhoneData} from '../redux/actions/mobileAction'
+import {socket} from '../redux/actions/websockets/websocketsAction'
 //Step
 import {IntroStep, CursorStep, stepTypes} from './steps'
 //Lib
@@ -84,9 +86,9 @@ class MobileApp extends Component {
 
   render() {
     return (
-      <div className="app mobile-app">
-        {this.renderSteps()}
-      </div>
+        <div className="app mobile-app">
+          {this.renderSteps()}
+        </div>
     )
   }
 }
@@ -112,5 +114,12 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(MobileApp)
+const MobileAppConnected = connect(mapStateToProps,mapDispatchToProps)(MobileApp)
+
+export default () => (
+  <Provider store={configureStore()}>
+    <MobileAppConnected/>
+  </Provider>
+
+)
 
