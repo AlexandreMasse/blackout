@@ -2,39 +2,74 @@
 
 .keyboard {
 
-  $width: 250px;
+  &__board {
+    width: calc(74vw + 2px);
+    position: relative;
+    border: 1px white solid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
-  width: $width;
-  & > {
-    .board {
-      width: 100%;
-      border: 2px white solid;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      .key {
-        position: relative;
-        width: calc(100% / 3);
-        height: $width / 3;
-        background-color: black;
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.31);
-        //transition: all 0.2s ease;
+    &__key {
+      position: relative;
+      width: calc(100% / 3);
+      height: 18.5vw;
+      background-color: $black;
+      color: $white;
+      border: 1px solid rgba(255, 255, 255, 0.31);
+      //transition: all 0.2s ease;
 
-        &:active {
-          color: red;
-          background-color: white;
-        }
+      &:active {
+        color: $red;
+        background-color:$white;
+      }
 
-        p {
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: 0;
+        font-size: 3.5rem;
+        transform: translateX(-50%) translateY(-50%);
+      }
+
+      &_delete {
+        svg {
           position: absolute;
           top: 50%;
           left: 50%;
-          margin: 0;
-          font-size: 25px;
           transform: translateX(-50%) translateY(-50%);
+          width:40%;
+          fill:$white;
+          stroke: $white;
+        }
+
+        &:active {
+          svg {
+            fill: $red;
+            stroke: $red;
+          }
         }
       }
+    }
+  }
+
+  &__button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 18.5vw;
+    border: 0;
+    background: $red;
+    font-size: 2.5rem;
+    outline: none;
+
+    &:active {
+      background: $white;
+      color:$red;
     }
   }
 }

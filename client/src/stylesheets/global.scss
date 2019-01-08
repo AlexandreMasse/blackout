@@ -3,6 +3,10 @@
   font-weight: 500;
 }
 
+.button {         
+  font-family: $font-scopevariable;
+}
+
 @mixin keyframe-fade-in {
   @keyframes fade-in {
     from {

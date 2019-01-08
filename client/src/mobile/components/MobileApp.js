@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import {wsEmitPassword, wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
 import {setCurrentStep, setPhoneData} from '../redux/actions/mobileAction'
 import {socket} from '../redux/actions/websockets/websocketsAction'
+// Component 
+import {BackgroundGrid} from './components'
 //Step
 import {IntroStep, CursorStep, stepTypes} from './steps'
 //Lib
@@ -86,7 +88,8 @@ class MobileApp extends Component {
 
   render() {
     return (
-        <div className="app mobile-app">
+        <div className="app mobile-app"> 
+          <BackgroundGrid />
           {this.renderSteps()}
         </div>
     )
