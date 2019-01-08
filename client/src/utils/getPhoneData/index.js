@@ -22,35 +22,43 @@ const getOsVersionNumber = (os) => os ? md.version(os) : null
 
 const getOsReleaseDate = (os, osVersionNumber) => {
 
-  // round with one digit after dot
-  const osVersionNumberRounded = (Math.floor(osVersionNumber * 10) / 10).toFixed(1);
+
 
   const currentOsReleaseDates = osReleaseDates[os]
 
   const versionNumberKeys = Object.keys(currentOsReleaseDates)
 
-  const firstVersion = versionNumberKeys[0]
-  const lastVersion = versionNumberKeys[versionNumberKeys.length - 1]
+  // round with one digit after dot
+  const osVersionNumberRoundedString = (Math.floor(osVersionNumber * 10) / 10).toFixed(1);
+  const osVersionNumberRounded = Number(osVersionNumberRoundedString)
 
-  if (osVersionNumberRounded <= firstVersion) { // inferior
-    return currentOsReleaseDates[firstVersion]
+  const firstVersionString = versionNumberKeys[0]
+  const lastVersionString = versionNumberKeys[versionNumberKeys.length - 1]
+
+  const firstVersionNumber = Number(versionNumberKeys[0])
+  const lastVersionNumber = Number(versionNumberKeys[versionNumberKeys.length - 1])
+
+  console.table({osVersionNumberRounded, firstVersionString, lastVersionString, firstVersionNumber, lastVersionNumber});
+
+  if (osVersionNumberRounded <= firstVersionNumber) { // inferior
+    return currentOsReleaseDates[firstVersionString]
   } else if (
-    osVersionNumberRounded > firstVersion &&
-    osVersionNumberRounded < lastVersion
+    osVersionNumberRounded > firstVersionNumber &&
+    osVersionNumberRounded < lastVersionNumber
   ) { // in
-    if(versionNumberKeys.includes(osVersionNumberRounded)) { // include
-      return currentOsReleaseDates[osVersionNumberRounded]
+    if(versionNumberKeys.includes(osVersionNumberRoundedString)) { // include
+      return currentOsReleaseDates[osVersionNumberRoundedString]
     } else { // not include
       const beforeVersions = versionNumberKeys.filter((version) => version <= osVersionNumberRounded)
       return currentOsReleaseDates[beforeVersions[beforeVersions.length -1]]
     }
   } else { //superior
-    return currentOsReleaseDates[lastVersion]
+    return currentOsReleaseDates[lastVersionString]
   }
 }
 
 // Operator
-export const getOperator = async (data) => {
+export const getOperator = async () => {
     const response = await fetch('http://ipinfo.io/json');
     const json = await response.json();
     return json;
