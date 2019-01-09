@@ -42,7 +42,7 @@ class DesktopApp extends Component {
   render() {
     const {isLoaded, currentStep} = this.props
     return (
-      <div className="App desktop-app desktop-app--loading">
+      <div className="App desktop-app">
         {!isLoaded ? (
           <Loading/>
         ) : (

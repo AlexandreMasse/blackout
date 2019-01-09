@@ -41,37 +41,12 @@ class Cursor extends Component {
     this.app.ticker.add( this.renderScene.bind(this) )
 
     let bg2 = PIXI.Sprite.fromImage(bureau)
-<<<<<<< HEAD
     let bureauItemImg = AssetsManager.get('bureauItem')
     let baseTexture = new PIXI.BaseTexture(bureauItemImg)
     let texture = new PIXI.Texture(baseTexture)
     let bureauItemSprite = new PIXI.Sprite(texture) 
     bureauItemSprite.y = 476
     bureauItemSprite.x = 826
-=======
-
-    let imageRatio = bg.width / bg.height
-    let containerRatio = width / height
-    if(containerRatio > imageRatio) {
-        bg.height = bg.height / (bg.width / width)
-        bg2.height = bg2.height / (bg2.width / width)
-        bg.width = width
-        bg2.width = width
-        bg.position.x = 0
-        bg2.position.x = 0
-        bg.position.y = (height - bg.height) / 2
-        bg2.position.y = (height - bg2.height) / 2
-    }else{
-        bg.width = bg.width / (bg.height / height)
-        bg2.width = bg2.width / (bg2.height / height)
-        bg.height = height
-        bg2.height = height
-        bg.position.y = 0
-        bg2.position.y = 0
-        bg.position.x = (width - bg.width) / 2
-        bg2.position.x = (width - bg2.width) / 2
-    }
->>>>>>> 06de5aa4001cfe2c02ce6b30ad371e24e3a6f847
 
     // CIRCLE MASK
     this.mask1 = new PIXI.Graphics()
@@ -142,7 +117,7 @@ class Cursor extends Component {
     }
 }
 
-  showLight = () => {
+  showLight = () => { 
     if(this.props.isPlayer1Connected) {
       console.log('player 1')
       this.mask1.visible = true
