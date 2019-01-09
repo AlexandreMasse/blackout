@@ -1,13 +1,12 @@
 
-import noise from './img/bureau.png'
-import beer from './obj/beer.glb'
-import kickGuitar from './sounds/guitar.mp3'
-import deer from './obj/deer.obj'
-import motor from './obj/motor.gltf'
+// import bureau from '../../../desktop/assets/img/bureau.png'
+import bureau from './img/bureau.png'
+// import flou from './img/rond_flou.png'
+import flou from './img/rond_flou.png'
+import re from './img/re.jpg'
+import bureauItem from './img/bureauItem.jpg'
 
 export const assetsToLoad = {
-    noise: { url: noise },
-    beer: { url: beer, type: 'gltf' },
-    // motor: { url: motor, type: 'gltf' },
-    guitar: { url: kickGuitar }
+    bureauItem: { url: bureauItem,  type: 'image' },
+    bureau: { url: bureau }
 }

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import * as PIXI from 'pixi.js'
 import {TweenMax, Back, RoughEase} from 'gsap'
 import bureau from '../../../assets/img/bureau.png'
+import {AssetsManager} from '../../../../managers'
+
 //css
 import './Cursor.scss'
 let bg = PIXI.Sprite.fromImage(bureau)
@@ -32,38 +34,19 @@ class Cursor extends Component {
     let height = ref.clientHeight
     let maskRadius = 140
     let maskRadius2 = 160
+    this.container = new PIXI.Container()
+    this.app = new PIXI.Application(width, height, {transparent:true, resolution: 1})
+    ref.appendChild(this.app.view)
+   
+    this.app.ticker.add( this.renderScene.bind(this) )
 
-    var app = new PIXI.Application(width, height, {transparent:true, resolution: 1})
-    ref.appendChild(app.view)
-  
     let bg2 = PIXI.Sprite.fromImage(bureau)
-    bg.width  = 1920
-    bg.height = 1080
-    
-    bg2.width  = 1920
-    bg2.height = 1080
-
-    let imageRatio = bg.width / bg.height
-    let containerRatio = width / height
-    if(containerRatio > imageRatio) {
-        bg.height = bg.height / (bg.width / width)
-        bg2.height = bg2.height / (bg2.width / width)
-        bg.width = width
-        bg2.width = width
-        bg.position.x = 0
-        bg2.position.x = 0
-        bg.position.y = (height - bg.height) / 2
-        bg2.position.y = (height - bg2.height) / 2
-    }else{
-        bg.width = bg.width / (bg.height / height)
-        bg2.width = bg2.width / (bg2.height / height)
-        bg.height = height
-        bg2.height = height
-        bg.position.y = 0
-        bg2.position.y = 0
-        bg.position.x = (width - bg.width) / 2
-        bg2.position.x = (width - bg2.width) / 2
-    }
+    let bureauItemImg = AssetsManager.get('bureauItem')
+    let baseTexture = new PIXI.BaseTexture(bureauItemImg)
+    let texture = new PIXI.Texture(baseTexture)
+    let bureauItemSprite = new PIXI.Sprite(texture) 
+    bureauItemSprite.y = 476
+    bureauItemSprite.x = 826
 
     // CIRCLE MASK
     this.mask1 = new PIXI.Graphics()
@@ -71,7 +54,7 @@ class Cursor extends Component {
     this.mask1.drawCircle(0, 0, maskRadius)
     this.mask1.endFill()
 
-    this.mask1.position.x = width/2
+    this.mask1.position.x = width/2 
     this.mask1.position.y = height/2
  
     // CIRCLE MASK
@@ -81,25 +64,58 @@ class Cursor extends Component {
     this.mask2.endFill()
 
     this.mask2Position =  {
-      x: width/2,
-      y: height/2
+      x: bg2.width/2,
+      y: bg2.height/2
     }
     this.mask2.position.x = this.mask2Position.x
     this.mask2.position.y = this.mask2Position.y
     
-    this.mask1.visible = false
-    this.mask2.visible = false
+    // this.mask1.visible = false
+    // this.mask2.visible = false
 
+    
     bg.mask = this.mask1
     bg2.mask = this.mask2
+    bureauItemSprite.mask = this.mask2
+
+    this.brt = new PIXI.BaseRenderTexture(bg2.width, bg2.height, PIXI.SCALE_MODES.LINEAR, 1)
+    this.rt = new PIXI.RenderTexture(this.brt)
+
+    this.spriteScene = new PIXI.Sprite(this.rt)
   
-    app.stage.addChild(this.mask1)
-    app.stage.addChild(this.mask2)
-    app.stage.addChild(bg)
-    app.stage.addChild(bg2)
+    this.container.addChild(this.mask1)
+    this.container.addChild(this.mask2)
+    this.container.addChild(bg)
+    this.container.addChild(bg2)
+    this.container.addChild(bureauItemSprite)
+    this.setFullScreen(this.spriteScene, this.spriteScene.width, this.spriteScene.height)
+    this.app.stage.addChild(this.spriteScene)
 
     this.setState({init:true})
   }
+
+  renderScene = () => {
+    this.app.renderer.render(this.container, this.rt)
+  }
+
+  setFullScreen = (bg, spriteW, spriteH) => {
+    let width = window.innerWidth
+    let height = window.innerHeight
+
+    let imageRatio = spriteW / spriteH
+    let containerRatio = width / height
+    if(containerRatio > imageRatio) {
+        bg.height = bg.height / (bg.width / width)
+        bg.width = width
+        bg.position.x = 0
+        bg.position.y = (height - bg.height) / 2
+    } else {
+        bg.width = bg.width / (bg.height / height)
+        bg.height = height
+        bg.position.y = 0
+        bg.position.x = (width - bg.width) / 2
+    }
+}
 
   showLight = () => {
     if(this.props.isPlayer1Connected) {
