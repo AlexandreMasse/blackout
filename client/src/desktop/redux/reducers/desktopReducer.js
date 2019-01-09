@@ -1,10 +1,11 @@
 import {websocketsOnActionTypes} from '../actions/websockets/websocketsActionTypes'
-import {SET_APP_LOADED} from '../actions/desktopActionTypes'
+import desktopActionTypes from '../actions/desktopActionTypes';
 
 const initialState = {
   app: {
     isLoaded: false
   },
+  currentStep: null,
   roomId: null,
   password1: null,
   password2: null,
@@ -28,14 +29,21 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    // app action
+    // desktop action
 
-    case SET_APP_LOADED: {
+    case desktopActionTypes.SET_APP_LOADED: {
       return {
         ...state,
         app: {
           isLoaded: true
         }
+      }
+    }
+
+    case desktopActionTypes.SET_CURRENT_STEP: {
+      return {
+        ...state,
+        currentStep: action.currentStep
       }
     }
 

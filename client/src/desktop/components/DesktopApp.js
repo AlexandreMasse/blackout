@@ -1,14 +1,17 @@
 import React, {Component} from 'react'
+//redux
 import {connect} from 'react-redux'
 import { Provider } from 'react-redux'
 import configureStore from '../redux/store'
 import {wsEmitDeviceType} from '../redux/actions/websockets/websocketsAction'
-import {setAppLoaded} from '../redux/actions/desktopAction'
+import {setAppLoaded, setCurrentStep} from '../redux/actions/desktopAction'
+//assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
 import {Loading} from "./components"
 //steps
-import {ConnexionStep} from "./steps"
+import {StepManager} from "./managers";
+import steps from "./steps"
 // style
 import './DesktopApp.scss'
 
@@ -17,6 +20,7 @@ class DesktopApp extends Component {
   constructor(props) {
     super(props)
     this.props.wsEmitDeviceType("desktop")
+    this.props.setCurrentStep(steps.CONNEXION.name)
   }
 
   componentWillMount() {
@@ -36,13 +40,13 @@ class DesktopApp extends Component {
   }
 
   render() {
-    const {isLoaded} = this.props
+    const {isLoaded, currentStep} = this.props
     return (
       <div className="App desktop-app desktop-app--loading">
         {!isLoaded ? (
           <Loading/>
         ) : (
-          <ConnexionStep/>
+          <StepManager currentStep={currentStep}/>
         )}
       </div>
     )
@@ -51,7 +55,8 @@ class DesktopApp extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoaded : state.desktop.app.isLoaded
+    isLoaded : state.desktop.app.isLoaded,
+    currentStep : state.desktop.currentStep
   }
 }
 
@@ -59,6 +64,7 @@ const mapDispatchToProps = dispatch => {
   return {
     wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
     setAppLoaded: () => dispatch(setAppLoaded()),
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
   }
 }
 

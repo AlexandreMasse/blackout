@@ -61,15 +61,10 @@ export default class User {
         })
     }
 
-    phoneData = (io,socket) => {
+    phoneData = (io, socket) => {
         socket.on('phoneData', (data) => {
-             console.log("on phoneData", data)
-             console.log("socket.room", socket.room)
+            console.log("on phoneData", data)
             this.phoneDataObject = data.phoneData
-            // io.to(socket.room).emit('phoneData', {
-            //     phoneData: data.phoneData,
-            //     userId: socket.username
-            // })
         })
     }
 
