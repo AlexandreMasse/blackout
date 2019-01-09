@@ -9,7 +9,6 @@
   justify-content: center;
   color: black;
 
-
   .intro {
     display: flex;
     flex-direction: column;
@@ -108,7 +107,7 @@
 
   &.fade-appear-active {
     opacity: 1;
-    transition: all 700ms 700ms;
+    transition: all 2000ms 700ms;
   }
 
   &-done {

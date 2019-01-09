@@ -6,7 +6,7 @@ import {setCurrentStep} from "../../../redux/actions/mobileAction";
 //components
 import {Keyboard} from "../../components";
 //step
-import {stepTypes} from '..'
+import steps from '..'
 //lib
 import NoSleep from "nosleep.js";
 
@@ -21,7 +21,6 @@ class IntroStep extends Component {
     this.state = {
       password: ''
     }
-
   }
 
   setFullscreen = () => {
@@ -58,7 +57,7 @@ class IntroStep extends Component {
     // change step after connexion
     if(nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
       setTimeout(() => {
-        this.props.setCurrentStep(stepTypes.CURSOR)
+        this.props.setCurrentStep(steps.CURSOR.name)
       }, 3000)
     }
   }
@@ -67,7 +66,8 @@ class IntroStep extends Component {
     const { roomId, userId, isConnected} = this.props
 
     return (
-      <div className="intro" >
+      <div className="intro">
+        <button style={{color:"red"}} onClick={() => this.props.setCurrentStep(steps.CURSOR.name)}>Step suivant</button>
         {isConnected ? (
           <>
             <p>Hello <span>{userId}</span></p>
