@@ -4,10 +4,10 @@ import { Provider } from 'react-redux'
 import configureStore from '../redux/store'
 import { connect } from 'react-redux'
 import {wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
-import {setCurrentStep, setPhoneData} from '../redux/actions/mobileAction'
+import {setCurrentStep, setPhoneData, setAppLoaded} from '../redux/actions/mobileAction'
 import {socket} from '../redux/actions/websockets/websocketsAction'
 // Component 
-import {BackgroundGrid} from './components'
+import {BackgroundGrid, Loading} from './components'
 import {StepManager} from "./managers";
 //Step
 import steps from './steps'
@@ -15,6 +15,9 @@ import steps from './steps'
 import { getCookie, getPhoneData } from '../../utils'
 //Style
 import './MobileApp.scss'
+//Assets loading
+import load from '../../vendors/assets-loader'
+import {assetsToLoad} from '../assets/asset-list'
 
 class MobileApp extends Component {
 
@@ -29,6 +32,18 @@ class MobileApp extends Component {
     })
 
     this.props.setCurrentStep(steps.INTRO.name)
+    this.loadAssets()
+  }
+
+  loadAssets = () => {
+    load.any(assetsToLoad, ev => {
+      console.log(`Progress: ${ev.progress}`)
+    }).then(assets => {
+      window.assets = assets
+      setTimeout(() => {
+        this.props.setAppLoaded()
+      }, 1000)
+    })
   }
 
   componentDidMount() {
@@ -76,11 +91,17 @@ class MobileApp extends Component {
   }
 
   render() {
-    const {currentStep} = this.props;
+    const {currentStep, isLoaded} = this.props;
     return (
       <div className="app mobile-app">
-        <BackgroundGrid/>
-        <StepManager currentStep={currentStep}/>
+        {isLoaded ? (
+          <>
+            <BackgroundGrid/>
+            <StepManager currentStep={currentStep}/>
+          </>
+        ) : (
+          <Loading/>
+        )}
       </div>
     )
   }
@@ -93,11 +114,13 @@ const mapStateToProps = state => {
     isConnected: state.mobile.isConnected,
     currentStep: state.mobile.currentStep,
     phoneData: state.mobile.phoneData,
+    isLoaded : state.mobile.isLoaded
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+      setAppLoaded: () => dispatch(setAppLoaded()),
       setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
       setPhoneData: (phoneData) => dispatch(setPhoneData(phoneData)),
       wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),

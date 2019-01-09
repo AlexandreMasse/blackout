@@ -56,7 +56,7 @@ class Keyboard extends Component {
           </div>
         </div>
         <button className="keyboard__button button" onClick={handleSubmit}>
-           <span> {'> Valider <'} </span>
+           <span>{'> Valider <'}</span>
         </button>
       </div>
     );

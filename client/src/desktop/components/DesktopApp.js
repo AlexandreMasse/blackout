@@ -16,10 +16,10 @@ class DesktopApp extends Component {
 
   constructor(props) {
     super(props)
+    this.props.wsEmitDeviceType("desktop")
   }
 
   componentWillMount() {
-    this.props.wsEmitDeviceType("desktop")
     this.assetLoaded()
   }
 

@@ -9,9 +9,11 @@ import {Keyboard} from "../../components";
 import steps from '..'
 //lib
 import NoSleep from "nosleep.js";
-
 //css
 import './IntroStep.scss'
+//asset
+import {AssetsManager} from "./../../../../managers"
+import {assetsToLoad} from "../../../assets/asset-list"
 
 class IntroStep extends Component {
 
@@ -46,10 +48,16 @@ class IntroStep extends Component {
   }
 
   handleKeyBoardPress = (key) => {
-    this.setState({password: this.state.password + key});
+    if(this.state.password.length < 4) {
+      this.setState({
+        password: this.state.password + key
+      });
+    }
   }
   handleKeyBoardPressDelete = (key) => {
-    this.setState({password: ''});
+    this.setState({
+      password: this.state.password.substring(0,this.state.password.length-1)
+    });
   }
 
   //TODO: just for test
@@ -64,10 +72,11 @@ class IntroStep extends Component {
 
   render() {
     const { roomId, userId, isConnected} = this.props
+    const { password} = this.state
 
     return (
-      <div className="intro">
-        <button style={{color:"red"}} onClick={() => this.props.setCurrentStep(steps.CURSOR.name)}>Step suivant</button>
+      <div className="intro-step">
+        <button onClick={() => this.props.setCurrentStep(steps.CURSOR.name)}>Step suivant</button>
         {isConnected ? (
           <>
             <p>Hello <span>{userId}</span></p>
@@ -75,32 +84,36 @@ class IntroStep extends Component {
           </>
         ) : (
           <>
-          <div className='intro__infos'>
-            <span className='intro__infos__logoContainer'>
-              <svg className="intro__infos__logo" viewBox="0 0 227 32">
+          <div className='intro-step__infos'>
+            <span className='intro-step__infos__logoContainer'>
+              <svg className="intro-step__infos__logo" viewBox="0 0 227 32">
                 <use xlinkHref="#icon-logo" />
               </svg>
             </span>
-            <p className='intro__infos__paragraph'>
+            <p className='intro-step__infos__paragraph'>
               <span className="bold">Blackout</span> est un jeu collaboratif qui fait participer deux joueurs
             </p>
-            <p className='intro__infos__paragraph'>
+            <p className='intro-step__infos__paragraph'>
               Pour lancer une partie, <br/> rendez-vous sur <span className="bold">blackout.io</span>  à partir d’un ordinateur.
             </p>
-            <span className="intro__infos__viewmore">Entrez le code</span>
-            <span className="intro__infos__viewmoreIcon">
-              <svg className="intro__infos__arrow" viewBox="0 0 21 32">
-                <use xlinkHref="#icon-arrow" />
-              </svg>
-            </span>
+            <span className="intro-step__infos__viewmore">Entrez le code</span>
+            <div className="intro-step__infos__viewmoreIcon">
+              <img src={AssetsManager.get(assetsToLoad.arrowDonw.name).src} alt=""/>
+            </div>
           </div>
-          <form className='intro__infos__form'>
-            <input disabled={true} type="number" value={this.state.password}/>
-            <Keyboard handleKeyPress={this.handleKeyBoardPress} handleDelete={this.handleKeyBoardPressDelete}
-                      handleSubmit={this.submit}/>
-            {/*<input type="submit" value={"Submit"}/>*/}
-            
-          </form>
+          <div className='intro-step__form'>
+            <div className="intro-step__form__numbers">
+              <p className="intro-step__form__numbers__1">{password.substring(0, 1)}</p>
+              <p className="intro-step__form__numbers__2">{password.substring(1, 2)}</p>
+              <p className="intro-step__form__numbers__3">{password.substring(2, 3)}</p>
+              <p className="intro-step__form__numbers__4">{password.substring(3, 4)}</p>
+            </div>
+            <Keyboard
+              handleKeyPress={this.handleKeyBoardPress}
+              handleDelete={this.handleKeyBoardPressDelete}
+              handleSubmit={this.submit}
+            />
+          </div>
           </>
         )}
       </div>

@@ -6,41 +6,32 @@ import {CSSTransition} from "react-transition-group";
 
 class StepManager extends Component {
 
+  constructor(props) {
+    super(props)
+    this.stepsArray = Object.keys(steps).map(i => steps[i])
+  }
+
   renderSteps = () => {
-    let stepsNodes = []
-
-    for(let step in steps) {
-      const stepObject = steps[step];
-
-      stepsNodes.push(
-        <CSSTransition
-          key={stepObject.name}
-          timeout={stepObject.timeout}
-          classNames={stepObject.classNames}
-          in={stepObject.name === this.props.currentStep}
+    return this.stepsArray.map(step => (
+      <CSSTransition
+          key={step.name}
+          in={step.name === this.props.currentStep}
+          timeout={step.timeout}
+          classNames={step.classNames}
           appear={true}
           mountOnEnter={true}
           unmountOnExit={true}
-          onEnter={stepObject.onEnter}
-          onExit={stepObject.onExit}
+          onEnter={step.onEnter}
+          onExit={step.onExit}
         >
-          {stepObject.component}
+          {step.component}
         </CSSTransition>
-      )
-    }
-
-    // const stepObject = steps[this.props.currentStep];
-
-    return stepsNodes
-
+    ))
   }
-
 
   render() {
     const {currentStep} = this.props;
-    return (
-      <>{currentStep && this.renderSteps()}</>
-    )
+    return currentStep && this.renderSteps()
   }
 }
 
