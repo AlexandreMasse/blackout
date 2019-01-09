@@ -37,11 +37,6 @@ class Cursor extends Component {
     ref.appendChild(app.view)
   
     let bg2 = PIXI.Sprite.fromImage(bureau)
-    bg.width  = 1920
-    bg.height = 1080
-    
-    bg2.width  = 1920
-    bg2.height = 1080
 
     let imageRatio = bg.width / bg.height
     let containerRatio = width / height

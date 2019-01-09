@@ -47,6 +47,7 @@
       font-size: 2.2em;
       margin-top: 0;
       margin-bottom: 3.75rem;
+      font-variation-settings: $light;
 
       &:last-child {
        margin-bottom: 0;
@@ -58,6 +59,7 @@
       bottom: 40px;
       text-align: center;
       font-size: 2.2rem;
+      font-variation-settings: $medium;
       color: $black;
       left: 50%;
       transform: translateX(-50%);
@@ -95,6 +97,7 @@
       display: flex;
       width: 100%;
       justify-content: space-evenly;
+      font-variation-settings: $light;
 
       p {
         height: 4rem;
@@ -104,6 +107,7 @@
         border-bottom: 1px solid $white;
         text-align: center;
         font-size: 2.5rem;
+        font-variation-settings: $light;
         font-family: $font-scopevariable;
       }
     }
