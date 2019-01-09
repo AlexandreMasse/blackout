@@ -1,14 +1,13 @@
 @import "../../../../stylesheets/global";
 
 
-.step-connexion {
+.connexion-step {
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: black;
-
 
   .intro {
     display: flex;
@@ -33,11 +32,8 @@
       display: block;
       width: 100%;
       @include keyframe-fade-in;
-
-      &:nth-of-type(1) {
-        margin-top: 90px;
-        animation: fade-in 2s 1.5s ease-in-out forwards;
-      }
+      margin-top: 90px;
+      animation: fade-in 2s 1.5s ease-in-out forwards;
     }
   }
 
@@ -108,7 +104,7 @@
 
   &.fade-appear-active {
     opacity: 1;
-    transition: all 700ms 700ms;
+    transition: all 2000ms 700ms;
   }
 
   &-done {

@@ -1,1 +1,4 @@
-export const SET_APP_LOADED = "SET_APP_LOADED"
+export default {
+  SET_APP_LOADED: "SET_APP_LOADED",
+  SET_CURRENT_STEP: "SET_CURRENT_STEP",
+}

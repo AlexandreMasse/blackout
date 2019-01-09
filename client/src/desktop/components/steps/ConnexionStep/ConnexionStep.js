@@ -1,11 +1,18 @@
 import React, {Component} from 'react'
+//redux
 import {connect} from 'react-redux'
+import {setCurrentStep} from "../../../redux/actions/desktopAction";
+//lib
 import classNames from 'classnames'
 import {CSSTransition} from 'react-transition-group'
+//component
 import {Cursor} from '../../components'
+//asset
 import logotype from "../../../../assets/global/video/logotype.mp4"
 // style
 import './ConnexionStep.scss'
+//step
+import steps from "../index";
 
 class ConnexionStep extends Component {
   render() {
@@ -18,12 +25,13 @@ class ConnexionStep extends Component {
 
       <CSSTransition classNames={"fade"} in={!(isPlayer1Connected && isPlayer2Connected)} appear={true}
                       timeout={{enter: 0, exit: 2500}} mountOnEnter={true} unmountOnExit={true}>
-        <div className="step-connexion">
+        <div className="connexion-step step">
           <div className="intro">
             <video width="350" autoPlay loop muted={true}>
               <source src={logotype} type="video/mp4"/>
             </video>
             <p>Prenez votre mobile et connectez vous à l'expérience !</p>
+            <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
           </div>
           <div className="codes">
             <div className={classNames("player1", {"connected": isPlayer1Connected})}>
@@ -53,4 +61,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ConnexionStep)
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnexionStep)

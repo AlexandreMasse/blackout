@@ -1,0 +1,27 @@
+@import "../../../../stylesheets/global.scss";
+
+.indication {
+    position: relative;
+    background:red;
+    z-index: 10;
+    &__title {
+        text-transform: uppercase;
+        font-size: 3.6rem;
+        font-variation-settings: $bold;
+    }
+
+    &__description {
+        margin: 0;
+        font-size: 3rem;
+        font-weight:300; 
+    }
+
+    &__iconContainer {
+        display: inline-block;
+        width:7.8vw;
+
+        &__icon {
+            width: 100%;
+        }
+    }
+}

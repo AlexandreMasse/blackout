@@ -17,6 +17,7 @@
       background-color: $black;
       color: $white;
       border: 1px solid rgba(255, 255, 255, 0.31);
+      font-variation-settings: $light;
       //transition: all 0.2s ease;
 
       &:active {
@@ -65,6 +66,7 @@
     border: 0;
     background: $red;
     font-size: 2.5rem;
+    font-variation-settings: $light;
     outline: none;
 
     &:active {

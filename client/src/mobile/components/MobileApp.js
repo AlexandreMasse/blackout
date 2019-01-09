@@ -3,17 +3,21 @@ import React,{ Component} from 'react'
 import { Provider } from 'react-redux'
 import configureStore from '../redux/store'
 import { connect } from 'react-redux'
-import {wsEmitPassword, wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
-import {setCurrentStep, setPhoneData} from '../redux/actions/mobileAction'
+import {wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
+import {setCurrentStep, setPhoneData, setAppLoaded} from '../redux/actions/mobileAction'
 import {socket} from '../redux/actions/websockets/websocketsAction'
 // Component 
-import {BackgroundGrid} from './components'
+import {BackgroundGrid, Loading} from './components'
+import {StepManager} from "./managers";
 //Step
-import {IntroStep, CursorStep, stepTypes} from './steps'
+import steps from './steps'
 //Lib
 import { getCookie, getPhoneData } from '../../utils'
 //Style
 import './MobileApp.scss'
+//Assets loading
+import load from '../../vendors/assets-loader'
+import {assetsToLoad} from '../assets/asset-list'
 
 class MobileApp extends Component {
 
@@ -27,7 +31,19 @@ class MobileApp extends Component {
       this.props.wsEmitPhoneData(data)
     })
 
-    this.props.setCurrentStep(stepTypes.INTRO)
+    this.props.setCurrentStep(steps.INTRO.name)
+    this.loadAssets()
+  }
+
+  loadAssets = () => {
+    load.any(assetsToLoad, ev => {
+      console.log(`Progress: ${ev.progress}`)
+    }).then(assets => {
+      window.assets = assets
+      setTimeout(() => {
+        this.props.setAppLoaded()
+      }, 1000)
+    })
   }
 
   componentDidMount() {
@@ -74,24 +90,19 @@ class MobileApp extends Component {
     }
   }
 
-  renderSteps = () => {
-    switch (this.props.currentStep) {
-      case stepTypes.INTRO:
-        return <IntroStep/>
-      case stepTypes.CURSOR:
-        return <CursorStep/>
-      default:
-        return null
-    }
-  }
-
-
   render() {
+    const {currentStep, isLoaded} = this.props;
     return (
-        <div className="app mobile-app"> 
-          <BackgroundGrid />
-          {this.renderSteps()}
-        </div>
+      <div className="app mobile-app">
+        {isLoaded ? (
+          <>
+            <BackgroundGrid/>
+            <StepManager currentStep={currentStep}/>
+          </>
+        ) : (
+          <Loading/>
+        )}
+      </div>
     )
   }
 }
@@ -103,16 +114,17 @@ const mapStateToProps = state => {
     isConnected: state.mobile.isConnected,
     currentStep: state.mobile.currentStep,
     phoneData: state.mobile.phoneData,
+    isLoaded : state.mobile.isLoaded
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+      setAppLoaded: () => dispatch(setAppLoaded()),
       setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
       setPhoneData: (phoneData) => dispatch(setPhoneData(phoneData)),
       wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
       wsEmitPhoneData: (data) => dispatch(wsEmitPhoneData({data})),
-      wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
       wsEmitReconnection: (userId, roomId) => dispatch(wsEmitReconnection({userId, roomId})),
   }
 }
@@ -123,6 +135,5 @@ export default () => (
   <Provider store={configureStore()}>
     <MobileAppConnected/>
   </Provider>
-
 )
 

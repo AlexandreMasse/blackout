@@ -1,8 +1,16 @@
-import {SET_APP_LOADED} from './desktopActionTypes'
+import desktopActionTypes from './desktopActionTypes'
 
 export const setAppLoaded = (payload) => (dispatch) => {
  dispatch({
-  type: SET_APP_LOADED,
+  type: desktopActionTypes.SET_APP_LOADED,
   payload
+ })
+}
+
+
+export const setCurrentStep = (currentStep) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_CURRENT_STEP,
+  currentStep
  })
 }

@@ -1,0 +1,14 @@
+@import "../../../../stylesheets/global";
+
+.analysis-step {
+  height: 100%;
+  width: 100%;
+  background-color: green;
+  color: red;
+  display: flex;
+
+  &__text {
+    margin: auto;
+    font-size: 4rem;
+  }
+}
