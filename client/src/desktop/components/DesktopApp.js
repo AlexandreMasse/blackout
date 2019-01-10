@@ -8,7 +8,7 @@ import {setAppLoaded, setCurrentStep} from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
-import {Loading} from "./components"
+import {Loading, TextAnimation} from "./components"
 //steps
 import {StepManager} from "./managers";
 import steps from "./steps"

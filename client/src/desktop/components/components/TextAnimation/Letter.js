@@ -1,13 +1,13 @@
 export default class Letter {
     constructor(DOMElement, nextChar) {
-        this.DOMEl = DOMElement;
-        this.char = DOMElement.innerHTML;
-        this.next = nextChar;
-        this.speed = Math.floor(Math.random() * (500 - 10) );
-        this.total = 0;
-        this.duration = 2000;
-        this.animating = true;
-        this.isDead = false;
+        this.DOMEl = DOMElement
+        this.char = DOMElement.innerHTML
+        this.next = nextChar
+        this.speed = Math.floor(Math.random() * (200 - 10) )
+        this.total = 0
+        this.duration = 300
+        this.animating = true
+        this.isDead = false
 
         this.timer = setInterval(() => {
             if ( this.animating === true ) {
@@ -20,11 +20,9 @@ export default class Letter {
     }
 
     animate() {
-        var i;
-        var random;
         
         if ( !this.isDead ) {
-          window.requestAnimationFrame( this.animate.bind(this) );
+          window.requestAnimationFrame( this.animate.bind(this) )
         }
         
         

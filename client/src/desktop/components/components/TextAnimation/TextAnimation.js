@@ -13,11 +13,14 @@ export default class TextAnimation extends Component {
         // this.ini
         // this.initLetter('BLACK OUT')
         // this.initWord('BLACK OUT')
-        // this.initWord()
+    }
+    
+    handleRef = (ref) => {
+        this.initWord(ref)
     }
 
-    initWord() {
-        this.word = new Word()
+    initWord(ref) {
+        this.word = new Word(ref)
         this.word.start('BLACKOUT')
         console.log("coucou")
     }
@@ -35,9 +38,7 @@ export default class TextAnimation extends Component {
 
     render() {
         return (
-            <p className="textAnimation" >
-                {this.renderText('BLACKOUT')}
-            </p>
+            <p className="textAnimation" ref={this.handleRef} />
         )
     }
 }
