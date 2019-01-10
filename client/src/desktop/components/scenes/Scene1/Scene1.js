@@ -1,9 +1,15 @@
 import {AssetsManager} from "../../../../managers";
 import * as PIXI from "pixi.js";
+//redux
+import {setCurrentScene} from "../../../redux/actions/desktopAction";
+//scenes
+import scenes from ".."
 
 export default class Scene1 {
 
-  constructor() {
+  constructor({dispatch}) {
+    this.dispatch = dispatch
+
     this.needUpdate = true;
 
     this.init()
@@ -23,6 +29,11 @@ export default class Scene1 {
     this.brt = new PIXI.BaseRenderTexture(bureauItemImg.width, bureauItemImg.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
+
+
+    setTimeout(() => {
+      this.dispatch(setCurrentScene(scenes.SCENE2.name))
+    },5000)
   }
 
   update() {

@@ -1,7 +1,11 @@
 @import "../../../../stylesheets/global";
 
 .scene-step {
-  background-color: red;
+  //override step style
+  &.step {
+     background-color: red;
+    width: 80%;
+  }
 
   &__button {
     z-index: 2;

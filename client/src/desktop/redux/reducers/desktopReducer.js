@@ -7,7 +7,8 @@ const initialState = {
     isLoaded: false
   },
   currentStep: null,
-  currentScene: scenes.SCENE1.name,
+  currentScene: scenes.SCENE1.name, //TODO
+  isSplitScreen: false, //TODO
   roomId: null,
   password1: null,
   password2: null,
@@ -16,13 +17,15 @@ const initialState = {
       id: "player1",
       isConnected: false,
       position: null,
-      phoneData: null
+      phoneData: null,
+      currentSplitScene: null //TODO
     },
     {
       id: "player2",
       isConnected: false,
       position:null,
-      phoneData: null
+      phoneData: null,
+      currentSplitScene: null //TODO
     }
   ],
 }
