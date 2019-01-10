@@ -42,6 +42,7 @@ class MobileApp extends Component {
       window.assets = assets
       setTimeout(() => {
         this.props.setAppLoaded()
+        // this.reconnect()
       }, 1000)
     })
   }
@@ -54,9 +55,9 @@ class MobileApp extends Component {
     let cookieRoomID = getCookie('room')
     let cookieUserId = getCookie('userId')
     if (cookieRoomID && cookieUserId) {
-      socket.emit('reconnect', {
+      socket.emit('reco', {
         userId: cookieUserId,
-        roomId: cookieUserId
+        roomId: cookieRoomID
       })
     }
   }

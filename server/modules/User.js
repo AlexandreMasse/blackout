@@ -23,6 +23,13 @@ export default class User {
                 roomId: roomId,
                 userId: userId
                 })
+                
+                io.in(roomId).clients((err, clients) => {
+                    console.log(clients)
+                    var size = Object.keys(clients).length;
+                    console.log(size)
+                })
+
                 //Emit phone data after connexion
                 io.to(socket.room).emit('phoneData', {
                     phoneData: this.phoneDataObject,
@@ -37,15 +44,23 @@ export default class User {
     }
 
     reconnect = (io, socket) => {
-        socket.on('reconnect' , (data) => {
-            console.log("on sendCookie", data)
-            socket.username = data.userId
+        socket.on('reco' , (data) => {
+                console.log("on sendCookie", data)
+                socket.username = data.userId
                 socket.room = data.roomId
-                socket.join(data.roomId)
-                io.to(data.roomId).emit('connectToRoom', {
-                roomId: data.roomId,
-                userId: data.userId
-            })
+
+                io.in(data.roomId).clients((err, clients) => {
+                    console.log(clients)
+                    var size = Object.keys(clients).length;
+                    console.log(size)
+                    if (size > 1 ) {
+                        socket.join(data.roomId)
+                        io.to(data.roomId).emit('connectToRoom', {
+                            roomId: data.roomId,
+                            userId: data.userId
+                        })
+                    }
+                })
         })
     }
 
@@ -57,7 +72,7 @@ export default class User {
             roomId: socket.room,
             userId: socket.username
             })
-            console.log('user mobile disconnected')
+            console.log(`user ${socket.username} mobile disconnected`)
         })
     }
 

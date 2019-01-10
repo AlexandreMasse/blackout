@@ -8,6 +8,7 @@
   justify-content: center;
   color: white;
   position: relative;
+  z-index: 1;
 
 
   // provisoir
@@ -67,8 +68,8 @@
 
     &__viewmoreIcon {
       position: absolute;
-      bottom: -48px;
-      left: 50%;
+      bottom: -10vw;
+      left: calc( 50% - .9px);
       transform: translateX(-50%);
       width: 12%;
       mix-blend-mode: difference;
