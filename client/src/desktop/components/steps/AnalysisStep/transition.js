@@ -11,7 +11,7 @@ export const onEnter = (html) => {
 
 export const onExit = (html) => {
 
-  TweenMax.fromTo(html, 3, {
+  TweenMax.fromTo(html, 2, {
     opacity: 1,
   },{
     opacity: 0

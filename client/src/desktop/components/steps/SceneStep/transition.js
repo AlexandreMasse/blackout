@@ -2,7 +2,7 @@ import {TweenMax} from 'gsap'
 
 export const onEnter = (html) => {
 
-  TweenMax.fromTo(html, 3, {
+  TweenMax.fromTo(html, 2, {
     opacity: 0,
   },{
     opacity: 1

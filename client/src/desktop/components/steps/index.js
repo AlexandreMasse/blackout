@@ -25,7 +25,7 @@ export default {
     name: "ANALYSIS",
     classNames: "",
     component: <AnalysisStep/>,
-    timeout: {enter: 3000, exit: 3000},
+    timeout: {enter: 3000, exit: 2000},
     onEnter: AnalysisStepOnEnter,
     onExit: AnalysisStepOnExit
   },
@@ -33,7 +33,7 @@ export default {
     name: "SCENE",
     classNames: "",
     component: <SceneStep/>,
-    timeout: {enter: 3000, exit: 3000},
+    timeout: {enter: 2000, exit: 3000},
     onEnter: SceneStepOnEnter,
     onExit: SceneStepOnExit
   }
