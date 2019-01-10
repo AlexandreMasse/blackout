@@ -7,6 +7,10 @@ import {onEnter as AnalysisStepOnEnter, onExit as AnalysisStepOnExit} from "./An
 import {default as AnalysisStep} from './AnalysisStep/AnalysisStep'
 
 
+import {onEnter as SceneStepOnEnter, onExit as SceneStepOnExit} from "./SceneStep/transition";
+import {default as SceneStep} from './SceneStep/SceneStep'
+
+
 
 export default {
   CONNEXION: {
@@ -24,6 +28,14 @@ export default {
     timeout: {enter: 3000, exit: 3000},
     onEnter: AnalysisStepOnEnter,
     onExit: AnalysisStepOnExit
+  },
+  SCENE: {
+    name: "SCENE",
+    classNames: "",
+    component: <SceneStep/>,
+    timeout: {enter: 3000, exit: 3000},
+    onEnter: SceneStepOnEnter,
+    onExit: SceneStepOnExit
   }
 }
 

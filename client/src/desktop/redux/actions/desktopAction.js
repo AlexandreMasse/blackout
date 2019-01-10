@@ -14,3 +14,10 @@ export const setCurrentStep = (currentStep) => (dispatch, getState, {emit}) => {
   currentStep
  })
 }
+
+export const setCurrentScene = (currentScene) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_CURRENT_SCENE,
+  currentScene
+ })
+}

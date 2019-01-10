@@ -31,7 +31,7 @@ class ConnexionStep extends Component {
               <source src={logotype} type="video/mp4"/>
             </video>
             <p>Prenez votre mobile et connectez vous à l'expérience !</p>
-            <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
+            <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>Next step ></p>
           </div>
           <div className="codes">
             <div className={classNames("player1", {"connected": isPlayer1Connected})}>

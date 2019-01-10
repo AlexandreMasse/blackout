@@ -63,7 +63,6 @@ export default class User {
 
     phoneData = (io, socket) => {
         socket.on('phoneData', (data) => {
-            console.log("on phoneData", data)
             this.phoneDataObject = data.phoneData
         })
     }

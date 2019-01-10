@@ -1,11 +1,13 @@
 import {websocketsOnActionTypes} from '../actions/websockets/websocketsActionTypes'
 import desktopActionTypes from '../actions/desktopActionTypes';
+import scenes from './../../components/scenes'
 
 const initialState = {
   app: {
     isLoaded: false
   },
   currentStep: null,
+  currentScene: scenes.SCENE1.name,
   roomId: null,
   password1: null,
   password2: null,
@@ -44,6 +46,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentStep: action.currentStep
+      }
+    }
+
+    case desktopActionTypes.SET_CURRENT_SCENE: {
+      return {
+        ...state,
+        currentScene: action.currentScene
       }
     }
 

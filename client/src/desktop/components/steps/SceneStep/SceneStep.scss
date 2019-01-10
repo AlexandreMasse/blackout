@@ -1,0 +1,12 @@
+@import "../../../../stylesheets/global";
+
+.scene-step {
+  background-color: red;
+
+  &__button {
+    z-index: 2;
+    position: relative;
+    font-size: 3rem;
+  }
+}
+
