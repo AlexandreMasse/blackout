@@ -46,7 +46,10 @@ class DesktopApp extends Component {
         {!isLoaded ? (
           <Loading/>
         ) : (
+          <>
+          <TextAnimation />
           <StepManager currentStep={currentStep}/>
+          </>
         )}
       </div>
     )
