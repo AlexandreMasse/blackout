@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 //redux
 import {connect} from 'react-redux';
 import {wsEmitDeviceType, wsEmitPassword} from "../../../redux/actions/websockets/websocketsAction";
-import {setCurrentStep} from "../../../redux/actions/mobileAction";
+import {setCurrentStep, setPassword} from "../../../redux/actions/mobileAction";
 //components
 import {Keyboard} from "../../components";
 //step
@@ -38,12 +38,14 @@ class IntroStep extends Component {
   submit = (e) => {
     e.preventDefault()
     let password = this.state.password
-    if(password !== null && password !== '') {
+    if(password !== null && password !== '' && password.length === 4) {
+      this.props.setPassword(password)
       this.props.wsEmitPassword(password)
+      //TODO: activate fullscreen
       //this.setFullscreen()
       this.setNoSleep()
     } else {
-      console.log('le password est vide')
+      console.log('le password est invalide')
     }
   }
 
@@ -135,6 +137,7 @@ const mapDispatchToProps = dispatch => {
     wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
     wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
     setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
+    setPassword: (password) => dispatch(setPassword({password})),
   }
 }
 

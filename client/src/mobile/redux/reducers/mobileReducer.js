@@ -5,9 +5,10 @@ const initialState = {
     roomId: null,
     userId: null,
     isConnected: false,
+    password: null,
     currentStep: null,
     phoneData: null,
-    isLoaded: false
+    isLoaded: false,
 }
 
 export default (state = initialState, action) => {
@@ -29,6 +30,14 @@ export default (state = initialState, action) => {
             }
         }
 
+        case mobileActionTypes.SET_PASSWORD: {
+            const {password} = action.payload
+            return {
+                ...state,
+                password
+            }
+        }
+
         case mobileActionTypes.SET_PHONE_DATA: {
             return {
                 ...state,
@@ -38,15 +47,19 @@ export default (state = initialState, action) => {
 
         // websocket actions
 
-        case websocketsOnActionTypes.WEBSOCKET_ON_CONNECT_TO_ROOM:
-            const {roomId, userId} = action.payload
+        case websocketsOnActionTypes.WEBSOCKET_ON_CONNECT_TO_ROOM: {
+            const {roomId, userId, password} = action.payload
+            const isCurrentUser = state.password === password
             return {
                 ...state,
-                roomId,
-                userId,
-                isConnected: true
+                roomId: isCurrentUser ? roomId : state.roomId,
+                userId: isCurrentUser ? userId : state.userId,
+                isConnected: isCurrentUser ? true : state.isConnected,
             }
-        default:
+        }
+
+        default: {
             return state
+        }
     }
 }

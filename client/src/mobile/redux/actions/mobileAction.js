@@ -15,6 +15,13 @@ export const setCurrentStep = (currentStep) => (dispatch, getState, {emit}) => {
  })
 }
 
+export const setPassword = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: mobileActionTypes.SET_PASSWORD,
+  payload
+ })
+}
+
 export const setPhoneData = (phoneData) => (dispatch, getState, {emit}) => {
  dispatch({
   type: mobileActionTypes.SET_PHONE_DATA,

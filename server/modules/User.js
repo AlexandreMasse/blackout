@@ -8,13 +8,13 @@ export default class User {
     connect = (io, socket) => {
         socket.on('password', (data) => {
             console.log('hello', data.key)
-            let code = data.key
+            const code = data.key
             if(password.activePasswordObj[code]) {
                 console.log(password.activePasswordObj[code])
-                let roomNameData = password.activePasswordObj[code]
-                let parts = roomNameData.split('_', 2)
-                let roomId = parts[0]
-                let userId = parts[1]
+                const roomNameData = password.activePasswordObj[code]
+                const parts = roomNameData.split('_', 2)
+                const roomId = parts[0]
+                const userId = parts[1]
                 socket.username = userId
                 socket.room = roomId
                 socket.code = code 

@@ -10,9 +10,7 @@ export default class Scene1 {
   constructor({dispatch, store}) {
     this.dispatch = dispatch
     this.store = store
-
     this.needUpdate = true;
-
     this.init()
   }
 
