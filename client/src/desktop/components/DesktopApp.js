@@ -48,7 +48,7 @@ class DesktopApp extends Component {
           <Loading/>
         ) : (
           <>
-          <Indication />
+          <Indication description="Tournez les roues jusqu’à trouver la combinaison." />
           <StepManager currentStep={currentStep}/>
           </>
         )}

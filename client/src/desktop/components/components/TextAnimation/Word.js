@@ -1,13 +1,14 @@
 import Letter from './Letter'
 
 export default class Word {
-    constructor(parent) {
+    constructor(parent, word) {
         this.parent = parent
         this.lettersDOM = null
         this.active = null
         this.letters = []
         this.alphabet = ["a", "b", "c", "d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","i","u","v","w","x","y","z","~","&","|","^","ç","@","]","[","{","}","ù","*","µ","¤","$","£","€","°",")","(","+","-","/","<",">","²","`","é","è","1","2","3","4","5","6","7","8","9","0"
         ]
+        this.word = word
     }
 
     
@@ -74,8 +75,8 @@ export default class Word {
         }
     }
 
-    start(word) {
-        this.init(word)
+    start() {
+        this.init(this.word)
     }
 
     stop() {

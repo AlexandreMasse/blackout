@@ -14,8 +14,9 @@ export default class TextAnimation extends Component {
     }
 
     initWord(ref) {
-        this.word = new Word(ref)
-        this.word.start('Entrez le mot de passe')
+        this.word = new Word(ref, this.props.text)
+        //this.word.start('Entrez le mot de passe')
+        this.props.handleWord(this.word)
     }
 
     render() {
