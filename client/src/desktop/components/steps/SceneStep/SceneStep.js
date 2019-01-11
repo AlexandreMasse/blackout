@@ -25,7 +25,7 @@ class SceneStep extends Component {
     const {currentScene, dispatch, store} = this.props
     const {isMounted} = this.state
 
-    const currentScenesArray = [currentScene,"SCENE1"]
+    const currentScenesArray = [currentScene,"SCENEKINEMATIC"]
 
     return (
       <div className="scene-step step" ref={(ref) => this.ref = ref}>

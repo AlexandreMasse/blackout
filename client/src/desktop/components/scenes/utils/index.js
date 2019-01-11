@@ -1,0 +1,1 @@
+export { setFullScreen } from './setFullScreen'

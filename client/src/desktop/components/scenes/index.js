@@ -1,4 +1,3 @@
-import React from 'react'
 
 import {default as Scene1} from './Scene1/Scene1'
 import {onEnter as onEnterScene1, onExit as onExitScene1} from './Scene1/transition'
@@ -6,6 +5,8 @@ import {onEnter as onEnterScene1, onExit as onExitScene1} from './Scene1/transit
 import {default as Scene2} from './Scene2/Scene2'
 import {onEnter as onEnterScene2, onExit as onExitScene2} from './Scene2/transition'
 
+import {default as SceneKinematic} from './SceneKinematic/SceneKinematic'
+import {onEnter as onEnterSceneKinematic, onExit as onExitSceneKinematic} from './SceneKinematic/transition'
 
 export default {
   SCENE1: {
@@ -19,6 +20,12 @@ export default {
     scene: Scene2,
     onEnter: onEnterScene2,
     onExit: onExitScene2,
+  },
+  SCENEKINEMATIC: {
+    name:"SCENEKINEMATIC",
+    scene: SceneKinematic,
+    onEnter: onEnterSceneKinematic,
+    onExit: onExitSceneKinematic,
   },
 }
 
