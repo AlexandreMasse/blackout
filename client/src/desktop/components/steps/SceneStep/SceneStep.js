@@ -22,7 +22,7 @@ class SceneStep extends Component {
   }
 
   render() {
-    const {currentScene, dispatch} = this.props
+    const {currentScene, dispatch, store} = this.props
     const {isMounted} = this.state
 
     const currentScenesArray = [currentScene,"SCENE1"]
@@ -30,7 +30,7 @@ class SceneStep extends Component {
     return (
       <div className="scene-step step" ref={(ref) => this.ref = ref}>
           <button className={"scene-step__button"} onClick={() => this.props.setCurrentScene(scenes.SCENE2.name)}>SCENE 2 ></button>
-        {currentScenesArray.length > 0 && isMounted && <SceneManager currentScene={currentScenesArray} parentRef={this.ref} dispatch={dispatch}/>}
+        {currentScenesArray.length > 0 && isMounted && <SceneManager currentScene={currentScenesArray} parentRef={this.ref} dispatch={dispatch} store={store}/>}
       </div>
     )
   }
@@ -38,6 +38,7 @@ class SceneStep extends Component {
 
 const mapStateToProps = state => {
   return {
+    store: state.desktop,
     currentScene: state.desktop.currentScene,
   }
 }

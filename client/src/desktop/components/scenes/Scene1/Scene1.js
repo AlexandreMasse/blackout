@@ -7,8 +7,9 @@ import scenes from ".."
 
 export default class Scene1 {
 
-  constructor({dispatch}) {
+  constructor({dispatch, store}) {
     this.dispatch = dispatch
+    this.store = store
 
     this.needUpdate = true;
 
@@ -37,7 +38,8 @@ export default class Scene1 {
   }
 
   update() {
-    console.log("scene1 update");
+    console.log("scene1 store.currentScene", this.store.currentScene);
+
   }
 
 }
