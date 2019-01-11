@@ -3,9 +3,9 @@ export default class Letter {
         this.DOMEl = DOMElement
         this.char = DOMElement.innerHTML
         this.next = nextChar
-        this.speed = Math.floor(Math.random() * (200 - 10) )
+        this.speed = Math.floor(Math.random() * (500 - 30) )
         this.total = 0
-        this.duration = 300
+        this.duration = 500
         this.animating = true
         this.isDead = false
 

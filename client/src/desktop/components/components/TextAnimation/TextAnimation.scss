@@ -1,5 +1,9 @@
 @import "../../../../stylesheets/global";
 
 .textAnimation {
-    font-size: 30px;
+    margin: 0;
+
+    .empty {
+        opacity: 0;
+    }
 }

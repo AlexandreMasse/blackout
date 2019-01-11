@@ -12,23 +12,29 @@ export default class Word {
 
     
     init(word) {
-        this.lettersDOM = document.querySelectorAll('.letter');
+        this.lettersDOM = document.querySelectorAll('.letter')
         this.wordArr = Array.from(word)
-        this.active = true;
-        var i;
-        var nextChar;
+        this.active = true
+        var i
+        var nextChar
         var letterNb = this.wordArr.length
 
         for ( i = 0; i < letterNb; i++ ) {
           
-          if ( word.charAt( i ) != "" )
+          if ( word.charAt( i ) != "" ) {
             nextChar = word.charAt( i )
-          else 
-            nextChar = false;
+          } else {
+            nextChar = false
+          }
+ 
           
           var span = document.createElement("span")
+          if (nextChar == ' ') {
+            span.classList.add('empty')
+          }
           this.parent.appendChild(span)
-          this.letters.push( new Letter( span, nextChar ) )     
+          
+            this.letters.push( new Letter( span, nextChar ))
         }
 
         this.animate()
@@ -52,7 +58,6 @@ export default class Word {
             if ( !current.isDead ) {     
               random = Math.floor(Math.random() * (this.alphabet.length - 0))
               char = this.alphabet[ random ] 
-              console.log(char)
               current.render( char )
             } else {
               indexes.push( i )
@@ -76,10 +81,4 @@ export default class Word {
     stop() {
         this.active = false
     }
-
-
 }
-  
-// var letters = new Word()
-// letters.start('BLACK OUT')
-  

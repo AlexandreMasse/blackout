@@ -29,11 +29,13 @@
 
     p {
       opacity: 0;
+      text-align: center;
       display: block;
       width: 100%;
       @include keyframe-fade-in;
       margin-top: 90px;
       animation: fade-in 2s 1.5s ease-in-out forwards;
+      font-variation-settings: $light;
     }
   }
 
@@ -62,7 +64,8 @@
       .password {
         transition: all 1s ease;
         text-shadow: none;
-        font-size: 90px;
+        font-size: 6rem;
+        font-variation-settings: $light;
       }
 
       .score {

@@ -8,7 +8,7 @@ import {setAppLoaded, setCurrentStep} from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
-import {Loading, TextAnimation} from "./components"
+import {Loading, Indication} from "./components"
 //steps
 import {StepManager} from "./managers";
 import steps from "./steps"
@@ -25,6 +25,7 @@ class DesktopApp extends Component {
 
   componentWillMount() {
     this.assetLoaded()
+    // Indication.initTimeline()
   }
 
   assetLoaded = () => {
@@ -47,7 +48,7 @@ class DesktopApp extends Component {
           <Loading/>
         ) : (
           <>
-          <TextAnimation />
+          <Indication />
           <StepManager currentStep={currentStep}/>
           </>
         )}

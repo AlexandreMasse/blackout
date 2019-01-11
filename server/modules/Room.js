@@ -15,7 +15,7 @@ export default class Room {
         this.roomArr.push(roomId)
         socket.room = roomId
         this.password.createUsersPassword(roomId, socket)
-        console.log(`connected client in room ${this.roomIndex}`)
+        console.log(`The room number ${this.roomIndex} is created`)
     }
 
     destroy(io, socket) {
