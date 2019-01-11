@@ -33,6 +33,14 @@ class MobileApp extends Component {
 
     this.props.setCurrentStep(steps.INTRO.name)
     this.loadAssets()
+
+    window.addEventListener('resize',this.handleResize)
+    this.handleResize()
+  }
+
+  handleResize = (e) => {
+    const ratio = window.innerWidth / 375
+    document.querySelector('html').style.fontSize = 10 * ratio + "px"
   }
 
   loadAssets = () => {
