@@ -17,19 +17,14 @@ export default class User {
                 let userId = parts[1]
                 socket.username = userId
                 socket.room = roomId
-                socket.code = code
+                socket.code = code 
                 socket.join(roomId)
                 io.to(roomId).emit('connectToRoom', {
-                roomId: roomId,
-                userId: userId
+                    roomId: roomId,
+                    userId: userId,
+                    password: code
                 })
                 
-                // io.in(roomId).clients((err, clients) => {
-                //     console.log(clients)
-                //     var size = Object.keys(clients).length;
-                //     console.log(size)
-                // })
-
                 //Emit phone data after connexion
                 io.to(socket.room).emit('phoneData', {
                     phoneData: this.phoneDataObject,

@@ -8,7 +8,7 @@ import {setAppLoaded, setCurrentStep} from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
-import {Loading, Indication} from "./components"
+import {Loading} from "./components"
 //steps
 import {StepManager} from "./managers";
 import steps from "./steps"
@@ -48,7 +48,7 @@ class DesktopApp extends Component {
           <Loading/>
         ) : (
           <>
-          <Indication description="Tournez les roues jusqu’à trouver la combinaison." />
+          {/* <Indication description="Tournez les roues jusqu’à trouver la combinaison." /> */}
           <StepManager currentStep={currentStep}/>
           </>
         )}
