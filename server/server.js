@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 var server = require('http').createServer(app)
 import Room from './modules/Room'
+import Rooms from './modules/Rooms'
 import User from './modules/User'
 var io = require('socket.io')(server, { wsEngine: 'ws' })
 app.set('port', process.env.PORT || 8888);
@@ -21,14 +22,16 @@ if (process.env.NODE_ENV === 'production') {
 
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')   
-  const room = new Room()
   const user = new User()
-  room.init()
+
+  // rooms.init()
+  // console.log()
 
   io.sockets.on('connection', function response(socket) {
     // Check device type 
     socket.on('deviceType', (data) => {
         if (data.type === 'desktop') {
+          const room = new Room()
           room.create(socket)
           room.destroy(io ,socket)
         }

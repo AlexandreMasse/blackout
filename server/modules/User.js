@@ -50,10 +50,15 @@ export default class User {
                     console.log(size)
                     if (size > 1 ) {
                         socket.join(data.roomId)
-                        io.to(data.roomId).emit('connectToRoom', {
+                        io.to(roomId).emit('connectToRoom', {
                             roomId: data.roomId,
                             userId: data.userId
                         })
+                        // io.to(data.roomId).emit('connectToRoom', {
+                        //     roomId: data.roomId,
+                        //     userId: data.userId
+                        // })
+
                     }
                 })
         })

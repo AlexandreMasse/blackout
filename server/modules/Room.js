@@ -1,21 +1,26 @@
 import Password from './Password'
+import Rooms from './Rooms'
 
 export default class Room {
 
-    init() {
-        this.roomIndex = 0
-        this.roomArr = []
+    constructor() {
+        console.log()
         this.password = new Password()
+        this.users = {desktop: null, player1: null, player2: null}
     }
-
+    
     create(socket) {
+        Rooms.roomIndex++
+        this.roomArr = Rooms.roomArr
         this.roomIndex++
-        let roomId = `room-${this.roomIndex}`
+        let roomId = `room-${Rooms.roomIndex}`
         socket.join(roomId)
         this.roomArr.push(roomId)
+        this.users.desktop = socket.id
+        console.log(this.users)
         socket.room = roomId
         this.password.createUsersPassword(roomId, socket)
-        console.log(`The room number ${this.roomIndex} is created`)
+        console.log(`The room number ${Rooms.roomIndex} is created`)
     }
 
     destroy(io, socket) {
