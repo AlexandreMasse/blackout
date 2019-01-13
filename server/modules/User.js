@@ -18,19 +18,39 @@ export default class User {
                 this.getRoomInstance(roomId)
                 socket.username = userId
                 socket.room = roomId
-                socket.code = code 
+                socket.code = code
                 socket.join(roomId)
                 io.to(roomId).emit('connectToRoom', {
                     roomId: roomId,
                     userId: userId,
                     password: code
                 })
+
+                this.roomInstance.users[userId] = this
+
+                console.log("Nombre d'utilisateur : ", Object.keys( this.roomInstance.users).length);
+
+                // All clients connected to room
+                if (Object.keys(this.roomInstance.users).length === 3) {
+                    const phoneData = []
+                    for(const user in this.roomInstance.users) {
+                        const userInstance = this.roomInstance.users[user]
+                        if(user === "player1" || user === "player2") {
+                            phoneData.push({
+                                userId: user,
+                                phoneData: userInstance.phoneDataObject
+                            })
+                        }
+                    }
+
+                    io.to(socket.room).emit('phoneData', phoneData)
+                }
                 
                 //Emit phone data after connexion
-                io.to(socket.room).emit('phoneData', {
-                    phoneData: this.phoneDataObject,
-                    userId: socket.username
-                })
+                // io.to(socket.room).emit('phoneData', {
+                //     phoneData: this.phoneDataObject,
+                //     userId: socket.username
+                // })
                 delete password.activePasswordObj[code]
             } else {
                 console.log('mdp nom définit')

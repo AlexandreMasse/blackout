@@ -6,7 +6,7 @@ export default class Room {
     constructor(socket) {
         this.userInRoom = 0
         this.password = new Password()
-        this.users = {desktop: null, player1: null, player2: null}
+        this.users = {} // {desktop: null, player1: null, player2: null}
         this.getUserId(socket)
     }
     
@@ -27,11 +27,10 @@ export default class Room {
             console.log('user disconnected')
             let roomId = socket.room
             console.log(roomId)
-            var index = this.roomArr.indexOf(roomId)
+            var index = Rooms.roomArrId.indexOf(roomId)
             if (index > -1) {
-                this.roomArr.splice(index, 1)
+                Rooms.roomArrId.splice(index, 1)
             }
-            console.log(this.roomArr)
             io.to(roomId).emit('userDisconnected',
             'perte de la connection'
             )
