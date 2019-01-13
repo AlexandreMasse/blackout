@@ -132,7 +132,7 @@ class Cursor extends Component {
   moveFlashLight = () => {
      TweenMax.to(bg, 2, {alpha:(Math.random() - 0.1) * 1.2, ease:RoughEase.ease.config()})
 
-    if (this.props.isPlayer1Connected) {
+    if (this.props.isPlayer1Connected && this.props.player1Position) {
       const player1Position = {
         x:this.props.player1Position.x * (window.innerWidth * .5),
         y: this.props.player1Position.y * (window.innerHeight * .5)
@@ -143,7 +143,7 @@ class Cursor extends Component {
       TweenMax.to(this.mask1, 0.2, {x:newPositionX, y:newPositionY, ease:Back.easeOut.config(1.7)}, 0)
     }
 
-    if (this.props.isPlayer2Connected) {
+    if (this.props.isPlayer2Connected && this.props.player2Position) {
       const player2Position = {
         x:this.props.player2Position.x * (window.innerWidth * .5),
         y: this.props.player2Position.y * (window.innerHeight * .5)

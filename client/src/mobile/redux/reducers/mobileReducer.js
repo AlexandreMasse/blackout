@@ -9,6 +9,18 @@ const initialState = {
     currentStep: null,
     phoneData: null,
     isLoaded: false,
+    users: [
+        {
+            id: "player1",
+            isConnected: false,
+            phoneScore: null,
+        },
+        {
+            id: "player2",
+            isConnected: false,
+            phoneScore: null,
+        }
+    ],
 }
 
 export default (state = initialState, action) => {
@@ -55,6 +67,34 @@ export default (state = initialState, action) => {
                 roomId: isCurrentUser ? roomId : state.roomId,
                 userId: isCurrentUser ? userId : state.userId,
                 isConnected: isCurrentUser ? true : state.isConnected,
+                //useless
+                users: state.users.map(user => {
+                    if (user.id === userId) {
+                        return {
+                            ...user,
+                            isConnected: true
+                        }
+                    } else {
+                        return user;
+                    }
+                }),
+            }
+        }
+        case websocketsOnActionTypes.WEBSOCKET_ON_PHONE_DATA: {
+            const phoneDataArray = action.payload
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    phoneDataArray.forEach(phoneData => {
+                        if (user.id === phoneData.userId) {
+                            user = {
+                                ...user,
+                                phoneScore: phoneData.phoneData.score
+                            }
+                        }
+                    })
+                    return user
+                }),
             }
         }
 
