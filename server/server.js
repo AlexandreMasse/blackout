@@ -22,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
 
 server.listen(app.get('port'), function () {
   console.log('----- SERVER STARTED -----')   
-  const user = new User()
 
   // rooms.init()
   // console.log()
@@ -31,12 +30,13 @@ server.listen(app.get('port'), function () {
     // Check device type 
     socket.on('deviceType', (data) => {
         if (data.type === 'desktop') {
-          const room = new Room()
+          const room = new Room(socket)
           room.create(socket)
           room.destroy(io ,socket)
         }
         
         if (data.type === 'mobile') {
+          const user = new User()
           user.connect(io, socket)
           // user reconnection
           user.reconnect(io, socket)

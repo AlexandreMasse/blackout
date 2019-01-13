@@ -1,4 +1,5 @@
 import password from './Password'
+import Rooms from './Rooms'
 
 export default class User {
     constructor() {
@@ -9,12 +10,15 @@ export default class User {
         socket.on('password', (data) => {
             console.log('hello', data.key)
             const code = data.key
+            // console.log(password.activePasswordObj[code])
             if(password.activePasswordObj[code]) {
-                console.log(password.activePasswordObj[code])
+                // console.log(password.activePasswordObj[code])
+                // console.log(this.users)
                 const roomNameData = password.activePasswordObj[code]
                 const parts = roomNameData.split('_', 2)
                 const roomId = parts[0]
                 const userId = parts[1]
+                this.sendUserId(io, socket.id, roomId)
                 socket.username = userId
                 socket.room = roomId
                 socket.code = code 
@@ -89,5 +93,17 @@ export default class User {
             userId: socket.username
             })
         })
+    }
+
+    sendUserId(io,userId, roomId) {
+        const parts = roomId.split('-', 2)
+        const roomIndex = parseInt(parts[1])
+        console.log('parts', roomIndex)
+        console.log(Rooms.roomArrId)
+        let roomSocketId = Rooms.roomArrId[roomIndex - 1]
+        console.log('la room actuelle est :',roomId , "et sa room socketID : ", roomSocketId)
+        // socket.broadcast.to(roomSocketId).emit('bra', userId)
+        io.to(`${roomSocketId}`).emit('tes', 'I just met you')
+
     }
 }

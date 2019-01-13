@@ -3,10 +3,12 @@ import Rooms from './Rooms'
 
 export default class Room {
 
-    constructor() {
-        console.log()
+    constructor(socket) {
+        // console.log()
+        this.userInRoom = 0
         this.password = new Password()
         this.users = {desktop: null, player1: null, player2: null}
+        this.getUserId(socket)
     }
     
     create(socket) {
@@ -16,8 +18,9 @@ export default class Room {
         let roomId = `room-${Rooms.roomIndex}`
         socket.join(roomId)
         this.roomArr.push(roomId)
+        Rooms.roomArrId.push(socket.id)
         this.users.desktop = socket.id
-        console.log(this.users)
+        // console.log(this.users)
         socket.room = roomId
         this.password.createUsersPassword(roomId, socket)
         console.log(`The room number ${Rooms.roomIndex} is created`)
@@ -40,6 +43,13 @@ export default class Room {
                 if (error) throw error
                 socketIds.forEach(socketId => io.sockets.sockets[socketId].leave(socket))
             })
+        })
+    }
+
+    getUserId(socket) {
+        
+        socket.on('bra', (userID) =>{
+            console.log('un nouvelle userID est la: ', userID)
         })
     }
 }
