@@ -1,4 +1,5 @@
 import password from './Password'
+import Rooms from './Rooms'
 
 export default class User {
     constructor() {
@@ -10,26 +11,46 @@ export default class User {
             console.log('hello', data.key)
             const code = data.key
             if(password.activePasswordObj[code]) {
-                console.log(password.activePasswordObj[code])
                 const roomNameData = password.activePasswordObj[code]
                 const parts = roomNameData.split('_', 2)
                 const roomId = parts[0]
                 const userId = parts[1]
+                this.getRoomInstance(roomId)
                 socket.username = userId
                 socket.room = roomId
-                socket.code = code 
+                socket.code = code
                 socket.join(roomId)
                 io.to(roomId).emit('connectToRoom', {
                     roomId: roomId,
                     userId: userId,
                     password: code
                 })
+
+                this.roomInstance.users[userId] = this
+
+                console.log("Nombre d'utilisateur : ", Object.keys( this.roomInstance.users).length);
+
+                // All clients connected to room
+                if (Object.keys(this.roomInstance.users).length === 3) {
+                    const phoneData = []
+                    for(const user in this.roomInstance.users) {
+                        const userInstance = this.roomInstance.users[user]
+                        if(user === "player1" || user === "player2") {
+                            phoneData.push({
+                                userId: user,
+                                phoneData: userInstance.phoneDataObject
+                            })
+                        }
+                    }
+
+                    io.to(socket.room).emit('phoneData', phoneData)
+                }
                 
                 //Emit phone data after connexion
-                io.to(socket.room).emit('phoneData', {
-                    phoneData: this.phoneDataObject,
-                    userId: socket.username
-                })
+                // io.to(socket.room).emit('phoneData', {
+                //     phoneData: this.phoneDataObject,
+                //     userId: socket.username
+                // })
                 delete password.activePasswordObj[code]
             } else {
                 console.log('mdp nom définit')
@@ -58,7 +79,6 @@ export default class User {
                         //     roomId: data.roomId,
                         //     userId: data.userId
                         // })
-
                     }
                 })
         })
@@ -89,5 +109,23 @@ export default class User {
             userId: socket.username
             })
         })
+    }
+
+    getRoomInstance(roomId) {
+        const parts = roomId.split('-', 2)
+        const roomIndex = parseInt(parts[1])
+        this.roomInstance = Rooms.roomArrInstance[roomIndex - 1]
+        console.log('la room actuelle est :',roomId , "et son instance : ", this.roomInstance)
+    }
+
+    sendUserId(io,userId, roomId) {
+        const parts = roomId.split('-', 2)
+        const roomIndex = parseInt(parts[1])
+        console.log('parts', roomIndex)
+        console.log(Rooms.roomArrId)
+        let roomSocketId = Rooms.roomArrId[roomIndex - 1]
+        console.log('la room actuelle est :',roomId , "et sa room socketID : ", roomSocketId)
+        // socket.broadcast.to(roomSocketId).emit('bra', userId)
+        io.to(`${roomSocketId}`).emit('tes', 'I just met you')
     }
 }

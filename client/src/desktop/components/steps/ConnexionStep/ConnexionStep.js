@@ -19,9 +19,9 @@ class ConnexionStep extends Component {
     const {password1, password2, isPlayer1Connected, isPlayer2Connected, player1PhoneData, player2PhoneData} = this.props
     return (
       <>
-       <CSSTransition classNames={"fade"} in={isPlayer1Connected && isPlayer2Connected} timeout={4500} mountOnEnter={true}>
-          <Cursor/>
-      </CSSTransition> 
+       {/*<CSSTransition classNames={"fade"} in={isPlayer1Connected && isPlayer2Connected} timeout={4500} mountOnEnter={true}>*/}
+          {/*<Cursor/>*/}
+      {/*</CSSTransition> */}
 
       <CSSTransition classNames={"fade"} in={!(isPlayer1Connected && isPlayer2Connected)} appear={true}
                       timeout={{enter: 0, exit: 2500}} mountOnEnter={true} unmountOnExit={true}>

@@ -88,19 +88,19 @@ export default (state = initialState, action) => {
     }
 
     case websocketsOnActionTypes.WEBSOCKET_ON_PHONE_DATA: {
-      const  {phoneData, userId} = action.payload
-      console.log(action);
+      const userArr = action.payload
       return {
         ...state,
         users: state.users.map(user => {
-          if (user.id === userId) {
-            return {
-              ...user,
-              phoneData
+          userArr.forEach(userPayload => {
+            if (user.id === userPayload.userId) {
+              user = {
+                ...user,
+                phoneData: userPayload.phoneData
+              }
             }
-          } else {
-            return user;
-          }
+          })
+          return user
         }),
       }
     }
