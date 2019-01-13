@@ -30,8 +30,9 @@ server.listen(app.get('port'), function () {
     // Check device type 
     socket.on('deviceType', (data) => {
         if (data.type === 'desktop') {
-          const room = new Room(socket)
+          const room = new Room(socket) 
           room.create(socket)
+          Rooms.roomArrInstance.push(room)
           room.destroy(io ,socket)
         }
         
