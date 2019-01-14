@@ -55,6 +55,8 @@ class SceneManager extends Component {
     window.addEventListener('resize', this.onWindowResize, false)
   }
 
+
+
   renderScene(delta) {
     const {currentScene} = this.props
 
@@ -84,7 +86,7 @@ class SceneManager extends Component {
   }
 
   changeScene(nextScene, index) {
-    console.log("changeScene");
+    console.log("changeScene", this.currentSceneObjectArray);
 
     this.currentSceneObjectArray[index].onExit(this.currentSceneInstanceArray[index]).then(() => {
       this.nextScene(nextScene, index)
@@ -116,11 +118,20 @@ class SceneManager extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
 
+    console.log("currentSCene array :", nextProps.currentScene);
+
+    if (nextProps.currentScene.length !== this.props.currentScene.length) {
+      //TODO : wip
+      this.currentSceneObjectArray = nextProps.currentScene.map(currentScene => {
+        return this.scenesArray.find(scene => scene.name === currentScene);
+      })
+    }
+
     if (nextProps.currentScene[0] !== this.props.currentScene[0]) {
       this.changeScene(nextProps.currentScene[0], 0)
     }
 
-    if (nextProps.currentScene[1] !== this.props.currentScene[1]) {
+    if (nextProps.currentScene[1] && nextProps.currentScene[1] !== this.props.currentScene[1]) {
       this.changeScene(nextProps.currentScene[1], 1)
     }
 

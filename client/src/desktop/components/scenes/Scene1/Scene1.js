@@ -30,14 +30,13 @@ export default class Scene1 {
     this.sprite = new PIXI.Sprite(this.rt)
 
 
-    setTimeout(() => {
-      this.dispatch(setCurrentScene(scenes.SCENE2.name))
-    },5000)
+    // setTimeout(() => {
+    //   this.dispatch(setCurrentScene(scenes.SCENE2.name))
+    // },5000)
   }
 
   update() {
-    console.log("scene1 store.currentScene", this.store.currentScene);
-
+    //console.log("scene1 store.currentScene", this.store.currentScene);
   }
 
 }
