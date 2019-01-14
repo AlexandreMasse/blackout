@@ -23,6 +23,14 @@ class DesktopApp extends Component {
     super(props)
     this.props.wsEmitDeviceType("desktop")
     this.props.setCurrentStep(steps.CONNEXION.name)
+
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  }
+
+  handleResize = (e) => {
+    const ratio = window.innerWidth / 1920
+    document.querySelector('html').style.fontSize = 10 * ratio + "px"
   }
 
   componentWillMount() {
