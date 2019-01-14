@@ -8,7 +8,7 @@ const initialState = {
   },
   currentStep: null,
   currentScene: scenes.SCENE1.name,
-  isSplitScreen: true,
+  isSplitScreen: false,
   roomId: null,
   password1: null,
   password2: null,

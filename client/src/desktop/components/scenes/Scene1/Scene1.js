@@ -29,7 +29,6 @@ export default class Scene1 {
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
 
-
     // setTimeout(() => {
     //   this.dispatch(setCurrentScene(scenes.SCENE2.name))
     // },5000)
@@ -37,6 +36,7 @@ export default class Scene1 {
 
   update() {
     //console.log("scene1 store.currentScene", this.store.currentScene);
+    //console.log("update scene 1");
   }
 
 }

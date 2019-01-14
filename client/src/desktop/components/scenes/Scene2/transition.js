@@ -1,4 +1,4 @@
-import {TweenMax, TimelineMax} from 'gsap'
+import {TweenMax, TimelineMax, Power2} from 'gsap'
 
 
 export const onEnter = (instance) => (
@@ -12,7 +12,9 @@ export const onEnter = (instance) => (
     timeline.fromTo(instance.sprite, 3, {
       alpha: 0,
     },{
+      delay: 1,
       alpha: 1,
+      ease: Power2.easeInOut
     })
   })
 )

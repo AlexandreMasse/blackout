@@ -10,7 +10,7 @@ export const onEnter = (instance) => (
       }
     })
 
-    timeline.fromTo(instance.sprite, 2.5, {
+    timeline.fromTo(instance.sprite, 3, {
       alpha: 0,
     }, {
       delay: 1,
