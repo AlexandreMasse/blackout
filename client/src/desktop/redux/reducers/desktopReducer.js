@@ -1,6 +1,7 @@
 import {websocketsOnActionTypes} from '../actions/websockets/websocketsActionTypes'
 import desktopActionTypes from '../actions/desktopActionTypes';
 import scenes from './../../components/scenes'
+import steps from './../../components/steps'
 
 const initialState = {
   app: {
@@ -117,6 +118,7 @@ export default (state = initialState, action) => {
       const phoneDataArray = action.payload
       return {
         ...state,
+        currentStep: steps.ANALYSIS.name,
         users: state.users.map(user => {
           phoneDataArray.forEach(phoneData => {
             if (user.id === phoneData.userId) {
