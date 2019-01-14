@@ -16,6 +16,7 @@ const initialState = {
     {
       id: "player1",
       isConnected: false,
+      status: null,
       position: null,
       phoneData: null,
       currentSplitScene: null //TODO
@@ -23,6 +24,7 @@ const initialState = {
     {
       id: "player2",
       isConnected: false,
+      status: null,
       position:null,
       phoneData: null,
       currentSplitScene: null //TODO
@@ -96,6 +98,17 @@ export default (state = initialState, action) => {
             if (user.id === phoneData.userId) {
               user = {
                 ...user,
+                status: (() => {
+                  const currentScore = phoneData.phoneData.score;
+                  const otherScore = phoneDataArray.find(pd => pd.userId !== user.id).phoneData.score;
+                   if (currentScore > otherScore) {
+                     return "superior"
+                   } else if (currentScore === otherScore) {
+                     return "equal"
+                   } else {
+                     return "inferior"
+                   }
+                })(),
                 phoneData: phoneData.phoneData
               }
             }
@@ -144,3 +157,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
