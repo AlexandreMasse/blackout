@@ -1,0 +1,46 @@
+@import "../../../../../../stylesheets/global";
+
+.block-appear {
+    // margin-left: 20px;
+    opacity: 0;
+    &.active {
+        opacity: 1;
+    }
+
+    &__item {
+        color: $white;
+        font-size: 18px;
+        margin: 0;
+        font-variation-settings: $light;
+
+        &.uppercase {
+            text-transform: uppercase;
+        }
+    }
+
+    &__value {
+        background : $white;
+        color: $black;
+        clip-path: inset(0px 100% 0px 0px);
+        transition: clip-path .3s ease-in-out; 
+
+        &.active {
+            clip-path: inset(0px 0px 0px 0px);
+        }
+    }
+
+    &__container {
+        display: flex;
+        align-items: center;
+    }
+
+    .hide {
+        opacity: 0;
+    }
+
+    .show {
+        opacity: 1;
+    }
+}
+
+

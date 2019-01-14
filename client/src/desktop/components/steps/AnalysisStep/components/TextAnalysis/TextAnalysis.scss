@@ -1,0 +1,12 @@
+@import "../../../../../../stylesheets/global";
+
+.text-analysis {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+
+    &--right {
+        left: auto;
+        right:30px;
+    }
+}

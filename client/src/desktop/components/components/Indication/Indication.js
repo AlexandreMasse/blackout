@@ -9,7 +9,6 @@ import './Indication.scss'
 export default class Indication extends Component {
     
     componentDidMount() {
-        console.log()
         const arrows = this.ref.querySelectorAll('.arrow')
         const description = this.ref.querySelector('.indication__description')
         this.tl = new TimelineMax()

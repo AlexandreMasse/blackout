@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import classNames from 'classnames'
+import {TextAnalysis} from './components'
 // style
 import './AnalysisStep.scss'
 
@@ -8,6 +9,7 @@ class AnalysisStep extends Component {
   render() {
     return (
       <div className="analysis-step step">
+            <TextAnalysis />
           <p className={"analysis-step__text"}>ANALYSE...</p>
       </div>
     )
