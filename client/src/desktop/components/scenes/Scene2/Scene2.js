@@ -28,7 +28,7 @@ export default class Scene2 {
   }
 
   update() {
-    console.log("scene2 update");
+    //console.log("scene2 update");
   }
 
 }

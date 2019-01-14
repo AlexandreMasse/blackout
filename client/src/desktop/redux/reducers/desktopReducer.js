@@ -7,8 +7,8 @@ const initialState = {
     isLoaded: false
   },
   currentStep: null,
-  currentScene: scenes.SCENE1.name, //TODO
-  isSplitScreen: false, //TODO
+  currentScene: scenes.SCENE1.name,
+  isSplitScreen: true,
   roomId: null,
   password1: null,
   password2: null,
@@ -19,7 +19,7 @@ const initialState = {
       status: null,
       position: null,
       phoneData: null,
-      currentSplitScene: null //TODO
+      currentScene: scenes.SCENE1.name,
     },
     {
       id: "player2",
@@ -27,10 +27,10 @@ const initialState = {
       status: null,
       position:null,
       phoneData: null,
-      currentSplitScene: null //TODO
+      currentScene: scenes.SCENE2.name,
     }
   ],
-}
+};
 
 
 export default (state = initialState, action) => {
@@ -58,6 +58,30 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentScene: action.currentScene
+      }
+    }
+
+    case desktopActionTypes.SET_SPLIT_SCREEN: {
+      return {
+        ...state,
+        isSplitScreen: action.payload
+      }
+    }
+
+    case desktopActionTypes.SET_USER_CURRENT_SCENE: {
+      const {currentScene, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              currentScene
+            }
+          } else {
+            return user;
+          }
+        }),
       }
     }
 
