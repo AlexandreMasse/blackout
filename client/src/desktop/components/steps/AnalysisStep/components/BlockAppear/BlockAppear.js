@@ -33,7 +33,7 @@ export default class BlockAppear {
                 } else {
                     clearInterval(timer)
                 }
-            }, 30)
+            }, 20)
         })
     }
 

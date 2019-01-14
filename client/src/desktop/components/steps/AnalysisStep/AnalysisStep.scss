@@ -3,8 +3,9 @@
 .analysis-step {
   height: 100%;
   width: 100%;
-  background-color: green;
-  color: red;
+  background-color:$black;
+  color: $white;
+  font-size: 1.8rem;
   display: flex;
 
   &__text {

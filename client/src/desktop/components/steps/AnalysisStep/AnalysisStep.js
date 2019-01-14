@@ -9,8 +9,30 @@ class AnalysisStep extends Component {
   render() {
     return (
       <div className="analysis-step step">
-            <TextAnalysis />
-          <p className={"analysis-step__text"}>ANALYSE...</p>
+            <TextAnalysis  
+              position="left"
+              userId="Player1"
+              os="iOS 11"
+              year="2018"
+              resolution="1980x900"
+              state="Ile-de-France"
+              country="FR"
+              scoreUser1="12.345443"
+              scoreUser2="9.32454"
+            />
+
+            <TextAnalysis  
+              position="right"
+              userId="Player2"
+              os="iOS11"
+              year="2018"
+              resolution="1980x900"
+              state="Ile-de-France"
+              country="FR"
+              scoreUser2="12.345443"
+              scoreUser1="9.32454"
+            />
+          {/* <p className={"analysis-step__text"}>ANALYSE...</p> */}
       </div>
     )
   }

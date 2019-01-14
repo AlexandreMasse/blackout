@@ -9,7 +9,7 @@
 
     &__item {
         color: $white;
-        font-size: 18px;
+        font-size: 1.8rem;
         margin: 0;
         font-variation-settings: $light;
 
@@ -23,7 +23,10 @@
         color: $black;
         clip-path: inset(0px 100% 0px 0px);
         transition: clip-path .3s ease-in-out; 
-
+        font-size: 1.8rem;
+        padding-left: .3rem;
+        padding-right: .3rem;
+        margin-left: 1rem;
         &.active {
             clip-path: inset(0px 0px 0px 0px);
         }
@@ -40,6 +43,22 @@
 
     .show {
         opacity: 1;
+    }
+
+    .block {
+        display: flex;
+        align-items: center;
+
+        &--player {
+            .block-appear__item {
+                margin-left: 0 !important;
+            }
+
+            .block-appear__value{
+                margin-left: .3rem;
+                margin-right: .3rem;
+            }
+        }
     }
 }
 
