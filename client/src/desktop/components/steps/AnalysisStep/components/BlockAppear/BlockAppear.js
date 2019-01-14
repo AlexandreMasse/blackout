@@ -33,12 +33,18 @@ export default class BlockAppear {
                 } else {
                     clearInterval(timer)
                 }
-            }, 20)
+            }, 14)
         })
     }
 
     start (blockIndex) {
         this.init(blockIndex)
+    }
+
+    removeblockActive() {
+        this.blockParent.forEach((bloc) => {
+            bloc.classList.remove('active')
+        })
     }
 
     activeValue(blockIndex) {
