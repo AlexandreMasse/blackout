@@ -19,6 +19,11 @@ class ConnexionStep extends Component {
 
   constructor(props) {
     super(props)
+
+    this.state = {
+      cityLeftProgression: 0,
+      cityRightProgression: 0
+    }
   }
 
   render() {
@@ -26,7 +31,27 @@ class ConnexionStep extends Component {
     return (
       <div className="connexion-step step">
         {/*TODO: enable autoplay*/}
-        <LottieAnimation autoplay={false} animationData={animations.HomeAbstrait} className={"home-abstrait"} />
+        <LottieAnimation autoplay={true} animationData={animations.HomeAbstrait} className={"home-abstrait"} />
+
+        <input
+          style={{zIndex:"10", width: "50%"}}
+          type="range"
+          onChange={(e) => this.setState({cityLeftProgression: e.target.value})}
+          value={this.state.cityLeftProgression}
+          step={0.001}
+          min={0}
+          max={1}
+        />
+
+        <input
+          style={{zIndex:"10", width: "50%"}}
+          type="range"
+          onChange={(e) => this.setState({cityRightProgression: e.target.value})}
+          value={this.state.cityRightProgression}
+          step={0.001}
+          min={0}
+          max={1}
+        />
 
         <div className={"connexion-step__city"}>
           <LottieAnimation
@@ -37,6 +62,8 @@ class ConnexionStep extends Component {
             animationData={animations.HomeCityLeft}
             aspectRatio={"cover-right"}
             speed={0.8}
+            progressionTweenDuration={0.5}
+            progression={Number(this.state.cityLeftProgression)}
           />
           <LottieAnimation
             autoplay={false}
@@ -46,6 +73,7 @@ class ConnexionStep extends Component {
             animationData={animations.HomeCityRight}
             aspectRatio={"cover-left"}
             speed={0.8}
+            progression={Number(this.state.cityRightProgression)}
           />
         </div>
 

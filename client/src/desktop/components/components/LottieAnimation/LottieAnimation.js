@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import classNames from "classnames"
 import Lottie from 'lottie-web'
 import PropTypes from 'prop-types'
+import {TweenMax, Power2} from 'gsap'
 
 //css
 import './LottieAnimation.scss'
@@ -14,6 +15,7 @@ class LottieAnimation extends Component {
     super(props)
     this.state = {}
     this.animation = null
+    this.progression = props.progression
 
     this.aspectRatio = {
       "cover": 'xMidYMid slice',
@@ -25,6 +27,7 @@ class LottieAnimation extends Component {
       "contain-top" : "xMidYMin meet",
       "contain-bottom" : "xMidYMax meet",
     }
+
   }
 
   handleRef = (ref) => {
@@ -32,7 +35,7 @@ class LottieAnimation extends Component {
   }
 
   componentDidMount() {
-    const {animationData, path, renderer, loop, autoplay, aspectRatio} = this.props
+    const {animationData, path, renderer, loop, autoplay, aspectRatio, assetsPath} = this.props
     this.animation = Lottie.loadAnimation({
       container: this.ref,
       animationData,
@@ -42,10 +45,15 @@ class LottieAnimation extends Component {
       autoplay,
       rendererSettings: {
         preserveAspectRatio: this.aspectRatio[aspectRatio],
-      }
+      },
+      assetsPath
     })
 
-    this.setSpeed()
+    this.totalFrames = this.animation.totalFrames
+
+    console.log(this.animation);
+
+    //this.setSpeed()
   }
 
   setSpeed() {
@@ -60,7 +68,19 @@ class LottieAnimation extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     this.props.play ? this.animation.play() : this.animation.pause()
-    this.setSpeed()
+
+    //this.setSpeed()
+
+    if(prevProps.progression !== this.props.progression) {
+
+      TweenMax.to(this, this.props.progressionTweenDuration, {
+        progression: this.props.progression,
+        ease: Power2.easeInOut,
+        onUpdate: () => {
+          this.animation.goToAndStop(Math.round(this.progression * this.totalFrames),true)
+        }
+      })
+    }
   }
 
   render() {
@@ -83,6 +103,8 @@ LottieAnimation.propTypes = {
   play: PropTypes.bool,
   speed: PropTypes.number,
   progression: PropTypes.number,
+  progressionTweenDuration: PropTypes.number,
+  assetsPath: PropTypes.string
 }
 
 LottieAnimation.defaultProps = {
@@ -95,7 +117,9 @@ LottieAnimation.defaultProps = {
   aspectRatio: "cover",
   play: false,
   speed: 1,
-
+  progression: null,
+  progressionTweenDuration: 1,
+  assetsPath: null
 }
 
 

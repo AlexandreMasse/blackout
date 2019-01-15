@@ -16,4 +16,8 @@ export const onExit = (html) => {
   },{
     opacity: 0
   })
+
+  TweenMax.to(html, 2, {
+    backgroundColor: "black"
+  })
 }
