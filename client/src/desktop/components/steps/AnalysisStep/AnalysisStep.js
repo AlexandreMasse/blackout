@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {TextAnalysis} from './components'
 import {AssetsManager} from "../../../../managers"
+import steps from '../'
+// redux
+import {setCurrentStep} from '../../../redux/actions/desktopAction'
 
 import {TimelineMax} from 'gsap'
 
@@ -13,16 +16,25 @@ import './AnalysisStep.scss'
 
 class AnalysisStep extends Component {
   componentDidMount() {
-    // this.playVideo()
+    this.video = document.querySelector('.analysis-step__video')
+    this.endVideo()
     this.initTimeline()
   }
 
   playVideo() {
-    this.video = document.querySelector('.analysis-step__video')
     this.video.play()
   }
   stopVideo() {
     this.video.pause()
+  }
+
+  endVideo = () => {
+    this.video.addEventListener('ended',() => {
+      this.video.style.opacity = 0
+      setTimeout(() => {
+        this.props.setCurrentStep(steps.SCENE.name)
+      }, 500)
+    })
   }
   
   initTimeline = () => {
@@ -45,7 +57,7 @@ class AnalysisStep extends Component {
     this.tl.add(() => {this.stopVideo()}, 5.6)
 
     this.tl.add(() => {this.playVideo()}, 6.4)
-    this.tl.add(() => {this.blockAppear.removeblockActive()}, 7)
+    this.tl.add(() => {this.blockAppear.removeblockActive()}, 6.8)
   }
   
   handleBlockAppear = (blockAppear) => {this.blockAppear = blockAppear}
@@ -102,4 +114,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(AnalysisStep)
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnalysisStep)

@@ -8,7 +8,7 @@ const initialState = {
     isLoaded: false
   },
   currentStep: null,
-  currentScene: scenes.SCENE1.name,
+  currentScene: scenes.SCENEKINEMATIC.name,
   isSplitScreen: false,
   roomId: null,
   password1: null,
@@ -19,7 +19,24 @@ const initialState = {
       isConnected: false,
       status: null,
       position: null,
-      phoneData: null,
+      phoneData: {
+        "os": "Android",
+        "osVersionNumber": 8,
+        "osReleaseDate": "21/08/2017",
+        "height": 731,
+        "width": 411,
+        "operator": {
+          "ip": "195.68.195.30",
+          "hostname": "toto.urba.cci-parisidf.fr",
+          "city": "Paris",
+          "region": "Ile-de-France",
+          "country": "FR",
+          "loc": "48.8763,2.3183",
+          "postal": "75008",
+          "org": "AS56774 Chambre de commerce et d'Industrie de Paris"
+        },
+        "score": 15.43252921697582
+      },
       currentScene: scenes.SCENE1.name,
     },
     {
@@ -27,7 +44,24 @@ const initialState = {
       isConnected: false,
       status: null,
       position:null,
-      phoneData: null,
+      phoneData: {
+        "os": "Android",
+        "osVersionNumber": 8,
+        "osReleaseDate": "21/08/2017",
+        "height": 731,
+        "width": 411,
+        "operator": {
+          "ip": "195.68.195.30",
+          "hostname": "toto.urba.cci-parisidf.fr",
+          "city": "Paris",
+          "region": "Ile-de-France",
+          "country": "FR",
+          "loc": "48.8763,2.3183",
+          "postal": "75008",
+          "org": "AS56774 Chambre de commerce et d'Industrie de Paris"
+        },
+        "score": 15.43252921697582
+      },
       currentScene: scenes.SCENE2.name,
     }
   ],
