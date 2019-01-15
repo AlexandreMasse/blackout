@@ -5,12 +5,15 @@ import {AssetsManager} from "../../../../managers"
 
 import {TimelineMax} from 'gsap'
 
+//transition
+import {onEnterDelay} from './transition'
+
 // style
 import './AnalysisStep.scss'
 
 class AnalysisStep extends Component {
   componentDidMount() {
-    this.playVideo()
+    // this.playVideo()
     this.initTimeline()
   }
 
@@ -23,7 +26,10 @@ class AnalysisStep extends Component {
   }
   
   initTimeline = () => {
-    this.tl = new TimelineMax()
+    this.tl = new TimelineMax({
+      delay: onEnterDelay
+    })
+    this.tl.add(() => {this.playVideo()}, 0)
     this.tl.add(() => {this.blockAppear.start(0)}, 4)
     this.tl.add(() => {this.blockAppear.activeValue(0)}, 4.4)
     this.tl.add(() => {this.blockAppear.start(1)}, 4.8)

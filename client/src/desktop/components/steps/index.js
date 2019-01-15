@@ -1,9 +1,10 @@
 import React from 'react'
 
-import {onEnter as ConnexionStepOnEnter, onExit as ConnexionStepOnExit} from "./ConnexionStep/transition";
+import {onEnter as ConnexionStepOnEnter, onExit as ConnexionStepOnExit, onEnterTimeout as ConnexionStepOnEnterTimeout, onExitTimeout as ConnexionStepOnExitTimeout} from "./ConnexionStep/transition";
 import {default as ConnexionStep} from './ConnexionStep/ConnexionStep'
 
-import {onEnter as AnalysisStepOnEnter, onExit as AnalysisStepOnExit} from "./AnalysisStep/transition";
+import {onEnter as AnalysisStepOnEnter, onExit as AnalysisStepOnExit,
+  onEnterTimeout as AnalysisStepOnEnterTimeout, onExitTimeout as AnalysisStepOnExitTimeout} from "./AnalysisStep/transition";
 import {default as AnalysisStep} from './AnalysisStep/AnalysisStep'
 
 
@@ -17,7 +18,7 @@ export default {
     name:"CONNEXION",
     classNames: "",
     component: <ConnexionStep/>,
-    timeout: {enter: 3000, exit: 3000},
+    timeout: {enter: ConnexionStepOnEnterTimeout * 1000, exit: ConnexionStepOnExitTimeout * 1000},
     onEnter: ConnexionStepOnEnter,
     onExit: ConnexionStepOnExit
   },
@@ -25,7 +26,7 @@ export default {
     name: "ANALYSIS",
     classNames: "",
     component: <AnalysisStep/>,
-    timeout: {enter: 3000, exit: 2000},
+    timeout: {enter: AnalysisStepOnEnterTimeout * 1000, exit: AnalysisStepOnExitTimeout * 1000},
     onEnter: AnalysisStepOnEnter,
     onExit: AnalysisStepOnExit
   },

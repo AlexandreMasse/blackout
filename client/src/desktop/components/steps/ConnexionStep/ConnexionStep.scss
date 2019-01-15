@@ -9,7 +9,35 @@
   justify-content: center;
   color: black;
 
-  .intro {
+  .lottie-animation.home-abstrait {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  &__city {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+
+    div {
+      height: 100%;
+      width: 50%;
+    }
+
+    &__left {
+    }
+
+    &__right {
+    }
+  }
+
+  &__intro {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,7 +67,7 @@
     }
   }
 
-  .codes {
+  &__codes {
     display: flex;
     flex: 1;
     justify-content: space-around;
@@ -88,39 +116,39 @@
 
 }
 
-
-.fade-enter {
-  opacity: 0;
-
-  &.fade-enter-active {
-    opacity: 1;
-    transition: all 1500ms 3000ms ease-in-out;
-  }
-
-  &-done {
-    opacity: 1;
-  }
-}
-
-.fade-appear {
-  opacity: 0;
-
-  &.fade-appear-active {
-    opacity: 1;
-    transition: all 2000ms 700ms;
-  }
-
-  &-done {
-    opacity: 1;
-  }
-}
-
-.fade-exit {
-  opacity: 1;
-
-  &.fade-exit-active {
-    opacity: 0;
-    transition: all 1500ms 1000ms;
-  }
-}
+//
+//.fade-enter {
+//  opacity: 0;
+//
+//  &.fade-enter-active {
+//    opacity: 1;
+//    transition: all 1500ms 3000ms ease-in-out;
+//  }
+//
+//  &-done {
+//    opacity: 1;
+//  }
+//}
+//
+//.fade-appear {
+//  opacity: 0;
+//
+//  &.fade-appear-active {
+//    opacity: 1;
+//    transition: all 2000ms 700ms;
+//  }
+//
+//  &-done {
+//    opacity: 1;
+//  }
+//}
+//
+//.fade-exit {
+//  opacity: 1;
+//
+//  &.fade-exit-active {
+//    opacity: 0;
+//    transition: all 1500ms 1000ms;
+//  }
+//}
 
