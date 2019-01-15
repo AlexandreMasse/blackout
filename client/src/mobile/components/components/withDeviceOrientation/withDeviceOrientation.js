@@ -77,6 +77,7 @@ const withDeviceOrientation = (WrappedComponent) => {
 
     handleTouchStartEvent = (e) => {
       e.preventDefault();
+      e.target.parentNode.classList.add('power-button--active')
 
       // Every time we touch and hold we calibrate to the center of the screen.
       this.baseAlpha = this.latestAlpha;
@@ -86,6 +87,8 @@ const withDeviceOrientation = (WrappedComponent) => {
 
 
     handleTouchEndEvent = (e) => {
+      e.target.parentNode.classList.remove('power-button--active')
+
       e.preventDefault();
       this.touching = false;
     }

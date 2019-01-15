@@ -23,9 +23,13 @@ class CursorStep extends Component {
         <div className="cursor" style={{
           transform: `translate3d(${x}px,${y}px,0)`
         }}/>
-        <div className="power-button"/>
+        <div className="power-button">
+          <div className="power-button__container">
+          <span className="power-button__text">on</span>
+          </div>
+        </div>
       </div>
-    );
+    )
   }
 }
 

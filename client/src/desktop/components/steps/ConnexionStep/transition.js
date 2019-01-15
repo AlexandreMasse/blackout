@@ -16,7 +16,7 @@ export const onEnter = (html) => {
 
 
 const onExitDuration = 2
-const onExitDelay = 4
+const onExitDelay = 2
 export const onExitTimeout = onExitDuration + onExitDelay
 
 export const onExit = (html) => {

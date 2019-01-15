@@ -65,7 +65,7 @@ class AnalysisStep extends Component {
     const dateUser2 = osReleaseDate2.split('/', 3)
     return (
       <div className="analysis-step step">
-            <video className="analysis-step__video" src={video.src}></video>
+            <video className="analysis-step__video" muted src={video.src}></video>
             <TextAnalysis  
               handleBlockAppear={this.handleBlockAppear}
               position="left"

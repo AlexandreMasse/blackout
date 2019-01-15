@@ -5,13 +5,17 @@ export const onEnterDelay = 4
 export const onEnterTimeout = onEnterDuration + onEnterDelay
 
 export const onEnter = (html) => {
-
+  // step apparition
   TweenMax.fromTo(html, onEnterDuration, {
     opacity: 0,
   },{
     delay: onEnterDelay,
     opacity: 1
   })
+
+  // video fade
+  const video = html.querySelector('.analysis-step__video')
+  TweenMax.to(video, .5, {opacity: 1, delay: onEnterDelay})
 }
 
 
