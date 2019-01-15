@@ -1,0 +1,27 @@
+@import "../../../../stylesheets/global";
+
+.notification-step {
+    position: relative;
+    width: 74vw;
+    margin:0 auto;
+    &__title {
+        margin-top: 22.5vw;
+        position: relative;
+        font-size: 4.5rem;
+        text-transform: uppercase;
+        display: inline-block;
+        color:$white;
+        font-variation-settings: $bold;
+    }
+
+    &__map {
+        border: 2px solid $white;
+        width: 100%;
+    }
+
+    &__wrapper {
+        margin-bottom: 14.5vw;
+    }
+
+
+}

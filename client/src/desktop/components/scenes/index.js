@@ -1,6 +1,6 @@
 
-import {default as Scene1} from './Scene1/Scene1'
-import {onEnter as onEnterScene1, onExit as onExitScene1} from './Scene1/transition'
+import {default as SceneFlashlight} from './SceneFlashlight/SceneFlashlight'
+import {onEnter as onEnterSceneFlashlight, onExit as onExitSceneFlashlight} from './SceneFlashlight/transition'
 
 import {default as Scene2} from './Scene2/Scene2'
 import {onEnter as onEnterScene2, onExit as onExitScene2} from './Scene2/transition'
@@ -9,11 +9,11 @@ import {default as SceneKinematic} from './SceneKinematic/SceneKinematic'
 import {onEnter as onEnterSceneKinematic, onExit as onExitSceneKinematic} from './SceneKinematic/transition'
 
 export default {
-  SCENE1: {
-    name:"SCENE1",
-    scene: Scene1,
-    onEnter: onEnterScene1,
-    onExit: onExitScene1,
+  SCENEFLASHLIGHT: {
+    name:"SCENEFLASHLIGHT",
+    scene: SceneFlashlight,
+    onEnter: onEnterSceneFlashlight,
+    onExit: onExitSceneFlashlight,
   },
   SCENE2: {
     name:"SCENE2",

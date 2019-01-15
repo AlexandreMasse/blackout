@@ -6,6 +6,23 @@
 
 .button {         
   font-family: $font-scopevariable;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 18.5vw;
+  border: 0;
+  background: $red;
+  font-size: 2.5rem;
+  font-variation-settings: $light;
+  outline: none;
+
+  &:active {
+    background: $white;
+    color:$red;
+  }
 }
 
 @mixin keyframe-fade-in {

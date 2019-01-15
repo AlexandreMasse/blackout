@@ -37,7 +37,7 @@ const initialState = {
         },
         "score": 15.43252921697582
       },
-      currentScene: scenes.SCENE1.name,
+      currentScene: scenes.SCENEFLASHLIGHT.name,
     },
     {
       id: "player2",

@@ -2,12 +2,19 @@ import * as PIXI from "pixi.js"
 import {AssetsManager} from "../../../../managers"
 import {setFullScreen} from '../utils'
 
+import {setCurrentScene} from "../../../redux/actions/desktopAction"
+//scenes
+import scenes from ".."
+
 export default class SceneKinematic {
 
-    constructor() {
+    constructor({dispatch, store}) {
+        this.dispatch = dispatch
+        this.store = store
         this.needUpdate = true
 
         this.init()
+        this.endVideo()
     }
 
     init() {
@@ -23,22 +30,34 @@ export default class SceneKinematic {
 
         this.sprite = new PIXI.Sprite(this.rt)
         setFullScreen(this.sprite)
-        // this.pauseVideo()
         this.isPlaying = false
         this.isStop = false
     }
 
     pauseVideo() {
-        const video = this.textureVid.baseTexture.source
-        video.pause()
+        this.video.pause()
     }
 
     playVideo() {
-        const video = this.textureVid.baseTexture.source
         this.isPlaying = true
-        video.play()
+        this.video.play()
     }
 
+    endVideo = () => {
+        this.video.addEventListener('ended',() => {
+
+        setTimeout(() => {
+            this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
+        },500)    
+        //   this.video.style.opacity = 0
+
+
+        //   setTimeout(() => {
+        //     // this.props.setCurrentStep(steps.SCENE.name)
+        //     // this.props.wsEmitCurrentStep(stepsMobile.NOTIFICATION.name)
+        //   }, 500)
+        })
+    }
 
     update() {
         const currentTime = Math.round(this.video.currentTime)

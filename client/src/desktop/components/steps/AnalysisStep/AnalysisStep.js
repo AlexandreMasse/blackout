@@ -35,7 +35,7 @@ class AnalysisStep extends Component {
       this.video.style.opacity = 0
       setTimeout(() => {
         this.props.setCurrentStep(steps.SCENE.name)
-        this.props.wsEmitCurrentStep(stepsMobile.CURSOR.name)
+        this.props.wsEmitCurrentStep(stepsMobile.NOTIFICATION.name)
       }, 500)
     })
   }
@@ -81,7 +81,7 @@ class AnalysisStep extends Component {
     return (
       <div className="analysis-step step">
             <video className="analysis-step__video" muted src={video.src}></video>
-            <TextAnalysis  
+            <TextAnalysis
               handleBlockAppear={this.handleBlockAppear}
               position="left"
               userId="Player1"
@@ -94,11 +94,11 @@ class AnalysisStep extends Component {
               scoreUser2={score2.toFixed(3)}
             />
 
-            <TextAnalysis  
+            <TextAnalysis
               position="right"
               userId="Player2"
               os={osUser2}
-              year={dateUser2}
+              year={dateUser2[2]}
               resolution={resolutionUSer2}
               state={player2PhoneData.operator.region}
               country={player2PhoneData.operator.country}

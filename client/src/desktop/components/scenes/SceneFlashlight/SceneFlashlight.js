@@ -5,7 +5,7 @@ import {setCurrentScene} from "../../../redux/actions/desktopAction";
 //scenes
 import scenes from ".."
 
-export default class Scene1 {
+export default class SceneFlashlight {
 
   constructor({dispatch, store}) {
     this.dispatch = dispatch
@@ -15,7 +15,7 @@ export default class Scene1 {
   }
 
   init() {
-    console.log("scene1 init");
+    console.log("scene flashlight init")
 
     let width = window.innerWidth
     let height = window.innerHeight
