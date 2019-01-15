@@ -52,7 +52,17 @@ class AnalysisStep extends Component {
 
   render() {
     const video = AssetsManager.get('analyse')
-
+    const {player1PhoneData, player2PhoneData} = this.props
+    const osUser1 = `${player1PhoneData.os} ${player1PhoneData.osVersionNumber}`
+    const osUser2 = `${player2PhoneData.os} ${player2PhoneData.osVersionNumber}`
+    const resolutionUSer1 = `${player1PhoneData.width}x${player1PhoneData.height}`
+    const resolutionUSer2 = `${player2PhoneData.width}x${player2PhoneData.height}`
+    const score1 = player1PhoneData.score
+    const score2 = player2PhoneData.score
+    const osReleaseDate1 = player1PhoneData.osReleaseDate
+    const dateUser1 =  osReleaseDate1.split('/', 3)
+    const osReleaseDate2 = player2PhoneData.osReleaseDate
+    const dateUser2 = osReleaseDate2.split('/', 3)
     return (
       <div className="analysis-step step">
             <video className="analysis-step__video" src={video.src}></video>
@@ -60,25 +70,25 @@ class AnalysisStep extends Component {
               handleBlockAppear={this.handleBlockAppear}
               position="left"
               userId="Player1"
-              os="iOS 11"
-              year="2018"
-              resolution="1980x900"
-              state="Ile-de-France"
-              country="FR"
-              scoreUser1="12.345443"
-              scoreUser2="9.32454"
+              os={osUser1}
+              year={dateUser1[2]}
+              resolution={resolutionUSer1}
+              state={player1PhoneData.operator.region}
+              country={player1PhoneData.operator.country}
+              scoreUser1={score1.toFixed(3)}
+              scoreUser2={score2.toFixed(3)}
             />
 
             <TextAnalysis  
               position="right"
               userId="Player2"
-              os="iOS11"
-              year="2018"
-              resolution="1980x900"
-              state="Ile-de-France"
-              country="FR"
-              scoreUser2="12.345443"
-              scoreUser1="9.32454"
+              os={osUser2}
+              year={dateUser2}
+              resolution={resolutionUSer2}
+              state={player2PhoneData.operator.region}
+              country={player2PhoneData.operator.country}
+              scoreUser1={score1.toFixed(3)}
+              scoreUser2={score2.toFixed(3)}
             />
       </div>
     )
