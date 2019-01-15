@@ -89,6 +89,17 @@ export default (state = initialState, action) => {
                         if (user.id === phoneData.userId) {
                             user = {
                                 ...user,
+                                status: (() => {
+                                    const currentScore = phoneData.phoneData.score;
+                                    const otherScore = phoneDataArray.find(pd => pd.userId !== user.id).phoneData.score;
+                                    if (currentScore > otherScore) {
+                                        return "superior"
+                                    } else if (currentScore === otherScore) {
+                                        return "equal"
+                                    } else {
+                                        return "inferior"
+                                    }
+                                })(),
                                 phoneScore: phoneData.phoneData.score
                             }
                         }
