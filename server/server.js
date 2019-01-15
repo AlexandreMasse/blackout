@@ -33,6 +33,7 @@ server.listen(app.get('port'), function () {
           const room = new Room(socket) 
           room.create(socket)
           Rooms.roomArrInstance.push(room)
+          room.currentStep(io, socket)
           room.destroy(io ,socket)
         }
         

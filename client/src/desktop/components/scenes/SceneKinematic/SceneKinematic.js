@@ -23,7 +23,7 @@ export default class SceneKinematic {
 
         this.sprite = new PIXI.Sprite(this.rt)
         setFullScreen(this.sprite)
-        this.pauseVideo()
+        // this.pauseVideo()
         this.isPlaying = false
         this.isStop = false
     }

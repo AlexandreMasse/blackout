@@ -3,8 +3,10 @@ import {connect} from 'react-redux'
 import {TextAnalysis} from './components'
 import {AssetsManager} from "../../../../managers"
 import steps from '../'
+import stepsMobile from '../../../../mobile/components/steps'
 // redux
 import {setCurrentStep} from '../../../redux/actions/desktopAction'
+import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 
 import {TimelineMax} from 'gsap'
 
@@ -33,6 +35,7 @@ class AnalysisStep extends Component {
       this.video.style.opacity = 0
       setTimeout(() => {
         this.props.setCurrentStep(steps.SCENE.name)
+        this.props.wsEmitCurrentStep(stepsMobile.CURSOR.name)
       }, 500)
     })
   }
@@ -116,7 +119,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
+    wsEmitCurrentStep: (currentStep) => dispatch(wsEmitCurrentStep({currentStep}))
   }
 }
 

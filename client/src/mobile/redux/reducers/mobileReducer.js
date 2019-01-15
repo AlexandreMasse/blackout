@@ -97,6 +97,13 @@ export default (state = initialState, action) => {
                 }),
             }
         }
+        case websocketsOnActionTypes.WEBSOCKET_ON_CURRENT_STEP: {
+            const {step} = action.payload
+            return {
+                ...state,
+                currentStep:step
+            }
+        }
 
         default: {
             return state

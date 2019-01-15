@@ -1,5 +1,6 @@
 export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_DEVICE_TYPE: "deviceType",
+    WEBSOCKET_EMIT_CURRENT_STEP: "currentStep",
 }
 
 export const websocketsOnActionTypes = {

@@ -24,5 +24,12 @@ export const emit = (type, payload) => socket.emit(type, payload)
 export const wsEmitDeviceType = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_DEVICE_TYPE, {
         type: payload.type,
-    });
+    })
+}
+
+export const wsEmitCurrentStep = (payload) => (dispatch, getState, {emit}) => {
+    console.log("wsEmitCurrentStep", payload)
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_CURRENT_STEP, {
+        step: payload.currentStep,
+    })
 }

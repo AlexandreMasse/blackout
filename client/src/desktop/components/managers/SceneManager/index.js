@@ -33,7 +33,7 @@ class SceneManager extends Component {
     let width = parentRef.clientWidth
     let height = parentRef.clientHeight
 
-    this.app = new PIXI.Application(width, height, {backgroundColor: 0xD5D5D5})
+    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000})
 
     parentRef.appendChild(this.app.view)
 

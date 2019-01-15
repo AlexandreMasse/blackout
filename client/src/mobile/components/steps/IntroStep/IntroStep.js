@@ -66,9 +66,9 @@ class IntroStep extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     // change step after connexion
     if(nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
-      setTimeout(() => {
-        this.props.setCurrentStep(steps.CURSOR.name)
-      }, 3000)
+      // setTimeout(() => {
+      //   this.props.setCurrentStep(steps.CURSOR.name)
+      // }, 3000)
     }
   }
 

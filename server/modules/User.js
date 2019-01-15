@@ -100,7 +100,7 @@ export default class User {
         socket.on('phoneData', (data) => {
             this.phoneDataObject = data.phoneData
         })
-    }
+    } 
 
     position = (io,socket) => {
         socket.on('position', (data) => {
