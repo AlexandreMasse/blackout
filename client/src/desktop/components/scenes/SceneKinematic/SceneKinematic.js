@@ -29,7 +29,7 @@ export default class SceneKinematic {
         this.rt = new PIXI.RenderTexture(this.brt)
 
         this.sprite = new PIXI.Sprite(this.rt)
-        setFullScreen(this.sprite)
+        setFullScreen(this.sprite, this.textureVid.width, this.textureVid.height)
         this.isPlaying = false
         this.isStop = false
     }
