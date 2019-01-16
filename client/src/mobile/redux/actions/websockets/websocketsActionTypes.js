@@ -3,6 +3,7 @@ export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_DEVICE_TYPE: "deviceType",
     WEBSOCKET_EMIT_DISCONNECT_TO_ROOM: "disconnectToRoom",
     WEBSOCKET_EMIT_PHONE_DATA: "phoneData",
+    WEBSOCKET_EMIT_INTRO_PROGRESSION: "introProgression",
     WEBSOCKET_EMIT_RECONNECT: "reconnect",
     WEBSOCKET_EMIT_POSITION: "position",
 }

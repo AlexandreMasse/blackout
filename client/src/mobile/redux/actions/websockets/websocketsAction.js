@@ -41,6 +41,14 @@ export const wsEmitPhoneData = (payload) => (dispatch, getState, {emit}) => {
     });
 }
 
+export const wsEmitIntroProgression = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_INTRO_PROGRESSION, {
+        progression: payload.progression,
+    });
+}
+
+
+
 export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_RECONNECT, {
         userId: payload.userId,

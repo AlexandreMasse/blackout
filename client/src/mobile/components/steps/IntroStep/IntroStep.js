@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 //redux
 import {connect} from 'react-redux';
-import {wsEmitDeviceType, wsEmitPassword} from "../../../redux/actions/websockets/websocketsAction";
+import {wsEmitDeviceType, wsEmitPassword, wsEmitIntroProgression} from "../../../redux/actions/websockets/websocketsAction";
 import {setCurrentStep, setPassword} from "../../../redux/actions/mobileAction";
 //components
 import {Keyboard} from "../../components";
@@ -9,6 +9,7 @@ import {Keyboard} from "../../components";
 import steps from '..'
 //lib
 import NoSleep from "nosleep.js";
+import GyroNorm from  'gyronorm';
 //css
 import './IntroStep.scss'
 //asset
@@ -23,6 +24,9 @@ class IntroStep extends Component {
     this.state = {
       password: ''
     }
+
+    this.listenDeviceOrientation()
+
   }
 
   setFullscreen = () => {
@@ -70,6 +74,39 @@ class IntroStep extends Component {
       //   this.props.setCurrentStep(steps.CURSOR.name)
       // }, 3000)
     }
+  }
+
+  listenDeviceOrientation() {
+
+    this.gn = new GyroNorm();
+
+    const args = {
+      frequency: 25,
+      gravityNormalized: true,
+      orientationBase: GyroNorm.GAME,
+      decimalCount: 2,
+      logger: null,
+      screenAdjusted: false
+    };
+
+    this.gn.init(args).then(() => {
+      console.log();
+      this.gn.start((data) => {
+        const minBeta = 0
+        const maxBeta = 90
+        const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
+        const progressionClamped = Math.min(Math.max(progression, 0), 1);
+        const progressionRounded = Number(progressionClamped.toPrecision(4))
+        console.log(progressionRounded);
+        this.props.wsEmitIntroProgression(progressionRounded)
+      });
+    }).catch((e) => {
+      console.error(e);
+    });
+  }
+
+  componentWillUnmount() {
+    this.gn.end()
   }
 
   render() {
@@ -136,6 +173,7 @@ const mapDispatchToProps = dispatch => {
   return {
     wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
     wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
+    wsEmitIntroProgression: (progression) => dispatch(wsEmitIntroProgression({progression})),
     setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
     setPassword: (password) => dispatch(setPassword({password})),
   }

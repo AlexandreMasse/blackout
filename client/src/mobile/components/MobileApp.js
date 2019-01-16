@@ -1,3 +1,4 @@
+import 'gyronorm/dist/gyronorm.complete.min.js';
 import React,{ Component} from 'react'
 //Redux
 import { Provider } from 'react-redux'
@@ -6,7 +7,7 @@ import { connect } from 'react-redux'
 import {wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
 import {setCurrentStep, setPhoneData, setAppLoaded} from '../redux/actions/mobileAction'
 import {socket} from '../redux/actions/websockets/websocketsAction'
-// Component 
+// Component
 import {BackgroundGrid, Loading} from './components'
 import {StepManager} from "./managers";
 //Step

@@ -11,6 +11,7 @@
     "@types/react-transition-group": "^2.0.14",
     "classnames": "^2.2.6",
     "gsap": "^2.0.2",
+    "gyronorm": "^2.0.6",
     "is-promise": "^2.1.0",
     "lottie-web": "^5.4.3",
     "mobile-detect": "^1.4.3",
