@@ -81,7 +81,7 @@ class IntroStep extends Component {
     this.gn = new GyroNorm();
 
     const args = {
-      frequency: 25,
+      frequency: 100,
       gravityNormalized: true,
       orientationBase: GyroNorm.GAME,
       decimalCount: 2,
@@ -97,7 +97,6 @@ class IntroStep extends Component {
         const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
         const progressionClamped = Math.min(Math.max(progression, 0), 1);
         const progressionRounded = Number(progressionClamped.toPrecision(4))
-        console.log(progressionRounded);
         this.props.wsEmitIntroProgression(progressionRounded)
       });
     }).catch((e) => {

@@ -38,6 +38,7 @@ const initialState = {
         "score": 15.43252921697582
       },
       currentScene: scenes.SCENEFLASHLIGHT.name,
+      introProgression: 0,
     },
     {
       id: "player2",
@@ -63,6 +64,7 @@ const initialState = {
         "score": 15.43252921697582
       },
       currentScene: scenes.SCENE2.name,
+      introProgression: 0,
     }
   ],
 };
@@ -203,6 +205,23 @@ export default (state = initialState, action) => {
             return {
               ...user,
               position
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_INTRO_PROGRESSION: {
+      const {progression, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              introProgression: progression
             }
           } else {
             return user;

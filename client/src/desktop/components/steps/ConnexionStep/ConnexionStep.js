@@ -26,6 +26,9 @@ class ConnexionStep extends Component {
     }
   }
 
+
+
+
   render() {
     const {password1, password2, isPlayer1Connected, isPlayer2Connected, player1PhoneData, player2PhoneData} = this.props
     return (
@@ -36,13 +39,12 @@ class ConnexionStep extends Component {
         <input
           style={{zIndex:"10", width: "50%"}}
           type="range"
-          onChange={(e) => this.setState({cityLeftProgression: e.target.value})}
+          onChange={(e) => {console.log(e); this.setState({cityLeftProgression: e.target.value})}}
           value={this.state.cityLeftProgression}
           step={0.001}
           min={0}
           max={1}
         />
-
         <input
           style={{zIndex:"10", width: "50%"}}
           type="range"
@@ -62,8 +64,8 @@ class ConnexionStep extends Component {
             animationData={animations.HomeCityLeft}
             aspectRatio={"cover-right"}
             speed={0.8}
-            progressionTweenDuration={0.5}
-            progression={Number(this.state.cityLeftProgression)}
+            progressionTweenDuration={0.2}
+            progression={this.props.player1IntroProgression}
           />
           <LottieAnimation
             autoplay={false}
@@ -108,7 +110,9 @@ const mapStateToProps = state => {
     isPlayer1Connected: state.desktop.users.find(user => user.id === "player1").isConnected,
     isPlayer2Connected: state.desktop.users.find(user => user.id === "player2").isConnected,
     player1PhoneData: state.desktop.users.find(user => user.id === "player1").phoneData,
-    player2PhoneData: state.desktop.users.find(user => user.id === "player2").phoneData
+    player2PhoneData: state.desktop.users.find(user => user.id === "player2").phoneData,
+    player1IntroProgression: state.desktop.users.find(user => user.id === "player1").introProgression,
+    player2IntroProgression: state.desktop.users.find(user => user.id === "player1").introProgression
   }
 }
 

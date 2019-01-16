@@ -45,6 +45,7 @@ server.listen(app.get('port'), function () {
           user.disconnect(io, socket)
           user.position(io, socket)
           user.phoneData(io, socket)
+          user.introProgression(io, socket)
         }
     })
   })

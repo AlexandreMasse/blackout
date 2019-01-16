@@ -111,6 +111,15 @@ export default class User {
         })
     }
 
+    introProgression = (io,socket) => {
+        socket.on('introProgression', (data) => {
+            io.to(socket.room).emit('introProgression', {
+            progression: data.progression,
+            userId: socket.username
+            })
+        })
+    }
+
     getRoomInstance(roomId) {
         const parts = roomId.split('-', 2)
         const roomIndex = parseInt(parts[1])
