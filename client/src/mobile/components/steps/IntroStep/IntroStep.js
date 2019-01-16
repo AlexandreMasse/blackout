@@ -43,11 +43,11 @@ class IntroStep extends Component {
     e.preventDefault()
     let password = this.state.password
     if(password !== null && password !== '' && password.length === 4) {
+      //TODO: activate fullscreen
+      this.setFullscreen()
+      this.setNoSleep()
       this.props.setPassword(password)
       this.props.wsEmitPassword(password)
-      //TODO: activate fullscreen
-      //this.setFullscreen()
-      this.setNoSleep()
     } else {
       console.log('le password est invalide')
     }

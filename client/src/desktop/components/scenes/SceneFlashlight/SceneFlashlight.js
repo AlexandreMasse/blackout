@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js"
 import {AssetsManager} from "../../../../managers"
+import {TweenMax, RoughEase} from 'gsap'
 //redux
 import {setCurrentScene} from "../../../redux/actions/desktopAction"
 // scenes
@@ -13,22 +14,29 @@ export default class SceneFlashlight {
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
+    this.isOff = true;
     // console.log(this.store)
     this.init()
   }
 
-  //required
+  // required
   updateStore(newStore) {
-    const currentPlayer1Position = this.store.users.find(user => user.id === "player1").position
-    const newPlayer1Position = newStore.users.find(user => user.id === "player1").position
+    this.currentPlayer1Position = this.store.users.find(user => user.id === "player1").position
+    this.newPlayer1Position = newStore.users.find(user => user.id === "player1").position
 
-    if(currentPlayer1Position !== newPlayer1Position) {
+    if(this.currentPlayer1Position !== this.newPlayer1Position) {
       //player1 position has changed
+      if(this.isOff) {
+        this.switchOnLight()
+      }
+      this.moveFlashLight()
+      // console.log(this.currentPlayer1Position)
     }
 
     //update store
     this.store = newStore
   }
+
 
   init() {
     console.log("scene flashlight init")
@@ -42,6 +50,34 @@ export default class SceneFlashlight {
     // this.sprite.x = -600
     // this.sprite.y = -80
     setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
+  }
+
+  switchOnLight() {
+    TweenMax.to(this.spriteFlashOff, 1, {alpha:0})
+    // TweenMax.to(this.spriteBureau1, 1, {alpha:1 ,delay:1})
+    // TweenMax.to(this.spriteBureau2, 1, {alpha:1 ,delay:1})
+    // TweenMax.to(this.spriteBureau3, 1, {alpha:1 ,delay:1})
+    // this.isOff = false
+    TweenMax.to(this.spriteBureau1, 3, {alpha:1, ease:RoughEase.ease.config({points:50, strength:1, clamp:true}), delay:1})
+    TweenMax.to(this.spriteBureau2, 3, {alpha:1, ease:RoughEase.ease.config({points:50, strength:2, clamp:true}), delay:1})
+    TweenMax.to(this.spriteBureau3, 3, {alpha:1, ease:RoughEase.ease.config({points:50, strength:4, clamp:true}), delay:1, onComplete:() => {
+      this.isOff = false
+    }})
+  }
+
+  moveFlashLight() {
+    const player1Position = {
+      x:this.currentPlayer1Position.x * (this.sceneWH.width * .5),
+      y: this.currentPlayer1Position.y * (this.sceneWH.height * .5)
+    }
+    const mulplicator = 1
+    const mulplicatorY = 1
+    let newPositionX = (player1Position.x * mulplicator) + (window.innerWidth / 2)
+    let newPositionY = (player1Position.y * mulplicatorY) + (window.innerHeight / 2)
+
+    TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
+    TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
+    TweenMax.to(this.maskUSer[2], 0.1, {x:newPositionX, y:newPositionY})
   }
 
   initBackgroundUser() {
@@ -95,9 +131,6 @@ export default class SceneFlashlight {
     const maskRadius1 = 380
     const maskRadius2 = 320
     const maskRadius3 = 260
-    // const maskRadius1 = 180
-    // const maskRadius2 = 140
-    // const maskRadius3 = 100
     
     // CIRCLE MASK 1
     this.mask1 = new PIXI.Graphics()
@@ -138,12 +171,12 @@ export default class SceneFlashlight {
   }
 
   addToScene() {
-    this.container.addChild(this.mask1)
-    this.container.addChild(this.mask2)
     this.container.addChild(this.mask3)
-    this.container.addChild(this.spriteBureau1)
-    this.container.addChild(this.spriteBureau2)
+    this.container.addChild(this.mask2)
+    this.container.addChild(this.mask1)
     this.container.addChild(this.spriteBureau3)
+    this.container.addChild(this.spriteBureau2)
+    this.container.addChild(this.spriteBureau1)
     this.container.addChild(this.spriteFlashOff)
   }
   update() {
