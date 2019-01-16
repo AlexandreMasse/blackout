@@ -5,7 +5,7 @@ import {setCurrentScene} from "../../../redux/actions/desktopAction"
 // scenes
 import scenes from ".."
 // utils
-import {setFullScreen, collisionDetection} from '../utils'
+import {setFullScreen, collisionDetection, lerp} from '../utils'
 
 export default class SceneFlashlight {
 
@@ -13,7 +13,7 @@ export default class SceneFlashlight {
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
-    console.log(this.store)
+    // console.log(this.store)
     this.init()
   }
 
@@ -147,6 +147,7 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteFlashOff)
   }
   update() {
+    // this.store.
     // console.log("update scene flashlight");
   }
 
