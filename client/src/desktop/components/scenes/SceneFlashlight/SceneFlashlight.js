@@ -153,10 +153,10 @@ export default class SceneFlashlight {
       x:this.currentPlayer1Position.x * (this.sceneWH.width * .5),
       y: this.currentPlayer1Position.y * (this.sceneWH.height * .5)
     }
-    const mulplicator = 1
-    const mulplicatorY = 1
-    let newPositionX = (player1Position.x * mulplicator) + (window.innerWidth / 2)
-    let newPositionY = (player1Position.y * mulplicatorY) + (window.innerHeight / 2)
+    // const mulplicator = 1
+    // const mulplicatorY = 1
+    let newPositionX = (player1Position.x) + (window.innerWidth / 2)
+    let newPositionY = (player1Position.y) + (window.innerHeight / 2)
 
     TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
     TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
@@ -289,7 +289,7 @@ export default class SceneFlashlight {
     this.mask1.drawCircle(0, 0, maskRadius1)
     this.mask1.endFill()
 
-    this.mask1.x = this.sceneWH.width / 2 
+    this.mask1.x = this.sceneWH.width / 2 - (this.sceneWH.width / 4)
     this.mask1.y = this.sceneWH.height / 2
 
     this.maskUSer.push(this.mask1)
@@ -299,7 +299,7 @@ export default class SceneFlashlight {
     this.mask2.drawCircle(0, 0, maskRadius2)
     this.mask2.endFill()
 
-    this.mask2.x = this.sceneWH.width / 2 
+    this.mask2.x = this.sceneWH.width / 2 - (this.sceneWH.width / 4)
     this.mask2.y = this.sceneWH.height / 2
     
     this.maskUSer.push(this.mask2)
@@ -310,9 +310,8 @@ export default class SceneFlashlight {
     this.mask3.drawCircle(0, 0, maskRadius3)
     this.mask3.endFill()
 
-    this.mask3.x = this.sceneWH.width / 2
-    this.mask3.y = this.sceneWH.height / 2
-
+    this.mask3.x = this.sceneWH.width / 2 - (this.sceneWH.width / 4)
+    this.mask3.y = this.sceneWH.height / 2 
     this.maskUSer.push(this.mask3)
     
     // SET MASK TO SPRITE
