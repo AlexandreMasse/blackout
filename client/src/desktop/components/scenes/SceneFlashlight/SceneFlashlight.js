@@ -31,12 +31,15 @@ export default class SceneFlashlight {
       if (this.isOff) {
         this.switchOnLight()
       }
-      this.moveFlashLight()
+      if (this.canMove) {
+        this.moveFlashLight()
+      }
     }
 
     if (this.currentPlayer1Position == this.newPlayer1Position) {
       // player1 position has not changed
       if (!this.isOff) {
+        console.log('jeteins')
         this.switchOffLight()
       }
     }
@@ -78,16 +81,19 @@ export default class SceneFlashlight {
   }
 
   switchOnLight() {
+    this.canMove = false
     TweenMax.to(this.spriteFlashOff, .3, {alpha:0})
-    TweenMax.to(this.spriteBureau1, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:.4})
-    TweenMax.to(this.spriteBureau2, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:.4})
-    TweenMax.to(this.spriteBureau3, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:.4, onComplete:() => {
-      this.isOff = false
+    TweenMax.to(this.spriteBureau1, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
+    TweenMax.to(this.spriteBureau2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
+    TweenMax.to(this.spriteBureau3, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true}), onComplete: () => {
+      console.log('finito')
+      this.canMove = true
     }})
+    this.isOff = false
   }
 
   switchOffLight() {
-    TweenMax.to(this.spriteFlashOff, 1, {alpha:1 , delay:1, onComplete:() => {
+    TweenMax.to(this.spriteFlashOff, .3, {alpha:1 , delay:1, onComplete:() => {
       this.isOff = true
     }})
     TweenMax.to(this.spriteBureau1, 1, {alpha:0, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
@@ -97,11 +103,13 @@ export default class SceneFlashlight {
 
   switchOnLight2() {
     TweenMax.to(this.spriteFlashOff_2, 1, {alpha:0})
-    TweenMax.to(this.spriteBureau1_2, 2, {alpha:1, ease:RoughEase.ease.config({points:50, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau2_2, 2, {alpha:1, ease:RoughEase.ease.config({points:50, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau3_2, 2, {alpha:1, ease:RoughEase.ease.config({points:50, strength:2, clamp:true}), delay:1, onComplete:() => {
-      this.isOff2 = false
+    TweenMax.to(this.spriteBureau1_2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
+    TweenMax.to(this.spriteBureau2_2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
+    TweenMax.to(this.spriteBureau3_2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true}), onComplete: () => {
+      console.log('finito 2')
+      this.canMove2 = true
     }})
+    this.isOff2 = false
   }
 
   switchOffLight2() {
@@ -138,33 +146,35 @@ export default class SceneFlashlight {
     
     this.circleDetection_2.alpha = 0
 
+    // BOX DETECTION
     this.box = new PIXI.Graphics()
     this.box.beginFill(0x000000)
     this.box.drawRect(0, 0, 150, 150)
     this.box.endFill()
-    this.box.x = 1155
-    this.box.y = 755
+    this.box.x = 1355
+    this.box.y = 855
     this.box.alpha = 0
   }
 
   moveFlashLight() {
     this.isMoving = true
     const player1Position = {
-      x:this.currentPlayer1Position.x * (this.sceneWH.width * .5),
+      x: this.currentPlayer1Position.x * (this.sceneWH.width * .5),
       y: this.currentPlayer1Position.y * (this.sceneWH.height * .5)
     }
     // const mulplicator = 1
     // const mulplicatorY = 1
-    let newPositionX = (player1Position.x) + (window.innerWidth / 2)
-    let newPositionY = (player1Position.y) + (window.innerHeight / 2)
-
-    TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
-    TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
-    TweenMax.to(this.maskUSer[2], 0.1, {x:newPositionX, y:newPositionY})
-    
-    TweenMax.to(this.circleDetection, 0.1, {x:newPositionX, y:newPositionY ,onComplete: () => {
-      this.isMoving = false 
-    }})
+      let newPositionX = (player1Position.x) + (this.sceneWH.width / 2) 
+      let newPositionY = (player1Position.y) + (this.sceneWH.height / 2)
+      TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
+      TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
+      TweenMax.to(this.maskUSer[2], 0.1, {x:newPositionX, y:newPositionY})
+      
+      TweenMax.to(this.spriteFlashOff, 0.1, {x:newPositionX - (this.spriteFlashOff.width / 2), y:newPositionY - (this.spriteFlashOff.height / 2) })
+      TweenMax.to(this.circleDetection, 0.1, {x:newPositionX, y:newPositionY ,onComplete: () => {
+        this.isMoving = false 
+      }})
+   
   }
 
   moveFlashLight2() {
@@ -173,15 +183,16 @@ export default class SceneFlashlight {
       x: this.currentPlayer2Position.x * (this.sceneWH.width * .5),
       y: this.currentPlayer2Position.y * (this.sceneWH.height * .5)
     }
-    const mulplicator = 1
-    const mulplicatorY = 1
-    let newPositionX = (player2Position.x * mulplicator) + (window.innerWidth / 2)
-    let newPositionY = (player2Position.y * mulplicatorY) + (window.innerHeight / 2)
+    // const mulplicator = 1
+    // const mulplicatorY = 1
+    let newPositionX = (player2Position.x) + (this.sceneWH.width / 2)
+    let newPositionY = (player2Position.y) + (this.sceneWH.height / 2)
 
     TweenMax.to(this.maskUSer2[0], 0.1, {x:newPositionX, y:newPositionY})
     TweenMax.to(this.maskUSer2[1], 0.1, {x:newPositionX, y:newPositionY})
     TweenMax.to(this.maskUSer2[2], 0.1, {x:newPositionX, y:newPositionY})
 
+    TweenMax.to(this.spriteFlashOff_2, 0.1, {x:newPositionX - (this.spriteFlashOff_2.width / 2), y:newPositionY - (this.spriteFlashOff_2.height / 2) })
     TweenMax.to(this.circleDetection_2, 0.1, {x:newPositionX, y:newPositionY ,onComplete: () => {
       this.isMoving2 = false
     }})
@@ -264,7 +275,7 @@ export default class SceneFlashlight {
     this.spriteFlashOff = new PIXI.Sprite(tFlashOff)
 
     this.spriteFlashOff.x = (this.sceneWH.width / 2) - (this.spriteFlashOff.width / 2) - (this.sceneWH.width / 4)
-    this.spriteFlashOff.y = this.sceneWH.height / 2
+    this.spriteFlashOff.y = this.sceneWH.height / 2 - (this.spriteFlashOff.height / 2)
   }
 
   initFlashOff2() {
@@ -274,14 +285,14 @@ export default class SceneFlashlight {
     this.spriteFlashOff_2 = new PIXI.Sprite(tFlashOff)
 
     this.spriteFlashOff_2.x = (this.sceneWH.width / 2) - (this.spriteFlashOff_2.width / 2) + (this.sceneWH.width / 4)
-    this.spriteFlashOff_2.y = this.sceneWH.height / 2
+    this.spriteFlashOff_2.y = this.sceneWH.height / 2 - (this.spriteFlashOff_2.height / 2)
   }
 
   initMaskUser() {
     this.maskUSer = []
-    const maskRadius1 = 200
-    const maskRadius2 = 160
-    const maskRadius3 = 120
+    const maskRadius1 = 240
+    const maskRadius2 = 200
+    const maskRadius3 = 160
     
     // CIRCLE MASK 1
     this.mask1 = new PIXI.Graphics()
