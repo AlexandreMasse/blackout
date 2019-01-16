@@ -120,10 +120,10 @@ class SceneManager extends Component {
 
   updateStore = (store) => {
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
-      currentSceneInstance.store = store
+      currentSceneInstance.updateStore(store)
     })
     this.nextSceneInstanceArray.forEach(nextSceneInstance => {
-      if(nextSceneInstance) nextSceneInstance.store = store
+      if(nextSceneInstance) nextSceneInstance.updateStore(store)
     })
   }
 

@@ -3,10 +3,18 @@ import * as PIXI from "pixi.js";
 
 export default class Scene2 {
 
-  constructor() {
+  constructor({dispatch, store}) {
+    this.store = store
     this.needUpdate = true;
 
     this.init()
+  }
+
+  //required
+  updateStore(newStore) {
+    //update store
+    console.log("updateStore", newStore);
+    this.store = newStore
   }
 
   init() {

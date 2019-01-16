@@ -19,6 +19,12 @@ export default class SceneKinematic {
         this.endVideo()
     }
 
+    //required
+    updateStore(newStore) {
+        //update store
+        this.store = newStore
+    }
+
     init() {
         this.container = new PIXI.Container()
         const mouse = AssetsManager.get('mouse')

@@ -17,6 +17,19 @@ export default class SceneFlashlight {
     this.init()
   }
 
+  //required
+  updateStore(newStore) {
+    const currentPlayer1Position = this.store.users.find(user => user.id === "player1").position
+    const newPlayer1Position = newStore.users.find(user => user.id === "player1").position
+
+    if(currentPlayer1Position !== newPlayer1Position) {
+      //player1 position has changed
+    }
+
+    //update store
+    this.store = newStore
+  }
+
   init() {
     console.log("scene flashlight init")
     this.container = new PIXI.Container()
