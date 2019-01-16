@@ -36,7 +36,7 @@ class AnalysisStep extends Component {
       setTimeout(() => {
         this.props.setCurrentStep(steps.SCENE.name)
         this.props.wsEmitCurrentStep(stepsMobile.NOTIFICATION.name)
-      }, 500)
+      }, 800)
     })
   }
   

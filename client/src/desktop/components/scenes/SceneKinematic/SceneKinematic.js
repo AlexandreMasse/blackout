@@ -22,8 +22,8 @@ export default class SceneKinematic {
         const mouse = AssetsManager.get('mouse')
         this.textureVid = PIXI.Texture.fromVideo(mouse)
         this.bg = new PIXI.Sprite(this.textureVid)
-        this.textureVid.baseTexture.source.loop = true
         this.video = this.textureVid.baseTexture.source 
+        this.video.muted = true
         this.container.addChild(this.bg)
         this.brt = new PIXI.BaseRenderTexture(this.textureVid.width, this.textureVid.height, PIXI.SCALE_MODES.LINEAR, 1)
         this.rt = new PIXI.RenderTexture(this.brt)
@@ -45,26 +45,18 @@ export default class SceneKinematic {
 
     endVideo = () => {
         this.video.addEventListener('ended',() => {
-
-        setTimeout(() => {
-            this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
-        },500)    
-        //   this.video.style.opacity = 0
-
-
-        //   setTimeout(() => {
-        //     // this.props.setCurrentStep(steps.SCENE.name)
-        //     // this.props.wsEmitCurrentStep(stepsMobile.NOTIFICATION.name)
-        //   }, 500)
+            setTimeout(() => {
+                this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
+            },500)    
         })
     }
 
     update() {
-        const currentTime = Math.round(this.video.currentTime)
-        if(this.isPlaying && currentTime === 3 && this.isStop === false) {
-            this.pauseVideo()
-            this.isStop = true
-        }
+        // const currentTime = Math.round(this.video.currentTime)
+        // if(this.isPlaying && currentTime === 3 && this.isStop === false) {
+        //     this.pauseVideo()
+        //     this.isStop = true
+        // }
         // console.log("scene kinematic update");
     }
 

@@ -1,9 +1,11 @@
-import {AssetsManager} from "../../../../managers";
-import * as PIXI from "pixi.js";
+import * as PIXI from "pixi.js"
+import {AssetsManager} from "../../../../managers"
 //redux
-import {setCurrentScene} from "../../../redux/actions/desktopAction";
-//scenes
+import {setCurrentScene} from "../../../redux/actions/desktopAction"
+// scenes
 import scenes from ".."
+// utils
+import {setFullScreen, collisionDetection} from '../utils'
 
 export default class SceneFlashlight {
 
@@ -16,27 +18,106 @@ export default class SceneFlashlight {
 
   init() {
     console.log("scene flashlight init")
-
-    let width = window.innerWidth
-    let height = window.innerHeight
     this.container = new PIXI.Container()
-    let bureauItemImg = AssetsManager.get('bureauItem')
-    let baseTexture = new PIXI.BaseTexture(bureauItemImg)
-    let texture = new PIXI.Texture(baseTexture)
-    let bureauItemSprite = new PIXI.Sprite(texture)
-    this.container.addChild(bureauItemSprite)
-    this.brt = new PIXI.BaseRenderTexture(bureauItemImg.width, bureauItemImg.height, PIXI.SCALE_MODES.LINEAR, 1)
+    this.initBackgroundUser()
+    this.addToScene()
+    this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
-
-    // setTimeout(() => {
-    //   this.dispatch(setCurrentScene(scenes.SCENE2.name))
-    // },5000)
+    
+    // this.sprite.x = -600
+    // this.sprite.y = -80
+    setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
   }
 
+  initBackgroundUser() {
+    // get image from assets 
+    const bureau1 = AssetsManager.get('bureau1')
+    const bureau2 = AssetsManager.get('bureau2')
+    const bureau3 = AssetsManager.get('bureau3')
+    const outline = AssetsManager.get('outline')
+
+    const baseTextureBureau1 = new PIXI.BaseTexture(bureau1)
+    const baseTextureBureau2 = new PIXI.BaseTexture(bureau2)
+    const baseTextureBureau3 = new PIXI.BaseTexture(bureau3)
+    const baseTextureOutline = new PIXI.BaseTexture(outline)
+
+    const tBureau1 = new PIXI.Texture(baseTextureBureau1)
+    const tBureau2 = new PIXI.Texture(baseTextureBureau2)
+    const tBureau3 = new PIXI.Texture(baseTextureBureau3)
+    const tOutline = new PIXI.Texture(baseTextureOutline)
+
+    this.spriteBureau1 = new PIXI.Sprite(tBureau1)
+    this.spriteBureau2 = new PIXI.Sprite(tBureau2)
+    this.spriteBureau3 = new PIXI.Sprite(tBureau3)
+
+    this.sceneWH = {
+      width: this.spriteBureau1.width,
+      height: this.spriteBureau1.height
+    }
+    // const spriteOutline = new PIXI.Sprite(tOutline)
+
+    this.initMaskUser()
+    // this.container.addChild(spriteOutline)
+  }
+
+  initMaskUser() {
+    this.maskUSer = []
+    const maskRadius1 = 380
+    const maskRadius2 = 320
+    const maskRadius3 = 260
+    // const maskRadius1 = 180
+    // const maskRadius2 = 140
+    // const maskRadius3 = 100
+    
+    // CIRCLE MASK 1
+    this.mask1 = new PIXI.Graphics()
+    this.mask1.beginFill('0xffffff')
+    this.mask1.drawCircle(0, 0, maskRadius1)
+    this.mask1.endFill()
+
+    this.mask1.x = this.sceneWH.width / 2 
+    this.mask1.y = this.sceneWH.height / 2
+
+    this.maskUSer.push(this.mask1)
+    // CIRCLE MASK 2
+    this.mask2 = new PIXI.Graphics()
+    this.mask2.beginFill('0xffffff')
+    this.mask2.drawCircle(0, 0, maskRadius2)
+    this.mask2.endFill()
+
+    this.mask2.x = this.sceneWH.width / 2 
+    this.mask2.y = this.sceneWH.height / 2
+    
+    this.maskUSer.push(this.mask2)
+
+    // CIRCLE MASK 3
+    this.mask3 = new PIXI.Graphics()
+    this.mask3.beginFill('0xffffff')
+    this.mask3.drawCircle(0, 0, maskRadius3)
+    this.mask3.endFill()
+
+    this.mask3.x = this.sceneWH.width / 2
+    this.mask3.y = this.sceneWH.height / 2
+
+    this.maskUSer.push(this.mask3)
+    
+    // SET MASK TO SPRITE
+    this.spriteBureau1.mask = this.mask1
+    this.spriteBureau2.mask = this.mask2
+    this.spriteBureau3.mask = this.mask3
+  }
+
+  addToScene() {
+    this.container.addChild(this.mask1)
+    this.container.addChild(this.mask2)
+    this.container.addChild(this.mask3)
+    this.container.addChild(this.spriteBureau1)
+    this.container.addChild(this.spriteBureau2)
+    this.container.addChild(this.spriteBureau3)
+  }
   update() {
-    //console.log("scene1 store.currentScene", this.store.currentScene);
-    //console.log("update scene 1");
+    // console.log("update scene flashlight");
   }
 
 }
