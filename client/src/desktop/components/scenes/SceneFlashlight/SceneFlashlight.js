@@ -14,7 +14,8 @@ export default class SceneFlashlight {
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
-    this.isOff = true;
+    this.isOff = true
+    this.isMoving = false
     // console.log(this.store)
     this.init()
   }
@@ -67,9 +68,20 @@ export default class SceneFlashlight {
   }
 
   detectionBox() {
-    this.box = new PIXI.Graphics();
-    this.box.beginFill(0xCCFF99);
-    this.box.drawRect(0, 0, 150, 150);
+    // CIRCLE MASK 3
+    this.circleDetection = new PIXI.Graphics()
+    this.circleDetection.beginFill('0xff0000')
+    this.circleDetection.drawCircle(0, 0, 20)
+    this.circleDetection.endFill()
+
+    this.circleDetection.x = this.sceneWH.width / 2
+    this.circleDetection.y = this.sceneWH.height / 2
+    
+    this.circleDetection.alpha = .1
+
+    this.box = new PIXI.Graphics()
+    this.box.beginFill(0xCCFF99)
+    this.box.drawRect(0, 0, 150, 150)
     this.box.endFill()
     this.box.x = 1155
     this.box.y = 755
@@ -77,6 +89,7 @@ export default class SceneFlashlight {
   }
 
   moveFlashLight() {
+    this.isMoving = true
     const player1Position = {
       x:this.currentPlayer1Position.x * (this.sceneWH.width * .5),
       y: this.currentPlayer1Position.y * (this.sceneWH.height * .5)
@@ -89,6 +102,10 @@ export default class SceneFlashlight {
     TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
     TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
     TweenMax.to(this.maskUSer[2], 0.1, {x:newPositionX, y:newPositionY})
+    TweenMax.to(this.circleDetection, 0.1, {x:newPositionX, y:newPositionY ,onComplete: () => {
+      this.isMoving = false
+    }})
+
   }
 
   initBackgroundUser() {
@@ -189,11 +206,15 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau2)
     this.container.addChild(this.spriteBureau1)
     this.container.addChild(this.box)
+    this.container.addChild(this.circleDetection)
     this.container.addChild(this.spriteFlashOff)
   }
   update() {
-    // this.store.
     // console.log("update scene flashlight");
+    if (this.isMoving) {
+      if (collisionDetection(this.circleDetection, this.box)) {
+        console.log('COLLISIIIIIOOON')
+      }
+    }
   }
-
 }
