@@ -77,7 +77,9 @@ class LottieAnimation extends Component {
         progression: this.props.progression,
         ease: Power2.easeInOut,
         onUpdate: () => {
-          this.animation.goToAndStop(Math.round(this.progression * this.totalFrames),true)
+          if (this.animation) {
+            this.animation.goToAndStop(Math.round(this.progression * this.totalFrames),true)
+          }
         }
       })
     }

@@ -6,7 +6,7 @@ import analyse from './videos/analyse.mp4'
 import bureau1 from './img/bureau_1.png'
 import bureau2 from './img/bureau_2.png'
 import bureau3 from './img/bureau_3.png'
-import outline from './img/contours-generateur.png'
+import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 
 export const assetsToLoad = {
