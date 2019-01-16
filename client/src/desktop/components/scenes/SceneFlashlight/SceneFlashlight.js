@@ -42,6 +42,7 @@ export default class SceneFlashlight {
     console.log("scene flashlight init")
     this.container = new PIXI.Container()
     this.initBackgroundUser()
+    this.detectionBox()
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
@@ -58,11 +59,21 @@ export default class SceneFlashlight {
     // TweenMax.to(this.spriteBureau2, 1, {alpha:1 ,delay:1})
     // TweenMax.to(this.spriteBureau3, 1, {alpha:1 ,delay:1})
     // this.isOff = false
-    TweenMax.to(this.spriteBureau1, 3, {alpha:1, ease:RoughEase.ease.config({points:50, strength:1, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau2, 3, {alpha:1, ease:RoughEase.ease.config({points:50, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau3, 3, {alpha:1, ease:RoughEase.ease.config({points:50, strength:4, clamp:true}), delay:1, onComplete:() => {
+    TweenMax.to(this.spriteBureau1, 2, {alpha:1, ease:RoughEase.ease.config({points:50, strength:1, clamp:true}), delay:1})
+    TweenMax.to(this.spriteBureau2, 2, {alpha:1, ease:RoughEase.ease.config({points:50, strength:2, clamp:true}), delay:1})
+    TweenMax.to(this.spriteBureau3, 2, {alpha:1, ease:RoughEase.ease.config({points:50, strength:4, clamp:true}), delay:1, onComplete:() => {
       this.isOff = false
     }})
+  }
+
+  detectionBox() {
+    this.box = new PIXI.Graphics();
+    this.box.beginFill(0xCCFF99);
+    this.box.drawRect(0, 0, 150, 150);
+    this.box.endFill()
+    this.box.x = 1155
+    this.box.y = 755
+    this.box.alpha = .1
   }
 
   moveFlashLight() {
@@ -177,6 +188,7 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau3)
     this.container.addChild(this.spriteBureau2)
     this.container.addChild(this.spriteBureau1)
+    this.container.addChild(this.box)
     this.container.addChild(this.spriteFlashOff)
   }
   update() {
