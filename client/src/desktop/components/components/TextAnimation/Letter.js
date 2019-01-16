@@ -1,11 +1,11 @@
 export default class Letter {
-    constructor(DOMElement, nextChar) {
+    constructor(DOMElement, nextChar, duration = 500, minSpeed = 30, maxSpeed = 500) {
         this.DOMEl = DOMElement
         this.char = DOMElement.innerHTML
         this.next = nextChar
-        this.speed = Math.floor(Math.random() * (500 - 30) )
+        this.speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1) + minSpeed);
         this.total = 0
-        this.duration = 500
+        this.duration = duration
         this.animating = true
         this.isDead = false
 

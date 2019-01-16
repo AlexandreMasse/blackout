@@ -53,7 +53,7 @@ class LottieAnimation extends Component {
 
     console.log(this.animation);
 
-    //this.setSpeed()
+    this.setSpeed()
   }
 
   setSpeed() {
@@ -69,7 +69,9 @@ class LottieAnimation extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     this.props.play ? this.animation.play() : this.animation.pause()
 
-    //this.setSpeed()
+    if (prevProps.speed !== this.props.speed) {
+      this.setSpeed()
+    }
 
     if(prevProps.progression !== this.props.progression) {
 
