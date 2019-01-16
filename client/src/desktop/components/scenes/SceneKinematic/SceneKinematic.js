@@ -3,8 +3,10 @@ import {AssetsManager} from "../../../../managers"
 import {setFullScreen} from '../utils'
 
 import {setCurrentScene} from "../../../redux/actions/desktopAction"
+import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
 import scenes from ".."
+import stepsMobile from '../../../../mobile/components/steps'
 
 export default class SceneKinematic {
 
@@ -46,7 +48,9 @@ export default class SceneKinematic {
     endVideo = () => {
         this.video.addEventListener('ended',() => {
             setTimeout(() => {
+                const currentStep = stepsMobile.CURSOR.name
                 this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
+                this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
         })
     }

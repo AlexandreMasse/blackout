@@ -13,6 +13,7 @@ export default class SceneFlashlight {
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
+    console.log(this.store)
     this.init()
   }
 
@@ -51,6 +52,10 @@ export default class SceneFlashlight {
     this.spriteBureau2 = new PIXI.Sprite(tBureau2)
     this.spriteBureau3 = new PIXI.Sprite(tBureau3)
 
+    this.spriteBureau1.alpha = 0
+    this.spriteBureau2.alpha = 0
+    this.spriteBureau3.alpha = 0
+
     this.sceneWH = {
       width: this.spriteBureau1.width,
       height: this.spriteBureau1.height
@@ -58,7 +63,18 @@ export default class SceneFlashlight {
     // const spriteOutline = new PIXI.Sprite(tOutline)
 
     this.initMaskUser()
+    this.initFlashOff()
     // this.container.addChild(spriteOutline)
+  }
+
+  initFlashOff() {
+    const flashoff = AssetsManager.get('flashoff')
+    const baseTextureFlashOff = new PIXI.BaseTexture(flashoff)
+    const tFlashOff = new PIXI.Texture(baseTextureFlashOff)
+    this.spriteFlashOff = new PIXI.Sprite(tFlashOff)
+
+    this.spriteFlashOff.x = (this.sceneWH.width / 2) - (this.spriteFlashOff.width / 2)
+    this.spriteFlashOff.y = this.sceneWH.height / 2
   }
 
   initMaskUser() {
@@ -115,6 +131,7 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau1)
     this.container.addChild(this.spriteBureau2)
     this.container.addChild(this.spriteBureau3)
+    this.container.addChild(this.spriteFlashOff)
   }
   update() {
     // console.log("update scene flashlight");
