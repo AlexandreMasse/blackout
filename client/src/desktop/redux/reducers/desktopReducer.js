@@ -39,6 +39,11 @@ const initialState = {
       },
       currentScene: scenes.SCENEFLASHLIGHT.name,
       introProgression: 0,
+      indication: {
+        isOpen: false,
+        title: null,
+        description: null,
+      }
     },
     {
       id: "player2",
@@ -65,6 +70,11 @@ const initialState = {
       },
       currentScene: scenes.SCENE2.name,
       introProgression: 0,
+      indication: {
+        isOpen: false,
+        title: null,
+        description: null,
+      }
     }
   ],
 };
@@ -114,6 +124,66 @@ export default (state = initialState, action) => {
             return {
               ...user,
               currentScene
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_USER_INDICATION_OPEN: {
+      const {isOpen, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              indication: {
+                ...user.indication,
+                isOpen
+              }
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_USER_INDICATION_TITLE: {
+      const {title, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              indication: {
+                ...user.indication,
+                title
+              }
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_USER_INDICATION_DESCRIPTION: {
+      const {description, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              indication: {
+                ...user.indication,
+                description
+              }
             }
           } else {
             return user;

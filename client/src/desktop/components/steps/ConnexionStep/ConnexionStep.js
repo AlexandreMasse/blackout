@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 //redux
 import {connect} from 'react-redux'
-import {setCurrentStep} from "../../../redux/actions/desktopAction";
+import {setCurrentStep, setUserIndicationOpen} from "../../../redux/actions/desktopAction";
 //lib
 import classNames from 'classnames'
 import {TimelineMax} from "gsap";
@@ -113,6 +113,8 @@ class ConnexionStep extends Component {
       <div className="connexion-step step" ref={(ref) => this.ref = ref}>
 
         <p style={{position:"absolute", margin:"0", top: "10px", left: "10px", zIndex: "100", fontSize:"3rem", cursor:"pointer"}} onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
+
+        <p style={{position:"absolute", margin:"0", top: "40px", left: "10px", zIndex: "100", fontSize:"3rem", cursor:"pointer"}} onClick={() => this.props.setUserIndicationOpen("player1", true)}>Player 1 Indication Open</p>
 
         {/*TODO: enable autoplay*/}
         <LottieAnimation autoplay={true} animationData={animations.HomeAbstrait} className={"home-abstrait"} />
@@ -244,7 +246,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
+    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen}))
   }
 }
 

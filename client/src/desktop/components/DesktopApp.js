@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import { Provider } from 'react-redux'
 import configureStore from '../redux/store'
 import {wsEmitDeviceType} from '../redux/actions/websockets/websocketsAction'
-import {setAppLoaded, setCurrentStep} from '../redux/actions/desktopAction'
+import {setAppLoaded, setCurrentStep, setUserIndicationOpen} from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => {
   return {
     wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
     setAppLoaded: () => dispatch(setAppLoaded()),
-    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
   }
 }
 

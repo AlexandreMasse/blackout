@@ -28,10 +28,30 @@ export const setSplitScreen = (payload) => (dispatch, getState, {emit}) => {
  })
 }
 
-
 export const setUserCurrentScene = (payload) => (dispatch, getState, {emit}) => {
  dispatch({
   type: desktopActionTypes.SET_USER_CURRENT_SCENE,
+  payload
+ })
+}
+
+export const setUserIndicationOpen = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_USER_INDICATION_OPEN,
+  payload
+ })
+}
+
+export const setUserIndicationTitle = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_USER_INDICATION_TITLE,
+  payload
+ })
+}
+
+export const setUserIndicationDescription = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_USER_INDICATION_DESCRIPTION,
   payload
  })
 }

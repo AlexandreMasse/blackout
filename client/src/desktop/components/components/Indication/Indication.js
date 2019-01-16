@@ -2,11 +2,15 @@ import React,{Component} from 'react'
 import {TextAnimation} from '../'
 
 import {TweenMax ,TimelineMax, Power3} from 'gsap'
+import classNames from "classnames"
+import PropTypes from "prop-types"
 
-import './Indication.scss'  
+import './Indication.scss'
+
+import {connect} from "react-redux";
 
 
-export default class Indication extends Component {
+class Indication extends Component {
     
     componentDidMount() {
         const arrows = this.ref.querySelectorAll('.arrow')
@@ -25,17 +29,30 @@ export default class Indication extends Component {
     }
 
     render() {
+        const {player, player1Indication, player2Indication} = this.props
+        let indication = null
+
+        if(this.props.player === "player1") {
+            indication = player1Indication
+        }
+        if(this.props.player === "player2") {
+            indication = player2Indication
+        }
+
         return (
-            <div ref={this.initTimeline} className="indication indication--left">
+            <div ref={this.initTimeline} className={classNames("indication",
+              {"indication--left" : player === "player1"},
+              {"indication--right" : player === "player2"},
+              )}>
             <div className="indication__title">
                 <div className="indication__title__arrow">
                     <span className="arrow">></span>
                     <span className="arrow">></span>
                     <span className="arrow">></span>
                 </div>
-                <TextAnimation text="Entrez le mot de passe" handleWord={word => this.word = word}/>
+                {indication.title && <TextAnimation text={indication.title} handleWord={word => this.word = word}/>}
             </div>
-            <p className="indication__description">{this.props.description}</p>
+            <p className="indication__description">{indication.description}</p>
             <span className="indication__iconContainer">
                 <svg indication__iconContainer__icon viewBox="0 0 16 32">
                     <use xlinkHref="#icon-mobile" />
@@ -45,3 +62,20 @@ export default class Indication extends Component {
         )
     }
 }
+
+Indication.propTypes = {
+    player: PropTypes.oneOf(["player1","player2"]).isRequired
+}
+
+const mapStateToProps = state => {
+    return {
+        player1Indication: state.desktop.users.find(user => user.id === "player1").indication,
+        player2Indication: state.desktop.users.find(user => user.id === "player1").indication
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Indication)
