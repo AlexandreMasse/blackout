@@ -15,6 +15,8 @@ import './IntroStep.scss'
 //asset
 import {AssetsManager} from "./../../../../managers"
 import {assetsToLoad} from "../../../assets/asset-list"
+// utils 
+import {toggleFullscreen} from '../../../../utils'
 
 class IntroStep extends Component {
 
@@ -35,8 +37,7 @@ class IntroStep extends Component {
   }
 
   setFullscreen = () => {
-      const elem = document.documentElement
-      elem.requestFullscreen()
+    toggleFullscreen()
   }
 
   setNoSleep = () => {
