@@ -8,6 +8,7 @@ import bureau2 from './img/bureau_2.png'
 import bureau3 from './img/bureau_3.png'
 import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
+import generator from './img/generator.png'
 
 export const assetsToLoad = {
     bureau: { url: bureau },
@@ -19,4 +20,5 @@ export const assetsToLoad = {
     bureau3: { url: bureau3, name:'bureau3', type: 'image'},
     outline: { url: outline, name:'outline', type: 'image'},
     flashoff: { url: flashoff, name:'flashoff', type: 'image'},
+    generator: { url: generator, name:'generator', type: 'image'},
 }

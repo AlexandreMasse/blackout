@@ -282,6 +282,23 @@ export default (state = initialState, action) => {
       }
     }
 
+    case websocketsOnActionTypes.WEBSOCKET_ON_SLIDER_VALUE: {
+      const {sliderValue, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              sliderValue
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
     case websocketsOnActionTypes.WEBSOCKET_ON_INTRO_PROGRESSION: {
       const {progression, userId} = action.payload
       return {

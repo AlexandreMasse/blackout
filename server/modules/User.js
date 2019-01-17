@@ -111,6 +111,15 @@ export default class User {
         })
     }
 
+    slider = (io,socket) => {
+        socket.on('sliderValue', (data) => {
+            io.to(socket.room).emit('sliderValue', {
+            sliderValue: data.sliderValue,
+            userId: socket.username
+            })
+        })
+    }
+
     introProgression = (io,socket) => {
         socket.on('introProgression', (data) => {
             io.to(socket.room).emit('introProgression', {

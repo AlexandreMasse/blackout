@@ -63,3 +63,9 @@ export const wsEmitPosition = (payload) => (dispatch, getState, {emit}) => {
     });
 }
 
+export const wsEmitSliderValue = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_SLIDER_VALUE, {
+        sliderValue: payload.sliderValue,
+    });
+}
+

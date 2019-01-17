@@ -6,6 +6,7 @@ export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_INTRO_PROGRESSION: "introProgression",
     WEBSOCKET_EMIT_RECONNECT: "reconnect",
     WEBSOCKET_EMIT_POSITION: "position",
+    WEBSOCKET_EMIT_SLIDER_VALUE: "sliderValue",
 }
 
 export const websocketsOnActionTypes = {

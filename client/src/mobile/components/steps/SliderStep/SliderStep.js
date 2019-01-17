@@ -2,11 +2,14 @@ import React, {Component} from 'react'
 // assets
 // import {AssetsManager} from "./../../../../managers"
 // import {assetsToLoad} from "../../../assets/asset-list"
+// redux
+import {connect} from 'react-redux'
+import {wsEmitSliderValue} from '../../../redux/actions/websockets/websocketsAction'
 
 //css
 import './SliderStep.scss'
 
-export default class SliderStep extends Component {
+ class SliderStep extends Component {
     constructor(props) {
         super(props)
 
@@ -15,6 +18,11 @@ export default class SliderStep extends Component {
           }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.value !== prevState.value) {
+            this.props.wsEmitSliderValue(this.state.value)
+        }
+    }
     render() {
         return (
             <div className="slider-step">
@@ -32,3 +40,15 @@ export default class SliderStep extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {}
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      wsEmitSliderValue: (sliderValue) => dispatch(wsEmitSliderValue({sliderValue}))
+    }
+  }
+  
+  export default connect(mapStateToProps,mapDispatchToProps)(SliderStep)

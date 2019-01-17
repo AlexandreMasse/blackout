@@ -42,14 +42,6 @@ export default class SceneFlashlight {
       }
     }
 
-    if (this.currentPlayer1Position == this.newPlayer1Position) {
-      // player1 position has not changed
-      console.log('jeteins')
-      if (!this.isOff) {
-        this.switchOffLight()
-      }
-    }
-
     this.currentPlayer2Position = this.store.users.find(user => user.id === "player2").position
     this.newPlayer2Position = newStore.users.find(user => user.id === "player2").position
 
@@ -59,13 +51,6 @@ export default class SceneFlashlight {
         this.switchOnLight2()
       }
       this.moveFlashLight2()
-    }
-
-    if (this.currentPlayer2Position == this.newPlayer2Position) {
-      // player2 position has not changed
-      if (!this.isOff2) {
-        this.switchOffLight2()
-      }  
     }
 
     //update store
@@ -87,7 +72,7 @@ export default class SceneFlashlight {
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
     setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
-    this.initGUI()
+    // this.initGUI()
   }
 
   switchOnLight() {
@@ -438,12 +423,11 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau3)
     this.container.addChild(this.spriteBureau2)
     this.container.addChild(this.spriteBureau1)
-    this.container.addChild(this.fillbox)
     this.container.addChild(this.box)
     this.container.addChild(this.circleDetection)
     this.container.addChild(this.spriteFlashOff)
     this.container.addChild(this.spriteOutline)
-
+    
     // user 2
     this.container.addChild(this.mask3_2)
     this.container.addChild(this.mask2_2)
@@ -454,7 +438,8 @@ export default class SceneFlashlight {
     this.container.addChild(this.circleDetection_2)
     this.container.addChild(this.spriteFlashOff_2)
     this.container.addChild(this.spriteOutline_2)
-
+    
+    this.container.addChild(this.fillbox)
   }
 
   initGUI() {
