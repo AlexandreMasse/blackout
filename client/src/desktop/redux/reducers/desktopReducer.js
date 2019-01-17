@@ -224,7 +224,6 @@ export default (state = initialState, action) => {
       const phoneDataArray = action.payload
       return {
         ...state,
-        currentStep: steps.ANALYSIS.name,
         users: state.users.map(user => {
           phoneDataArray.forEach(phoneData => {
             if (user.id === phoneData.userId) {

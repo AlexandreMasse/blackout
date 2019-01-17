@@ -12,12 +12,19 @@ export default class TextAnimation extends Component {
   }
 
   handleRef = (ref) => {
-    this.initWord(ref)
+    this.ref = ref
+
+  }
+
+  componentDidMount() {
+    this.initWord(this.ref)
   }
 
   initWord(ref) {
-    const {text, handleWord, letterDuration, letterMinSpeed, letterMaxSpeed} = this.props
+    const {text, handleWord, autoPlay, letterDuration, letterMinSpeed, letterMaxSpeed} = this.props
     this.word = new Word(ref, text, letterDuration, letterMinSpeed, letterMaxSpeed)
+
+    if(autoPlay) this.word.start()
 
     if(handleWord) handleWord(this.word)
   }
@@ -34,6 +41,7 @@ TextAnimation.propTypes = {
   className: PropTypes.string,
   text: PropTypes.string.isRequired,
   handleWord: PropTypes.func,
+  autoPlay: PropTypes.bool,
   letterDuration: PropTypes.number,
   letterMinSpeed: PropTypes.number,
   letterMaxSpeed: PropTypes.number,
@@ -42,6 +50,7 @@ TextAnimation.propTypes = {
 TextAnimation.defaultProps = {
   className: null,
   handleWord: null,
+  autoPlay: false,
   letterDuration: 500,
   letterMinSpeed: 30,
   letterMaxSpeed: 500,

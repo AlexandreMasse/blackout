@@ -12,6 +12,8 @@ import {Loading} from "./components"
 //steps
 import {StepManager} from "./managers";
 import steps from "./steps"
+//utils
+import {toggleFullscreen} from '../../utils'
 // style
 import './DesktopApp.scss'
 
@@ -24,11 +26,18 @@ class DesktopApp extends Component {
     this.props.wsEmitDeviceType("desktop")
     this.props.setCurrentStep(steps.CONNEXION.name)
 
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
+    window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('keydown', this.handleWindowKeydown)
+    this.handleWindowResize()
   }
 
-  handleResize = (e) => {
+  handleWindowKeydown = (e) => {
+    if(e.key === "f") {
+      toggleFullscreen()
+    }
+  }
+  
+  handleWindowResize = (e) => {
     const ratio = window.innerWidth / 1920
     document.querySelector('html').style.fontSize = 10 * ratio + "px"
   }

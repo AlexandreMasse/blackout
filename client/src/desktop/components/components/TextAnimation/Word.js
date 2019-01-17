@@ -23,7 +23,6 @@ export default class Word {
     var i
     var nextChar
     var letterNb = this.wordArr.length
-    var spanList
 
     for (i = 0; i < letterNb; i++) {
 

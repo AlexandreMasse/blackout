@@ -54,23 +54,18 @@
     video {
       opacity: 0;
       margin-bottom: 2rem;
-      //@include keyframe-fade-in;
-      //animation: fade-in 2s 0.5s ease-in-out forwards;
       mix-blend-mode: darken;
     }
 
     &__baseline {
       text-align: center;
       display: block;
-      font-size: 3rem;
-      //@include keyframe-fade-in;
-      //animation: fade-in 2s 1.5s ease-in-out forwards;
+      font-size: 2.4rem;
       font-variation-settings: $light;
 
       &__1, &__2{
         opacity: 0;
-        //height: 1.4em;
-        line-height: 1.4em;
+        height: 1.4em;
       }
     }
 
@@ -101,13 +96,13 @@
         text-align: center;
         width: 25rem;
 
-        &.connected .password {
-          $shadow-color: black;
-          color: white;
-          text-shadow: -1px -1px 0 $shadow-color, 1px -1px 0 $shadow-color, -1px 1px 0 $shadow-color, 1px 1px 0 $shadow-color;
+        &.connected &__password {
+          //$shadow-color: black;
+          //color: white;
+          //text-shadow: -1px -1px 0 $shadow-color, 1px -1px 0 $shadow-color, -1px 1px 0 $shadow-color, 1px 1px 0 $shadow-color;
         }
 
-        &__password, &__score {
+        &__password, &__name {
           width: 100%;
           margin: 0;
         }
@@ -116,27 +111,27 @@
           opacity: 0;
           transition: text-shadow 1s ease;
           text-shadow: none;
-          font-size: 6rem;
+          font-size: 7rem;
           font-variation-settings: $light;
-          height: 1.4em;
+          height: 1.3em;
         }
 
-        &__score {
-          opacity: 0;
-          font-size: 2.4rem;
+        &__name {
+          opacity: 1;
+          height: 1.3em;
+          font-size: 1.8rem;
           font-variation-settings: $light;
         }
 
-      }
+        &__status {
+          margin-top: 1rem;
+          p {
+            margin: 0;
+            height: 1.3em;
+            font-size: 2.8rem;
+          }
+        }
 
-      .player1 {
-        @include keyframe-fade-in;
-        animation: fade-in 2s 2.5s ease-in-out forwards;
-      }
-
-      .player2 {
-        @include keyframe-fade-in;
-        animation: fade-in 2s 3s ease-in-out forwards;
       }
 
     }
@@ -146,40 +141,4 @@
 
 
 }
-
-//
-//.fade-enter {
-//  opacity: 0;
-//
-//  &.fade-enter-active {
-//    opacity: 1;
-//    transition: all 1500ms 3000ms ease-in-out;
-//  }
-//
-//  &-done {
-//    opacity: 1;
-//  }
-//}
-//
-//.fade-appear {
-//  opacity: 0;
-//
-//  &.fade-appear-active {
-//    opacity: 1;
-//    transition: all 2000ms 700ms;
-//  }
-//
-//  &-done {
-//    opacity: 1;
-//  }
-//}
-//
-//.fade-exit {
-//  opacity: 1;
-//
-//  &.fade-exit-active {
-//    opacity: 0;
-//    transition: all 1500ms 1000ms;
-//  }
-//}
 

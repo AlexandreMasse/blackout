@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 //redux
 import {connect} from 'react-redux'
-import {setCurrentStep, setUserIndicationOpen} from "../../../redux/actions/desktopAction";
+import {setCurrentStep} from "../../../redux/actions/desktopAction";
 //lib
 import classNames from 'classnames'
 import {TimelineMax} from "gsap";
@@ -24,7 +24,9 @@ class ConnexionStep extends Component {
 
     this.state = {
       cityLeftProgression: 0,
-      cityRightProgression: 0
+      cityRightProgression: 0,
+      isCityLeftReady: false,
+      isCityRightReady: false,
     }
   }
 
@@ -53,6 +55,22 @@ class ConnexionStep extends Component {
     this.wordPlayer2Password = word
   }
 
+  handleWordPlayer1Name = (word) => {
+    this.wordPlayer1Name = word
+  }
+
+  handleWordPlayer2Name = (word) => {
+    this.wordPlayer2Name = word
+  }
+
+  handleWordPlayer1Status = (word) => {
+    this.wordPlayer1Status = word
+  }
+
+  handleWordPlayer2Status = (word) => {
+    this.wordPlayer2Status = word
+  }
+
 
   componentDidMount() {
 
@@ -60,76 +78,107 @@ class ConnexionStep extends Component {
       delay: onEnterDelay
     })
 
-    this.tl.delay(1.5)
+    this.tl.delay(0.5)
     //video
-    this.tl.to(this.ref.querySelector("video"), 4, {
-      opacity: 1
-    })
-
-    this.tl.add(() => {this.video.play()})
+    this.tl.addLabel("video")
+    this.tl.to(this.ref.querySelector("video"), 1.5, {
+      opacity: 1,
+    }, "video")
+    this.tl.add(() => {this.video.play()}, "video+=0.5")
 
     //baseline
-    this.tl.addLabel("baseline", "-=3")
+    this.tl.addLabel("baseline", "-=1.3")
     this.tl.add(() => {this.wordBaseline1.start()}, "baseline")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__1"), 1, {
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__1"), 0, {
       opacity: 1
     }, "baseline")
-    this.tl.add(() => {this.wordBaseline2.start()}, "baseline+=0.5")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__2"), 1, {
+    this.tl.add(() => {this.wordBaseline2.start()}, "baseline+=0.3")
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__2"), 0, {
       opacity: 1
-    }, "baseline+=0.5")
+    }, "baseline+=0.3")
 
     //instructions
-    this.tl.addLabel("instructions", "baseline+=1")
+    this.tl.addLabel("instructions", "baseline+=0.7")
     this.tl.add(() => {this.wordInstructions1.start()}, "instructions")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__1"), 1, {
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__1"), 0, {
       opacity: 1
     }, "instructions")
-    this.tl.add(() => {this.wordInstructions2.start()}, "instructions+=0.5")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__2"), 1, {
+    this.tl.add(() => {this.wordInstructions2.start()}, "instructions+=0.3")
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__2"), 0, {
       opacity: 1
-    }, "instructions+=0.5")
+    }, "instructions+=0.3")
 
     //Player1
-    this.tl.addLabel("player1", "instructions+=1")
+    this.tl.addLabel("player1", "instructions+=0.7")
     this.tl.add(() => {this.wordPlayer1Password.start()}, "player1")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__password"), 1, {
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__password"), 0, {
       opacity: 1
     }, "player1")
+    this.tl.add(() => {this.wordPlayer1Name.start()}, "player1+=0.3")
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__name"), 0, {
+      opacity: 1
+    }, "player1+=0.3")
+    this.tl.add(() => {this.wordPlayer1Status.start()}, "player1+=0.6")
 
     //Player2
-    this.tl.addLabel("player2", "player1+=0.5")
+    this.tl.addLabel("player2", "instructions+=0.7")
     this.tl.add(() => {this.wordPlayer2Password.start()}, "player2")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__password"), 1, {
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__password"), 0, {
       opacity: 1
     }, "player2")
+    this.tl.add(() => {this.wordPlayer2Name.start()}, "player2+=0.3")
+    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__name"), 0, {
+      opacity: 1
+    }, "player2+=0.3")
+    this.tl.add(() => {this.wordPlayer2Status.start()}, "player2+=0.6")
 
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if(!this.state.isCityLeftReady && prevProps.player1IntroProgression >= 1){
+      console.log("city left ready !");
+      this.setState({isCityLeftReady: true})
+    }
+    if(!this.state.isCityRightReady && prevProps.player2IntroProgression >= 1){
+      console.log("city right ready !");
+      this.setState({isCityRightReady: true})
+    }
+
+
+    if (
+      (!prevState.isCityLeftReady || !prevState.isCityRightReady) &&
+      (this.state.isCityLeftReady && this.state.isCityRightReady)
+    ) {
+      console.log("city left and right ready -> analysis");
+      this.props.setCurrentStep(steps.ANALYSIS.name)
+    }
   }
 
 
   render() {
-    const {password1, password2, isPlayer1Connected, isPlayer2Connected, player1PhoneData, player2PhoneData} = this.props
+    const {password1, password2, isPlayer1Connected, isPlayer2Connected, player1PhoneData, player2PhoneData, player1IntroProgression, player2IntroProgression} = this.props
+
+    const {isCityLeftReady, isCityRightReady} = this.state
+
     return (
       <div className="connexion-step step" ref={(ref) => this.ref = ref}>
 
         <p style={{position:"absolute", margin:"0", top: "10px", left: "10px", zIndex: "100", fontSize:"3rem", cursor:"pointer"}} onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
 
-        <p style={{position:"absolute", margin:"0", top: "40px", left: "10px", zIndex: "100", fontSize:"3rem", cursor:"pointer"}} onClick={() => this.props.setUserIndicationOpen("player1", true)}>Player 1 Indication Open</p>
-
-        {/*TODO: enable autoplay*/}
         <LottieAnimation autoplay={true} animationData={animations.HomeAbstrait} className={"home-abstrait"} />
 
         <input
-          style={{zIndex:"10", width: "50%", position:"absolute", top: "0"}}
+          style={{display: "none", zIndex:"10", width: "30%", position:"absolute", top: "0"}}
           type="range"
-          onChange={(e) => {console.log(e); this.setState({cityLeftProgression: e.target.value})}}
+          onChange={(e) => {this.setState({cityLeftProgression: e.target.value})}}
           value={this.state.cityLeftProgression}
           step={0.001}
           min={0}
           max={1}
         />
         <input
-          style={{zIndex: "10", width: "50%", position: "absolute", top: "25px"}}
+          style={{display: "none", zIndex: "10", width: "30%", position: "absolute", top: "25px"}}
           type="range"
           onChange={(e) => this.setState({cityRightProgression: e.target.value})}
           value={this.state.cityRightProgression}
@@ -146,9 +195,9 @@ class ConnexionStep extends Component {
             className={"connexion-step__city__left"}
             animationData={animations.HomeCityLeft}
             aspectRatio={"cover-right"}
-            speed={0.8}
             progressionTweenDuration={0.2}
-            progression={this.props.player1IntroProgression}
+            progression={isCityLeftReady ? 1 : player1IntroProgression}
+            //progression={Number(this.state.cityLeftProgression)}
           />
           <LottieAnimation
             autoplay={false}
@@ -157,8 +206,9 @@ class ConnexionStep extends Component {
             className={"connexion-step__city__right"}
             animationData={animations.HomeCityRight}
             aspectRatio={"cover-left"}
-            speed={0.8}
-            progression={Number(this.state.cityRightProgression)}
+            progressionTweenDuration={0.2}
+            progression={isCityRightReady ? 1 : player2IntroProgression}
+            //progression={Number(this.state.cityRightProgression)}
           />
         </div>
 
@@ -177,7 +227,7 @@ class ConnexionStep extends Component {
             <TextAnimation
               letterDuration={200}
               className={"connexion-step__intro__baseline__2"}
-              text="dans un univers alternatif régit par la technologie"
+              text="dans un univers alternatif régit par la technologie."
               handleWord={this.handleWordBaseline2}
             />
           </div>
@@ -192,20 +242,47 @@ class ConnexionStep extends Component {
                   handleWord={this.handleWordPlayer1Password}
                 />
               }
-              <p className={"connexion-step__intro__codes__player1__score"}>JOUEUR 1</p>
+              <TextAnimation
+                letterDuration={200}
+                className={"connexion-step__intro__codes__player1__name"}
+                text="JOUEUR 1"
+                handleWord={this.handleWordPlayer1Name}
+              />
+
+              <div className={"connexion-step__intro__codes__player1__status"}>
+                {isPlayer1Connected ?
+                  (
+                    <TextAnimation
+                      key={1}
+                      letterDuration={200}
+                      text="CONNECTÉ"
+                      className={"connexion-step__intro__codes__player1__status__1"}
+                      autoPlay={true}
+                    />
+                  ) : (
+                    <TextAnimation
+                      key={2}
+                      letterDuration={200}
+                      text="LIBRE"
+                      className={"connexion-step__intro__codes__player1__status__2"}
+                      handleWord={this.handleWordPlayer1Status}
+                    />
+                  )
+                }
+              </div>
             </div>
 
             <div className="connexion-step__intro__codes__instructions">
               <TextAnimation
                 letterDuration={200}
                 className={"connexion-step__intro__codes__instructions__1"}
-                text="Lancez Blackout sur votre smartphone et"
+                text="Lancez Blackout.io sur votre smartphone et"
                 handleWord={this.handleWordInstructions1}
               />
               <TextAnimation
                 letterDuration={200}
                 className={"connexion-step__intro__codes__instructions__2"}
-                text="entrez un des codes pour démarrer"
+                text="entrez un des codes pour démarrer."
                 handleWord={this.handleWordInstructions2}
               />
             </div>
@@ -219,11 +296,36 @@ class ConnexionStep extends Component {
                   handleWord={this.handleWordPlayer2Password}
                 />
               }
-              <p className={"connexion-step__intro__codes__player2__score"}>JOUEUR 2</p>
+              <TextAnimation
+                letterDuration={200}
+                className={"connexion-step__intro__codes__player2__name"}
+                text="JOUEUR 2"
+                handleWord={this.handleWordPlayer2Name}
+              />
+
+              <div className={"connexion-step__intro__codes__player2__status"}>
+                {isPlayer2Connected ?
+                  (
+                    <TextAnimation
+                      key={1}
+                      letterDuration={200}
+                      text="CONNECTÉ"
+                      autoPlay={true}
+                    />
+                  ) : (
+                    <TextAnimation
+                      key={2}
+                      letterDuration={200}
+                      text="LIBRE"
+                      handleWord={this.handleWordPlayer2Status}
+                    />
+                  )
+                }
+              </div>
+
             </div>
           </div>
         </div>
-
 
       </div>
 
@@ -240,14 +342,13 @@ const mapStateToProps = state => {
     player1PhoneData: state.desktop.users.find(user => user.id === "player1").phoneData,
     player2PhoneData: state.desktop.users.find(user => user.id === "player2").phoneData,
     player1IntroProgression: state.desktop.users.find(user => user.id === "player1").introProgression,
-    player2IntroProgression: state.desktop.users.find(user => user.id === "player1").introProgression
+    player2IntroProgression: state.desktop.users.find(user => user.id === "player2").introProgression
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
-    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen}))
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
   }
 }
 

@@ -1,7 +1,7 @@
 import {TweenMax} from 'gsap'
 
-export const onEnterDuration = 2
-export const onEnterDelay = 4
+export const onEnterDuration = 0.01
+export const onEnterDelay = 2.7
 export const onEnterTimeout = onEnterDuration + onEnterDelay
 
 export const onEnter = (html) => {
