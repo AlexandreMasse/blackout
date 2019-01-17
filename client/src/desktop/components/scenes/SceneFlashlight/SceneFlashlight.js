@@ -66,7 +66,6 @@ export default class SceneFlashlight {
     this.detectionBox()
     this.fillBox()
     // this.player2Collision = true
-    this.player1Collision = true
     this.isDiscover = false
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1)
@@ -128,7 +127,20 @@ export default class SceneFlashlight {
     this.fillbox.height = 0
     this.fillbox.pivot.y = 54
     this.fillbox.mask = this.mask1
+  }
 
+  fillBox2() {
+    this.fillbox2 = new PIXI.Graphics()
+    this.fillbox2.beginFill(0xE82E2E)
+    this.fillbox2.drawRect(0, 0, 102, 54)
+    this.fillbox2.endFill()
+    this.fillbox2.x = 1169
+    this.fillbox2.y = 773 + 54
+    this.fillbox2.alpha = .95
+
+    this.fillbox2.height = 0
+    this.fillbox2.pivot.y = 54
+    this.fillbox2.mask = this.mask1
   }
 
   discoverAnimation() {
@@ -439,8 +451,9 @@ export default class SceneFlashlight {
     this.container.addChild(this.circleDetection_2)
     this.container.addChild(this.spriteFlashOff_2)
     this.container.addChild(this.spriteOutline_2)
-    
     this.container.addChild(this.fillbox)
+
+
   }
 
   initGUI() {
@@ -469,6 +482,7 @@ export default class SceneFlashlight {
 
     // this.gui.close()
   }
+
   update() {
     // console.log("update scene flashlight");
     if (this.isMoving) {
