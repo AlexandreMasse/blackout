@@ -32,7 +32,8 @@ class DesktopApp extends Component {
   }
 
   handleWindowKeydown = (e) => {
-    if(e.key === "f") {
+    console.log(e);
+    if(e.key === "f" || e.code === "Space") {
       toggleFullscreen()
     }
   }

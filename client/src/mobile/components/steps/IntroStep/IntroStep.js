@@ -87,7 +87,7 @@ class IntroStep extends Component {
     this.gn = new GyroNorm();
 
     const args = {
-      frequency: 100,
+      frequency: 50,
       gravityNormalized: true,
       orientationBase: GyroNorm.GAME,
       decimalCount: 2,

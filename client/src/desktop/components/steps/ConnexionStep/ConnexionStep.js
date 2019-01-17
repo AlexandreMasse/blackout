@@ -145,7 +145,6 @@ class ConnexionStep extends Component {
       this.setState({isCityRightReady: true})
     }
 
-
     if (
       (!prevState.isCityLeftReady || !prevState.isCityRightReady) &&
       (this.state.isCityLeftReady && this.state.isCityRightReady)
@@ -157,7 +156,7 @@ class ConnexionStep extends Component {
 
 
   render() {
-    const {password1, password2, isPlayer1Connected, isPlayer2Connected, player1PhoneData, player2PhoneData, player1IntroProgression, player2IntroProgression} = this.props
+    const {password1, password2, isPlayer1Connected, isPlayer2Connected, player1IntroProgression, player2IntroProgression} = this.props
 
     const {isCityLeftReady, isCityRightReady} = this.state
 
@@ -189,24 +188,26 @@ class ConnexionStep extends Component {
 
         <div className={"connexion-step__city"}>
           <LottieAnimation
+            key={1}
             autoplay={false}
             loop={false}
             play={isPlayer1Connected}
-            className={"connexion-step__city__left"}
+            className={classNames("connexion-step__city__left", {"connected": isPlayer1Connected})}
             animationData={animations.HomeCityLeft}
             aspectRatio={"cover-right"}
-            progressionTweenDuration={0.2}
+            progressionTweenDuration={0.1}
             progression={isCityLeftReady ? 1 : player1IntroProgression}
             //progression={Number(this.state.cityLeftProgression)}
           />
           <LottieAnimation
+            key={2}
             autoplay={false}
             loop={false}
             play={isPlayer2Connected}
-            className={"connexion-step__city__right"}
+            className={classNames("connexion-step__city__right", {"connected": isPlayer2Connected})}
             animationData={animations.HomeCityRight}
             aspectRatio={"cover-left"}
-            progressionTweenDuration={0.2}
+            progressionTweenDuration={0.1}
             progression={isCityRightReady ? 1 : player2IntroProgression}
             //progression={Number(this.state.cityRightProgression)}
           />
@@ -250,25 +251,34 @@ class ConnexionStep extends Component {
               />
 
               <div className={"connexion-step__intro__codes__player1__status"}>
-                {isPlayer1Connected ?
-                  (
-                    <TextAnimation
-                      key={1}
-                      letterDuration={200}
-                      text="CONNECTÉ"
-                      className={"connexion-step__intro__codes__player1__status__1"}
-                      autoPlay={true}
-                    />
-                  ) : (
-                    <TextAnimation
-                      key={2}
-                      letterDuration={200}
-                      text="LIBRE"
-                      className={"connexion-step__intro__codes__player1__status__2"}
-                      handleWord={this.handleWordPlayer1Status}
-                    />
-                  )
+                {!isPlayer1Connected &&
+                  <TextAnimation
+                    key={1}
+                    letterDuration={200}
+                    text="LIBRE"
+                    className={"connexion-step__intro__codes__player1__status__free"}
+                    handleWord={this.handleWordPlayer1Status}
+                  />
                 }
+                {isPlayer1Connected && !isCityLeftReady &&
+                  <TextAnimation
+                    key={2}
+                    letterDuration={200}
+                    text="CONNECTÉ"
+                    className={"connexion-step__intro__codes__player1__status__connected"}
+                    autoPlay={true}
+                  />
+                }
+                {isPlayer1Connected && isCityLeftReady &&
+                  <TextAnimation
+                    key={3}
+                    letterDuration={200}
+                    text="PRET"
+                    className={"connexion-step__intro__codes__player1__status__ready"}
+                    autoPlay={true}
+                  />
+                }
+
               </div>
             </div>
 
@@ -304,31 +314,38 @@ class ConnexionStep extends Component {
               />
 
               <div className={"connexion-step__intro__codes__player2__status"}>
-                {isPlayer2Connected ?
-                  (
-                    <TextAnimation
-                      key={1}
-                      letterDuration={200}
-                      text="CONNECTÉ"
-                      autoPlay={true}
-                    />
-                  ) : (
-                    <TextAnimation
-                      key={2}
-                      letterDuration={200}
-                      text="LIBRE"
-                      handleWord={this.handleWordPlayer2Status}
-                    />
-                  )
+                {!isPlayer2Connected &&
+                <TextAnimation
+                  key={1}
+                  letterDuration={200}
+                  text="LIBRE"
+                  className={"connexion-step__intro__codes__player2__status__free"}
+                  handleWord={this.handleWordPlayer2Status}
+                />
+                }
+                {isPlayer2Connected && !isCityRightReady &&
+                <TextAnimation
+                  key={2}
+                  letterDuration={200}
+                  text="CONNECTÉ"
+                  className={"connexion-step__intro__codes__player2__status__connected"}
+                  autoPlay={true}
+                />
+                }
+                {isPlayer2Connected && isCityRightReady &&
+                <TextAnimation
+                  key={3}
+                  letterDuration={200}
+                  text="PRET"
+                  className={"connexion-step__intro__codes__player2__status__ready"}
+                  autoPlay={true}
+                />
                 }
               </div>
-
             </div>
           </div>
         </div>
-
       </div>
-
     )
   }
 }
@@ -339,8 +356,6 @@ const mapStateToProps = state => {
     password2: state.desktop.password2,
     isPlayer1Connected: state.desktop.users.find(user => user.id === "player1").isConnected,
     isPlayer2Connected: state.desktop.users.find(user => user.id === "player2").isConnected,
-    player1PhoneData: state.desktop.users.find(user => user.id === "player1").phoneData,
-    player2PhoneData: state.desktop.users.find(user => user.id === "player2").phoneData,
     player1IntroProgression: state.desktop.users.find(user => user.id === "player1").introProgression,
     player2IntroProgression: state.desktop.users.find(user => user.id === "player2").introProgression
   }

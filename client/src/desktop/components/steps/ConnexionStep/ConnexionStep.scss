@@ -31,11 +31,15 @@
       width: 50%;
     }
 
-    &__left {
+    &__left, &__right {
+      opacity: 0;
+
+      &.connected {
+        opacity: 1;
+      }
     }
 
-    &__right {
-    }
+
   }
 
   &__intro {
@@ -129,6 +133,10 @@
             margin: 0;
             height: 1.3em;
             font-size: 2.8rem;
+          }
+
+          &__connected, &__ready {
+            color: $red;
           }
         }
 

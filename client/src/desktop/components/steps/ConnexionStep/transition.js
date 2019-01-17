@@ -25,16 +25,18 @@ export const onExit = (html) => {
     delay: onExitDelay
   })
 
-  const opacity = 0.5
+  const opacity = 1
 
-  tl.to(html, 1.5, {opacity:opacity, ease: Power1.easeIn}, "+=0")
-  tl.to(html, 0, {opacity:0}, "+=0")
-  tl.to(html, 0, {opacity:opacity}, "+=0.3")
-  tl.to(html, 0, {opacity:0}, "+=0.3")
+  //tl.to(html, 1.5, {opacity:opacity, ease: Power1.easeIn}, "+=0")
+  tl.to(html, 0, {opacity:0}, "+=1.5")
+  tl.to(html, 0, {opacity:opacity}, "+=0.2")
+  tl.to(html, 0, {opacity:0}, "+=0.2")
   tl.to(html, 0, {opacity:opacity}, "+=0.2")
   tl.to(html, 0, {opacity:0}, "+=0.2")
   tl.to(html, 0, {opacity:opacity}, "+=0.1")
   tl.to(html, 0, {opacity:0}, "+=0.1")
+  tl.to(html, 0, {opacity:opacity}, "+=0.05")
+  tl.to(html, 0, {opacity:0}, "+=0.05")
 
   // TweenMax.fromTo(html, onExitDuration, {
   //   opacity: 1,
