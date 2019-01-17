@@ -22,11 +22,16 @@ class IntroStep extends Component {
     super(props)
 
     this.state = {
-      password: ''
+      password: '',
+      value:3
     }
 
     this.listenDeviceOrientation()
 
+  }
+
+  handleChange = (event) => {
+    this.setState({value: event.target.value})
   }
 
   setFullscreen = () => {

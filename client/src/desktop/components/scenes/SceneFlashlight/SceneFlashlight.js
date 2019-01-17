@@ -1,10 +1,14 @@
 import * as PIXI from "pixi.js"
+import * as dat from 'dat.gui'
+
 import {AssetsManager} from "../../../../managers"
 import {TweenMax, RoughEase} from 'gsap'
 //redux
-// import {setCurrentScene} from "../../../redux/actions/desktopAction"
-// // scenes
-// import scenes from ".."
+import {setCurrentScene} from "../../../redux/actions/desktopAction"
+import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
+//scenes
+import scenes from ".."
+import stepsMobile from '../../../../mobile/components/steps'
 // utils
 import {setFullScreen, collisionDetection} from '../utils'
 
@@ -18,6 +22,8 @@ export default class SceneFlashlight {
     this.isOff2 = true
     this.isMoving = false
     this.isMoving2 = false
+    this.player1Collision = false
+    this.player2Collision = false
     this.init()
   }
 
@@ -38,8 +44,8 @@ export default class SceneFlashlight {
 
     if (this.currentPlayer1Position == this.newPlayer1Position) {
       // player1 position has not changed
+      console.log('jeteins')
       if (!this.isOff) {
-        console.log('jeteins')
         this.switchOffLight()
       }
     }
@@ -73,20 +79,23 @@ export default class SceneFlashlight {
     this.initBackgroundUser()
     this.initBackgroundUser2()
     this.detectionBox()
+    this.fillBox()
+    this.player2Collision = true
+    this.isDiscover = false
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
     setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
+    this.initGUI()
   }
 
   switchOnLight() {
     this.canMove = false
     TweenMax.to(this.spriteFlashOff, .3, {alpha:0})
-    TweenMax.to(this.spriteBureau1, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
-    TweenMax.to(this.spriteBureau2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
-    TweenMax.to(this.spriteBureau3, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true}), onComplete: () => {
-      console.log('finito')
+    TweenMax.to(this.spriteBureau1, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau3, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
       this.canMove = true
     }})
     this.isOff = false
@@ -102,10 +111,10 @@ export default class SceneFlashlight {
   }
 
   switchOnLight2() {
-    TweenMax.to(this.spriteFlashOff_2, 1, {alpha:0})
-    TweenMax.to(this.spriteBureau1_2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
-    TweenMax.to(this.spriteBureau2_2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true})})
-    TweenMax.to(this.spriteBureau3_2, 2, {alpha:1, ease:RoughEase.ease.config({points:20, strength:3, clamp:true}), onComplete: () => {
+    TweenMax.to(this.spriteFlashOff_2, .3, {alpha:0})
+    TweenMax.to(this.spriteBureau1_2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau2_2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau3_2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
       console.log('finito 2')
       this.canMove2 = true
     }})
@@ -121,6 +130,42 @@ export default class SceneFlashlight {
     TweenMax.to(this.spriteBureau3_2, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
   }
 
+  fillBox() {
+    this.fillbox = new PIXI.Graphics()
+    this.fillbox.beginFill(0xE82E2E)
+    this.fillbox.drawRect(0, 0, 102, 54)
+    this.fillbox.endFill()
+    this.fillbox.x = 1169
+    this.fillbox.y = 773 + 54
+    this.fillbox.alpha = .95
+
+    this.fillbox.height = 0
+    this.fillbox.pivot.y = 54
+    this.fillbox.mask = this.mask1
+
+  }
+
+  discoverAnimation() {
+    TweenMax.to(this.fillbox, 2, {height:54, onComplete: () => {
+      this.nextScene()
+    }})
+    this.isDiscover = true
+  }
+
+  nextScene() {
+    TweenMax.to(this.spriteBureau1, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau3, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
+
+    TweenMax.to(this.spriteBureau1_2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau2_2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau3_2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true}),onComplete: () => {
+        console.log('vers la scène suivante mané')
+        const currentStep = stepsMobile.SLIDER.name
+        this.dispatch(setCurrentScene(scenes.SCENEGENERATOR.name))
+        this.dispatch(wsEmitCurrentStep({currentStep}))
+    }})
+  }
 
   detectionBox() {
     // CIRCLE DETECTION
@@ -151,7 +196,7 @@ export default class SceneFlashlight {
     this.box.beginFill(0x000000)
     this.box.drawRect(0, 0, 150, 150)
     this.box.endFill()
-    this.box.x = 1355
+    this.box.x = 1300
     this.box.y = 855
     this.box.alpha = 0
   }
@@ -334,9 +379,9 @@ export default class SceneFlashlight {
 
   initMaskUser2() {
     this.maskUSer2 = []
-    const maskRadius1 = 200
-    const maskRadius2 = 160
-    const maskRadius3 = 120
+    const maskRadius1 = 240
+    const maskRadius2 = 200
+    const maskRadius3 = 160
     
     // CIRCLE MASK 1
     this.mask1_2 = new PIXI.Graphics()
@@ -378,11 +423,11 @@ export default class SceneFlashlight {
   }
 
   outlineAnimation() {
-    TweenMax.to(this.spriteOutline, .3, {alpha:1, repeat: -1, repeatDelay: 2, yoyo:true})
+    TweenMax.to(this.spriteOutline, .3, {alpha:1, repeat: -1, repeatDelay: 1, yoyo:true})
   }
 
   outlineAnimation2() {
-    TweenMax.to(this.spriteOutline_2, .3, {alpha:1, repeat: -1, repeatDelay: 2, yoyo:true})
+    TweenMax.to(this.spriteOutline_2, .3, {alpha:1, repeat: -1, repeatDelay: 1, yoyo:true})
   }
 
   addToScene() {
@@ -393,6 +438,7 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau3)
     this.container.addChild(this.spriteBureau2)
     this.container.addChild(this.spriteBureau1)
+    this.container.addChild(this.fillbox)
     this.container.addChild(this.box)
     this.container.addChild(this.circleDetection)
     this.container.addChild(this.spriteFlashOff)
@@ -410,18 +456,58 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteOutline_2)
 
   }
+
+  initGUI() {
+    this.gui = new dat.GUI({ autoPlace: false })
+    var customContainer = document.querySelector('.desktop-app')
+    customContainer.appendChild(this.gui.domElement)
+    const fillBoxPos = {
+      x: this.fillbox.x,
+      y: this.fillbox.y,
+      width: this.fillbox.width,
+      height: this.fillbox.height
+    }
+
+    let fillBoxChanger = () => {
+        this.fillbox.x = fillBoxPos.x
+        this.fillbox.y = fillBoxPos.y
+        this.fillbox.width = fillBoxPos.width
+        this.fillbox.height = fillBoxPos.height
+    }
+
+    let f1 = this.gui.addFolder('Fill Box')
+    f1.add(fillBoxPos, 'x', 0, 1920, 0.1).onChange(fillBoxChanger)
+    f1.add(fillBoxPos, 'y', 0, 900, 0.1).onChange(fillBoxChanger)
+    f1.add(fillBoxPos, 'width', 0, 200, 0.1).onChange(fillBoxChanger)
+    f1.add(fillBoxPos, 'height', 0, 200, 0.1).onChange(fillBoxChanger)
+
+    this.gui.close()
+  }
   update() {
     // console.log("update scene flashlight");
     if (this.isMoving) {
       if (collisionDetection(this.circleDetection, this.box)) {
-        console.log('COLLISIIIIIOOON 1')
+        this.player1Collision = true
+        // console.log('COLLISIIIIIOOON 1')
+      } else {
+        this.player1Collision = false
       }
     }
 
     if (this.isMoving2) {
       if (collisionDetection(this.circleDetection_2, this.box)) {
-        console.log('COLLISIIIIIOOON 2')
+        // console.log('COLLISIIIIIOOON 2')
+        this.player2Collision = true
+      } else {
+        this.player2Collision = false
       }
     }
+
+    if (this.player1Collision && this.player2Collision) {
+      if (!this.isDiscover) {
+        console.log('ok go go go')
+        this.discoverAnimation()
+      }
+    } 
   }
 }

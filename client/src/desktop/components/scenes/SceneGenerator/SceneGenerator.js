@@ -1,7 +1,7 @@
 import {AssetsManager} from "../../../../managers";
 import * as PIXI from "pixi.js";
 
-export default class Scene2 {
+export default class SceneGenerator {
 
   constructor({dispatch, store}) {
     this.store = store
@@ -13,12 +13,12 @@ export default class Scene2 {
   //required
   updateStore(newStore) {
     //update store
-    console.log("updateStore", newStore);
+    console.log("updateStore", newStore)
     this.store = newStore
   }
 
   init() {
-    console.log("scene2 init");
+    console.log("scene generator init")
 
     let width = window.innerWidth
     let height = window.innerHeight

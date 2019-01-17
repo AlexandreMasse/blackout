@@ -10,6 +10,9 @@ import {onEnter as CursorStepOnEnter, onExit as CursorStepOnExit} from './Cursor
 import {default as NotificationStep} from './NotificationStep/NotificationStep'
 import {onEnter as NotificationStepOnEnter, onExit as NotificationStepOnExit} from './CursorStep/transition'
 
+import {default as SliderStep} from './SliderStep/SliderStep'
+import {onEnter as SliderStepOnEnter, onExit as SliderStepOnExit} from './SliderStep/transition'
+
 
 export default {
   INTRO: {
@@ -35,5 +38,13 @@ export default {
     timeout: {enter: 2000, exit: 1000},
     onEnter: CursorStepOnEnter,
     onExit: CursorStepOnExit
+  },
+  SLIDER: {
+    name: 'SLIDER',
+    component: <SliderStep/>,
+    classNames: "",
+    timeout: {enter: 2000, exit: 1000},
+    onEnter: SliderStepOnEnter,
+    onExit: SliderStepOnExit
   }
 }

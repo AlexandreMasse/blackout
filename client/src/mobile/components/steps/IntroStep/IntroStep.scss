@@ -90,15 +90,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(85vh - 3.15rem);
-    margin-bottom: 3.15rem;
-    margin-top: 11.7rem;
+    height: calc(85vh - 31.15vw);
+    margin-top: 31.15vw;
 
     &__numbers {
       display: flex;
       width: 100%;
       justify-content: space-evenly;
-      font-variation-settings: $light;
+      font-variation-settings: "wght" 60, "wdth" 600;
 
       p {
         height: 4rem;
@@ -108,7 +107,7 @@
         border-bottom: 1px solid $white;
         text-align: center;
         font-size: 3.5rem;
-        font-variation-settings: $light;
+        font-variation-settings: "wght" 60, "wdth" 600;
         font-family: $font-scopevariable;
       }
     }

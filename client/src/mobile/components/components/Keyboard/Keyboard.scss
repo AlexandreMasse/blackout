@@ -13,11 +13,11 @@
     &__key {
       position: relative;
       width: calc(100% / 3);
-      height: 18.5vw;
+      height: 17.1vw;
       background-color: $black;
       color: $white;
       border: 1px solid rgba(255, 255, 255, 0.31);
-      font-variation-settings: $light;
+      font-variation-settings: "wght" 60, "wdth" 600;
       //transition: all 0.2s ease;
 
       &:active {
@@ -66,7 +66,7 @@
     border: 0;
     background: $red;
     font-size: 2.5rem;
-    font-variation-settings: $light;
+    font-variation-settings: "wght" 60, "wdth" 600;
     outline: none;
 
     &:active {
