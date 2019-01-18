@@ -3,19 +3,27 @@ import {TweenMax, TimelineMax, Power2} from 'gsap'
 
 export const onEnter = (instance) => (
   new Promise(resolve => {
-    const timeline = new TimelineMax({
+    
+    const generator = instance.generatorSprite
+    generator.alpha = 0
+
+    const tl = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete : scene2 enter");
-        resolve();
+        console.log("onComplete : scene generator enter")
+        resolve()
       }
     })
-    timeline.fromTo(instance.sprite, 3, {
+    tl.fromTo(instance.sprite, 1, {
       alpha: 0,
     },{
       delay: 1,
       alpha: 1,
       ease: Power2.easeInOut
     })
+    tl.to(generator, 0, {alpha:0}, "+=0.2")
+    tl.to(generator, 0, {alpha:1}, "+=0.2")
+    tl.to(generator, 0, {alpha:0}, "+=0.2")
+    tl.to(generator, 0, {alpha:1}, "+=0.2")
   })
 )
 

@@ -8,7 +8,7 @@ import {setAppLoaded, setCurrentStep, setUserIndicationOpen} from '../redux/acti
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
-import {Loading} from "./components"
+import {Loading, Indication} from "./components"
 //steps
 import {StepManager} from "./managers";
 import steps from "./steps"

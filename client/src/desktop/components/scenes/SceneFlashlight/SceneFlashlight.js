@@ -65,7 +65,8 @@ export default class SceneFlashlight {
     this.initBackgroundUser2()
     this.detectionBox()
     this.fillBox()
-    this.player2Collision = true
+    // this.player2Collision = true
+    this.player1Collision = true
     this.isDiscover = false
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1)
@@ -78,9 +79,9 @@ export default class SceneFlashlight {
   switchOnLight() {
     this.canMove = false
     TweenMax.to(this.spriteFlashOff, .3, {alpha:0})
-    TweenMax.to(this.spriteBureau1, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau3, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
+    TweenMax.to(this.spriteBureau1, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau3, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
       this.canMove = true
     }})
     this.isOff = false
@@ -97,9 +98,9 @@ export default class SceneFlashlight {
 
   switchOnLight2() {
     TweenMax.to(this.spriteFlashOff_2, .3, {alpha:0})
-    TweenMax.to(this.spriteBureau1_2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau2_2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau3_2, 1.2, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
+    TweenMax.to(this.spriteBureau1_2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau2_2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
+    TweenMax.to(this.spriteBureau3_2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
       console.log('finito 2')
       this.canMove2 = true
     }})
@@ -443,30 +444,30 @@ export default class SceneFlashlight {
   }
 
   initGUI() {
-    this.gui = new dat.GUI({ autoPlace: false })
-    var customContainer = document.querySelector('.desktop-app')
-    customContainer.appendChild(this.gui.domElement)
-    const fillBoxPos = {
-      x: this.fillbox.x,
-      y: this.fillbox.y,
-      width: this.fillbox.width,
-      height: this.fillbox.height
-    }
+    // this.gui = new dat.GUI({ autoPlace: false })
+    // var customContainer = document.querySelector('.desktop-app')
+    // customContainer.appendChild(this.gui.domElement)
+    // const fillBoxPos = {
+    //   x: this.fillbox.x,
+    //   y: this.fillbox.y,
+    //   width: this.fillbox.width,
+    //   height: this.fillbox.height
+    // }
 
-    let fillBoxChanger = () => {
-        this.fillbox.x = fillBoxPos.x
-        this.fillbox.y = fillBoxPos.y
-        this.fillbox.width = fillBoxPos.width
-        this.fillbox.height = fillBoxPos.height
-    }
+    // let fillBoxChanger = () => {
+    //     this.fillbox.x = fillBoxPos.x
+    //     this.fillbox.y = fillBoxPos.y
+    //     this.fillbox.width = fillBoxPos.width
+    //     this.fillbox.height = fillBoxPos.height
+    // }
 
-    let f1 = this.gui.addFolder('Fill Box')
-    f1.add(fillBoxPos, 'x', 0, 1920, 0.1).onChange(fillBoxChanger)
-    f1.add(fillBoxPos, 'y', 0, 900, 0.1).onChange(fillBoxChanger)
-    f1.add(fillBoxPos, 'width', 0, 200, 0.1).onChange(fillBoxChanger)
-    f1.add(fillBoxPos, 'height', 0, 200, 0.1).onChange(fillBoxChanger)
+    // let f1 = this.gui.addFolder('Fill Box')
+    // f1.add(fillBoxPos, 'x', 0, 1920, 0.1).onChange(fillBoxChanger)
+    // f1.add(fillBoxPos, 'y', 0, 900, 0.1).onChange(fillBoxChanger)
+    // f1.add(fillBoxPos, 'width', 0, 200, 0.1).onChange(fillBoxChanger)
+    // f1.add(fillBoxPos, 'height', 0, 200, 0.1).onChange(fillBoxChanger)
 
-    this.gui.close()
+    // this.gui.close()
   }
   update() {
     // console.log("update scene flashlight");

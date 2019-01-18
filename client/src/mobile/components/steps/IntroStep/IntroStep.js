@@ -15,8 +15,6 @@ import './IntroStep.scss'
 //asset
 import {AssetsManager} from "./../../../../managers"
 import {assetsToLoad} from "../../../assets/asset-list"
-// utils 
-import {toggleFullscreen} from '../../../../utils'
 
 class IntroStep extends Component {
 
@@ -37,7 +35,8 @@ class IntroStep extends Component {
   }
 
   setFullscreen = () => {
-    toggleFullscreen()
+      const elem = document.documentElement
+      elem.requestFullscreen()
   }
 
   setNoSleep = () => {
@@ -87,7 +86,7 @@ class IntroStep extends Component {
     this.gn = new GyroNorm();
 
     const args = {
-      frequency: 50,
+      frequency: 100,
       gravityNormalized: true,
       orientationBase: GyroNorm.GAME,
       decimalCount: 2,
