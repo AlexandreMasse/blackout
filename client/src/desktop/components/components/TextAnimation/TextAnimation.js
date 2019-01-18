@@ -17,16 +17,22 @@ export default class TextAnimation extends Component {
   }
 
   componentDidMount() {
-    this.initWord(this.ref)
+    this.initWord()
   }
 
-  initWord(ref) {
+  initWord() {
     const {text, handleWord, autoPlay, letterDuration, letterMinSpeed, letterMaxSpeed} = this.props
-    this.word = new Word(ref, text, letterDuration, letterMinSpeed, letterMaxSpeed)
+    this.word = new Word(this.ref, text, letterDuration, letterMinSpeed, letterMaxSpeed)
 
     if(autoPlay) this.word.start()
 
     if(handleWord) handleWord(this.word)
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.text !== this.props.text) {
+      this.initWord()
+    }
   }
 
   render() {

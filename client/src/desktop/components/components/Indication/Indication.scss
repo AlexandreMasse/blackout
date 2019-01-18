@@ -1,12 +1,21 @@
 @import "../../../../stylesheets/global.scss";
 
 .indication {
-    position: absolute;
-    bottom: -22.2rem;
+    position: fixed;
+    bottom: -17rem;
     z-index: 10;
 
     &--left {
         left: 5.5vw;
+        text-align: left;
+
+        .indication__title__arrow {
+            right: 105%;
+        }
+
+        .indication__description {
+
+        }
     }
 
     &--right {
@@ -14,8 +23,7 @@
         text-align: right;
         
         .indication__title__arrow {
-            left: 100%;
-            right: auto;
+            left: 105%;
         }
 
         .indication__description {
@@ -27,15 +35,15 @@
         position: relative;
         margin-bottom: .2rem;
         text-transform: uppercase;
-        font-size: 3.6rem;
+        font-size: 2.4rem;
         font-variation-settings: $bold;
+        height: 1.3em;
         
         &__arrow {
             position: absolute;
-            right: 100%;
             margin-right: .4rem;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-57%);
 
             .arrow{
                 visibility: hidden;
@@ -53,8 +61,8 @@
     &__description {
         margin-bottom: 2.1rem;
         margin-top: 0;
-        font-size: 3rem;
-        width: 60%;
+        font-size: 1.8rem;
+        width: 100%;
         font-variation-settings: $light;
         // animation
         opacity: 0;
@@ -63,7 +71,7 @@
 
     &__iconContainer {
         display: inline-block;
-        width:37%;
+        width:8rem;
 
         &__icon {
             width: 100%;

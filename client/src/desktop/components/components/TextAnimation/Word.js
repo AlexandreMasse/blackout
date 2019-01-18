@@ -17,12 +17,13 @@ export default class Word {
 
 
   init(word) {
-    this.lettersDOM = document.querySelectorAll('.letter')
+    this.parent.innerHTML = ""
+    this.lettersDOM = this.parent.querySelectorAll('.letter')
     this.wordArr = Array.from(word)
     this.active = true
-    var i
-    var nextChar
-    var letterNb = this.wordArr.length
+    let i
+    let nextChar
+    let letterNb = this.wordArr.length
 
     for (i = 0; i < letterNb; i++) {
 
@@ -33,7 +34,7 @@ export default class Word {
       }
 
 
-      var span = document.createElement("span")
+      let span = document.createElement("span")
       if (nextChar == ' ') {
         span.classList.add('empty')
       }

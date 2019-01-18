@@ -18,7 +18,6 @@ import {toggleFullscreen} from '../../utils'
 import './DesktopApp.scss'
 
 
-
 class DesktopApp extends Component {
 
   constructor(props) {
@@ -68,7 +67,8 @@ class DesktopApp extends Component {
           <Loading/>
         ) : (
           <>
-          {/* <Indication description="Tournez les roues jusqu’à trouver la combinaison." /> */}
+          <Indication player={"player1"}/>
+          <Indication player={"player2"}/>
           <StepManager currentStep={currentStep}/>
           </>
         )}

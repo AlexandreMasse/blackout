@@ -35,6 +35,13 @@ export const setUserCurrentScene = (payload) => (dispatch, getState, {emit}) => 
  })
 }
 
+export const setUserIndicationActive = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_USER_INDICATION_ACTIVE,
+  payload
+ })
+}
+
 export const setUserIndicationOpen = (payload) => (dispatch, getState, {emit}) => {
  dispatch({
   type: desktopActionTypes.SET_USER_INDICATION_OPEN,

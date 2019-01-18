@@ -40,9 +40,10 @@ const initialState = {
       currentScene: scenes.SCENEKINEMATIC.name,
       introProgression: 0,
       indication: {
+        isActive: false,
         isOpen: false,
-        title: null,
-        description: null,
+        title: "Titre test",
+        description: "Description test",
       }
     },
     {
@@ -71,9 +72,10 @@ const initialState = {
       currentScene: scenes.SCENEKINEMATIC.name,
       introProgression: 0,
       indication: {
+        isActive: false,
         isOpen: false,
-        title: null,
-        description: null,
+        title: "Titre test player 2",
+        description: "Description test player 2",
       }
     }
   ],
@@ -124,6 +126,26 @@ export default (state = initialState, action) => {
             return {
               ...user,
               currentScene
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_USER_INDICATION_ACTIVE: {
+      const {isActive, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              indication: {
+                ...user.indication,
+                isActive
+              }
             }
           } else {
             return user;

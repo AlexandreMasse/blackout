@@ -36,6 +36,7 @@
 
       &.connected {
         opacity: 1;
+        transition: opacity 1.2s 0.3s ease;
       }
     }
 

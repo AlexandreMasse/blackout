@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 //redux
 import {connect} from 'react-redux'
-import {setCurrentStep} from "../../../redux/actions/desktopAction";
+import {setCurrentStep, setUserIndicationActive, setUserIndicationOpen} from "../../../redux/actions/desktopAction";
 //lib
 import classNames from 'classnames'
 import {TimelineMax} from "gsap";
@@ -163,7 +163,45 @@ class ConnexionStep extends Component {
     return (
       <div className="connexion-step step" ref={(ref) => this.ref = ref}>
 
-        <p style={{position:"absolute", margin:"0", top: "10px", left: "10px", zIndex: "100", fontSize:"3rem", cursor:"pointer"}} onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
+        <p style={{
+          position: "absolute",
+          margin: "0",
+          top: "1rem",
+          left: "10px",
+          zIndex: "100",
+          fontSize: "2rem",
+          cursor: "pointer"
+        }} onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
+
+        <p style={{
+          position: "absolute",
+          margin: "0",
+          top: "3rem",
+          left: "10px",
+          zIndex: "100",
+          fontSize: "2rem",
+          cursor: "pointer"
+        }} onClick={() => this.props.setUserIndicationActive("player1", true)}>Indication : player 1 active</p>
+
+        <p style={{
+          position: "absolute",
+          margin: "0",
+          top: "5rem",
+          left: "10px",
+          zIndex: "100",
+          fontSize: "2rem",
+          cursor: "pointer"
+        }} onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
+
+        <p style={{
+          position: "absolute",
+          margin: "0",
+          top: "7rem",
+          left: "10px",
+          zIndex: "100",
+          fontSize: "2rem",
+          cursor: "pointer"
+        }} onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
 
         <LottieAnimation autoplay={true} animationData={animations.HomeAbstrait} className={"home-abstrait"} />
 
@@ -363,7 +401,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep))
+    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
+    setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({userId, isActive})),
+    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen}))
   }
 }
 
