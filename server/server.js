@@ -34,6 +34,7 @@ server.listen(app.get('port'), function () {
           room.create(socket)
           Rooms.roomArrInstance.push(room)
           room.currentStep(io, socket)
+          room.showDanger(io, socket)
           room.destroy(io ,socket)
         }
         

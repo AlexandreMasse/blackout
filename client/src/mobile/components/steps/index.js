@@ -8,7 +8,7 @@ import {onEnter as CursorStepOnEnter, onExit as CursorStepOnExit} from './Cursor
 
 
 import {default as NotificationStep} from './NotificationStep/NotificationStep'
-import {onEnter as NotificationStepOnEnter, onExit as NotificationStepOnExit} from './CursorStep/transition'
+import {onEnter as NotificationStepOnEnter, onExit as NotificationStepOnExit} from './NotificationStep/transition'
 
 import {default as SliderStep} from './SliderStep/SliderStep'
 import {onEnter as SliderStepOnEnter, onExit as SliderStepOnExit} from './SliderStep/transition'

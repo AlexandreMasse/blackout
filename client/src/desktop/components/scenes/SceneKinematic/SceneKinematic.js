@@ -3,7 +3,7 @@ import {AssetsManager} from "../../../../managers"
 import {setFullScreen} from '../utils'
 
 import {setCurrentScene} from "../../../redux/actions/desktopAction"
-import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
+import {wsEmitCurrentStep, wsEmitShowDanger} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
 import scenes from ".."
 import stepsMobile from '../../../../mobile/components/steps'
@@ -17,6 +17,7 @@ export default class SceneKinematic {
 
         this.init()
         this.endVideo()
+        this.showDanger()
     }
 
     //required
@@ -27,7 +28,7 @@ export default class SceneKinematic {
 
     init() {
         this.container = new PIXI.Container()
-        const mouse = AssetsManager.get('mouse')
+        const mouse = AssetsManager.get('cinematique')
         this.textureVid = PIXI.Texture.fromVideo(mouse)
         this.bg = new PIXI.Sprite(this.textureVid)
         this.video = this.textureVid.baseTexture.source 
@@ -59,6 +60,19 @@ export default class SceneKinematic {
                 this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
+        })
+    }
+
+    showDanger = () => {
+        this.isDanger = false
+        this.video.addEventListener('timeupdate', () => { 
+            if(this.video.currentTime > 19) {
+                const showDanger = true
+                if(!this.isDanger) {
+                    this.dispatch(wsEmitShowDanger({showDanger}))
+                    this.isDanger = true
+                }
+            }
         })
     }
 

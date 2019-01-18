@@ -2,6 +2,7 @@
 import bureau from './img/bureau.png'
 import bureauItem from './img/bureauItem.jpg'
 import mouse from './videos/mouse.mp4'
+import cinematique from './videos/cinematique.mp4'
 import analyse from './videos/analyse.mp4'
 import bureau1 from './img/bureau_1.png'
 import bureau2 from './img/bureau_2.png'
@@ -15,6 +16,7 @@ export const assetsToLoad = {
     bureau: { url: bureau },
     bureauItem: { url: bureauItem,  type: 'image' },
     mouse: { url: mouse },
+    cinematique: { url: cinematique },
     analyse: { url: analyse, },
     bureau1: { url: bureau1, name:'bureau2', type: 'image'},
     bureau2: { url: bureau2, name:'bureau1', type: 'image'},

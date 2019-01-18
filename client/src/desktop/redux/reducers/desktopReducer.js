@@ -21,7 +21,7 @@ const initialState = {
       position: null,
       phoneData: {
         "os": "Android",
-        "osVersionNumber": 8,
+        "osVersionNumber": 7,
         "osReleaseDate": "21/08/2017",
         "height": 731,
         "width": 411,
@@ -35,7 +35,7 @@ const initialState = {
           "postal": "75008",
           "org": "AS56774 Chambre de commerce et d'Industrie de Paris"
         },
-        "score": 15.43252921697582
+        "score": 12.43252921697582
       },
       currentScene: scenes.SCENEKINEMATIC.name,
       introProgression: 0,

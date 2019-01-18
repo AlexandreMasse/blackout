@@ -7,6 +7,7 @@ const initialState = {
     isConnected: false,
     password: null,
     currentStep: null,
+    showDanger: null,
     phoneData: null,
     isLoaded: false,
     users: [
@@ -113,6 +114,14 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 currentStep:step
+            }
+        }
+
+        case websocketsOnActionTypes.WEBSOCKET_ON_SHOW_DANGER: {
+            const {showDanger} = action.payload
+            return {
+                ...state,
+                showDanger:showDanger
             }
         }
 
