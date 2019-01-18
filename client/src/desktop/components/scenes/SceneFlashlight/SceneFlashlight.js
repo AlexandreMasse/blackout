@@ -4,13 +4,15 @@ import * as dat from 'dat.gui'
 import {AssetsManager} from "../../../../managers"
 import {TweenMax, RoughEase} from 'gsap'
 //redux
-import {setCurrentScene} from "../../../redux/actions/desktopAction"
+import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
 import scenes from ".."
 import stepsMobile from '../../../../mobile/components/steps'
 // utils
 import {setFullScreen, collisionDetection} from '../utils'
+//transition
+import {onEnterTimeout} from './transition'
 
 export default class SceneFlashlight {
 
@@ -73,6 +75,24 @@ export default class SceneFlashlight {
     this.sprite = new PIXI.Sprite(this.rt)
     setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
     // this.initGUI()
+
+    //indication
+    this.dispatch(setUserIndicationTitle({userId: "player1", title: "Allumer votre lampe"}))
+    this.dispatch(setUserIndicationTitle({userId: "player2", title: "Allumer votre lampe"}))
+    this.dispatch(setUserIndicationDescription({userId: "player1", description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton"}))
+    this.dispatch(setUserIndicationDescription({userId: "player2", description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton"}))
+
+    setTimeout(() => {
+      this.dispatch(setUserIndicationActive({
+        userId: "player1",
+        isActive: true
+      }))
+      this.dispatch(setUserIndicationActive({
+        userId: "player2",
+        isActive: true
+      }))
+    }, onEnterTimeout * 1000)
+
   }
 
   switchOnLight() {
@@ -84,6 +104,11 @@ export default class SceneFlashlight {
       this.canMove = true
     }})
     this.isOff = false
+
+    this.dispatch(setUserIndicationOpen({
+      userId: "player1",
+      isOpen: false
+    }))
   }
 
   switchOffLight() {
@@ -104,6 +129,11 @@ export default class SceneFlashlight {
       this.canMove2 = true
     }})
     this.isOff2 = false
+
+    this.dispatch(setUserIndicationOpen({
+      userId: "player2",
+      isOpen: false
+    }))
   }
 
   switchOffLight2() {
@@ -151,6 +181,16 @@ export default class SceneFlashlight {
   }
 
   nextScene() {
+
+    this.dispatch(setUserIndicationActive({
+      userId: "player1",
+      isActive: false
+    }))
+    this.dispatch(setUserIndicationActive({
+      userId: "player2",
+      isActive: false
+    }))
+
     TweenMax.to(this.spriteBureau1, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
     TweenMax.to(this.spriteBureau2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
     TweenMax.to(this.spriteBureau3, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
@@ -507,6 +547,10 @@ export default class SceneFlashlight {
       if (!this.isDiscover) {
         console.log('ok go go go')
         this.discoverAnimation()
+
+
+
+
       }
     } 
   }

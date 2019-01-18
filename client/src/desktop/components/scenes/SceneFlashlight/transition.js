@@ -1,6 +1,11 @@
 import {TweenMax, TimelineMax, Power2} from 'gsap'
 
 
+export const onEnterDelay = 1
+export const onEnterDuration = 3
+export const onEnterTimeout = onEnterDelay + onEnterDuration
+
+
 export const onEnter = (instance) => (
   new Promise(resolve => {
     const timeline = new TimelineMax({
@@ -10,10 +15,10 @@ export const onEnter = (instance) => (
       }
     })
 
-    timeline.fromTo(instance.sprite, 3, {
+    timeline.fromTo(instance.sprite, onEnterDuration, {
       alpha: 0,
     }, {
-      delay: 1,
+      delay: onEnterDelay,
       alpha: 1,
       ease: Power2.easeInOut
     })
