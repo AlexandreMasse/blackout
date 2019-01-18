@@ -43,7 +43,7 @@ const initialState = {
       indication: {
         isActive: false,
         isOpen: false,
-        title: "Titre test",
+        title: "Retrouver le générateur",
         description: "Description test",
       }
     },
@@ -76,7 +76,7 @@ const initialState = {
       indication: {
         isActive: false,
         isOpen: false,
-        title: "Titre test player 2",
+        title: "Retrouver le générateur",
         description: "Description test player 2",
       }
     }

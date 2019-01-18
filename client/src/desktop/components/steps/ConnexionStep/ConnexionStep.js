@@ -166,6 +166,7 @@ class ConnexionStep extends Component {
       <div className="connexion-step step" ref={(ref) => this.ref = ref}>
 
         <p style={{
+          display: 'none',
           position: "absolute",
           margin: "0",
           top: "1rem",
@@ -176,6 +177,7 @@ class ConnexionStep extends Component {
         }} onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
 
         <p style={{
+          display: 'none',
           position: "absolute",
           margin: "0",
           top: "3rem",
@@ -186,6 +188,7 @@ class ConnexionStep extends Component {
         }} onClick={() => this.props.setUserIndicationActive("player1", true)}>Indication : player 1 active</p>
 
         <p style={{
+          display: 'none',
           position: "absolute",
           margin: "0",
           top: "5rem",
@@ -196,6 +199,7 @@ class ConnexionStep extends Component {
         }} onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
 
         <p style={{
+          display: 'none',
           position: "absolute",
           margin: "0",
           top: "7rem",
