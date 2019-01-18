@@ -333,9 +333,9 @@ export default class SceneFlashlight {
 
   initMaskUser() {
     this.maskUSer = []
-    const maskRadius1 = 240
-    const maskRadius2 = 200
-    const maskRadius3 = 160
+    const maskRadius1 = 200
+    const maskRadius2 = 140
+    const maskRadius3 = 100
     
     // CIRCLE MASK 1
     this.mask1 = new PIXI.Graphics()

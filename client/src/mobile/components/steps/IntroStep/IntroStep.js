@@ -35,8 +35,7 @@ class IntroStep extends Component {
   }
 
   setFullscreen = () => {
-      const elem = document.documentElement
-      elem.requestFullscreen()
+    toggleFullscreen()
   }
 
   setNoSleep = () => {

@@ -1,7 +1,7 @@
-import {AssetsManager} from "../../../../managers"
-import * as PIXI from "pixi.js"
+import {AssetsManager} from "../../../../managers";
+import * as PIXI from "pixi.js";
 import * as dat from 'dat.gui'
-import { TweenMax } from "gsap";
+import {TweenMax} from 'gsap'
 import {map} from '../utils'
 
 export default class SceneGenerator {
@@ -17,27 +17,22 @@ export default class SceneGenerator {
   updateStore(newStore) {
     this.currentPlayer1SliderValue = this.store.users.find(user => user.id === "player1").sliderValue
     this.newPlayer1SliderValue = newStore.users.find(user => user.id === "player1").sliderValue
+
     if (this.newPlayer1SliderValue) {
       let value = parseInt(this.newPlayer1SliderValue, 10)
-      let mapValue = map(value, 0, 100, 0, 649.4)
+      let mapValue  = map(value, 0, 100, 0, window.innerHeight * .6)
       TweenMax.to(this.fillbox, .1, {height:mapValue})
     }
-    
-    // console.log(this.newPlayer1SliderValue)
 
-    
-    
-    if (this.currentPlayer1Position !== this.newPlayer1Position) {
-      // player1 slider value has changed
+    this.currentPlayer2SliderValue = this.store.users.find(user => user.id === "player2").sliderValue
+    this.newPlayer2SliderValue = newStore.users.find(user => user.id === "player2").sliderValue
+
+    if (this.newPlayer2SliderValue) {
+      let value2 = parseInt(this.newPlayer2SliderValue, 10)
+      let mapValue2  = map(value2, 0, 100, 0, window.innerHeight * .6)
+      // console.log(mapValue2)
+      TweenMax.to(this.fillbox2, .1, {height:mapValue2})
     }
-
-    this.currentPlayer2Position = this.store.users.find(user => user.id === "player2").position
-    this.newPlayer2Position = newStore.users.find(user => user.id === "player2").position
-
-    if (this.currentPlayer2Position !== this.newPlayer2Position) {
-      // player2 slider value has changed
-    }
-
     //update store
     this.store = newStore
   }
@@ -149,7 +144,7 @@ export default class SceneGenerator {
   }
 
   update() {
-    //console.log("scene generator");
+    //console.log("scene2 update");
     //console.log("update scene 2");
   }
 

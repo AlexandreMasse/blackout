@@ -49,6 +49,14 @@ export default class Room {
         })
     }
 
+    showDanger = (io ,socket) => {
+        socket.on('showDanger', (data) => {
+            io.to(socket.room).emit('showDanger', {
+                showDanger: data.showDanger
+            })
+        })
+    }
+    
     getUserId(socket) {
         socket.on('tes', (userID) =>{
             console.log('un nouvelle userID est la: ', userID)
