@@ -46,9 +46,9 @@ class NotificationStep extends Component {
                 <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src} />
             </div>
             
-            <button className="notification-step__button button">
+            {/* <button className="notification-step__button button">
                 <span>{'> Partager l\'alerte <'}</span>
-            </button>
+            </button> */}
         </div>
         <div className="alert"/>
         </>
