@@ -1,0 +1,46 @@
+@import "../../../../stylesheets/global";
+
+.lunch-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  color: white;
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+
+  &__text {
+    text-align: center;
+    width: calc(74vw + 2px);
+    font-size: 2.5rem;
+    line-height: 3.5rem;
+    margin: 0;
+  }
+
+  &__box {
+    position: relative;
+    width: calc(74vw + 2px);
+    padding: 5rem 2.5rem;
+    font-size: 2.4rem;
+    border: solid 1px white;
+    &__progression {
+      position: absolute;
+      background-color: white;
+      width: 100%;
+      height: 100%;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      left: 0;
+      bottom: 0;
+    }
+    p {
+      position: relative;
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      mix-blend-mode: difference;
+    }
+  }
+
+}

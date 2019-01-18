@@ -38,7 +38,7 @@ export const wsEmitPhoneData = (payload) => (dispatch, getState, {emit}) => {
     console.log("emit phone data", payload.data);
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_PHONE_DATA, {
         phoneData: payload.data,
-    });
+    })
 }
 
 export const wsEmitIntroProgression = (payload) => (dispatch, getState, {emit}) => {
@@ -46,8 +46,6 @@ export const wsEmitIntroProgression = (payload) => (dispatch, getState, {emit}) 
         progression: payload.progression,
     });
 }
-
-
 
 export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_RECONNECT, {
@@ -60,7 +58,7 @@ export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
 export const wsEmitPosition = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_POSITION, {
         position: payload.position,
-    });
+    })
 }
 
 export const wsEmitSliderValue = (payload) => (dispatch, getState, {emit}) => {

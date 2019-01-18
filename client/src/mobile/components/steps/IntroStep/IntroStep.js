@@ -13,7 +13,7 @@ import {Keyboard} from "../../components";
 import steps from '..'
 //lib
 import NoSleep from "nosleep.js";
-import {TweenMax} from 'gsap'
+import {TweenMax, Power1} from 'gsap'
 //css
 import './IntroStep.scss'
 //asset
@@ -35,8 +35,7 @@ class IntroStep extends Component {
   }
 
   setFullscreen = () => {
-      const elem = document.documentElement
-      elem.requestFullscreen()
+    toggleFullscreen()
   }
 
   setNoSleep = () => {
@@ -101,11 +100,10 @@ class IntroStep extends Component {
     } else {
       if (yDiff > 0) {
         /* up swipe */
-        TweenMax.to(this.ref, 0.5, {transform: 'translateY(-80vh)'})
+        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut,transform: 'translateY(-73vh)'})
       } else {
         /* down swipe */
-        TweenMax.to(this.ref, 0.5, {transform: 'translateY(0)'})
-
+        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut, transform: 'translateY(0)'})
       }
     }
     /* reset values */
@@ -127,7 +125,6 @@ class IntroStep extends Component {
     this.ref.removeEventListener('touchmove', this.handleTouchMove, false);
   }
 
-
   //TODO: just for test
   componentWillReceiveProps(nextProps, nextContext) {
     // change step after connexion
@@ -142,7 +139,7 @@ class IntroStep extends Component {
 
     return (
       <div className="intro-step" ref={(ref) => this.ref = ref}>
-        <button onClick={() => this.props.setCurrentStep(steps.CURSOR.name)}>
+        <button onClick={() => this.props.setCurrentStep(steps.LUNCH.name)}>
           Step suivant
         </button>
         <div className='intro-step__infos'>

@@ -14,7 +14,7 @@ import generator2 from './img/generator-transparent.png'
 
 export const assetsToLoad = {
     bureau: { url: bureau },
-    bureauItem: { url: bureauItem,  type: 'image' },
+    bureauItem: { url: bureauItem,  type: 'image'},
     mouse: { url: mouse },
     cinematique: { url: cinematique },
     analyse: { url: analyse, },

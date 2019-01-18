@@ -56,7 +56,6 @@ export default class Room {
             })
         })
     }
-
     getUserId(socket) {
         socket.on('tes', (userID) =>{
             console.log('un nouvelle userID est la: ', userID)

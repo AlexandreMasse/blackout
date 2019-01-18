@@ -19,6 +19,7 @@ const initialState = {
       isConnected: false,
       status: null,
       position: null,
+      sliderValue: null,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 7,
@@ -50,7 +51,8 @@ const initialState = {
       id: "player2",
       isConnected: false,
       status: null,
-      position:null,
+      position: null,
+      sliderValue: null,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 8,

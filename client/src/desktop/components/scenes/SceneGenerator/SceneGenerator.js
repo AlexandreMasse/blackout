@@ -30,7 +30,7 @@ export default class SceneGenerator {
     if (this.newPlayer2SliderValue) {
       let value2 = parseInt(this.newPlayer2SliderValue, 10)
       let mapValue2  = map(value2, 0, 100, 0, window.innerHeight * .6)
-      console.log(mapValue2)
+      // console.log(mapValue2)
       TweenMax.to(this.fillbox2, .1, {height:mapValue2})
     }
     //update store

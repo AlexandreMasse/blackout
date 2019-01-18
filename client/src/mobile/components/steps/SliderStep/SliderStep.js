@@ -2,20 +2,23 @@ import React, {Component} from 'react'
 // assets
 // import {AssetsManager} from "./../../../../managers"
 // import {assetsToLoad} from "../../../assets/asset-list"
-// redux
 import {connect} from 'react-redux'
 import {wsEmitSliderValue} from '../../../redux/actions/websockets/websocketsAction'
 
 //css
 import './SliderStep.scss'
-
- class SliderStep extends Component {
+class SliderStep extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             value: 0
           }
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if(this.state.value !== prevState.value) {
+            this.props.wsEmitSliderValue(this.state.value)
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -33,7 +36,7 @@ import './SliderStep.scss'
                         max="100"
                         type="range"
                         value={this.state.value}
-                        onChange={(e) => {this.setState({value: e.target.value})}} 
+                        onChange={(e) => {console.log('trigger');this.setState({value: e.target.value})}}
                     />
                 </div>
             </div>
@@ -47,7 +50,7 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-      wsEmitSliderValue: (sliderValue) => dispatch(wsEmitSliderValue({sliderValue}))
+        wsEmitSliderValue: (sliderValue) => dispatch(wsEmitSliderValue({sliderValue}))
     }
   }
   
