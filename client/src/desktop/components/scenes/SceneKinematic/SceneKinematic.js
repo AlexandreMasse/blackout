@@ -32,7 +32,7 @@ export default class SceneKinematic {
         this.textureVid = PIXI.Texture.fromVideo(mouse)
         this.bg = new PIXI.Sprite(this.textureVid)
         this.video = this.textureVid.baseTexture.source 
-        this.video.muted = true
+        this.video.muted = false
         this.video.autoplay = true
         this.container.addChild(this.bg)
         this.brt = new PIXI.BaseRenderTexture(this.textureVid.width, this.textureVid.height, PIXI.SCALE_MODES.LINEAR, 1)
