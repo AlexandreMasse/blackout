@@ -4,6 +4,8 @@
 .app {
   background-color: black;
   min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
   
   & > {
 
