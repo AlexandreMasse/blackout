@@ -17,6 +17,7 @@ class LunchStep extends Component {
     super(props)
 
     this.state = {
+      finish: false
     }
 
     this.listenDeviceOrientation()
@@ -44,8 +45,13 @@ class LunchStep extends Component {
         const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
         const progressionClamped = Math.min(Math.max(progression, 0), 1);
         const progressionRounded = Number(progressionClamped.toPrecision(4))
-        this.updateProgression(progressionRounded)
-        this.props.wsEmitIntroProgression(progressionRounded)
+        if(!this.state.finish) {
+          this.updateProgression(progressionRounded)
+          this.props.wsEmitIntroProgression(progressionRounded)
+        } else {
+          this.updateProgression(1)
+          this.props.wsEmitIntroProgression(progressionRounded)
+        }
       });
     }).catch((e) => {
       console.error(e);
@@ -55,6 +61,9 @@ class LunchStep extends Component {
   updateProgression = (progression) => {
     if(this.progression){
       TweenMax.to(this.progression, 0.1, {scaleY: progression})
+      if(progression >= 1 && !this.state.finish) {
+        this.setState({finish: true})
+      }
     }
   }
 

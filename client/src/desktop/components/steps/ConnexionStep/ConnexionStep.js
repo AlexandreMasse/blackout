@@ -16,6 +16,7 @@ import {LottieAnimation, TextAnimation} from "../../components";
 //LottieAnimation
 import animations from "../../components/LottieAnimation/animations"
 import {onEnterDelay} from "../ConnexionStep/transition";
+import {wsEmitCurrentStep} from "../../../redux/actions/websockets/websocketsAction";
 
 class ConnexionStep extends Component {
 
@@ -151,6 +152,7 @@ class ConnexionStep extends Component {
     ) {
       console.log("city left and right ready -> analysis");
       this.props.setCurrentStep(steps.ANALYSIS.name)
+      this.props.wsEmitCurrentStep(null)
     }
   }
 
@@ -403,7 +405,8 @@ const mapDispatchToProps = dispatch => {
   return {
     setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
     setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({userId, isActive})),
-    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen}))
+    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen})),
+    wsEmitCurrentStep: (currentStep) => dispatch(wsEmitCurrentStep({currentStep}))
   }
 }
 
