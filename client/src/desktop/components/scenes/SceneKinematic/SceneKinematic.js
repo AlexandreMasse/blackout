@@ -1,7 +1,10 @@
 import * as PIXI from "pixi.js"
 import {AssetsManager} from "../../../../managers"
+import {assetsToLoad} from "../../../assets/asset-list"
+// scene utils
 import {setFullScreen} from '../utils'
-
+// general utils
+import {requestTimeout} from '../../../../utils'
 import {setCurrentScene} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep, wsEmitShowDanger} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
@@ -55,7 +58,7 @@ export default class SceneKinematic {
 
     endVideo = () => {
         this.video.addEventListener('ended',() => {
-            setTimeout(() => {
+            requestTimeout(() => {
                 const currentStep = stepsMobile.CURSOR.name
                 this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
@@ -66,7 +69,7 @@ export default class SceneKinematic {
     showDanger = () => {
         this.isDanger = false
         this.video.addEventListener('timeupdate', () => { 
-            if(this.video.currentTime > 19) {
+            if(this.video.currentTime > 2) {
                 const showDanger = true
                 if(!this.isDanger) {
                     this.dispatch(wsEmitShowDanger({showDanger}))

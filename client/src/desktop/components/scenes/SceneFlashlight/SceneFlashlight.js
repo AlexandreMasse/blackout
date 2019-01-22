@@ -9,8 +9,10 @@ import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAct
 //scenes
 import scenes from ".."
 import stepsMobile from '../../../../mobile/components/steps'
-// utils
+// scenes utils
 import {setFullScreen, collisionDetection} from '../utils'
+// general utils
+import {requestTimeout} from '../../../../utils'
 //transition
 import {onEnterTimeout} from './transition'
 
@@ -82,7 +84,7 @@ export default class SceneFlashlight {
     this.dispatch(setUserIndicationDescription({userId: "player1", description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton"}))
     this.dispatch(setUserIndicationDescription({userId: "player2", description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton"}))
 
-    setTimeout(() => {
+    requestTimeout(() => {
       this.dispatch(setUserIndicationActive({
         userId: "player1",
         isActive: true

@@ -166,7 +166,7 @@ class ConnexionStep extends Component {
       <div className="connexion-step step" ref={(ref) => this.ref = ref}>
 
         <p style={{
-          display: 'none',
+          // display: 'none',
           position: "absolute",
           margin: "0",
           top: "1rem",

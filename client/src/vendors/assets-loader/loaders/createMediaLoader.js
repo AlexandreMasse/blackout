@@ -19,7 +19,7 @@ module.exports = function createMediaLoader (type, createElement) {
         var finished = false;
         var media = createElement();
         var onLoaded = function onLoaded () {
-          if (finished) return;
+          // if (finished) return;
           finished = true;
           resolve(media);
         };

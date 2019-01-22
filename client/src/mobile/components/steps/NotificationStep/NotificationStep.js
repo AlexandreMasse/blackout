@@ -24,43 +24,42 @@ class NotificationStep extends Component {
   }
 
   showAlert = () => {
-    const alert = document.querySelector('.alert') 
     const notification = document.querySelector('.notification-step')
     const tl = new TimelineMax()
-    tl.to(alert, 0, {opacity:1}, "+=0.2")
-    tl.to(alert, 0, {opacity:0}, "+=0.2")
-    tl.to(alert, 0, {opacity:1}, "+=0.2")
-    tl.to(alert, 0, {opacity:0}, "+=0.2")
-    tl.to(alert, 0, {opacity:1}, "+=0.2")
-    tl.to(alert, 0, {opacity:0}, "+=0.2")
-    tl.to(alert, 0, {opacity:1}, "+=0.2")
-    tl.to(alert, 0, {opacity:0}, "+=0.2")
     tl.to(notification, .1, {opacity:1}, "+=0.5")
   }
 
   render() {
+    const {player1Status, player2Status, player} = this.props
+    const isPlayer1 = player === "player1"
+    const isPlayer2 = player === "player2"
+
     return (
-        <>
-        <div className="notification-step">
-            <span className="notification-step__title">Danger</span>
-            <div className="notification-step__wrapper">
-                <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src} />
-            </div>
-            
-            {/* <button className="notification-step__button button">
-                <span>{'> Partager l\'alerte <'}</span>
-            </button> */}
-        </div>
-        <div className="alert"/>
-        </>
+      <div className="notification-step">
+        <span className="notification-step__title">Danger {player} </span>
+          <div className="notification-step__wrapper">
+              <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src} />
+          </div>
+          {isPlayer1 && player1Status === 'superior' && <>
+        <button className="notification-step__button button">
+          <span>{'> Partager l\'alerte <'}</span>
+        </button>
+        </>}
+        {isPlayer2 && player2Status  === 'superior' && <>
+        <button className="notification-step__button button">
+          <span>{'> Partager l\'alerte <'}</span>
+         </button>
+        </>}
+      </div>    
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    player1Status: state.mobile.users.find(user => user.id === "player1").player1Status,
-    player2Status: state.mobile.users.find(user => user.id === "player2").player2Status,
+    player: state.mobile.userId,
+    player1Status: state.mobile.users.find(user => user.id === "player1").status,
+    player2Status: state.mobile.users.find(user => user.id === "player2").status,
     showDanger: state.mobile.showDanger
   }
 }

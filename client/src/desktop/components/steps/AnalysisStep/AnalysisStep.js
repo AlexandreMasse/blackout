@@ -10,6 +10,7 @@ import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAct
 
 import {TimelineMax} from 'gsap'
 
+import {requestTimeout} from '../../../../utils'
 //transition
 import {onEnterDelay} from './transition'
 
@@ -33,7 +34,7 @@ class AnalysisStep extends Component {
   endVideo = () => {
     this.video.addEventListener('ended',() => {
       this.video.style.opacity = 0
-      setTimeout(() => {
+      requestTimeout(() => {
         this.props.setCurrentStep(steps.SCENE.name)
         this.props.wsEmitCurrentStep(stepsMobile.NOTIFICATION.name)
       }, 800)

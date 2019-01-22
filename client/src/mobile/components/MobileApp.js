@@ -49,10 +49,7 @@ class MobileApp extends Component {
       console.log(`Progress: ${ev.progress}`)
     }).then(assets => {
       window.assets = assets
-      setTimeout(() => {
         this.props.setAppLoaded()
-        // this.reconnect()
-      }, 1000)
     })
   }
 

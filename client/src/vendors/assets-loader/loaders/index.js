@@ -3,6 +3,7 @@ const createFileLoader = require('./createFileLoader');
 const loadImage = require('./loadImage');
 const loadGltf = require('./loadGltf');
 const loadHDR = require('./loadHDR');
+const loadVideo = require('./loadVideo');
 
 module.exports = [
   // json
@@ -54,5 +55,12 @@ module.exports = [
     key: 'hdr',
     match: /\.hdr$/i,
     load: loadHDR
-  }
+  },
+  
+  // VIDEO
+  // {
+  //   key: 'videos',
+  //   match: /\.mp4$/i,
+  //   load: loadVideo
+  // }
 ];

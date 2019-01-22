@@ -49,13 +49,14 @@ class DesktopApp extends Component {
 
   assetLoaded = () => {
     load.any(assetsToLoad, ev => {
+      console.log(ev)
       console.log(`Progress: ${ev.progress}`)
     }).then(assets => {
       window.assets = assets
       console.log(assets)
-      setTimeout(() => {
+      // setTimeout(() => {
         this.props.setAppLoaded()
-      }, 500)
+      // }, 500)
     })
   }
 

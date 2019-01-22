@@ -1,5 +1,6 @@
 export { isXs } from './isXs'
 export { isMobile } from './isMobile'
+export { requestTimeout, clearRequestTimeout } from './requestTimeout'
 export { getCookie } from './getCookie'
 export { getPhoneData } from './getPhoneData'
 export { default as toggleFullscreen } from './toggleFullscreen'
