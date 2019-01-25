@@ -69,9 +69,9 @@ export default class SceneKinematic {
     showDanger = () => {
         this.isDanger = false
         this.video.addEventListener('timeupdate', () => { 
-            if(this.video.currentTime > 2) {
+            if (this.video.currentTime > 17) {
                 const showDanger = true
-                if(!this.isDanger) {
+                if (!this.isDanger) {
                     this.dispatch(wsEmitShowDanger({showDanger}))
                     this.isDanger = true
                 }
@@ -80,11 +80,6 @@ export default class SceneKinematic {
     }
 
     update() {
-        // const currentTime = Math.round(this.video.currentTime)
-        // if(this.isPlaying && currentTime === 3 && this.isStop === false) {
-        //     this.pauseVideo()
-        //     this.isStop = true
-        // }
         // console.log("scene kinematic update");
     }
 

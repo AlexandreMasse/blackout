@@ -27,7 +27,7 @@ export default class SceneFlashlight {
     this.isMoving = false
     this.isMoving2 = false
     this.player1Collision = false
-    this.player2Collision = false
+    this.player2Collision = true
     this.init()
   }
 

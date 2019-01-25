@@ -54,9 +54,7 @@ class DesktopApp extends Component {
     }).then(assets => {
       window.assets = assets
       console.log(assets)
-      // setTimeout(() => {
         this.props.setAppLoaded()
-      // }, 500)
     })
   }
 
