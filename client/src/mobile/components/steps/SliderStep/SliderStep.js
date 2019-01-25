@@ -157,14 +157,6 @@ class SliderStep extends Component {
         return (
             <div className="slider-step">
                 <div className="slider-step__wrapper">
-                    <input 
-                        className="slider-step__input" 
-                        min="0"
-                        max="100"
-                        type="range"
-                        value={this.state.value}
-                        onChange={(e) => {console.log('trigger');this.setState({value: e.target.value})}}
-                    />
                      <div className="slider-step__outer outer" id="outer" ref={this.handleRef}>
                         <div className="slider-step__lock lock" id="lock"></div>
                         <div className="slider-step__mask mask"  /> 

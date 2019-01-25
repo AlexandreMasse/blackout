@@ -32,7 +32,7 @@ class MobileApp extends Component {
       this.props.wsEmitPhoneData(data)
     })
 
-    this.props.setCurrentStep(steps.SLIDER.name)
+    this.props.setCurrentStep(steps.INTRO.name)
     this.loadAssets()
 
     window.addEventListener('resize',this.handleResize)

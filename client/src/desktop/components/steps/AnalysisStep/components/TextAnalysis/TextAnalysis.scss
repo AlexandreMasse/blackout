@@ -5,6 +5,15 @@
     top: 30px;
     left: 30px;
 
+    .block--player__wrapper {
+        display: flex;
+        width: 50%;
+        justify-content: space-between;
+
+        .ndisplay {
+            visibility: hidden;
+        }
+    }
     &--right {
         left: auto;
         right:30px;
@@ -17,7 +26,5 @@
         .block--player {
             justify-content: flex-end;
         }
-
-        
     }
 }

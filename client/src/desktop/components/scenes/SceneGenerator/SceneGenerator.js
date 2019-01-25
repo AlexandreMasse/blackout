@@ -61,11 +61,13 @@ export default class SceneGenerator {
     this.brt = new PIXI.BaseRenderTexture(this.width, this.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
+    this.setFullScreen(this.generatorSprite, this.generatorSprite.width, this.generatorSprite.height)
+    // setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
+
   }
 
   initGenerator() {
     this.generatorSprite.y = this.generatorSprite.height / 2
-    this.setFullScreen(this.generatorSprite, this.generatorSprite.width, this.generatorSprite.height)
     this.generatorSprite.x = this.width / 2 - (this.generatorSprite.width / 2)
     }
 

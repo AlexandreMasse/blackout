@@ -30,7 +30,7 @@ export default class TextAnimation extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log("indication next ", nextProps.text);
+    // console.log("indication next ", nextProps.text);
     if(nextProps.text !== this.props.text) {
       console.log("test change")
       this.initWord()

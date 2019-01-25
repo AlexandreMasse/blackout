@@ -63,24 +63,37 @@ export default class TextAnalysis extends Component {
                     <p className="block-appear__item">/////////// ///////////</p>
                     <p className="block-appear__item uppercase">impact = notation</p>
                     <p className="block-appear__item">user({this.props.userId}).getscore = {this.props.userId === 'Player1' ? this.props.scoreUser1 : this.props.scoreUser2}</p>
-                    <p className="block-appear__item">------------------------------------------</p>
+                    <p className="block-appear__item">---------------------------------------------</p>
                     <div className="block block--player">
-                        <p className="block-appear__item">
-                            | PLAYER1 |
-                        </p>
-                        <p className="block-appear__item">
-                             PLAYER2 |
-                        </p>
+                        <div className="block--player__wrapper">
+                            <span>|</span>
+                                <p className="block-appear__item">
+                                    <span>PLAYER1</span>
+                                </p>
+                            <span className="ndisplay">|</span> 
+                        </div>
                         
+                        <div className="block--player__wrapper">
+                            <span>|</span>
+                                <p className="block-appear__item">
+                                    <span>PLAYER2</span>
+                                </p>
+                            <span>|</span> 
+                        </div>
                     </div>
                     <div className="block block--player">
-                    |
-                    <span className="block-appear__value">{this.props.scoreUser1} </span>
-                    |
-                    <span className="block-appear__value"> {this.props.scoreUser2}</span>
-                    |
+                        <div className="block--player__wrapper">
+                            <span>|</span>
+                            <span className="block-appear__value">{this.props.scoreUser1} </span>
+                            <span className="ndisplay">|</span> 
+                        </div>
+                        <div className="block--player__wrapper">
+                            <span>|</span>
+                            <span className="block-appear__value">{this.props.scoreUser2} </span>
+                            <span>|</span>
+                        </div>
                     </div>
-                    <p className="block-appear__item">------------------------------------------</p>
+                    <p className="block-appear__item">---------------------------------------------</p>
                 </div>
             </div>
         )

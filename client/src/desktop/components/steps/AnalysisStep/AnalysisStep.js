@@ -45,6 +45,7 @@ class AnalysisStep extends Component {
     this.tl = new TimelineMax({
       delay: onEnterDelay
     })
+    this.tl.addLabel("analysis")
     this.tl.add(() => {this.playVideo()}, 0)
     this.tl.add(() => {this.blockAppear.start(0)}, 4)
     this.tl.add(() => {this.blockAppear.activeValue(0)}, 4.4)
@@ -60,8 +61,8 @@ class AnalysisStep extends Component {
     this.tl.add(() => {this.blockAppear.activeValue(5)}, 5.6)
     this.tl.add(() => {this.stopVideo()}, 5.6)
 
-    this.tl.add(() => {this.playVideo()}, 6.4)
-    this.tl.add(() => {this.blockAppear.removeblockActive()}, 6.8)
+    this.tl.add(() => {this.playVideo()}, 6.8)
+    this.tl.add(() => {this.blockAppear.removeblockActive()}, 7.2)
   }
   
   handleBlockAppear = (blockAppear) => {this.blockAppear = blockAppear}
