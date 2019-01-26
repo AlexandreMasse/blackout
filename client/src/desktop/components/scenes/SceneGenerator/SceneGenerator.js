@@ -2,7 +2,8 @@ import {AssetsManager} from "../../../../managers";
 import * as PIXI from "pixi.js";
 import * as dat from 'dat.gui'
 import {TweenMax} from 'gsap'
-import {map} from '../utils'
+import {map, setFullScreen} from '../utils'
+
 
 export default class SceneGenerator {
 
@@ -20,7 +21,7 @@ export default class SceneGenerator {
 
     if (this.newPlayer1SliderValue) {
       let value = parseInt(this.newPlayer1SliderValue, 10)
-      let mapValue  = map(value, 0, 100, 0, window.innerHeight * .6)
+      let mapValue  = map(value, 0, 100, 0, 648)
       TweenMax.to(this.fillbox, .1, {height:mapValue})
     }
 
@@ -29,7 +30,7 @@ export default class SceneGenerator {
 
     if (this.newPlayer2SliderValue) {
       let value2 = parseInt(this.newPlayer2SliderValue, 10)
-      let mapValue2  = map(value2, 0, 100, 0, window.innerHeight * .6)
+      let mapValue2  = map(value2, 0, 100, 0, 648)
       // console.log(mapValue2)
       TweenMax.to(this.fillbox2, .1, {height:mapValue2})
     }
@@ -55,39 +56,18 @@ export default class SceneGenerator {
 
     this.initFillBox()
     this.initFillBox2()
-    this.initGenerator()
+    // this.initGenerator()
     this.addToScene()
     // this.initGUI()
-    this.brt = new PIXI.BaseRenderTexture(this.width, this.height, PIXI.SCALE_MODES.LINEAR, 1)
+    this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
-    this.setFullScreen(this.generatorSprite, this.generatorSprite.width, this.generatorSprite.height)
-    // setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
-
+    setFullScreen(this.sprite, this.spriteSize.width, this.spriteSize.height)
   }
 
   initGenerator() {
     this.generatorSprite.y = this.generatorSprite.height / 2
     this.generatorSprite.x = this.width / 2 - (this.generatorSprite.width / 2)
-    }
-
-  setFullScreen = (bg, w, h) => {
-    let width = window.innerWidth * .78
-    let height = window.innerHeight
-
-    let imageRatio = w / h
-    let containerRatio = width / height
-    if(containerRatio > imageRatio) {
-        bg.height = bg.height / (bg.width / width)
-        bg.width = width
-        bg.position.x = 0
-        bg.position.y = (height - bg.height) / 2
-    } else {
-        bg.width = bg.width / (bg.height / height)
-        bg.height = height
-        bg.position.y = 0
-        bg.position.x = (width - bg.width) / 2
-    }
   }
 
   initFillBox() {
@@ -95,8 +75,8 @@ export default class SceneGenerator {
     this.fillbox.beginFill(0xE82E2E)
     this.fillbox.drawRect(0, 0, 140, 400)
     this.fillbox.endFill()
-    this.fillbox.x = (window.innerWidth / 2) - 140
-    this.fillbox.y = window.innerHeight * .6
+    this.fillbox.x = 785
+    this.fillbox.y = 648
     this.fillbox.height = 0
     this.fillbox.pivot.y = 400
   }
@@ -106,8 +86,8 @@ export default class SceneGenerator {
     this.fillbox2.beginFill(0xE82E2E)
     this.fillbox2.drawRect(0, 0, 140, 400)
     this.fillbox2.endFill()
-    this.fillbox2.x = (window.innerWidth / 2) 
-    this.fillbox2.y = window.innerHeight * .6
+    this.fillbox2.x = 985
+    this.fillbox2.y = 648
     this.fillbox2.height = 0
     this.fillbox2.pivot.y = 400
   }
@@ -117,17 +97,17 @@ export default class SceneGenerator {
     var customContainer = document.querySelector('.desktop-app')
     customContainer.appendChild(this.gui.domElement)
     const fillBoxPos = {
-      x: this.fillbox2.x,
-      y: this.fillbox2.y,
-      width: this.fillbox2.width,
-      height: this.fillbox2.height
+      x: this.fillbox.x,
+      y: this.fillbox.y,
+      width: this.fillbox.width,
+      height: this.fillbox.height
     }
 
     let fillBoxChanger = () => {
-        this.fillbox2.x = fillBoxPos.x
-        this.fillbox2.y = fillBoxPos.y
-        this.fillbox2.width = fillBoxPos.width
-        this.fillbox2.height = fillBoxPos.height
+        this.fillbox.x = fillBoxPos.x
+        this.fillbox.y = fillBoxPos.y
+        this.fillbox.width = fillBoxPos.width
+        this.fillbox.height = fillBoxPos.height
     }
 
     let f1 = this.gui.addFolder('Fill Box')
