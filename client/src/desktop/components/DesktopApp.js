@@ -4,7 +4,13 @@ import {connect} from 'react-redux'
 import { Provider } from 'react-redux'
 import configureStore from '../redux/store'
 import {wsEmitDeviceType} from '../redux/actions/websockets/websocketsAction'
-import {setAppLoaded, setCurrentStep, setUserIndicationOpen} from '../redux/actions/desktopAction'
+import {
+  setAppLoaded,
+  setCurrentScene,
+  setCurrentStep,
+  setUserIndicationActive,
+  setUserIndicationOpen
+} from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
@@ -14,20 +20,28 @@ import {StepManager} from "./managers";
 import steps from "./steps"
 //utils
 import {toggleFullscreen} from '../../utils'
+import classNames from "classnames"
 // style
 import './DesktopApp.scss'
+//scenes
+import scenes from "./scenes";
 
 
 class DesktopApp extends Component {
 
   constructor(props) {
     super(props)
+
     this.props.wsEmitDeviceType("desktop")
     this.props.setCurrentStep(steps.CONNEXION.name)
 
     window.addEventListener('resize', this.handleWindowResize)
     window.addEventListener('keydown', this.handleWindowKeydown)
     this.handleWindowResize()
+
+    this.state = {
+      showDevButton: true
+    }
   }
 
   handleWindowKeydown = (e) => {
@@ -66,9 +80,22 @@ class DesktopApp extends Component {
           <Loading/>
         ) : (
           <>
-          <Indication player={"player1"}/>
-          <Indication player={"player2"}/>
-          <StepManager currentStep={currentStep}/>
+            <p className={"dev-toggle"} onClick={() => {
+              this.setState({showDevButton: !this.state.showDevButton})
+            }}>TOGGLE DEV</p>
+            <div className={classNames("dev-button", {"show": this.state.showDevButton})}>
+
+              <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Step : analysis</p>
+              <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>Step : scene</p>
+              <p onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>Scene : flashlight</p>
+              <p onClick={() => this.props.setUserIndicationActive("player1", true)}>Indication : player 1 active</p>
+              <p onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
+              <p onClick={() => this.props.setUserIndicationOpen("player1", true)}>Indication : player 1 open</p>
+              <p onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
+            </div>
+            <Indication player={"player1"}/>
+            <Indication player={"player2"}/>
+            <StepManager currentStep={currentStep}/>
           </>
         )}
       </div>
@@ -88,6 +115,9 @@ const mapDispatchToProps = dispatch => {
     wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
     setAppLoaded: () => dispatch(setAppLoaded()),
     setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
+    setCurrentScene: (currentScene) => dispatch(setCurrentScene(currentScene)),
+    setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({userId, isActive})),
+    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen})),
   }
 }
 

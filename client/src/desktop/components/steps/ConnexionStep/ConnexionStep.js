@@ -165,50 +165,6 @@ class ConnexionStep extends Component {
     return (
       <div className="connexion-step step" ref={(ref) => this.ref = ref}>
 
-        <p style={{
-          // display: 'none',
-          position: "absolute",
-          margin: "0",
-          top: "1rem",
-          left: "10px",
-          zIndex: "100",
-          fontSize: "2rem",
-          cursor: "pointer"
-        }} onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Next step ></p>
-
-        <p style={{
-          display: 'none',
-          position: "absolute",
-          margin: "0",
-          top: "3rem",
-          left: "10px",
-          zIndex: "100",
-          fontSize: "2rem",
-          cursor: "pointer"
-        }} onClick={() => this.props.setUserIndicationActive("player1", true)}>Indication : player 1 active</p>
-
-        <p style={{
-          display: 'none',
-          position: "absolute",
-          margin: "0",
-          top: "5rem",
-          left: "10px",
-          zIndex: "100",
-          fontSize: "2rem",
-          cursor: "pointer"
-        }} onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
-
-        <p style={{
-          display: 'none',
-          position: "absolute",
-          margin: "0",
-          top: "7rem",
-          left: "10px",
-          zIndex: "100",
-          fontSize: "2rem",
-          cursor: "pointer"
-        }} onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
-
         <LottieAnimation autoplay={true} animationData={animations.HomeAbstrait} className={"home-abstrait"} />
 
         <input

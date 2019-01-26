@@ -7,4 +7,37 @@
   max-height: 100vh;
   overflow: hidden;
   font-variation-settings: $medium;
+
+
+  .dev-toggle {
+    color: green;
+    z-index: 100;
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 10px;
+    font-size: 2.3rem;
+    font-variation-settings: $bold;
+    cursor: pointer;
+  }
+
+  .dev-button {
+    display: none;
+    &.show {
+      display: flex;
+    }
+    position: absolute;
+    flex-direction: column;
+    top: 3rem;
+    left: 10px;
+    z-index: 100;
+
+    p {
+      color: $red;
+      margin: 4px 0;
+      font-size: 2.3rem;
+      cursor: pointer;
+    }
+  }
+
 }
