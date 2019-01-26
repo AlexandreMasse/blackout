@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js"
-import * as dat from 'dat.gui'
+// import * as dat from 'dat.gui'
 
 import {AssetsManager} from "../../../../managers"
-import {TweenMax, RoughEase} from 'gsap'
+import {TweenMax, RoughEase, TimelineMax} from 'gsap'
 //redux
 import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
@@ -28,6 +28,7 @@ export default class SceneFlashlight {
     this.isMoving2 = false
     this.player1Collision = false
     this.player2Collision = true
+    this.getUsersStatus()
     this.init()
   }
 
@@ -54,13 +55,22 @@ export default class SceneFlashlight {
       if (this.isOff2) {
         this.switchOnLight2()
       }
-      this.moveFlashLight2()
+      if (this.canMove2) {
+        this.moveFlashLight2()
+      }
     }
 
     //update store
     this.store = newStore
   }
 
+  getUsersStatus() {
+    this.statusUser1 = this.store.users.find(user => user.id === "player1").status
+    this.statusUser2 = this.store.users.find(user => user.id === "player2").status
+
+    console.log('status1', this.statusUser1)
+    console.log('status2', this.statusUser2)
+  }
 
   init() {
     console.log("scene flashlight init")
@@ -69,7 +79,6 @@ export default class SceneFlashlight {
     this.initBackgroundUser2()
     this.detectionBox()
     this.fillBox()
-    // this.player2Collision = true
     this.isDiscover = false
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1)
@@ -94,17 +103,17 @@ export default class SceneFlashlight {
         isActive: true
       }))
     }, onEnterTimeout * 1000)
-
   }
 
   switchOnLight() {
     this.canMove = false
     TweenMax.to(this.spriteFlashOff, .3, {alpha:0})
-    TweenMax.to(this.spriteBureau1, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau3, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
+ 
+    TweenMax.to(this.maskUSer[0].scale, .3, {x:1, y:1, delay:.3})
+    TweenMax.to(this.maskUSer[1].scale, .3, {x:1, y:1, delay:.3})
+    TweenMax.to(this.maskUSer[2].scale, .3, {x:1, y:1, delay:.3, onComplete: () => {
       this.canMove = true
-    }})
+    }}) 
     this.isOff = false
 
     this.dispatch(setUserIndicationOpen({
@@ -123,15 +132,15 @@ export default class SceneFlashlight {
   }
 
   switchOnLight2() {
+    this.canMove2 = false
     TweenMax.to(this.spriteFlashOff_2, .3, {alpha:0})
-    TweenMax.to(this.spriteBureau1_2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau2_2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau3_2, .6, {alpha:1, ease:RoughEase.ease.config({points:6, strength:5, clamp:true}), onComplete: () => {
-      console.log('finito 2')
+    TweenMax.to(this.maskUSer2[0].scale, .3, {x:1,y:1, delay:.3})
+    TweenMax.to(this.maskUSer2[1].scale, .3, {x:1,y:1, delay:.3})
+    TweenMax.to(this.maskUSer2[2].scale, .3, {x:1,y:1, delay:.3, onComplete: () => {
       this.canMove2 = true
     }})
-    this.isOff2 = false
 
+    this.isOff2 = false
     this.dispatch(setUserIndicationOpen({
       userId: "player2",
       isOpen: false
@@ -183,28 +192,73 @@ export default class SceneFlashlight {
   }
 
   nextScene() {
-
     this.dispatch(setUserIndicationActive({
       userId: "player1",
       isActive: false
     }))
+    
     this.dispatch(setUserIndicationActive({
       userId: "player2",
       isActive: false
     }))
 
-    TweenMax.to(this.spriteBureau1, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau3, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
-
-    TweenMax.to(this.spriteBureau1_2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau2_2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true})})
-    TweenMax.to(this.spriteBureau3_2, .8, {alpha:0, ease:RoughEase.ease.config({points:3, strength:5, clamp:true}),onComplete: () => {
+    const tl = new TimelineMax({
+      onComplete: () => {
         console.log('vers la scène suivante mané')
         const currentStep = stepsMobile.SLIDER.name
         this.dispatch(setCurrentScene(scenes.SCENEGENERATOR.name))
         this.dispatch(wsEmitCurrentStep({currentStep}))
-    }})
+      }
+    })
+
+    // sprite 1 user 1
+    tl.addLabel("sp1user1")
+    tl.to(this.spriteBureau1, 0, {alpha:0}, 0.2)
+    tl.to(this.spriteBureau1, 0, {alpha:1}, 0.4)
+    tl.to(this.spriteBureau1, 0, {alpha:0}, 0.6)
+    tl.to(this.spriteBureau1, 0, {alpha:1}, 0.8)
+    tl.to(this.spriteBureau1, 0, {alpha:0}, 1)
+
+    // sprite 2 user 1
+    tl.addLabel("sp2user1")
+    tl.to(this.spriteBureau2, 0, {alpha:0}, 0.2)
+    tl.to(this.spriteBureau2, 0, {alpha:1}, 0.4)
+    tl.to(this.spriteBureau2, 0, {alpha:0}, 0.6)
+    tl.to(this.spriteBureau2, 0, {alpha:1}, 0.8)
+    tl.to(this.spriteBureau2, 0, {alpha:0}, 1)
+
+
+    // sprite 3 user 1
+    tl.addLabel("sp3user1")
+    tl.to(this.spriteBureau3, 0, {alpha:0}, 0.2)
+    tl.to(this.spriteBureau3, 0, {alpha:1}, 0.4)
+    tl.to(this.spriteBureau3, 0, {alpha:0}, 0.6)
+    tl.to(this.spriteBureau3, 0, {alpha:1}, 0.8)
+    tl.to(this.spriteBureau3, 0, {alpha:0}, 1)
+
+    // sprite 1 user 2
+    tl.addLabel("sp1user2")
+    tl.to(this.spriteBureau1_2, 0, {alpha:0}, .2)
+    tl.to(this.spriteBureau1_2, 0, {alpha:1}, .4)
+    tl.to(this.spriteBureau1_2, 0, {alpha:0}, .6)
+    tl.to(this.spriteBureau1_2, 0, {alpha:1}, .8)
+    tl.to(this.spriteBureau1_2, 0, {alpha:0}, 1)
+
+    // sprite 2 user 2
+    tl.addLabel("sp2user2")
+    tl.to(this.spriteBureau2_2, 0, {alpha:0}, .2)
+    tl.to(this.spriteBureau2_2, 0, {alpha:1}, .4)
+    tl.to(this.spriteBureau2_2, 0, {alpha:0}, .6)
+    tl.to(this.spriteBureau2_2, 0, {alpha:1}, .8)
+    tl.to(this.spriteBureau2_2, 0, {alpha:0}, 1)
+
+    // sprite 3 user 2
+    tl.addLabel("sp3user2")
+    tl.to(this.spriteBureau3_2, 0, {alpha:0}, .2)
+    tl.to(this.spriteBureau3_2, 0, {alpha:1}, .4)
+    tl.to(this.spriteBureau3_2, 0, {alpha:0}, .6)
+    tl.to(this.spriteBureau3_2, 0, {alpha:1}, .8)
+    tl.to(this.spriteBureau3_2, 0, {alpha:0}, 1)
   }
 
   detectionBox() {
@@ -218,7 +272,6 @@ export default class SceneFlashlight {
     this.circleDetection.y = this.sceneWH.height / 2
     
     this.circleDetection.alpha = 0
-
 
     // CIRCLE DETECTION 2
     this.circleDetection_2 = new PIXI.Graphics()
@@ -247,19 +300,16 @@ export default class SceneFlashlight {
       x: this.currentPlayer1Position.x * (this.sceneWH.width * .5),
       y: this.currentPlayer1Position.y * (this.sceneWH.height * .5)
     }
-    // const mulplicator = 1
-    // const mulplicatorY = 1
-      let newPositionX = (player1Position.x) + (this.sceneWH.width / 2) 
-      let newPositionY = (player1Position.y) + (this.sceneWH.height / 2)
-      TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
-      TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
-      TweenMax.to(this.maskUSer[2], 0.1, {x:newPositionX, y:newPositionY})
-      
-      TweenMax.to(this.spriteFlashOff, 0.1, {x:newPositionX - (this.spriteFlashOff.width / 2), y:newPositionY - (this.spriteFlashOff.height / 2) })
-      TweenMax.to(this.circleDetection, 0.1, {x:newPositionX, y:newPositionY ,onComplete: () => {
-        this.isMoving = false 
-      }})
-   
+    let newPositionX = (player1Position.x) + (this.sceneWH.width / 2) 
+    let newPositionY = (player1Position.y) + (this.sceneWH.height / 2)
+    TweenMax.to(this.maskUSer[0], 0.1, {x:newPositionX, y:newPositionY})
+    TweenMax.to(this.maskUSer[1], 0.1, {x:newPositionX, y:newPositionY})
+    TweenMax.to(this.maskUSer[2], 0.1, {x:newPositionX, y:newPositionY})
+    
+    TweenMax.to(this.spriteFlashOff, 0.1, {x:newPositionX - (this.spriteFlashOff.width / 2), y:newPositionY - (this.spriteFlashOff.height / 2) })
+    TweenMax.to(this.circleDetection, 0.1, {x:newPositionX, y:newPositionY ,onComplete: () => {
+      this.isMoving = false 
+    }})
   }
 
   moveFlashLight2() {
@@ -268,8 +318,6 @@ export default class SceneFlashlight {
       x: this.currentPlayer2Position.x * (this.sceneWH.width * .5),
       y: this.currentPlayer2Position.y * (this.sceneWH.height * .5)
     }
-    // const mulplicator = 1
-    // const mulplicatorY = 1
     let newPositionX = (player2Position.x) + (this.sceneWH.width / 2)
     let newPositionY = (player2Position.y) + (this.sceneWH.height / 2)
 
@@ -305,9 +353,6 @@ export default class SceneFlashlight {
     this.spriteBureau3 = new PIXI.Sprite(tBureau3)
     this.spriteOutline = new PIXI.Sprite(tOutline)
 
-    this.spriteBureau1.alpha = 0
-    this.spriteBureau2.alpha = 0
-    this.spriteBureau3.alpha = 0
     this.spriteOutline.alpha = .2
 
     this.sceneWH = {
@@ -315,7 +360,7 @@ export default class SceneFlashlight {
       height: this.spriteBureau1.height
     }
 
-    this.initMaskUser()
+    this.initMaskUser(this.statusUser1)
     this.initFlashOff()
     this.outlineAnimation()
     // this.container.addChild(spriteOutline)
@@ -343,12 +388,9 @@ export default class SceneFlashlight {
     this.spriteBureau3_2 = new PIXI.Sprite(tBureau3)
     this.spriteOutline_2 = new PIXI.Sprite(tOutline)
 
-    this.spriteBureau1_2.alpha = 0
-    this.spriteBureau2_2.alpha = 0
-    this.spriteBureau3_2.alpha = 0
     this.spriteOutline_2.alpha = 0
 
-    this.initMaskUser2()
+    this.initMaskUser2(this.statusUser2)
     this.initFlashOff2()
     this.outlineAnimation2()
   }
@@ -373,12 +415,19 @@ export default class SceneFlashlight {
     this.spriteFlashOff_2.y = this.sceneWH.height / 2 - (this.spriteFlashOff_2.height / 2)
   }
 
-  initMaskUser() {
+  initMaskUser(statusUser1) {
     this.maskUSer = []
-    const maskRadius1 = 200
-    const maskRadius2 = 140
-    const maskRadius3 = 100
     
+    if (statusUser1 === 'superior') {
+      var maskRadius1 = 240
+      var maskRadius2 = 200
+      var maskRadius3 = 160
+    } else {
+      var maskRadius1 = 200
+      var maskRadius2 = 140
+      var maskRadius3 = 100
+    }
+   
     // CIRCLE MASK 1
     this.mask1 = new PIXI.Graphics()
     this.mask1.beginFill('0xffffff')
@@ -387,6 +436,9 @@ export default class SceneFlashlight {
 
     this.mask1.x = this.sceneWH.width / 2 - (this.sceneWH.width / 4)
     this.mask1.y = this.sceneWH.height / 2
+
+    this.mask1.scale.x = 0
+    this.mask1.scale.y = 0
 
     this.maskUSer.push(this.mask1)
     // CIRCLE MASK 2
@@ -398,6 +450,9 @@ export default class SceneFlashlight {
     this.mask2.x = this.sceneWH.width / 2 - (this.sceneWH.width / 4)
     this.mask2.y = this.sceneWH.height / 2
     
+    this.mask2.scale.x = 0
+    this.mask2.scale.y = 0
+
     this.maskUSer.push(this.mask2)
 
     // CIRCLE MASK 3
@@ -408,6 +463,10 @@ export default class SceneFlashlight {
 
     this.mask3.x = this.sceneWH.width / 2 - (this.sceneWH.width / 4)
     this.mask3.y = this.sceneWH.height / 2 
+
+    this.mask3.scale.x = 0
+    this.mask3.scale.y = 0
+
     this.maskUSer.push(this.mask3)
     
     // SET MASK TO SPRITE
@@ -417,11 +476,17 @@ export default class SceneFlashlight {
     this.spriteOutline.mask = this.mask1
   }
 
-  initMaskUser2() {
+  initMaskUser2(statusUser2) {
     this.maskUSer2 = []
-    const maskRadius1 = 240
-    const maskRadius2 = 200
-    const maskRadius3 = 160
+    if (statusUser2 === 'superior') {
+      var maskRadius1 = 240
+      var maskRadius2 = 200
+      var maskRadius3 = 160
+    } else {
+      var maskRadius1 = 200
+      var maskRadius2 = 140
+      var maskRadius3 = 100
+    }
     
     // CIRCLE MASK 1
     this.mask1_2 = new PIXI.Graphics()
@@ -431,6 +496,9 @@ export default class SceneFlashlight {
 
     this.mask1_2.x = this.sceneWH.width / 2 
     this.mask1_2.y = this.sceneWH.height / 2
+    
+    this.mask1_2.scale.x = 0
+    this.mask1_2.scale.y = 0
 
     this.maskUSer2.push(this.mask1_2)
     // CIRCLE MASK 2
@@ -441,6 +509,9 @@ export default class SceneFlashlight {
 
     this.mask2_2.x = this.sceneWH.width / 2 
     this.mask2_2.y = this.sceneWH.height / 2
+
+    this.mask2_2.scale.x = 0
+    this.mask2_2.scale.y = 0
     
     this.maskUSer2.push(this.mask2_2)
 
@@ -452,6 +523,9 @@ export default class SceneFlashlight {
 
     this.mask3_2.x = this.sceneWH.width / 2
     this.mask3_2.y = this.sceneWH.height / 2
+
+    this.mask3_2.scale.x = 0
+    this.mask3_2.scale.y = 0
 
     this.maskUSer2.push(this.mask3_2)
     
@@ -547,12 +621,7 @@ export default class SceneFlashlight {
 
     if (this.player1Collision && this.player2Collision) {
       if (!this.isDiscover) {
-        console.log('ok go go go')
         this.discoverAnimation()
-
-
-
-
       }
     } 
   }

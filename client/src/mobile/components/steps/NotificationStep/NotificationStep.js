@@ -36,7 +36,7 @@ class NotificationStep extends Component {
 
     return (
       <div className="notification-step">
-        <span className="notification-step__title">Danger {player} </span>
+        <span className="notification-step__title">Danger</span>
           <div className="notification-step__wrapper">
               <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src} />
           </div>
