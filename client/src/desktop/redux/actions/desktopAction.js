@@ -62,3 +62,10 @@ export const setUserIndicationDescription = (payload) => (dispatch, getState, {e
   payload
  })
 }
+
+export const setUserIndicationTheme = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_USER_INDICATION_THEME,
+  payload
+ })
+}

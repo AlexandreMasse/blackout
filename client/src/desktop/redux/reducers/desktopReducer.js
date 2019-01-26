@@ -45,6 +45,7 @@ const initialState = {
         isOpen: false,
         title: "Retrouver le générateur",
         description: "Description test",
+        theme: 'black'
       }
     },
     {
@@ -78,6 +79,7 @@ const initialState = {
         isOpen: false,
         title: "Retrouver le générateur",
         description: "Description test player 2",
+        theme: 'black'
       }
     }
   ],
@@ -207,6 +209,26 @@ export default (state = initialState, action) => {
               indication: {
                 ...user.indication,
                 description
+              }
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_USER_INDICATION_THEME: {
+      const {theme, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              indication: {
+                ...user.indication,
+                theme
               }
             }
           } else {

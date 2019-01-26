@@ -4,8 +4,11 @@ import * as PIXI from "pixi.js"
 import {AssetsManager} from "../../../../managers"
 import {TweenMax, RoughEase, TimelineMax} from 'gsap'
 //redux
-import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../redux/actions/desktopAction"
+import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen,
+  setUserIndicationTheme} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
+// components
+import {themes as IndicationThemes} from '../../components/Indication/Indication'
 //scenes
 import scenes from ".."
 import stepsMobile from '../../../../mobile/components/steps'
@@ -88,6 +91,8 @@ export default class SceneFlashlight {
     // this.initGUI()
 
     //indication
+    this.dispatch(setUserIndicationTheme({userId: "player1", theme: IndicationThemes.white}))
+    this.dispatch(setUserIndicationTheme({userId: "player2", theme: IndicationThemes.white}))
     this.dispatch(setUserIndicationTitle({userId: "player1", title: "Allumer votre lampe"}))
     this.dispatch(setUserIndicationTitle({userId: "player2", title: "Allumer votre lampe"}))
     this.dispatch(setUserIndicationDescription({userId: "player1", description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton"}))

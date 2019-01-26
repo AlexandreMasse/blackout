@@ -2,16 +2,23 @@
 
 .indication {
     position: fixed;
-    bottom: -17rem;
+    bottom: -22.5rem;
     z-index: 10;
-    color: white;
+
+    &.black {
+        color: black;
+    }
+
+    &.white {
+        color: white;
+    }
 
     &--left {
         left: 5.5vw;
         text-align: left;
 
         .indication__title__arrow {
-            right: 105%;
+            right: calc(100% + 1.5rem);
         }
 
         .indication__description {
@@ -24,7 +31,7 @@
         text-align: right;
         
         .indication__title__arrow {
-            left: 105%;
+            left: calc(100% + 1.5rem);
         }
 
         .indication__description {
@@ -36,15 +43,15 @@
         position: relative;
         margin-bottom: .2rem;
         text-transform: uppercase;
-        font-size: 2.4rem;
+        font-size: 3rem;
         font-variation-settings: $bold;
         height: 1.3em;
         
         &__arrow {
             position: absolute;
-            margin-right: .4rem;
             top: 50%;
-            transform: translateY(-57%);
+            transform: translateY(-60%);
+            font-size: 3rem;
 
             .arrow{
                 visibility: hidden;
@@ -60,9 +67,10 @@
     }
 
     &__description {
-        margin-bottom: 2.1rem;
+        margin-bottom: 2.5rem;
         margin-top: 0;
-        font-size: 1.8rem;
+        max-width: 50rem;
+        font-size: 2.4rem;
         width: 100%;
         font-variation-settings: $light;
         // animation
@@ -72,7 +80,7 @@
 
     &__iconContainer {
         display: inline-block;
-        width:8rem;
+        width:11rem;
 
         &__icon {
             width: 100%;
