@@ -17,7 +17,9 @@ export default class SceneGenerator {
     this.store = store
     this.needUpdate = true;
     this.player1Ready = false
+    // FOR DEBUG
     this.player2Ready = true
+    // FOR DEBUG
     this.isReady = true
     this.init()
   }

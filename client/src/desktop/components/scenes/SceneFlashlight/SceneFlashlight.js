@@ -30,7 +30,9 @@ export default class SceneFlashlight {
     this.isMoving = false
     this.isMoving2 = false
     this.player1Collision = false
+    // FOR DEBUG
     this.player2Collision = true
+    // FOR DEBUG
     this.getUsersStatus()
     this.init()
   }
