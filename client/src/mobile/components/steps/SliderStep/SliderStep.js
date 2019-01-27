@@ -6,6 +6,9 @@ import {connect} from 'react-redux'
 import {wsEmitSliderValue} from '../../../redux/actions/websockets/websocketsAction'
 // lib 
 import {TweenMax} from 'gsap'
+// assets
+import {AssetsManager} from "./../../../../managers"
+import {assetsToLoad} from "../../../assets/asset-list"
 // utils
 import {map, clamp} from '../../../../utils'
 //css
@@ -20,13 +23,15 @@ class SliderStep extends Component {
           }
     }
     componentDidUpdate(prevProps, prevState) {
-        if(this.state.value !== prevState.value) {
+        if (this.state.value !== prevState.value) {
             this.props.wsEmitSliderValue(this.state.value)
         }
     }
 
     handleRef = (ref) => {
+      if (ref) {
         this.initSlider(ref)
+      }
     }
 
     initSlider = (ref) => {
@@ -159,7 +164,7 @@ class SliderStep extends Component {
                 <div className="slider-step__wrapper">
                      <div className="slider-step__outer outer" id="outer" ref={this.handleRef}>
                         <div className="slider-step__lock lock" id="lock"></div>
-                        <div className="slider-step__mask mask"  /> 
+                        <div className="slider-step__mask mask"   style={ { backgroundImage: `url(${ AssetsManager.get(assetsToLoad.trame.name).src})` } }  /> 
                     </div>
                 </div>
             </div>

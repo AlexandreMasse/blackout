@@ -51,7 +51,7 @@ class LottieAnimation extends Component {
 
     this.totalFrames = this.animation.totalFrames
 
-    console.log(this.animation);
+    // console.log(this.animation);
 
     this.setSpeed()
   }

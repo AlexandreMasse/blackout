@@ -4,12 +4,21 @@ import * as dat from 'dat.gui'
 import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../utils'
 
+// redux
+import {setCurrentScene} from "../../../redux/actions/desktopAction"
+import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
+//scenes
+import scenes from ".."
+
 export default class SceneGenerator {
 
   constructor({dispatch, store}) {
+    this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
-
+    this.player1Ready = false
+    this.player2Ready = true
+    this.isReady = true
     this.init()
   }
 
@@ -22,6 +31,7 @@ export default class SceneGenerator {
       let value = parseInt(this.newPlayer1SliderValue, 10)
       let mapValue  = map(value, 0, 100, 0, 648)
       TweenMax.to(this.fillbox, .1, {height:mapValue})
+      this.player1Ready = value === 100 ? true : false 
     }
 
     this.currentPlayer2SliderValue = this.store.users.find(user => user.id === "player2").sliderValue
@@ -30,8 +40,15 @@ export default class SceneGenerator {
     if (this.newPlayer2SliderValue) {
       let value2 = parseInt(this.newPlayer2SliderValue, 10)
       let mapValue2  = map(value2, 0, 100, 0, 648)
-      // console.log(mapValue2)
       TweenMax.to(this.fillbox2, .1, {height:mapValue2})
+      this.player2Ready = value2 === 100 ? true : false 
+    }
+
+    if (this.player1Ready && this.player2Ready) {
+      if(this.isReady) {
+        this.nextScene()
+      }
+      this.isReady = false
     }
     //update store
     this.store = newStore
@@ -55,7 +72,6 @@ export default class SceneGenerator {
 
     this.initFillBox()
     this.initFillBox2()
-    // this.initGenerator()
     this.initNumberSpriteSheet()
     this.initTraitSpriteSheet()
     this.initSinSpriteShet()
@@ -69,12 +85,10 @@ export default class SceneGenerator {
   }
 
   nextScene() {
-
-  }
-
-  initGenerator() {
-    this.generatorSprite.y = this.generatorSprite.height / 2
-    this.generatorSprite.x = this.width / 2 - (this.generatorSprite.width / 2)
+    console.log('LETTT GOOOO')
+    const currentStep = null
+    this.dispatch(setCurrentScene(scenes.SCENEKINEMATIC2.name))
+    this.dispatch(wsEmitCurrentStep({currentStep}))
   }
 
   initNumberSpriteSheet() {

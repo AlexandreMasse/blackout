@@ -15,7 +15,6 @@ var loadVideo = function (opt) {
                 var blob = this.response
                 var video = document.createElement('video')
                 video.src = window.URL.createObjectURL(blob)
-                console.log('ALLLEZ LAAAA')
                 resolve(video)
             }
         }

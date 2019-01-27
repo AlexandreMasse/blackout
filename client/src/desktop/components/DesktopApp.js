@@ -63,11 +63,9 @@ class DesktopApp extends Component {
 
   assetLoaded = () => {
     load.any(assetsToLoad, ev => {
-      console.log(ev)
-      console.log(`Progress: ${ev.progress}`)
     }).then(assets => {
       window.assets = assets
-      console.log(assets)
+      // console.log(assets)
         this.props.setAppLoaded()
     })
   }

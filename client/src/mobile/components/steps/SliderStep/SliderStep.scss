@@ -45,9 +45,12 @@
         // }
     }
     &__mask {
-        background: $white;
+        background-color: $white;
+        background-position: 50% 50%;
+        background-size:35px; 
         position: absolute;
-        width: calc(100%);
+        width: calc(100% + 1.5px);
+        margin-left: -.5px;
         height: 100%;
         clip-path: inset(100% 0px 0px 0px);
     }

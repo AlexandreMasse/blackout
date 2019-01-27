@@ -8,6 +8,9 @@ import {onEnter as onEnterSceneGenerator, onExit as onExitSceneGenerator} from '
 import {default as SceneKinematic} from './SceneKinematic/SceneKinematic'
 import {onEnter as onEnterSceneKinematic, onExit as onExitSceneKinematic} from './SceneKinematic/transition'
 
+import {default as SceneKinematic2} from './SceneKinematic2/SceneKinematic2'
+import {onEnter as onEnterSceneKinematic2, onExit as onExitSceneKinematic2} from './SceneKinematic/transition'
+
 export default {
   SCENEFLASHLIGHT: {
     name:"SCENEFLASHLIGHT",
@@ -26,6 +29,12 @@ export default {
     scene: SceneKinematic,
     onEnter: onEnterSceneKinematic,
     onExit: onExitSceneKinematic,
+  },
+  SCENEKINEMATIC2: {
+    name:"SCENEKINEMATIC2",
+    scene: SceneKinematic2,
+    onEnter: onEnterSceneKinematic2,
+    onExit: onExitSceneKinematic2,
   },
 }
 

@@ -1,6 +1,7 @@
 
 import bureauItem from './img/bureauItem.jpg'
 import cinematique from './videos/cinematique.mp4'
+import cinematiquePorte from './videos/porte.mp4'
 import analyse from './videos/analyse.mp4'
 import bureau1 from './img/bureau_1.png'
 import bureau2 from './img/bureau_2.png'
@@ -35,6 +36,7 @@ import middlePointImg from './spritesheet/generator/24fps/gen-03.png'
 export const assetsToLoad = {
     bureauItem: { url: bureauItem,  type: 'image'},
     cinematique: { url: cinematique, name:'cinematique', type:'video'},
+    cinematiquePorte: { url: cinematiquePorte, name:'cinematiquePorte', type:'video'},
     analyse: { url: analyse, name:'analyse' ,type:'video'},
     bureau1: { url: bureau1, name:'bureau2', type: 'image'},
     bureau2: { url: bureau2, name:'bureau1', type: 'image'},
