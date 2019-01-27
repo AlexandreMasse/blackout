@@ -1,0 +1,79 @@
+{"frames": {
+
+"Generateur5fps-03_00000.png":
+{
+	"frame": {"x":1,"y":1,"w":44,"h":37},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":37},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00001.png":
+{
+	"frame": {"x":1,"y":40,"w":44,"h":38},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":38},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00002.png":
+{
+	"frame": {"x":1,"y":80,"w":44,"h":37},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":37},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00003.png":
+{
+	"frame": {"x":1,"y":119,"w":44,"h":35},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":35},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00004.png":
+{
+	"frame": {"x":1,"y":156,"w":44,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":32},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00005.png":
+{
+	"frame": {"x":1,"y":190,"w":44,"h":34},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":34},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00006.png":
+{
+	"frame": {"x":1,"y":226,"w":44,"h":38},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":38},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur5fps-03_00007.png":
+{
+	"frame": {"x":1,"y":266,"w":44,"h":36},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":920,"y":71,"w":44,"h":36},
+	"sourceSize": {"w":1920,"h":1080}
+}},
+"animations": {
+	"Generateur5fps-03": ["Generateur5fps-03_00000.png","Generateur5fps-03_00001.png","Generateur5fps-03_00002.png","Generateur5fps-03_00003.png","Generateur5fps-03_00004.png","Generateur5fps-03_00005.png","Generateur5fps-03_00006.png","Generateur5fps-03_00007.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "gen-03.png",
+	"format": "RGBA8888",
+	"size": {"w":46,"h":303},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e3c1e29b9d09a52615eede660103666c:32734c9460d385495fea1deaed472ace:8f353b0f7ebb4b6c58771912919ad71b$"
+}
+}

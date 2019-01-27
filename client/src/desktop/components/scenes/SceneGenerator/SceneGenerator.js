@@ -59,8 +59,11 @@ export default class SceneGenerator {
     this.initFillBox2()
     // this.initGenerator()
     this.initNumberSpriteSheet()
+    this.initTraitSpriteSheet()
+    this.initSinSpriteShet()
+    this.initPointSpritesheet()
     this.addToScene()
-    // this.initGUI()
+    this.initGUI()
     this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
@@ -73,12 +76,86 @@ export default class SceneGenerator {
   }
 
   initNumberSpriteSheet() {
-    PIXI.loader
-    .add(spritesheet)
-    .load((t) => {
-      console.log(t)
-      // let sheet = PIXI.loader.resources["images/spritesheet.json"]; 
-      // console.log(sheet)
+    const topNumber = AssetsManager.get('topNumber')
+    topNumber.parse(() => {
+      let textures = Object.keys(topNumber.textures).map((t) => topNumber.textures[t])
+      this.topNumberAnim = new PIXI.extras.AnimatedSprite(textures)
+      this.topNumberAnim.animationSpeed = (5/60)
+      this.topNumberAnim.play()
+    })
+    
+    const rightNumber = AssetsManager.get('rightNumber')
+    rightNumber.parse(() => {
+      let textures = Object.keys(rightNumber.textures).map((t) => rightNumber.textures[t])
+      this.rightNumberAnim = new PIXI.extras.AnimatedSprite(textures)
+      this.rightNumberAnim.animationSpeed = (5/60)
+      this.rightNumberAnim.play()
+    })
+
+  }
+
+  initTraitSpriteSheet() {
+    const trait1Spritesheet = AssetsManager.get('trait1')
+    const trait2Spritesheet = AssetsManager.get('trait2')
+    const trait3Spritesheet = AssetsManager.get('trait3')
+
+    trait1Spritesheet.parse(() => {
+      let textures = Object.keys(trait1Spritesheet.textures).map((t) => trait1Spritesheet.textures[t])
+      this.trait1anim = new PIXI.extras.AnimatedSprite(textures)
+      this.trait1anim.animationSpeed = (5/60)
+      this.trait1anim.play()
+    })
+
+    trait2Spritesheet.parse(() => {
+      let textures = Object.keys(trait2Spritesheet.textures).map((t) => trait2Spritesheet.textures[t])
+      this.trait2anim = new PIXI.extras.AnimatedSprite(textures)
+      this.trait2anim.animationSpeed = (5/60)
+      this.trait2anim.play()
+    })
+
+    trait3Spritesheet.parse(() => {
+      let textures = Object.keys(trait3Spritesheet.textures).map((t) => trait3Spritesheet.textures[t])
+      this.trait3anim = new PIXI.extras.AnimatedSprite(textures)
+      this.trait3anim.animationSpeed = (5/60)
+      this.trait3anim.play()
+    })
+  }
+
+  initSinSpriteShet() {
+    const sinSpritesheet = AssetsManager.get('sinAnim')
+
+    sinSpritesheet.parse(() => {
+      let textures = Object.keys(sinSpritesheet.textures).map((t) => sinSpritesheet.textures[t])
+      this.sinanim = new PIXI.extras.AnimatedSprite(textures)
+      this.sinanim.animationSpeed = (6/60)
+      this.sinanim.play()
+    })
+  }
+
+  initPointSpritesheet() {
+    const topPointSpritesheet = AssetsManager.get('topPoint')
+    const circleSpritesheet = AssetsManager.get('circle')
+    const middlePointSpritesheet = AssetsManager.get('middlePoint')
+
+    topPointSpritesheet.parse(() => {
+      let textures = Object.keys(topPointSpritesheet.textures).map((t) => topPointSpritesheet.textures[t])
+      this.topPointanim = new PIXI.extras.AnimatedSprite(textures)
+      this.topPointanim.animationSpeed = (24/60)
+      this.topPointanim.play()
+    })
+    
+    circleSpritesheet.parse(() => {
+      let textures = Object.keys(circleSpritesheet.textures).map((t) => circleSpritesheet.textures[t])
+      this.circleanim = new PIXI.extras.AnimatedSprite(textures)
+      this.circleanim.animationSpeed = (24/60)
+      this.circleanim.play()
+    })
+
+    middlePointSpritesheet.parse(() => {
+      let textures = Object.keys(middlePointSpritesheet.textures).map((t) => middlePointSpritesheet.textures[t])
+      this.middlePointanim = new PIXI.extras.AnimatedSprite(textures)
+      this.middlePointanim.animationSpeed = (24/60)
+      this.middlePointanim.play()
     })
   }
 
@@ -128,6 +205,17 @@ export default class SceneGenerator {
     f1.add(fillBoxPos, 'width', 0, 200, 0.1).onChange(fillBoxChanger)
     f1.add(fillBoxPos, 'height', 0, 2000, 0.1).onChange(fillBoxChanger)
 
+
+    const topNumber = {
+      animationSpeed: this.topNumberAnim.animationSpeed,
+    }
+
+    let topNumberChanger = () => {
+        this.topNumberAnim.animationSpeed = topNumber.speed      
+    }
+
+    let f2 = this.gui.addFolder('Top Number Animation')
+    f2.add(topNumber, 'animationSpeed', 0, 1, 0.1).onChange(topNumberChanger)
     this.gui.close()
   }
 
@@ -135,6 +223,15 @@ export default class SceneGenerator {
     this.container.addChild(this.fillbox)
     this.container.addChild(this.fillbox2)
     this.container.addChild(this.generatorSprite)
+    this.container.addChild(this.topNumberAnim)
+    this.container.addChild(this.rightNumberAnim)
+    this.container.addChild(this.trait1anim)
+    this.container.addChild(this.trait2anim)
+    this.container.addChild(this.trait3anim)
+    this.container.addChild(this.sinanim)
+    this.container.addChild(this.topPointanim)
+    this.container.addChild(this.middlePointanim)
+    this.container.addChild(this.circleanim)
   }
 
   update() {

@@ -8,11 +8,30 @@ import bureau3 from './img/bureau_3.png'
 import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 import generator from './img/generator.png'
-import generator2 from './img/generator-transparent.png'
-import spritesheet from './spritesheet/generator/generator_top-numbers.json'
-import spritesheetImg from './spritesheet/generator/generator_top-numbers.png'
+// SPRITE SHEET GENERATOR 5FPS
+import trait1 from './spritesheet/generator/5fps/gen-01.json'
+import trait1Img from './spritesheet/generator/5fps/gen-01.png'
+import trait2 from './spritesheet/generator/5fps/gen-02.json'
+import trait2Img from './spritesheet/generator/5fps/gen-02.png'
+import trait3 from './spritesheet/generator/5fps/gen-03.json'
+import trait3Img from './spritesheet/generator/5fps/gen-03.png'
+import topNumber from './spritesheet/generator/5fps/gen-04.json'
+import topNumberImg from './spritesheet/generator/5fps/gen-04.png'
+import rightNumber from './spritesheet/generator/5fps/gen-05.json'
+import rightNumberImg from './spritesheet/generator/5fps/gen-05.png'
 
-console.log(spritesheetImg)
+// SPRITE SHEET GENERATOR 6FPS
+import sinAnim from './spritesheet/generator/6fps/gen-01.json'
+import sinAnimImg from './spritesheet/generator/6fps/gen-01.png'
+
+// SPRITE SHEET GENERATOR 24FPS
+import topPoint from './spritesheet/generator/24fps/gen-01.json'
+import topPointImg from './spritesheet/generator/24fps/gen-01.png'
+import circle from './spritesheet/generator/24fps/gen-02.json'
+import circleImg from './spritesheet/generator/24fps/gen-02.png'
+import middlePoint from './spritesheet/generator/24fps/gen-03.json'
+import middlePointImg from './spritesheet/generator/24fps/gen-03.png'
+
 export const assetsToLoad = {
     bureauItem: { url: bureauItem,  type: 'image'},
     cinematique: { url: cinematique, name:'cinematique', type:'video' },
@@ -23,6 +42,13 @@ export const assetsToLoad = {
     outline: { url: outline, name:'outline', type: 'image'},
     flashoff: { url: flashoff, name:'flashoff', type: 'image'},
     generator: { url: generator, name:'generator', type: 'image'},
-    generator2: { url: generator2, name:'generator2', type: 'image'},
-    spritesheet: { url: spritesheetImg, spritesheet: spritesheet, name:'spritesheet', type: 'spritesheet'},
+    trait1: { url: trait1Img, spritesheet: trait1, name:'spritesheet', type: 'spritesheet'},
+    trait2: { url: trait2Img, spritesheet: trait2, name:'spritesheet', type: 'spritesheet'},
+    trait3: { url: trait3Img, spritesheet: trait3, name:'spritesheet', type: 'spritesheet'},
+    topNumber: { url: topNumberImg, spritesheet: topNumber, name:'spritesheet', type: 'spritesheet'},
+    rightNumber: { url: rightNumberImg, spritesheet: rightNumber, name:'spritesheet', type: 'spritesheet'},
+    topPoint: { url: topPointImg, spritesheet: topPoint, name:'spritesheet', type: 'spritesheet'},
+    sinAnim: { url: sinAnimImg, spritesheet: sinAnim, name:'spritesheet', type: 'spritesheet'},
+    circle: { url: circleImg, spritesheet: circle, name:'spritesheet', type: 'spritesheet'},
+    middlePoint: { url: middlePointImg, spritesheet: middlePoint, name:'spritesheet', type: 'spritesheet'},
 }
