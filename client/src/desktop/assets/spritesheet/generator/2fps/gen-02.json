@@ -1,0 +1,31 @@
+{"frames": {
+
+"Generateur2fps-02_00000.png":
+{
+	"frame": {"x":1,"y":1,"w":96,"h":61},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1082,"y":492,"w":96,"h":61},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"Generateur2fps-02_00001.png":
+{
+	"frame": {"x":99,"y":1,"w":96,"h":61},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1082,"y":492,"w":96,"h":61},
+	"sourceSize": {"w":1920,"h":1080}
+}},
+"animations": {
+	"Generateur2fps-02": ["Generateur2fps-02_00000.png","Generateur2fps-02_00001.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Gen_02.png",
+	"format": "RGBA8888",
+	"size": {"w":196,"h":63},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1b3910d44482628cda84c349832331bc:8ed88536d7e2df465eba220cfc6e18d8:48e829bd82500afb677d16eceb65e54c$"
+}
+}

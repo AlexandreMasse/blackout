@@ -9,6 +9,14 @@ import bureau3 from './img/bureau_3.png'
 import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 import generator from './img/generator.png'
+
+
+// SPRITE SHEET GENERATOR 2FPS
+import button1 from './spritesheet/generator/2fps/gen-01.json'
+import button1Img from './spritesheet/generator/2fps/gen-01.png'
+import button2 from './spritesheet/generator/2fps/gen-02.json'
+import button2Img from './spritesheet/generator/2fps/gen-02.png'
+
 // SPRITE SHEET GENERATOR 5FPS
 import trait1 from './spritesheet/generator/5fps/gen-01.json'
 import trait1Img from './spritesheet/generator/5fps/gen-01.png'
@@ -20,6 +28,8 @@ import topNumber from './spritesheet/generator/5fps/gen-04.json'
 import topNumberImg from './spritesheet/generator/5fps/gen-04.png'
 import rightNumber from './spritesheet/generator/5fps/gen-05.json'
 import rightNumberImg from './spritesheet/generator/5fps/gen-05.png'
+import button3 from './spritesheet/generator/5fps/gen-06.json'
+import button3Img from './spritesheet/generator/5fps/gen-06.png'
 
 // SPRITE SHEET GENERATOR 6FPS
 import sinAnim from './spritesheet/generator/6fps/gen-01.json'
@@ -53,4 +63,7 @@ export const assetsToLoad = {
     sinAnim: { url: sinAnimImg, spritesheet: sinAnim, name:'spritesheet', type: 'spritesheet'},
     circle: { url: circleImg, spritesheet: circle, name:'spritesheet', type: 'spritesheet'},
     middlePoint: { url: middlePointImg, spritesheet: middlePoint, name:'spritesheet', type: 'spritesheet'},
+    button1: { url: button1Img, spritesheet: button1, name:'spritesheet', type: 'spritesheet'},
+    button2: { url: button2Img, spritesheet: button2, name:'spritesheet', type: 'spritesheet'},
+    button3: { url: button3Img, spritesheet: button3, name:'spritesheet', type: 'spritesheet'},
 }

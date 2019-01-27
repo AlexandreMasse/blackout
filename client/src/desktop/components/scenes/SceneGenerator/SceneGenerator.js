@@ -47,7 +47,7 @@ export default class SceneGenerator {
     }
 
     if (this.player1Ready && this.player2Ready) {
-      if(this.isReady) {
+      if (this.isReady) {
         this.nextScene()
       }
       this.isReady = false
@@ -78,6 +78,7 @@ export default class SceneGenerator {
     this.initTraitSpriteSheet()
     this.initSinSpriteShet()
     this.initPointSpritesheet()
+    this.initButtonSpritesheet()
     this.addToScene()
     this.initGUI()
     this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
@@ -87,7 +88,6 @@ export default class SceneGenerator {
   }
 
   nextScene() {
-    console.log('LETTT GOOOO')
     const currentStep = null
     this.dispatch(setCurrentScene(scenes.SCENEKINEMATIC2.name))
     this.dispatch(wsEmitCurrentStep({currentStep}))
@@ -177,6 +177,33 @@ export default class SceneGenerator {
     })
   }
 
+  initButtonSpritesheet() {
+    const button1Spritesheet = AssetsManager.get('button1')
+    const button2Spritesheet = AssetsManager.get('button2')
+    const button3Spritesheet = AssetsManager.get('button3')
+
+    button1Spritesheet.parse(() => {
+      let textures = Object.keys(button1Spritesheet.textures).map((t) => button1Spritesheet.textures[t])
+      this.button1anim = new PIXI.extras.AnimatedSprite(textures)
+      this.button1anim.animationSpeed = (2/60)
+      this.button1anim.play()
+    })
+    
+    button2Spritesheet.parse(() => {
+      let textures = Object.keys(button2Spritesheet.textures).map((t) => button2Spritesheet.textures[t])
+      this.button2anim = new PIXI.extras.AnimatedSprite(textures)
+      this.button2anim.animationSpeed = (2/60)
+      this.button2anim.play()
+    })
+
+    button3Spritesheet.parse(() => {
+      let textures = Object.keys(button3Spritesheet.textures).map((t) => button3Spritesheet.textures[t])
+      this.button3anim = new PIXI.extras.AnimatedSprite(textures)
+      this.button3anim.animationSpeed = (5/60)
+      this.button3anim.play()
+    })
+  }
+
   initFillBox() {
     this.fillbox = new PIXI.Graphics()
     this.fillbox.beginFill(0xE82E2E)
@@ -250,6 +277,9 @@ export default class SceneGenerator {
     this.container.addChild(this.topPointanim)
     this.container.addChild(this.middlePointanim)
     this.container.addChild(this.circleanim)
+    this.container.addChild(this.button1anim)
+    this.container.addChild(this.button2anim)
+    this.container.addChild(this.button3anim)
   }
 
   update() {
