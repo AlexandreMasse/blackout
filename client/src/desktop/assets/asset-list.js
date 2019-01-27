@@ -34,7 +34,7 @@ import middlePointImg from './spritesheet/generator/24fps/gen-03.png'
 
 export const assetsToLoad = {
     bureauItem: { url: bureauItem,  type: 'image'},
-    cinematique: { url: cinematique, name:'cinematique', type:'video' },
+    cinematique: { url: cinematique, name:'cinematique', type:'video'},
     analyse: { url: analyse, name:'analyse' ,type:'video'},
     bureau1: { url: bureau1, name:'bureau2', type: 'image'},
     bureau2: { url: bureau2, name:'bureau1', type: 'image'},

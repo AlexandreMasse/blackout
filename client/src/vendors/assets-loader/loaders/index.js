@@ -4,7 +4,7 @@ const createFileLoader = require('./createFileLoader');
 const loadImage = require('./loadImage');
 const loadGltf = require('./loadGltf');
 const loadHDR = require('./loadHDR');
-// const loadVideo = require('./loadVideo');
+const loadVideo = require('./loadVideo');
 
 module.exports = [
   // json
@@ -28,10 +28,6 @@ module.exports = [
   // audio
   createMediaLoader('audio', function () {
     return new window.Audio();
-  }),
-  // video
-  createMediaLoader('video', function () {
-    return document.createElement('video')
   }),
   // binary
   {
@@ -65,9 +61,9 @@ module.exports = [
   },
   
   // VIDEO
-  // {
-  //   key: 'videos',
-  //   match: /\.mp4$/i,
-  //   load: loadVideo
-  // }
+  {
+    key: 'video',
+    // match: /\.mp4$/i,
+    load: loadVideo
+  }
 ];

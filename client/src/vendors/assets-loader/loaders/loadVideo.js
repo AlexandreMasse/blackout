@@ -1,21 +1,28 @@
-var PIXI = require('pixi.js')
-const loader = PIXI.loader
-
 module.exports = function (opt) {
-console.log('OUIUUU',opt)
-  return loadVideo(opt).then((vid) => {
-      return vid
-  })
-};
+    return loadVideo(opt).then((video) => {
+        return video
+    })
+}
 
 var loadVideo = function (opt) {
-    console.log('OUIUUU',opt)
-
     return new Promise(function (resolve, reject) {
-        loader.add(opt.name, opt.url)
-        .load((loader, resources) => {
-            // console.log(resources[opt.name].data)
-            resolve(resources[opt.name].data)
-        })
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", opt.url)
+
+        xhr.onload = function() {
+            if (this.status == 200) {
+                var blob = this.response
+                var video = document.createElement('video')
+                video.src = window.URL.createObjectURL(blob)
+                console.log('ALLLEZ LAAAA')
+                resolve(video)
+            }
+        }
+        xhr.onerror = function(e) {
+            reject("Error " + e.target.status + " occurred while receiving the document.")
+        }
+
+        xhr.send()
     })
 }

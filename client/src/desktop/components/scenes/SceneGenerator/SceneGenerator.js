@@ -3,8 +3,6 @@ import * as PIXI from "pixi.js";
 import * as dat from 'dat.gui'
 import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../utils'
-import spritesheet from '../../../assets/spritesheet/generator/generator_top-numbers.json'
-
 
 export default class SceneGenerator {
 
@@ -68,6 +66,10 @@ export default class SceneGenerator {
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
     setFullScreen(this.sprite, this.spriteSize.width, this.spriteSize.height)
+  }
+
+  nextScene() {
+
   }
 
   initGenerator() {
