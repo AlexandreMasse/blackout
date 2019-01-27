@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import * as dat from 'dat.gui'
 import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../utils'
+import spritesheet from '../../../assets/spritesheet/generator/generator_top-numbers.json'
 
 
 export default class SceneGenerator {
@@ -57,6 +58,7 @@ export default class SceneGenerator {
     this.initFillBox()
     this.initFillBox2()
     // this.initGenerator()
+    this.initNumberSpriteSheet()
     this.addToScene()
     // this.initGUI()
     this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
@@ -68,6 +70,16 @@ export default class SceneGenerator {
   initGenerator() {
     this.generatorSprite.y = this.generatorSprite.height / 2
     this.generatorSprite.x = this.width / 2 - (this.generatorSprite.width / 2)
+  }
+
+  initNumberSpriteSheet() {
+    PIXI.loader
+    .add(spritesheet)
+    .load((t) => {
+      console.log(t)
+      // let sheet = PIXI.loader.resources["images/spritesheet.json"]; 
+      // console.log(sheet)
+    })
   }
 
   initFillBox() {

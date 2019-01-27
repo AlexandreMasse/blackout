@@ -1,4 +1,5 @@
 const createMediaLoader = require('./createMediaLoader');
+const loadSpriteSheet = require('./loadSpriteSheet');
 const createFileLoader = require('./createFileLoader');
 const loadImage = require('./loadImage');
 const loadGltf = require('./loadGltf');
@@ -55,6 +56,12 @@ module.exports = [
     key: 'hdr',
     match: /\.hdr$/i,
     load: loadHDR
+  },
+
+  // SPRITE SHEET
+  {
+    key: 'spritesheet',
+    load: loadSpriteSheet
   },
   
   // VIDEO
