@@ -1,6 +1,7 @@
 var THREE = require('three');
-var DRACOLoader = require('./DRACOLoader');
+var DRACOLoader = require('./DRACOLoader')
 var DDSLoader = require('./DDSLoader')
+var BufferGeometryUtils  = require("./helpers/BufferGeometryUtils")
 // import BufferGeometryUtils from "../helpers/BufferGeometryUtils"
 /* eslint-disable */
 /**

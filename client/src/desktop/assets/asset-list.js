@@ -9,7 +9,7 @@ import bureau3 from './img/bureau_3.png'
 import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 import generator from './img/generator.png'
-import stairs from './obj/Escalier2701.gltf'
+import stairs from './obj/Escalier2701.glb'
 
 // SPRITE SHEET GENERATOR 2FPS
 import button1 from './spritesheet/generator/2fps/gen-01.json'
@@ -44,6 +44,7 @@ import middlePoint from './spritesheet/generator/24fps/gen-03.json'
 import middlePointImg from './spritesheet/generator/24fps/gen-03.png'
 
 export const assetsToLoad = {
+    stairs: { url: stairs, type: 'gltf'},
     bureauItem: { url: bureauItem,  type: 'image'},
     cinematique: { url: cinematique, name:'cinematique', type:'video'},
     cinematiquePorte: { url: cinematiquePorte, name:'cinematiquePorte', type:'video'},

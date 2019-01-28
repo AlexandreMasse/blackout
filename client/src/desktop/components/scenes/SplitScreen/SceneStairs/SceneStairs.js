@@ -22,7 +22,6 @@ export default class SceneGenerator {
 
   init() {
     console.log("scene stairs init")
-
     let width = window.innerWidth
     let height = window.innerHeight
     this.container = new PIXI.Container()
