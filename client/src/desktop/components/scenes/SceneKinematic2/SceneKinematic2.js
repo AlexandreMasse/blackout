@@ -56,9 +56,9 @@ export default class SceneKinematic2 {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
                 const currentStep = null
+                this.dispatch(setUserCurrentScene({userId:'player1', curentScene:scenes.SCENESTAIRS.name}))
+                this.dispatch(setUserCurrentScene({userId:'player2', curentScene:scenes.SCENESTAIRS.name}))
                 this.dispatch(setSplitScreen({isSplitScreen: true}))
-                this.dispatch(setUserCurrentScene({userId:'player1',curentScene:scenes.SCENESTAIRS.name,}))
-                this.dispatch(setUserCurrentScene({userId:'player2',curentScene:scenes.SCENESTAIRS.name,}))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
         })

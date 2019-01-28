@@ -5,7 +5,9 @@ import * as PIXI from "pixi.js";
 
 export default class SceneGenerator {
 
-  constructor({dispatch, store}) {
+  constructor({dispatch, store, player}) {
+    this.player = player
+    console.log('YO LES PLAYER',this.player)
     this.store = store
     this.needUpdate = true;
     
