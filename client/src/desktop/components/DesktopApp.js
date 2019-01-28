@@ -9,7 +9,9 @@ import {
   setCurrentScene,
   setCurrentStep,
   setUserIndicationActive,
-  setUserIndicationOpen
+  setUserIndicationOpen,
+  setSplitScreen,
+  setUserCurrentScene
 } from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
@@ -85,11 +87,20 @@ class DesktopApp extends Component {
 
               <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Step : analysis</p>
               <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>Step : scene</p>
+              <p onClick={() => {
+                this.props.setSplitScreen(true)
+                this.props.setUserCurrentScene("player1", scenes.SCENESTAIRS.name)
+                this.props.setUserCurrentScene("player2", scenes.SCENESTAIRS.name)
+              }}>SplitScreen : true</p>
               <p onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>Scene : flashlight</p>
+              <p onClick={() => this.props.setCurrentScene(scenes.SCENEKINEMATIC2.name)}>Scene : kinematic 2</p>
+              <p onClick={() => this.props.setUserCurrentScene("player1", scenes.SCENESTAIRS.name)}>Player 1 Scene : stair</p>
+              <p onClick={() => this.props.setUserCurrentScene("player2", scenes.SCENESTAIRS.name)}>Player 2 Scene : stair</p>
               <p onClick={() => this.props.setUserIndicationActive("player1", true)}>Indication : player 1 active</p>
               <p onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
               <p onClick={() => this.props.setUserIndicationOpen("player1", true)}>Indication : player 1 open</p>
               <p onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
+
             </div>
             <Indication player={"player1"}/>
             <Indication player={"player2"}/>
@@ -116,6 +127,8 @@ const mapDispatchToProps = dispatch => {
     setCurrentScene: (currentScene) => dispatch(setCurrentScene(currentScene)),
     setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({userId, isActive})),
     setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen})),
+    setUserCurrentScene: (userId, currentScene) => dispatch(setUserCurrentScene({userId, currentScene})),
+    setSplitScreen: (isSplitScreen) => dispatch(setSplitScreen({isSplitScreen})),
   }
 }
 

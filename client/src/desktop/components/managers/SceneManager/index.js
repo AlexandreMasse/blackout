@@ -152,6 +152,8 @@ class SceneManager extends Component {
       prevProps.currentScene.length !== this.props.currentScene.length ||
       prevProps.currentScene[1] !== this.props.currentScene[1]
     ) {
+      console.log(">>>>", this.props.currentScene);
+      console.log(">>>>", this.props.currentScene[1]);
       this.changeScene(this.props.currentScene[1], 1)
     }
   }

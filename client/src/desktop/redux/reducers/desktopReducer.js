@@ -38,7 +38,7 @@ const initialState = {
         },
         "score": 12.43252921697582
       },
-      currentScene: scenes.SCENEKINEMATIC.name,
+      currentScene: scenes.SCENEFLASHLIGHT.name,
       introProgression: 0,
       indication: {
         isActive: false,
@@ -72,7 +72,7 @@ const initialState = {
         },
         "score": 15.43252921697582
       },
-      currentScene: scenes.SCENEKINEMATIC.name,
+      currentScene: scenes.SCENEFLASHLIGHT.name,
       introProgression: 0,
       indication: {
         isActive: false,
