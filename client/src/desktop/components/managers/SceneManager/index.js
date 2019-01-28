@@ -73,7 +73,6 @@ class SceneManager extends Component {
         }
       }
     })
-
   }
 
   onWindowResize = () => {
@@ -82,7 +81,6 @@ class SceneManager extends Component {
   }
 
   changeScene(nextScene, index) {
-
     // check to prevent split screen activation error
     //if current scene index exist do transition
     if(this.currentSceneObjectArray[index]) {
@@ -107,7 +105,6 @@ class SceneManager extends Component {
       // then go to next scene
       this.nextScene(nextScene, index)
     }
-
   }
 
   nextScene = (nextScene, index) => {
@@ -122,8 +119,6 @@ class SceneManager extends Component {
     this.currentSceneInstanceArray[index].sprite.destroy()
     this.currentSceneInstanceArray[index] = this.nextSceneInstanceArray[index]
     this.nextSceneInstanceArray[index] = null
-
-
   }
 
   updateStore = (store) => {

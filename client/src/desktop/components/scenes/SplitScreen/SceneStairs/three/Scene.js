@@ -21,14 +21,10 @@ export default class Scene {
         this.scene = new THREE.Scene()
         this.camera = this.gltf.cameras[0]
         this.scene.background = new THREE.Color('#000000')
-        this.renderer = new THREE.WebGLRenderer( { antialias: true } )
+        this.renderer = new THREE.WebGLRenderer( { antialias: false } )
         this.renderer.setPixelRatio( window.devicePixelRatio )
         this.renderer.setSize( window.innerWidth, window.innerHeight )
         this.clock = new THREE.Clock()
-        // this.renderer.toneMapping = THREE.LinearToneMapping
-        // this.renderer.toneMappingExposure = 1
-        // this.renderer.gammaOutput = true
-
         this.renderer.setAnimationLoop( this.update.bind(this) )
     }
 
