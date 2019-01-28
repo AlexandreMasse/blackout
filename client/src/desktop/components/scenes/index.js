@@ -9,7 +9,10 @@ import {default as SceneKinematic} from './SceneKinematic/SceneKinematic'
 import {onEnter as onEnterSceneKinematic, onExit as onExitSceneKinematic} from './SceneKinematic/transition'
 
 import {default as SceneKinematic2} from './SceneKinematic2/SceneKinematic2'
-import {onEnter as onEnterSceneKinematic2, onExit as onExitSceneKinematic2} from './SceneKinematic/transition'
+import {onEnter as onEnterSceneKinematic2, onExit as onExitSceneKinematic2} from './SceneKinematic2/transition'
+
+import {default as SceneStairs} from './SplitScreen/SceneStairs/SceneStairs'
+import {onEnter as onEnterSceneStairs, onExit as onExitSceneStairs} from './SplitScreen/SceneStairs/transition'
 
 export default {
   SCENEFLASHLIGHT: {
@@ -35,6 +38,12 @@ export default {
     scene: SceneKinematic2,
     onEnter: onEnterSceneKinematic2,
     onExit: onExitSceneKinematic2,
+  },
+  SCENESTAIRS: {
+    name:"SCENESTAIRS",
+    scene: SceneStairs,
+    onEnter: onEnterSceneStairs,
+    onExit: onExitSceneStairs,
   },
 }
 

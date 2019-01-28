@@ -8,7 +8,6 @@ import {setCurrentScene} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
 import scenes from ".."
-import stepsMobile from '../../../../mobile/components/steps'
 
 export default class SceneKinematic2 {
 
@@ -18,7 +17,7 @@ export default class SceneKinematic2 {
         this.needUpdate = true
 
         this.init()
-
+        this.endVideo()
     }
 
     //required
@@ -56,8 +55,8 @@ export default class SceneKinematic2 {
     endVideo = () => {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
-                const currentStep = stepsMobile.CURSOR.name
-                this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
+                const currentStep = null
+                this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
         })

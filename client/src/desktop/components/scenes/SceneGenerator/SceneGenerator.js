@@ -80,7 +80,7 @@ export default class SceneGenerator {
     this.initPointSpritesheet()
     this.initButtonSpritesheet()
     this.addToScene()
-    this.initGUI()
+    // this.initGUI()
     this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)

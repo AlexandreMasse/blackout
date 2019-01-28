@@ -41,6 +41,7 @@ class SceneStep extends Component {
         <div className={"scene-step__menu"}>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>SCENE FLASHLIGHT</button>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENEGENERATOR.name)}>SCENE GENERATOR</button>
+          <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENESTAIRS.name)}>SCENE STAIRS</button>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setSplitScreen(true)}>Enable split screen</button>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setSplitScreen(false)}>Disable split screen</button>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setUserCurrentScene("player1", scenes.SCENE1.name)}>PLAYER 1 : SCENE 1</button>
