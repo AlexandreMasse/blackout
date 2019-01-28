@@ -8,14 +8,20 @@ class SceneManager extends Component {
 
   constructor(props) {
     super(props)
+
+    this.players = [
+      "player1",
+      "player2",
+    ]
+
     this.scenesArray = Object.keys(scenes).map(i => scenes[i])
 
     this.currentSceneObjectArray = props.currentScene.map(currentScene => {
       return this.scenesArray.find(scene => scene.name === currentScene);
     })
 
-    this.currentSceneInstanceArray = this.currentSceneObjectArray.map(currentSceneObject => {
-      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store})
+    this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
+      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index]})
     })
 
     this.nextSceneObjectArray = [null, null];
@@ -33,7 +39,7 @@ class SceneManager extends Component {
     let width = parentRef.clientWidth
     let height = parentRef.clientHeight
 
-    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000, antialias: true,})
+    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000, antialias: true})
 
     parentRef.appendChild(this.app.view)
 
@@ -95,7 +101,8 @@ class SceneManager extends Component {
       this.currentSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === this.props.currentScene[index])
       this.currentSceneInstanceArray[index] = new this.currentSceneObjectArray[index].scene({
         dispatch: this.props.dispatch,
-        store: this.props.store
+        store: this.props.store,
+        player: this.players[index]
       })
       // then go to next scene
       this.nextScene(nextScene, index)
@@ -105,9 +112,10 @@ class SceneManager extends Component {
 
   nextScene = (nextScene, index) => {
     const {dispatch, store} = this.props
+    const player = this.players[index]
 
     this.nextSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === nextScene);
-    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store})
+    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player})
     this.app.stage.addChild(this.nextSceneInstanceArray[index].sprite)
     this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {
     })
