@@ -9,7 +9,7 @@ import bureau3 from './img/bureau_3.png'
 import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 import generator from './img/generator.png'
-import stairs from './obj/Escalier2701.glb'
+import stairs from './obj/Escalier2801.glb'
 
 // SPRITE SHEET GENERATOR 2FPS
 import button1 from './spritesheet/generator/2fps/gen-01.json'

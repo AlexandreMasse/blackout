@@ -17,7 +17,7 @@ const initialState = {
     {
       id: "player1",
       isConnected: false,
-      status: null,
+      status: "inferior",
       position: null,
       sliderValue: null,
       phoneData: {
@@ -51,7 +51,7 @@ const initialState = {
     {
       id: "player2",
       isConnected: false,
-      status: null,
+      status: "superior",
       position: null,
       sliderValue: null,
       phoneData: {

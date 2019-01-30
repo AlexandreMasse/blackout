@@ -143,7 +143,7 @@ class IntroStep extends Component {
           Step suivant
         </button>
         <div className='intro-step__infos'>
-          <video width="80%" autoPlay loop muted ref={(ref) => this.video = ref}>
+          <video width="80%" autoPlay playsInline loop muted ref={(ref) => this.video = ref}>
             <source src={logotype} type="video/mp4"/>
           </video>
           <p className='intro-step__infos__paragraph'>

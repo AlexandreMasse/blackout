@@ -4,7 +4,7 @@ import {AssetsManager} from "../../../../managers"
 import {setFullScreen} from '../utils'
 // general utils
 import {requestTimeout} from '../../../../utils'
-import {setCurrentScene, setSplitScreen, setUserCurrentScene} from "../../../redux/actions/desktopAction"
+import { setCurrentScene ,setSplitScreen, setUserCurrentScene} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
 import scenes from ".."
@@ -56,9 +56,10 @@ export default class SceneKinematic2 {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
                 const currentStep = null
-                this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENESTAIRS.name}))
-                this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
-                this.dispatch(setSplitScreen({isSplitScreen: true}))
+                // this.dispatch(setSplitScreen({isSplitScreen: true}))
+                // this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
+                this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
+                // this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENESTAIRS1.name}))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
         })

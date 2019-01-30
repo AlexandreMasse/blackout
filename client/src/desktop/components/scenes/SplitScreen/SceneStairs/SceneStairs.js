@@ -3,15 +3,15 @@ import Scene from './three/Scene'
 // import {AssetsManager} from "../../../../managers";
 import * as PIXI from "pixi.js";
 
-export default class SceneGenerator {
+export default class SceneStairs {
 
   constructor({dispatch, store, player}) {
     this.player = player
-    console.log('YO LES PLAYER',this.player)
     this.store = store
-    this.needUpdate = true;
-    
-    this.initSceneThree()
+    this.needUpdate = true
+    this.status = this.store.users.find(user => user.id === this.player).status
+    // console.log('YO LE PLAYER',this.player, ' Ton status est :', this.status)
+
     this.init()
   }
 
@@ -20,12 +20,14 @@ export default class SceneGenerator {
     //update store
     console.log("updateStore", newStore);
     this.store = newStore
+    // this.sceneThree.initEvent()
   }
 
   init() {
     console.log("scene stairs init")
     let width = window.innerWidth
     let height = window.innerHeight
+    this.initSceneThree()
     this.container = new PIXI.Container()
     this.THREE_TEXTURE = PIXI.BaseTexture.fromCanvas(this.sceneThree.renderer.domElement, PIXI.SCALE_MODES.LINEAR) 
     this.bg = new PIXI.Sprite.from(new PIXI.Texture(this.THREE_TEXTURE))
@@ -36,9 +38,13 @@ export default class SceneGenerator {
     this.rt = new PIXI.RenderTexture(this.brt)
     
     this.sprite = new PIXI.Sprite(this.rt)
+    // this.sprite.x = this.player === 'player1' ? -350 : 350 
   }
+  
   initSceneThree() {
-    this.sceneThree = new Scene() 
+    this.sceneThree = new Scene(this.status) 
+    // this.scenePlayer1 = this.sceneThree.sceneplayer1()
+    // this.scenePlayer2 = this.sceneThree.sceneplayer2()
   }
 
   addToScene() {
