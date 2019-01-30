@@ -25,11 +25,18 @@ export const onEnter = (html) => {
 }
 
 
+//exit
+
+export const onExitDuration = 1
+export const onExitDelay = 0.2
+export const onExitTimeout = onExitDuration + onExitDelay
+
 export const onExit = (html) => {
 
-  TweenMax.fromTo(html, 3, {
+  TweenMax.fromTo(html, onExitDuration, {
     opacity: 1,
-  },{
+  }, {
+    delay: onExitDelay,
     opacity: 0
   })
 }

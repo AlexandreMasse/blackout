@@ -1,0 +1,17 @@
+@import "../../../../stylesheets/global";
+
+.stairs-step {
+  
+  .left, .right {
+    height: 100%;
+    width: 50%;
+  }
+
+  .left {
+    background-color: rgba(232, 46, 46, 0.25);
+  }
+
+  .right {
+    background-color: rgba(0, 0, 255, 0.25);
+  }
+}

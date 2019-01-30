@@ -1,20 +1,53 @@
 import React from 'react'
 
-import {default as IntroStep} from './IntroStep/IntroStep'
-import {onEnter as IntroStepOnEnter, onExit as IntroStepOnExit, onEnterTimeout as IntroStepOnEnterTimeout, onExitTimeout as IntroStepOnExitTimeout} from './IntroStep/transition'
+import { default as IntroStep} from './IntroStep/IntroStep'
+import {
+  onEnter as IntroStepOnEnter,
+  onExit as IntroStepOnExit,
+  onEnterTimeout as IntroStepOnEnterTimeout,
+  onExitTimeout as IntroStepOnExitTimeout
+} from './IntroStep/transition'
 
 import {default as LunchStep} from './LunchStep/LunchStep'
-import {onEnter as LunchStepOnEnter, onExit as LunchStepOnExit} from './LunchStep/transition'
+import {
+  onEnter as LunchStepOnEnter,
+  onExit as LunchStepOnExit,
+  onEnterTimeout as LunchStepOnEnterTimeout,
+  onExitTimeout as LunchStepOnExitTimeout
+} from './LunchStep/transition'
 
 
 import {default as CursorStep} from './CursorStep/CursorStep'
-import {onEnter as CursorStepOnEnter, onExit as CursorStepOnExit} from './CursorStep/transition'
+import {
+  onEnter as CursorStepOnEnter,
+  onExit as CursorStepOnExit,
+  onEnterTimeout as CursorStepOnEnterTimeout,
+  onExitTimeout as CursorStepOnExitTimeout
+} from './CursorStep/transition'
 
 import {default as NotificationStep} from './NotificationStep/NotificationStep'
-import {onEnter as NotificationStepOnEnter, onExit as NotificationStepOnExit} from './NotificationStep/transition'
+import {
+  onEnter as NotificationStepOnEnter,
+  onExit as NotificationStepOnExit,
+  onEnterTimeout as NotificationStepOnEnterTimeout,
+  onExitTimeout as NotificationStepOnExitTimeout
+} from './NotificationStep/transition'
 
 import {default as SliderStep} from './SliderStep/SliderStep'
-import {onEnter as SliderStepOnEnter, onExit as SliderStepOnExit} from './SliderStep/transition'
+import {
+  onEnter as SliderStepOnEnter,
+  onExit as SliderStepOnExit,
+  onEnterTimeout as SliderStepOnEnterTimeout,
+  onExitTimeout as SliderStepOnExitTimeout
+} from './SliderStep/transition'
+
+import {default as StairsStep} from './StairsStep/StairsStep'
+import {
+  onEnter as StairsStepOnEnter,
+  onExit as StairsStepOnExit,
+  onEnterTimeout as StairsStepOnEnterTimeout,
+  onExitTimeout as StairsStepOnExitTimeout
+} from './StairsStep/transition'
 
 
 export default {
@@ -22,7 +55,7 @@ export default {
     name: 'INTRO',
     component: <IntroStep/>,
     classNames: "",
-    timeout: {enter: IntroStepOnEnterTimeout * 1000, exit: IntroStepOnExitTimeout * 1000},
+    timeout: {enter: IntroStepOnEnterTimeout, exit: IntroStepOnExitTimeout},
     onEnter: IntroStepOnEnter,
     onExit: IntroStepOnExit
   },
@@ -30,7 +63,7 @@ export default {
     name: 'LUNCH',
     component: <LunchStep/>,
     classNames: "",
-    timeout: {enter: 1000, exit: 1000},
+    timeout: {enter: LunchStepOnEnterTimeout, exit: LunchStepOnExitTimeout},
     onEnter: LunchStepOnEnter,
     onExit: LunchStepOnExit
   },
@@ -38,7 +71,7 @@ export default {
     name: 'NOTIFICATION',
     component: <NotificationStep/>,
     classNames: "",
-    timeout: {enter: 2000, exit: 1000},
+    timeout: {enter: NotificationStepOnEnterTimeout, exit: NotificationStepOnExitTimeout},
     onEnter: NotificationStepOnEnter,
     onExit: NotificationStepOnExit
   },
@@ -46,7 +79,7 @@ export default {
     name: 'CURSOR',
     component: <CursorStep/>,
     classNames: "",
-    timeout: {enter: 2000, exit: 1000},
+    timeout: {enter: CursorStepOnEnterTimeout, exit: CursorStepOnExitTimeout},
     onEnter: CursorStepOnEnter,
     onExit: CursorStepOnExit
   },
@@ -54,8 +87,16 @@ export default {
     name: 'SLIDER',
     component: <SliderStep/>,
     classNames: "",
-    timeout: {enter: 2000, exit: 1000},
+    timeout: {enter: SliderStepOnEnterTimeout, exit: SliderStepOnExitTimeout},
     onEnter: SliderStepOnEnter,
     onExit: SliderStepOnExit
+  },
+  STAIRS: {
+    name: 'STAIRS',
+    component: <StairsStep/>,
+    classNames: "",
+    timeout: {enter: StairsStepOnEnterTimeout, exit: StairsStepOnExitTimeout},
+    onEnter: StairsStepOnEnter,
+    onExit: StairsStepOnExit
   }
 }

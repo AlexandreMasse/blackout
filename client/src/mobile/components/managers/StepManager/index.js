@@ -16,7 +16,13 @@ class StepManager extends Component {
       <CSSTransition
           key={step.name}
           in={step.name === this.props.currentStep}
-          timeout={step.timeout}
+          timeout={(() => {
+            const timeout = {}
+            Object.keys(step.timeout).map((key) => {
+              timeout[key] = step.timeout[key] * 1000;
+            });
+            return timeout
+          })()}
           classNames={step.classNames}
           appear={true}
           mountOnEnter={true}
