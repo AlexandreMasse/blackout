@@ -20,6 +20,7 @@ const initialState = {
       status: "inferior",
       position: null,
       sliderValue: null,
+      tapValue: null,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 7,
@@ -54,6 +55,7 @@ const initialState = {
       status: "superior",
       position: null,
       sliderValue: null,
+      tapValue: null,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 8,
@@ -337,6 +339,23 @@ export default (state = initialState, action) => {
             return {
               ...user,
               sliderValue
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_TAP_VALUE: {
+      const {tapValue, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              tapValue
             }
           } else {
             return user;

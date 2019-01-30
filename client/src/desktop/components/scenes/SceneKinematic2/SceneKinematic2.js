@@ -8,6 +8,7 @@ import { setCurrentScene ,setSplitScreen, setUserCurrentScene} from "../../../re
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 //scenes
 import scenes from ".."
+import stepsMobile from '../../../../mobile/components/steps'
 
 export default class SceneKinematic2 {
 
@@ -55,7 +56,7 @@ export default class SceneKinematic2 {
     endVideo = () => {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
-                const currentStep = null
+                const currentStep = stepsMobile.STAIRS.name
                 // this.dispatch(setSplitScreen({isSplitScreen: true}))
                 // this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
                 this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))

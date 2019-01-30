@@ -32,8 +32,8 @@ export default class Scene {
     }
 
     setAnimation() {
-        this.maxSpeed = this.status === 'superior' ? .8 : .5
-        this.timing = this.status === 'superior' ? .5 : .8
+        this.maxSpeed = this.status === 'superior' ? 1 : .8
+        this.timing = this.status === 'superior' ? .8 : .6
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
         this.mixer.timeScale = 0
         var clips = this.gltf.animations        
@@ -48,13 +48,11 @@ export default class Scene {
         this.scene.add(this.gltf.scene)
     }
 
-    initEvent() {
-        document.addEventListener('click', () => {
-            TweenMax.fromTo(this.mixer, this.timing, {
-                timeScale: this.maxSpeed,
-              },{
-                timeScale: 0
-              })
+    moveCamera() {
+        TweenMax.fromTo(this.mixer, this.timing, {
+            timeScale: this.maxSpeed,
+        }, {
+            timeScale: 0
         })
     }
     

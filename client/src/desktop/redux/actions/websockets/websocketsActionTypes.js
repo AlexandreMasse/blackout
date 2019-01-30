@@ -10,6 +10,7 @@ export const websocketsOnActionTypes = {
     WEBSOCKET_ON_DISCONNECT_TO_ROOM: "disconnectToRoom",
     WEBSOCKET_ON_POSITION: "position",
     WEBSOCKET_ON_SLIDER_VALUE: "sliderValue",
+    WEBSOCKET_ON_TAP_VALUE: "tapValue",
     WEBSOCKET_ON_PHONE_DATA: "phoneData",
     WEBSOCKET_ON_INTRO_PROGRESSION: "introProgression",
 }

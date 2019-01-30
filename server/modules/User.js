@@ -120,6 +120,15 @@ export default class User {
         })
     }
 
+    tap = (io, socket) => {
+        socket.on('tapValue', (data) => {
+            io.to(socket.room).emit('tapValue', {
+                tapValue: data.tapValue,
+                userId: socket.username
+            })
+        })
+    }
+
     introProgression = (io,socket) => {
         socket.on('introProgression', (data) => {
             io.to(socket.room).emit('introProgression', {

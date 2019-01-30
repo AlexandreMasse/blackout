@@ -1,20 +1,39 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import {wsEmitPosition} from '../../../redux/actions/websockets/websocketsAction'
+import {wsEmitTapValue} from '../../../redux/actions/websockets/websocketsAction'
 
 //css
 import './StairsStep.scss'
 
 class StairsStep extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      tap: null
+      }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.tap !== prevState.tap) {
+      this.props.wsEmitTapValue(this.state.tap)
+    }
+  }
+
+  handleClick = (value) => {
+    // e.preventDefault()
+    this.setState({tap: value})
+  }
+
   render() {
 
     return (
       <div className="stairs-step" ref={(ref) => this.ref = ref}>
-        <div className="left">
+        <div className="left" onClick={() => this.handleClick('tapLeft')}>
 
         </div>
-        <div className="right">
+        <div className="right"  onClick={() => this.handleClick('tapRight')}>
 
         </div>
       </div>
@@ -29,7 +48,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //wsEmitPosition: (position) => dispatch(wsEmitPosition({position}))
+    wsEmitTapValue: (tapValue) => dispatch(wsEmitTapValue({tapValue}))
   }
 }
 

@@ -18,9 +18,23 @@ export default class SceneStairs {
   //required
   updateStore(newStore) {
     //update store
-    console.log("updateStore", newStore);
+
+    this.currentPlayer1TapValue = this.store.users.find(user => user.id === "player1").tapValue
+    this.newPlayer1TapValue = newStore.users.find(user => user.id === "player1").tapValue
+
+    if (this.newPlayer1TapValue) {
+      this.sceneThree.moveCamera()
+    }
+
+    this.currentPlayer2TapValue = this.store.users.find(user => user.id === "player2").tapValue
+    this.newPlayer2TapValue = newStore.users.find(user => user.id === "player2").tapValue
+
+    if (this.newPlayer2TapValue) {
+      this.sceneThree.moveCamera()    
+    }
+
+    // console.log("updateStore", newStore);
     this.store = newStore
-    // this.sceneThree.initEvent()
   }
 
   init() {
@@ -40,7 +54,7 @@ export default class SceneStairs {
     this.sprite = new PIXI.Sprite(this.rt)
     // this.sprite.x = this.player === 'player1' ? -350 : 350 
   }
-  
+
   initSceneThree() {
     this.sceneThree = new Scene(this.status) 
     // this.scenePlayer1 = this.sceneThree.sceneplayer1()
