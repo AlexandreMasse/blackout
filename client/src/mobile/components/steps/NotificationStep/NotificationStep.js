@@ -8,6 +8,10 @@ import {assetsToLoad} from "../../../assets/asset-list"
 import {TimelineMax} from 'gsap'
 //css
 import './NotificationStep.scss'
+import {
+  wsEmitShowDanger,
+} from "../../../redux/actions/websockets/websocketsAction";
+import {setCurrentStep, setPassword} from "../../../redux/actions/mobileAction";
 
 class NotificationStep extends Component {
 
@@ -16,52 +20,65 @@ class NotificationStep extends Component {
     this.props.handleRef(el)
   }
 
-  componentWillReceiveProps(nextprops) {
-    if (!this.props.showDanger && nextprops.showDanger ) {
-      console.log('ALLLLEEEERT')
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!prevProps.showDanger && this.props.showDanger ) {
       this.showAlert()
     }
   }
 
   showAlert = () => {
-    const notification = document.querySelector('.notification-step')
+    console.log("Show alert");
     const tl = new TimelineMax()
-    tl.to(notification, .1, {opacity:1}, "+=0.5")
+    tl.to(this.ref, 1, {opacity:1}, "+=0.2")
+  }
+
+  emitShowDanger = () => {
+    const {player} = this.props
+    const otherPlayer = player === "player1" ? "player2" : "player1"
+    this.props.wsEmitShowDanger(otherPlayer, true)
   }
 
   render() {
-    const {player1Status, player2Status, player} = this.props
+    const {playerStatus, showDanger, player} = this.props
+
     const isPlayer1 = player === "player1"
     const isPlayer2 = player === "player2"
 
     return (
-      <div className="notification-step">
-        <span className="notification-step__title">Danger</span>
+      <div className="notification-step" ref={ref => this.ref = ref}>
+        {showDanger && <>
+          <span className="notification-step__title">Danger</span>
           <div className="notification-step__wrapper">
-              <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src} />
-          </div>
-          {isPlayer1 && player1Status === 'superior' && <>
-        <button className="notification-step__button button">
-          <span>{'> Partager l\'alerte <'}</span>
-        </button>
-        </>}
-        {isPlayer2 && player2Status  === 'superior' && <>
-        <button className="notification-step__button button">
-          <span>{'> Partager l\'alerte <'}</span>
-         </button>
+            <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src}/>
+            </div>
+          {playerStatus === 'superior' &&
+            <button className="notification-step__button button" onClick={this.emitShowDanger}>
+              <span>{'> Partager l\'alerte <'}</span>
+            </button>
+          }
+          {playerStatus === 'inferior' &&
+            <button className="notification-step__button button">
+              <span>{"> Fuir le danger <"}</span>
+            </button>
+          }
         </>}
       </div>    
     )
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
   return {
     player: state.mobile.userId,
-    player1Status: state.mobile.users.find(user => user.id === "player1").status,
-    player2Status: state.mobile.users.find(user => user.id === "player2").status,
+    playerStatus: state.mobile.users.find(user => user.id === state.mobile.userId).status,
     showDanger: state.mobile.showDanger
   }
 }
 
-export default connect(mapStateToProps)((NotificationStep))
+const mapDispatchToProps = dispatch => {
+  return {
+    wsEmitShowDanger: (userId, showDanger) => dispatch(wsEmitShowDanger({userId, showDanger})),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationStep)

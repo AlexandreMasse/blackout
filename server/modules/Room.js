@@ -51,7 +51,7 @@ export default class Room {
 
     showDanger = (io ,socket) => {
         socket.on('showDanger', (data) => {
-            io.to(socket.room).emit('showDanger', {
+            io.to(this.users[data.userId].socketId).emit('showDanger', {
                 showDanger: data.showDanger
             })
         })

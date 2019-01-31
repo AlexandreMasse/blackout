@@ -21,6 +21,8 @@ export default class SceneKinematic {
         this.init()
         this.endVideo()
         this.showDanger()
+
+        this.superiorPlayer = this.store.users.find(user => user.status === "superior")
     }
 
     //required
@@ -70,9 +72,11 @@ export default class SceneKinematic {
         this.isDanger = false
         this.video.addEventListener('timeupdate', () => { 
             if (this.video.currentTime > 17) {
-                const showDanger = true
                 if (!this.isDanger) {
-                    this.dispatch(wsEmitShowDanger({showDanger}))
+                    this.dispatch(wsEmitShowDanger({
+                        userId: this.superiorPlayer.id,
+                        showDanger: true
+                    }))
                     this.isDanger = true
                 }
             }

@@ -8,6 +8,7 @@ export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_POSITION: "position",
     WEBSOCKET_EMIT_SLIDER_VALUE: "sliderValue",
     WEBSOCKET_EMIT_TAP_VALUE: "tapValue",
+    WEBSOCKET_EMIT_SHOW_DANGER: "showDanger",
 }
 
 export const websocketsOnActionTypes = {

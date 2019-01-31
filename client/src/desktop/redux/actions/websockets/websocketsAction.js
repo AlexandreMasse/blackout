@@ -37,6 +37,7 @@ export const wsEmitCurrentStep = (payload) => (dispatch, getState, {emit}) => {
 export const wsEmitShowDanger = (payload) => (dispatch, getState, {emit}) => {
     console.log("wsEmitShowDanger", payload)
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_SHOW_DANGER, {
+        userId: payload.userId,
         showDanger: payload.showDanger,
     })
 }

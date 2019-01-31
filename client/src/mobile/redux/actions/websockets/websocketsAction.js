@@ -54,6 +54,12 @@ export const wsEmitReconnection = (payload) => (dispatch, getState, {emit}) => {
     });
 }
 
+export const wsEmitShowDanger = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_SHOW_DANGER, {
+        userId: payload.userId,
+        showDanger: payload.showDanger,
+    })
+}
 
 export const wsEmitPosition = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_POSITION, {

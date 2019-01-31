@@ -44,6 +44,7 @@ server.listen(app.get('port'), function () {
           // user reconnection
           user.reconnect(io, socket)
           user.disconnect(io, socket)
+          user.showDanger(io, socket)
           user.position(io, socket)
           user.slider(io, socket)
           user.tap(io, socket)

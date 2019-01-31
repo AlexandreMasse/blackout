@@ -2,20 +2,20 @@ import {Power2, TimelineMax, TweenMax} from 'gsap'
 
 //enter
 
-export const onEnterDuration = 2
+export const onEnterDuration = 0
 export const onEnterDelay = 0.5
 export const onEnterTimeout = onEnterDuration + onEnterDelay
 
 export const onEnter = (html) => {
 
-  const tl = new TimelineMax({delay: onEnterDelay})
+  //const tl = new TimelineMax({delay: onEnterDelay})
 
-  tl.fromTo(html, 1.5, {
-    opacity: 0
-  }, {
-    ease: Power2.easeInOut,
-    opacity: 1
-  }, "+=0")
+  // tl.fromTo(html, 1.5, {
+  //   opacity: 0
+  // }, {
+  //   ease: Power2.easeInOut,
+  //   opacity: 1
+  // }, "+=0")
 }
 
 

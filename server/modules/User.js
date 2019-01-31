@@ -26,8 +26,12 @@ export default class User {
                     password: code
                 })
 
-                this.roomInstance.users[userId] = this
+                this.roomInstance.users[userId] = {
+                    socketId: socket.id,
+                    phoneDataObject: this.phoneDataObject
+                }
 
+                console.log("Instance de la room après connexion : ", this.roomInstance)
                 console.log("Nombre d'utilisateur : ", Object.keys( this.roomInstance.users).length);
 
                 // All clients connected to room
@@ -100,7 +104,15 @@ export default class User {
         socket.on('phoneData', (data) => {
             this.phoneDataObject = data.phoneData
         })
-    } 
+    }
+
+    showDanger = (io, socket) => {
+        socket.on('showDanger', (data) => {
+            io.to(this.roomInstance.users[data.userId].socketId).emit('showDanger', {
+                showDanger: data.showDanger
+            })
+        })
+    }
 
     position = (io,socket) => {
         socket.on('position', (data) => {
@@ -142,7 +154,6 @@ export default class User {
         const parts = roomId.split('-', 2)
         const roomIndex = parseInt(parts[1])
         this.roomInstance = Rooms.roomArrInstance[roomIndex - 1]
-        console.log('la room actuelle est :',roomId , "et son instance : ", this.roomInstance)
     }
 
     sendUserId(io,userId, roomId) {
