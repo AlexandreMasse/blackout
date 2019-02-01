@@ -9,6 +9,7 @@ export default class Scene {
        this.set() 
        this.setAnimation()
     //    this.initEvent()
+       this.isArrived = false
        this.addToScene()
     }
     debug() {
@@ -32,7 +33,7 @@ export default class Scene {
     }
 
     setAnimation() {
-        this.maxSpeed = this.status === 'superior' ? 1 : .8
+        this.maxSpeed = this.status === 'superior' ? 1 : .6
         this.timing = this.status === 'superior' ? .8 : .6
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
         this.mixer.timeScale = 0
@@ -49,13 +50,28 @@ export default class Scene {
     }
 
     moveCamera() {
-        TweenMax.fromTo(this.mixer, this.timing, {
-            timeScale: this.maxSpeed,
-        }, {
-            timeScale: 0
-        })
+        if (!this.isArrived) {
+            TweenMax.fromTo(this.mixer, this.timing, {
+                timeScale: this.maxSpeed,
+            }, {
+                timeScale: 0
+            })
+        } else {
+            this.mixer.timeScale = this.maxSpeed
+        }
+        this.getProgression()
+
     }
     
+    getProgression() {
+        const maxTime = 12
+        this.progression = this.mixer.time / maxTime
+        // console.log(this.progression)
+        if (this.mixer.time > maxTime) {
+            this.isArrived = true
+        }
+    }
+
     resize() {
         this.size = new THREE.Vector2(window.innerWidth, window.innerHeight)
         this.camera.aspect = this.size.x/this.size.y
@@ -64,7 +80,7 @@ export default class Scene {
     }
     update() {
         const delta = this.clock.getDelta()
-		if (this.mixer){
+		if (this.mixer) {
             this.mixer.update(delta)
         } 
         this.renderer.render(this.scene, this.camera)

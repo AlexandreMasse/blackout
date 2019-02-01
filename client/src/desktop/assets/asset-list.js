@@ -10,6 +10,10 @@ import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 import generator from './img/generator.png'
 import stairs from './obj/Escalier2801.glb'
+import outside from './img/outside.png'
+import outsideVoyant from './img/outside_voyant.png'
+import insideWall from './img/inside_mur.png'
+import insideDoor from './img/inside_porte.png'
 
 // SPRITE SHEET GENERATOR 2FPS
 import button1 from './spritesheet/generator/2fps/gen-01.json'
@@ -67,4 +71,8 @@ export const assetsToLoad = {
     button1: { url: button1Img, spritesheet: button1, name:'spritesheet', type: 'spritesheet'},
     button2: { url: button2Img, spritesheet: button2, name:'spritesheet', type: 'spritesheet'},
     button3: { url: button3Img, spritesheet: button3, name:'spritesheet', type: 'spritesheet'},
+    outside: { url: outside, name:'outside', type: 'image'},
+    outsideVoyant: { url: outsideVoyant, name:'outsideVoyant', type: 'image'},
+    insideWall: { url: insideWall, name:'insideWall', type: 'image'},
+    insideDoor: { url: insideDoor, name:'insideDoor', type: 'image'},
 }

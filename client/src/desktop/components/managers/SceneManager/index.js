@@ -56,7 +56,6 @@ class SceneManager extends Component {
   }
 
   renderScene() {
-
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
       this.app.renderer.render(currentSceneInstance.container, currentSceneInstance.rt)
       if (currentSceneInstance.needUpdate) {
@@ -79,6 +78,16 @@ class SceneManager extends Component {
     const {parentRef} = this.props
     this.app.renderer.resize(parentRef.clientWidth, parentRef.clientHeight)
   }
+
+  calculWidthScene(pct) {
+    const scene1 = this.props.currentScene[0]
+    const scene2 = this.props.currentScene[1]
+
+    scene1.splitSCreen(pct)
+    scene2.splitSCreen(1 - pct)
+  }
+
+
 
   changeScene(nextScene, index) {
     // check to prevent split screen activation error
@@ -152,8 +161,8 @@ class SceneManager extends Component {
       prevProps.currentScene.length !== this.props.currentScene.length ||
       prevProps.currentScene[1] !== this.props.currentScene[1]
     ) {
-      console.log(">>>>", this.props.currentScene);
-      console.log(">>>>", this.props.currentScene[1]);
+      // console.log(">>>>", this.props.currentScene);
+      // console.log(">>>>", this.props.currentScene[1]);
       this.changeScene(this.props.currentScene[1], 1)
     }
   }

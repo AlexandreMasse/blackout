@@ -45,6 +45,7 @@
         text-transform: uppercase;
         font-size: 3rem;
         font-variation-settings: $bold;
+        mix-blend-mode: difference;
         height: 1.3em;
         
         &__arrow {
@@ -73,6 +74,7 @@
         font-size: 2.4rem;
         width: 100%;
         font-variation-settings: $light;
+        mix-blend-mode: difference;
         // animation
         opacity: 0;
         transform: translateY(5px)
