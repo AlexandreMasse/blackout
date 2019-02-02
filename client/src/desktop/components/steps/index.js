@@ -1,15 +1,29 @@
 import React from 'react'
 
-import {onEnter as ConnexionStepOnEnter, onExit as ConnexionStepOnExit, onEnterTimeout as ConnexionStepOnEnterTimeout, onExitTimeout as ConnexionStepOnExitTimeout} from "./ConnexionStep/transition";
 import {default as ConnexionStep} from './ConnexionStep/ConnexionStep'
+import {
+  onEnter as ConnexionStepOnEnter,
+  onExit as ConnexionStepOnExit,
+  onEnterTimeout as ConnexionStepOnEnterTimeout,
+  onExitTimeout as ConnexionStepOnExitTimeout
+} from "./ConnexionStep/transition";
 
-import {onEnter as AnalysisStepOnEnter, onExit as AnalysisStepOnExit,
-  onEnterTimeout as AnalysisStepOnEnterTimeout, onExitTimeout as AnalysisStepOnExitTimeout} from "./AnalysisStep/transition";
 import {default as AnalysisStep} from './AnalysisStep/AnalysisStep'
+import {
+  onEnter as AnalysisStepOnEnter,
+  onExit as AnalysisStepOnExit,
+  onEnterTimeout as AnalysisStepOnEnterTimeout,
+  onExitTimeout as AnalysisStepOnExitTimeout
+} from "./AnalysisStep/transition";
 
 
-import {onEnter as SceneStepOnEnter, onExit as SceneStepOnExit} from "./SceneStep/transition";
 import {default as SceneStep} from './SceneStep/SceneStep'
+import {
+  onEnter as SceneStepOnEnter,
+  onExit as SceneStepOnExit,
+  onEnterTimeout as SceneStepOnEnterTimeout,
+  onExitTimeout as SceneStepOnExitTimeout
+} from "./SceneStep/transition";
 
 
 
@@ -18,7 +32,7 @@ export default {
     name:"CONNEXION",
     classNames: "",
     component: <ConnexionStep/>,
-    timeout: {enter: ConnexionStepOnEnterTimeout * 1000, exit: ConnexionStepOnExitTimeout * 1000},
+    timeout: {enter: ConnexionStepOnEnterTimeout, exit: ConnexionStepOnExitTimeout },
     onEnter: ConnexionStepOnEnter,
     onExit: ConnexionStepOnExit
   },
@@ -26,7 +40,7 @@ export default {
     name: "ANALYSIS",
     classNames: "",
     component: <AnalysisStep/>,
-    timeout: {enter: AnalysisStepOnEnterTimeout * 1000, exit: AnalysisStepOnExitTimeout * 1000},
+    timeout: {enter: AnalysisStepOnEnterTimeout, exit: AnalysisStepOnExitTimeout},
     onEnter: AnalysisStepOnEnter,
     onExit: AnalysisStepOnExit
   },
@@ -34,7 +48,7 @@ export default {
     name: "SCENE",
     classNames: "",
     component: <SceneStep/>,
-    timeout: {enter: 2000, exit: 3000},
+    timeout: {enter: SceneStepOnEnterTimeout, exit: SceneStepOnExitTimeout},
     onEnter: SceneStepOnEnter,
     onExit: SceneStepOnExit
   }
