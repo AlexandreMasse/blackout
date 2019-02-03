@@ -1,0 +1,32 @@
+@import "../../../../stylesheets/global";
+
+.fingerprint-step {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+
+  &__button {
+    margin: auto;
+    background-color: $red;
+    width: 13rem;
+    height: 18rem;
+    top: 8rem;
+    border-radius: 6rem;
+    position: relative;
+    overflow: hidden;
+
+    &__progression {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      background-color: white;
+    }
+  }
+}

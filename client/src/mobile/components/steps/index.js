@@ -50,6 +50,15 @@ import {
 } from './StairsStep/transition'
 
 
+import {default as FingerprintStep} from './FingerprintStep/FingerprintStep'
+import {
+  onEnter as FingerprintStepOnEnter,
+  onExit as FingerprintStepOnExit,
+  onEnterTimeout as FingerprintStepOnEnterTimeout,
+  onExitTimeout as FingerprintStepOnExitTimeout
+} from './FingerprintStep/transition'
+
+
 export default {
   INTRO: {
     name: 'INTRO',
@@ -98,5 +107,13 @@ export default {
     timeout: {enter: StairsStepOnEnterTimeout, exit: StairsStepOnExitTimeout},
     onEnter: StairsStepOnEnter,
     onExit: StairsStepOnExit
+  },
+  FINGERPRINT: {
+    name: 'FINGERPRINT',
+    component: <FingerprintStep/>,
+    classNames: "",
+    timeout: {enter: FingerprintStepOnEnterTimeout, exit: FingerprintStepOnExitTimeout},
+    onEnter: FingerprintStepOnEnter,
+    onExit: FingerprintStepOnExit
   }
 }
