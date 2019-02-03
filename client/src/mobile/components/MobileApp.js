@@ -19,11 +19,16 @@ import './MobileApp.scss'
 //Assets loading
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
+import classNames from "classnames";
 
 class MobileApp extends Component {
 
   constructor (props) {
     super(props)
+
+    this.state = {
+      showDevButton: false
+    }
 
     this.props.wsEmitDeviceType('mobile')
 
@@ -105,6 +110,12 @@ class MobileApp extends Component {
           <>
             <BackgroundGrid/>
             <StepManager currentStep={currentStep}/>
+            <p className={"dev-toggle"} onClick={() => {
+              this.setState({showDevButton: !this.state.showDevButton})
+            }}>TOGGLE DEV</p>
+            <div className={classNames("dev-button", {"show": this.state.showDevButton})}>
+              <p onClick={() => this.props.setCurrentStep(steps.FINGERPRINT.name)}>Step : fingerprint</p>
+            </div>
           </>
         ) : (
           <Loading/>

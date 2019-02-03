@@ -8,51 +8,39 @@
   overflow: hidden;
   
   & > {
+    .dev-toggle {
+      color: green;
+      z-index: 100;
+      position: absolute;
+      margin: 0;
+      top: 0;
+      left: 10px;
+      font-size: 2rem;
+      font-variation-settings: $bold;
+      cursor: pointer;
+    }
 
-    //.app-header {
-    //
-    //  display: flex;
-    //  flex-direction: column;
-    //  align-items: center;
-    //  justify-content: center;
-    //  color: white;
-    //
-    //  p {
-    //    margin-top: 0;
-    //    font-weight: 300;
-    //    font-family: $font-scopevariable;
-    //    span {
-    //      font-weight: bold;
-    //    }
-    //  }
-    //
-    //  form {
-    //    display: flex;
-    //    flex-direction: column;
-    //    align-items: center;
-    //
-    //    input[type="number"] {
-    //      height: 40px;
-    //      width: 100px;
-    //      margin-bottom: 20px;
-    //      background-color: black;
-    //      color: white;
-    //      border: none;
-    //      border-bottom: 1px solid white;
-    //      outline: none;
-    //      text-align: center;
-    //      font-size: 25px;
-    //      font-family: $font-scopevariable;
-    //
-    //    }
-    //    input[type="submit"] {
-    //      margin-top: 20px;
-    //      color: white;
-    //      font-size: 20px;
-    //      font-family: $font-scopevariable;
-    //    }
-    //  }
-    //}
+    .dev-button {
+      display: none;
+      background: rgba(0, 0, 0, 0.75);
+
+      &.show {
+        display: flex;
+      }
+
+      position: absolute;
+      flex-direction: column;
+      top: 3rem;
+      left: 10px;
+      z-index: 100;
+
+      p {
+        color: white;
+        margin: 0.7rem 1.5rem;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+    }
 
   }
 
