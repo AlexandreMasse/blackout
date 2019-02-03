@@ -11,7 +11,8 @@ import {
   setUserIndicationActive,
   setUserIndicationOpen,
   setSplitScreen,
-  setUserCurrentScene
+  setUserCurrentScene,
+  setPlayer1SplitScreenPercentage
 } from '../redux/actions/desktopAction'
 //assets
 import load from '../../vendors/assets-loader'
@@ -42,7 +43,8 @@ class DesktopApp extends Component {
     this.handleWindowResize()
 
     this.state = {
-      showDevButton: true
+      showDevButton: true,
+      splitScreenPercentage: .5,
     }
   }
 
@@ -100,7 +102,15 @@ class DesktopApp extends Component {
               <p onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
               <p onClick={() => this.props.setUserIndicationOpen("player1", true)}>Indication : player 1 open</p>
               <p onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
-
+              <input onChange={(e) => 
+                { this.props.setPlayer1SplitScreenPercentage(Number(e.target.value))
+                  this.setState({splitScreenPercentage:e.target.value})}}
+                  className="range"
+                  type="range"
+                  value={this.state.splitScreenPercentage}
+                  step="0.01"
+                  max="1"
+                  min="0" />
             </div>
             <Indication player={"player1"}/>
             <Indication player={"player2"}/>
@@ -129,6 +139,7 @@ const mapDispatchToProps = dispatch => {
     setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({userId, isOpen})),
     setUserCurrentScene: (userId, currentScene) => dispatch(setUserCurrentScene({userId, currentScene})),
     setSplitScreen: (isSplitScreen) => dispatch(setSplitScreen({isSplitScreen})),
+    setPlayer1SplitScreenPercentage: (splitScreenPercentage) => dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
   }
 }
 

@@ -69,3 +69,10 @@ export const setUserIndicationTheme = (payload) => (dispatch, getState, {emit}) 
   payload
  })
 }
+
+export const setPlayer1SplitScreenPercentage = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_PLAYER1_SPLIT_SCREEN_PERCENTAGE,
+  payload
+ })
+}

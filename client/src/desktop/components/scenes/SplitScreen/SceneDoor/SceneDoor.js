@@ -33,7 +33,6 @@ export default class SceneDoor {
 
     this.marge = 5
     this.containerSize = {width:width * .5, height:height}
-
     this.spriteSize = {
       width: this.outsideSprite.width,
       height: this.outsideSprite.height
@@ -45,24 +44,23 @@ export default class SceneDoor {
     // this.setPosition()
     setFullScreen(this.outsideSprite, this.spriteSize.width, this.spriteSize.height, this.containerSize.width)
     this.sprite.x = this.player === 'player2' ? this.containerSize.width: 0 
+    this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
+
   }
 
-  splitSCreen(pct) {
-    if(this.player === "player2") {
-      if(pct < 0.5) {
-        let bgX = ((window.innerWidth * pct) - this.bg.width) / 2
-        let diffX = this.sprite.x - (window.innerWidth * pct)
-        let spriteX = this.sprite.x + diffX
-        TweenMax.to(this.sprite,1,{x: spriteX})
-        TweenMax.to(this.bg.position,1,{x: bgX})
-      } else {
-          console.log('yas')
-          let bgX = ((window.innerWidth * pct) - this.bg.width) / 2
-          let diffX =  window.innerWidth * pct - this.sprite.x 
-          let spriteX = this.sprite.x - diffX
-          TweenMax.to(this.sprite,1,{x: spriteX})
-          TweenMax.to(this.bg.position,1,{x: bgX})
-      }
+  splitScreen(pct) {
+    if (this.player === "player2") {
+      console.log('PLAYER 2',pct)
+      let bgX = ((window.innerWidth * pct) - this.outsideSprite.width) / 2
+      let diffX = this.baseX - (window.innerWidth * pct)
+      let spriteX = this.baseX + diffX
+      
+      TweenMax.to(this.sprite, .5,{x: spriteX})
+      TweenMax.to(this.outsideSprite.position, .5,{x: bgX})
+    } else {
+      console.log('PLAYER 1',pct)
+      let bgX = ((window.innerWidth * pct) - this.outsideSprite.width) / 2
+      TweenMax.to(this.outsideSprite.position, .5,{x: bgX})
     }
   }
 

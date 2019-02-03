@@ -21,6 +21,7 @@ const initialState = {
       position: null,
       sliderValue: null,
       tapValue: null,
+      splitScreenPercentage:.5,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 7,
@@ -232,6 +233,23 @@ export default (state = initialState, action) => {
                 ...user.indication,
                 theme
               }
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_PLAYER1_SPLIT_SCREEN_PERCENTAGE: {
+      const {splitScreenPercentage} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === 'player1') {
+            return {
+              ...user,
+              splitScreenPercentage
             }
           } else {
             return user;

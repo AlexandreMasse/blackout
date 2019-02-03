@@ -80,11 +80,10 @@ class SceneManager extends Component {
   }
 
   calculWidthScene(pct) {
-    const scene1 = this.props.currentScene[0]
-    const scene2 = this.props.currentScene[1]
-
-    scene1.splitSCreen(pct)
-    scene2.splitSCreen(1 - pct)
+    const scenePlayer1 = this.currentSceneInstanceArray[0]
+    const scenePlayer2 = this.currentSceneInstanceArray[1]
+    scenePlayer1.splitScreen(pct)
+    scenePlayer2.splitScreen(1 - pct)
   }
 
 
@@ -164,6 +163,14 @@ class SceneManager extends Component {
       // console.log(">>>>", this.props.currentScene);
       // console.log(">>>>", this.props.currentScene[1]);
       this.changeScene(this.props.currentScene[1], 1)
+    }
+
+    // update player 1 scene split screen percentage
+    if (
+      prevProps.store.users.find((user) => user.id === 'player1').splitScreenPercentage !==
+      this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage 
+    ) {
+      this.calculWidthScene(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
     }
   }
 
