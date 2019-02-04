@@ -120,7 +120,7 @@ export default (state = initialState, action) => {
     case desktopActionTypes.SET_SPLIT_SCREEN: {
       return {
         ...state,
-        isSplitScreen: action.payload
+        isSplitScreen: action.payload.isSplitScreen
       }
     }
 

@@ -4,6 +4,8 @@ import * as PIXI from "pixi.js";
 //Step
 import scenes from '../../scenes'
 
+import {TweenMax} from 'gsap'
+
 class SceneManager extends Component {
 
   constructor(props) {
@@ -84,8 +86,19 @@ class SceneManager extends Component {
     const scenePlayer2 = this.currentSceneInstanceArray[1]
     scenePlayer1.splitScreen(pct)
     scenePlayer2.splitScreen(1 - pct)
-  }
 
+    TweenMax.to(this.refScene1,0.5, {
+      x: (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
+    })
+
+    this.refScene1.style.clipPath = `inset(0 ${(0.5 - pct) * 100}% 0 ${(0.5 - pct) * 100}%)`
+
+    TweenMax.to(this.refScene2, 0.5, {
+      x: window.innerWidth / 2 + (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
+    })
+
+    this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
+  }
 
 
   changeScene(nextScene, index) {
@@ -175,7 +188,53 @@ class SceneManager extends Component {
   }
 
   render() {
-    return null
+    return (
+      <>
+        <div ref={ref => this.refScene1 = ref} className="scene1" style={{
+          opacity: "0.5",
+          transition: "clip-path 0.5s",
+          // backgroundColor:"rgba(20, 200, 170, 1)",
+          position:"fixed",
+          top: 0,
+          width: window.innerWidth / 2,
+          height: window.innerHeight,
+          zIndex: 3,
+        }}>
+          <div className="child" style={{
+            background: "linear-gradient(to right, red, blue)",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: "100%",
+            height: "5rem",
+            transform: "translate(-50%, -50%)",
+          }}/>
+        </div>
+
+        <div ref={ref => this.refScene2 = ref} className="scene2" style={{
+          opacity: "0.5",
+          transition: "clip-path 0.5s",
+          // backgroundColor:"rgba(200, 100, 80, 1)",
+          position:"fixed",
+          top: 0,
+          width: window.innerWidth / 2,
+          height: window.innerHeight,
+          transform: `translateX(${window.innerWidth / 2}px)`,
+          zIndex: 3,
+        }}>
+          <div className="child" style={{
+            background: "linear-gradient(to right, red, blue)",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: "100%",
+            height: "5rem",
+            transform: "translate(-50%, -50%)",
+          }}/>
+        </div>
+      </>
+    )
+
   }
 }
 
