@@ -57,7 +57,7 @@
 
     &__viewmore {
       position: absolute;
-      bottom: 40px;
+      bottom: 4.4rem;
       text-align: center;
       font-size: 2.2rem;
       font-variation-settings: $medium;
@@ -68,9 +68,9 @@
 
     &__viewmoreIcon {
       position: absolute;
-      bottom: -10vw;
-      left: calc( 50% - .9px);
-      transform: translateX(-50%);
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(60%);
       width: 12%;
       mix-blend-mode: difference;
       background-color: transparent;
@@ -90,8 +90,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(85vh - 31.15vw);
-    margin-top: 24.3vw;
+    //margin-top: 24.3vw;
+    padding-top: 24.3vw;
 
     &__numbers {
       display: flex;
@@ -100,9 +100,10 @@
       font-variation-settings: "wght" 60, "wdth" 600;
 
       p {
-        height: 4rem;
+        height: 4.8rem;
         width: 5rem;
-        margin: 0 0.8rem 2rem 0.8rem;
+        margin: 0 0.8rem 1.3rem 0.8rem;
+        padding-bottom: 0.5rem;
         color: $white;
         border-bottom: 1px solid $white;
         text-align: center;

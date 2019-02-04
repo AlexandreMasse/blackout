@@ -100,7 +100,8 @@ class IntroStep extends Component {
     } else {
       if (yDiff > 0) {
         /* up swipe */
-        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut,transform: 'translateY(-73vh)'})
+        const formHeight = this.ref.querySelector(".intro-step__form").clientHeight
+        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut,transform: `translateY(-${formHeight * 0.9}px)`})
       } else {
         /* down swipe */
         TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut, transform: 'translateY(0)'})

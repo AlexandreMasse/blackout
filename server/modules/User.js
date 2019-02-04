@@ -6,6 +6,12 @@ export default class User {
         this.phoneDataObject = {}
     }
 
+    getRoomInstance(roomId) {
+        const parts = roomId.split('-', 2)
+        const roomIndex = parseInt(parts[1])
+        this.roomInstance = Rooms.roomArrInstance[roomIndex - 1]
+    }
+
     connect = (io, socket) => {
         socket.on('password', (data) => {
             console.log('hello', data.key)
@@ -64,27 +70,27 @@ export default class User {
     }
 
     reconnect = (io, socket) => {
-        socket.on('reco' , (data) => {
-                console.log("on sendCookie", data)
-                socket.username = data.userId
-                socket.room = data.roomId
+        socket.on('reco', (data) => {
+            console.log("on sendCookie", data)
+            socket.username = data.userId
+            socket.room = data.roomId
 
-                io.in(data.roomId).clients((err, clients) => {
-                    console.log(clients)
-                    var size = Object.keys(clients).length;
-                    console.log(size)
-                    if (size > 1 ) {
-                        socket.join(data.roomId)
-                        io.to(roomId).emit('connectToRoom', {
-                            roomId: data.roomId,
-                            userId: data.userId
-                        })
-                        // io.to(data.roomId).emit('connectToRoom', {
-                        //     roomId: data.roomId,
-                        //     userId: data.userId
-                        // })
-                    }
-                })
+            io.in(data.roomId).clients((err, clients) => {
+                console.log(clients)
+                var size = Object.keys(clients).length;
+                console.log(size)
+                if (size > 1) {
+                    socket.join(data.roomId)
+                    io.to(roomId).emit('connectToRoom', {
+                        roomId: data.roomId,
+                        userId: data.userId
+                    })
+                    // io.to(data.roomId).emit('connectToRoom', {
+                    //     roomId: data.roomId,
+                    //     userId: data.userId
+                    // })
+                }
+            })
         })
     }
 
@@ -150,10 +156,12 @@ export default class User {
         })
     }
 
-    getRoomInstance(roomId) {
-        const parts = roomId.split('-', 2)
-        const roomIndex = parseInt(parts[1])
-        this.roomInstance = Rooms.roomArrInstance[roomIndex - 1]
+    fingerprint = (io, socket) => {
+        socket.on('fingerprint', () => {
+            io.to(socket.room).emit('fingerprint', {
+                userId: socket.username
+            })
+        })
     }
 
     sendUserId(io,userId, roomId) {

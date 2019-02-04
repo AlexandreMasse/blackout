@@ -1,6 +1,7 @@
 export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_DEVICE_TYPE: "deviceType",
     WEBSOCKET_EMIT_CURRENT_STEP: "currentStep",
+    WEBSOCKET_EMIT_USER_CURRENT_STEP: "userCurrentStep",
     WEBSOCKET_EMIT_SHOW_DANGER: "showDanger",
 }
 
@@ -13,4 +14,5 @@ export const websocketsOnActionTypes = {
     WEBSOCKET_ON_TAP_VALUE: "tapValue",
     WEBSOCKET_ON_PHONE_DATA: "phoneData",
     WEBSOCKET_ON_INTRO_PROGRESSION: "introProgression",
+    WEBSOCKET_ON_FINGERPRINT: "fingerprint",
 }

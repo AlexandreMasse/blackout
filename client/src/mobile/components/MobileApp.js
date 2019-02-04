@@ -115,6 +115,7 @@ class MobileApp extends Component {
             }}>TOGGLE DEV</p>
             <div className={classNames("dev-button", {"show": this.state.showDevButton})}>
               <p onClick={() => this.props.setCurrentStep(steps.FINGERPRINT.name)}>Step : fingerprint</p>
+              <p onClick={() => this.props.setCurrentStep(steps.CURSOR.name)}>Step : cursor</p>
             </div>
           </>
         ) : (

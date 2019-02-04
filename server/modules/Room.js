@@ -49,6 +49,14 @@ export default class Room {
         })
     }
 
+    userCurrentStep = (io, socket) => {
+        socket.on('userCurrentStep', (data) => {
+            io.to(this.users[data.userId].socketId).emit('currentStep', {
+                step: data.step
+            })
+        })
+    }
+
     showDanger = (io ,socket) => {
         socket.on('showDanger', (data) => {
             io.to(this.users[data.userId].socketId).emit('showDanger', {
@@ -56,6 +64,7 @@ export default class Room {
             })
         })
     }
+
     getUserId(socket) {
         socket.on('tes', (userID) =>{
             console.log('un nouvelle userID est la: ', userID)

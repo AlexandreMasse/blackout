@@ -79,3 +79,7 @@ export const wsEmitTapValue = (payload) => (dispatch, getState, {emit}) => {
     });
 }
 
+export const wsEmitFingerprint = () => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_FINGERPRINT, {});
+}
+

@@ -35,6 +35,7 @@ server.listen(app.get('port'), function () {
           Rooms.roomArrInstance.push(room)
           room.currentStep(io, socket)
           room.showDanger(io, socket)
+          room.userCurrentStep(io, socket)
           room.destroy(io ,socket)
         }
         
@@ -50,6 +51,7 @@ server.listen(app.get('port'), function () {
           user.tap(io, socket)
           user.phoneData(io, socket)
           user.introProgression(io, socket)
+          user.fingerprint(io, socket)
         }
     })
   })

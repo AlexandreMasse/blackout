@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 // redux
 import {connect} from 'react-redux'
-//import {} from "../../../redux/actions/websockets/websocketsAction";
+import {wsEmitFingerprint} from "../../../redux/actions/websockets/websocketsAction";
 //import {setCurrentStep} from "../../../redux/actions/mobileAction";
 //css
 import './FingerprintStep.scss'
@@ -60,6 +60,7 @@ class FingerprintStep extends Component {
       this.progressionAnimation(0.05)
     } else {
       console.log("Press threshold reached!");
+      this.props.wsEmitFingerprint()
     }
   }
 
@@ -82,7 +83,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //wsEmitShowDanger: (userId, showDanger) => dispatch(wsEmitShowDanger({userId, showDanger})),
+    wsEmitFingerprint: () => dispatch(wsEmitFingerprint()),
   }
 }
 
