@@ -5,13 +5,13 @@ import * as PIXI from "pixi.js";
 
 export default class SceneStairs {
 
-  constructor({dispatch, store, player}) {
+  constructor({dispatch, store, player, renderer}) {
+    this.renderer = renderer
     this.player = player
     this.store = store
     this.needUpdate = true
     this.status = this.store.users.find(user => user.id === this.player).status
     // console.log('YO LE PLAYER',this.player, ' Ton status est :', this.status)
-
     this.init()
   }
 
@@ -39,9 +39,10 @@ export default class SceneStairs {
 
   init() {
     console.log("scene stairs init")
+    
     let width = window.innerWidth
     let height = window.innerHeight
-    this.initSceneThree()
+    this.initSceneThree(renderer)
     this.container = new PIXI.Container()
     this.THREE_TEXTURE = PIXI.BaseTexture.fromCanvas(this.sceneThree.renderer.domElement, PIXI.SCALE_MODES.LINEAR) 
     this.bg = new PIXI.Sprite.from(new PIXI.Texture(this.THREE_TEXTURE))
@@ -50,7 +51,6 @@ export default class SceneStairs {
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
-    
     this.sprite = new PIXI.Sprite(this.rt)
     // this.sprite.x = this.player === 'player1' ? -350 : 350 
   }

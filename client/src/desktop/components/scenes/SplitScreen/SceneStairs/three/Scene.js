@@ -12,6 +12,7 @@ export default class Scene {
        this.isArrived = false
        this.addToScene()
     }
+    
     debug() {
         document.body.appendChild(this.renderer.domElement)
     }

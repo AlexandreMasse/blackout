@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types"
-import * as PIXI from "pixi.js";
+import * as PIXI from "pixi.js"
+import * as THREE from 'three'
 //Step
 import scenes from '../../scenes'
 
@@ -13,6 +14,7 @@ class SceneManager extends Component {
       "player1",
       "player2",
     ]
+    this.initThreeRenderer()
 
     this.scenesArray = Object.keys(scenes).map(i => scenes[i])
 
@@ -21,7 +23,7 @@ class SceneManager extends Component {
     })
 
     this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
-      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index]})
+      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], renderer: this.renderer})
     })
 
     this.nextSceneObjectArray = [null, null];
@@ -55,6 +57,14 @@ class SceneManager extends Component {
     window.addEventListener('resize', this.onWindowResize, false)
   }
 
+  initThreeRenderer() {
+    this.renderer = new THREE.WebGLRenderer( { antialias: false } )
+    this.renderer.setPixelRatio( window.devicePixelRatio )
+    this.renderer.setSize( window.innerWidth, window.innerHeight )
+    this.clock = new THREE.Clock()
+    // this.renderer.setAnimationLoop( this.update.bind(this) )
+  }
+
   renderScene() {
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
       this.app.renderer.render(currentSceneInstance.container, currentSceneInstance.rt)
@@ -85,8 +95,6 @@ class SceneManager extends Component {
     scenePlayer1.splitScreen(pct)
     scenePlayer2.splitScreen(1 - pct)
   }
-
-
 
   changeScene(nextScene, index) {
     // check to prevent split screen activation error
