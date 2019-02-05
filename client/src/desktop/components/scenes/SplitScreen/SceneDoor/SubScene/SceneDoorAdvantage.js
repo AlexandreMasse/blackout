@@ -4,7 +4,8 @@ import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../../../utils'
 
 export default class SceneDoorAdvantage {
-    constructor(player, status) {
+    constructor(pct) {
+        this.initialPct = pct
         this.init()
     }
 
@@ -16,8 +17,7 @@ export default class SceneDoorAdvantage {
         let baseTexture = new PIXI.BaseTexture(outsideImg)
         let texture = new PIXI.Texture(baseTexture)
         this.outsideSprite = new PIXI.Sprite(texture)
-        // this.marge = 5
-        this.containerSize = {width:width * .5, height:height}
+        this.containerSize = {width:width * this.initialPct, height:height}
         this.spriteSize = {
           width: this.outsideSprite.width,
           height: this.outsideSprite.height
