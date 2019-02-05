@@ -106,7 +106,7 @@ class SceneManager extends Component {
     }
     this.isSplitActive = true
 
-    TweenMax.to(this.margeSplitScreen, 0.5, {
+    TweenMax.to(this.margeSplitScreen, 1, {
       x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
     })
   }
@@ -222,14 +222,14 @@ class SceneManager extends Component {
           height: window.innerHeight,
           zIndex: 3,
         }}>
-          <div className="child" style={{
-            background: "linear-gradient(to right, red, blue)",
+        <div className="child" style={{
+            // background: "linear-gradient(to right, red, blue)",
             position: "absolute",
             left: "50%",
             top: "50%",
             width: "100%",
             height: "5rem",
-            transform: "translate(-50%, -50%)",
+            transform: "translate3d(-50%, -50%, 0)",
           }}/>
         </div>
 
@@ -244,14 +244,14 @@ class SceneManager extends Component {
           transform: `translateX(${window.innerWidth / 2}px)`,
           zIndex: 3,
         }}>
-          <div className="child" style={{
-            background: "linear-gradient(to right, red, blue)",
+        <div className="child" style={{
+            // background: "linear-gradient(to right, red, blue)",
             position: "absolute",
             left: "50%",
             top: "50%",
             width: "100%",
             height: "5rem",
-            transform: "translate(-50%, -50%)",
+            transform: "translate3d(-50%, -50%, 0)",
           }}/>
         </div>
       </>
