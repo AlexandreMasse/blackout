@@ -11,6 +11,9 @@ export default class SceneStairs {
     this.store = store
     this.needUpdate = true
     this.status = this.store.users.find(user => user.id === this.player).status
+    this.addedOnce = false
+    console.log(this)  
+
     // console.log('YO LE PLAYER',this.player, ' Ton status est :', this.status)
     this.init()
   }
@@ -42,12 +45,15 @@ export default class SceneStairs {
     
     let width = window.innerWidth
     let height = window.innerHeight
-    this.initSceneThree(renderer)
+    this.initSceneThree()
     this.container = new PIXI.Container()
-    this.THREE_TEXTURE = PIXI.BaseTexture.fromCanvas(this.sceneThree.renderer.domElement, PIXI.SCALE_MODES.LINEAR) 
-    this.bg = new PIXI.Sprite.from(new PIXI.Texture(this.THREE_TEXTURE))
-    this.bg.width = width
-    this.bg.height = height
+    this.THREE_TEXTURE = PIXI.BaseTexture.fromCanvas(this.renderer.domElement, PIXI.SCALE_MODES.LINEAR) 
+    // console.log(this.THREE_TEXTURE._texture.baseTexture._glTextures[0])
+    // console.log(this.THREE_TEXTURE)
+    this.spriteScene3D = new PIXI.Sprite.from(new PIXI.Texture(this.THREE_TEXTURE))
+    console.log('SPRITE SCENE 3D', this.spriteScene3D)
+    this.spriteScene3D.width = width
+    this.spriteScene3D.height = height
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
@@ -56,18 +62,27 @@ export default class SceneStairs {
   }
 
   initSceneThree() {
-    this.sceneThree = new Scene(this.status) 
+    this.sceneThree = new Scene(this.status, this.renderer) 
+
+    console.log('BUFFER TEXTURE',this.sceneThree.bufferTexture)
     // this.scenePlayer1 = this.sceneThree.sceneplayer1()
     // this.scenePlayer2 = this.sceneThree.sceneplayer2()
   }
 
   addToScene() {
-    this.container.addChild(this.bg)
+    this.container.addChild(this.spriteScene3D)
   }
 
   update() {
+    if(!this.addedOnce && this.spriteScene3D._texture.baseTexture._glTextures[0].texture != null && this.renderer.properties.get(this.sceneThree.bufferTexture.texture).__webglTexture != null) {
+      this.spriteScene3D._texture.baseTexture._glTextures[0].texture = this.renderer.properties.get(this.sceneThree.bufferTexture.texture).__webglTexture
+      this.addedOnce = true
+      console.log("added")
+    }
+    
+    this.sceneThree.render()
     this.sceneThree.update()
-    this.bg.texture.update()
+    // this.bg.texture.update()
   }
 
   resize() {

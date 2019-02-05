@@ -3,8 +3,9 @@ import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
 
 export default class Scene {
-    constructor(status) {
+    constructor(status, renderer) {
        this.status = status
+       this.renderer = renderer
        this.getGltfScene()
        this.set() 
        this.setAnimation()
@@ -26,11 +27,10 @@ export default class Scene {
         this.scene = new THREE.Scene()
         this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
         this.scene.background = new THREE.Color('#000000')
-        this.renderer = new THREE.WebGLRenderer( { antialias: false } )
-        this.renderer.setPixelRatio( window.devicePixelRatio )
-        this.renderer.setSize( window.innerWidth, window.innerHeight )
+        // this.bufferTexture = new THREE.WebGLRenderTarget( window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter})
+        this.bufferTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter})
         this.clock = new THREE.Clock()
-        this.renderer.setAnimationLoop( this.update.bind(this) )
+        // this.renderer.setAnimationLoop( this.update.bind(this) )
     }
 
     setAnimation() {
@@ -79,12 +79,18 @@ export default class Scene {
         this.camera.updateProjectionMatrix()
         this.renderer.setSize(this.size.x, this.size.y)
     }
+
+    render() {
+        this.renderer.setRenderTarget(null)
+        this.renderer.render(this.scene, this.camera, this.bufferTexture)
+    }
+
     update() {
         const delta = this.clock.getDelta()
 		if (this.mixer) {
             this.mixer.update(delta)
         } 
-        this.renderer.render(this.scene, this.camera)
+        // this.renderer.render(this.scene, this.camera)
     }
 
 }

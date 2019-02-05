@@ -61,7 +61,7 @@ export default class SceneKinematic2 {
                 // this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
                 this.dispatch(setSplitScreen({isSplitScreen: true}))
                 this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENESTAIRS.name}))
-                this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
+                this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENEGENERATOR.name}))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
         })
