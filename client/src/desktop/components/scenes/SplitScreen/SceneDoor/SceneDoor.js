@@ -11,8 +11,13 @@ export default class SceneDoor {
     this.player = player
     this.store = store
     this.needUpdate = true;
+    let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
+    this.initialPrct = player === 'player1' ? pct : 1 - pct 
+    console.log(this.initialPrct)
+
     if (player == "player2") this.initSceneDisadvantage()
     this.init()
+
   }
 
   //required
@@ -34,7 +39,7 @@ export default class SceneDoor {
     this.outsideSprite = new PIXI.Sprite(texture)
 
     this.marge = 0
-    this.containerSize = {width:width * .5, height:height}
+    this.containerSize = {width: width * this.initialPrct, height:height}
     this.spriteSize = {
       width: this.outsideSprite.width,
       height: this.outsideSprite.height
@@ -43,10 +48,8 @@ export default class SceneDoor {
     this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt) 
-    // this.setPosition()
-    this.sprite.x = this.player === 'player2' ? this.containerSize.width: 0 
+    this.sprite.x = this.player === 'player2' ? width - this.containerSize.width: 0 
     this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
-
 
     switch (this.player) {
       case 'player1':
@@ -54,7 +57,7 @@ export default class SceneDoor {
         break;
       case 'player2':
       setFullScreen(this.spriteDisadvantage, this.spriteSize.width, this.spriteSize.height, this.containerSize.width)
-      console.log(this.spriteDisadvantage.width)
+      // console.log(this.spriteDisadvantage.width)
         break;
       default:
         console.log('Sorry, we are out of ' + this.player + '.')
@@ -64,7 +67,7 @@ export default class SceneDoor {
 
   initSceneDisadvantage() {
     console.log('INIT SCENE PLAYER 2 DESAVANTAGE')
-    this.sceneDisadvantage = new SceneDoorDisavantage()
+    this.sceneDisadvantage = new SceneDoorDisavantage(this.initialPrct)
     this.spriteDisadvantage = this.sceneDisadvantage.spriteOutside
     console.log(this.spriteDisadvantage)
   }
@@ -74,7 +77,7 @@ export default class SceneDoor {
       // console.log('PLAYER 2',pct)
       let bgX = ((window.innerWidth * pct) - this.spriteDisadvantage.width) / 2
       let diffX = this.baseX - (window.innerWidth * pct)
-      let spriteX = this.baseX + diffX
+      let spriteX = window.innerWidth - this.baseX + diffX
       
       TweenMax.to(this.sprite, .5,{x: spriteX})
       TweenMax.to(this.spriteDisadvantage.position, .5,{x: bgX})
