@@ -16,7 +16,7 @@ export default class SceneDoorAdvantage {
         let baseTexture = new PIXI.BaseTexture(outsideImg)
         let texture = new PIXI.Texture(baseTexture)
         this.outsideSprite = new PIXI.Sprite(texture)
-        this.marge = 5
+        // this.marge = 5
         this.containerSize = {width:width * .5, height:height}
         this.spriteSize = {
           width: this.outsideSprite.width,

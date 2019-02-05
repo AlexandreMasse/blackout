@@ -33,7 +33,7 @@ export default class SceneDoor {
     let width = window.innerWidth
     let height = window.innerHeight
     this.container = new PIXI.Container()
-    let outsideImg = AssetsManager.get('outside')
+    let outsideImg = AssetsManager.get('outsideTest')
     let baseTexture = new PIXI.BaseTexture(outsideImg)
     let texture = new PIXI.Texture(baseTexture)
     this.outsideSprite = new PIXI.Sprite(texture)

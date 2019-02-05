@@ -33,6 +33,8 @@ class SceneManager extends Component {
     this.app = null;
 
     this.init()
+    this.isSplitActive = false
+    this.setMargeSplitScreen()
   }
 
   init() {
@@ -41,7 +43,7 @@ class SceneManager extends Component {
     let width = parentRef.clientWidth
     let height = parentRef.clientHeight
 
-    this.app = new PIXI.Application(width, height, {backgroundColor: 0xffffff, antialias: false})
+    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000000, antialias: false})
 
     parentRef.appendChild(this.app.view)
 
@@ -98,10 +100,25 @@ class SceneManager extends Component {
     })
 
     this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
+    if (!this.isSplitActive) {
+      this.margeSplitScreen.visible = true
+      this.margeSplitScreen.alpha = 1
+    }
+    this.isSplitActive = true
+
+    TweenMax.to(this.margeSplitScreen, 0.5, {
+      x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
+    })
   }
 
-  setMargeSlitScreen(){
-    // this.
+  setMargeSplitScreen() {
+    this.margeSplitScreen = new PIXI.Graphics()
+    this.margeSplitScreen.beginFill(0xffffff)
+    this.margeSplitScreen.drawRect(0, 0, 6, window.innerHeight)
+    this.margeSplitScreen.endFill()
+    this.margeSplitScreen.visible = false
+    this.margeSplitScreen.alpha = 0
+    this.app.stage.addChild(this.margeSplitScreen)
   }
 
 
