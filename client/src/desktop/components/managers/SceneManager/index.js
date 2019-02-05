@@ -23,7 +23,7 @@ class SceneManager extends Component {
     })
 
     this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
-      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index]})
+      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], app: this.app})
     })
 
     this.nextSceneObjectArray = [null, null];
@@ -121,7 +121,8 @@ class SceneManager extends Component {
       this.currentSceneInstanceArray[index] = new this.currentSceneObjectArray[index].scene({
         dispatch: this.props.dispatch,
         store: this.props.store,
-        player: this.players[index]
+        player: this.players[index],
+        app: this.app
       })
       // then go to next scene
       this.nextScene(nextScene, index)
@@ -133,7 +134,7 @@ class SceneManager extends Component {
     const player = this.players[index]
 
     this.nextSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === nextScene);
-    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player})
+    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player, app: this.app})
     this.app.stage.addChild(this.nextSceneInstanceArray[index].sprite)
     this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {
     })
