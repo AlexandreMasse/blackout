@@ -50,7 +50,7 @@ export default class SceneDoor {
 
   splitScreen(pct) {
     if (this.player === "player2") {
-      console.log('PLAYER 2',pct)
+      // console.log('PLAYER 2',pct)
       let bgX = ((window.innerWidth * pct) - this.outsideSprite.width) / 2
       let diffX = this.baseX - (window.innerWidth * pct)
       let spriteX = this.baseX + diffX
@@ -58,7 +58,7 @@ export default class SceneDoor {
       TweenMax.to(this.sprite, .5,{x: spriteX})
       TweenMax.to(this.outsideSprite.position, .5,{x: bgX})
     } else {
-      console.log('PLAYER 1',pct)
+      // console.log('PLAYER 1',pct)
       let bgX = ((window.innerWidth * pct) - this.outsideSprite.width) / 2
       TweenMax.to(this.outsideSprite.position, .5,{x: bgX})
     }
