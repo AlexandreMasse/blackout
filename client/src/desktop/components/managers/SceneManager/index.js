@@ -41,7 +41,7 @@ class SceneManager extends Component {
     let width = parentRef.clientWidth
     let height = parentRef.clientHeight
 
-    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000, antialias: false})
+    this.app = new PIXI.Application(width, height, {backgroundColor: 0xffffff, antialias: false})
 
     parentRef.appendChild(this.app.view)
 
@@ -98,6 +98,10 @@ class SceneManager extends Component {
     })
 
     this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
+  }
+
+  setMargeSlitScreen(){
+    // this.
   }
 
 

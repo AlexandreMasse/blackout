@@ -37,9 +37,9 @@ export default class SceneDoor {
     let baseTexture = new PIXI.BaseTexture(outsideImg)
     let texture = new PIXI.Texture(baseTexture)
     this.outsideSprite = new PIXI.Sprite(texture)
-
-    this.marge = 0
+    this.marge = 3
     this.containerSize = {width: width * this.initialPrct, height:height}
+    this.mask = new PIXI.Graphics().beginFill(0x8bc5ff).drawRect(0,0, this.containerSize.width - this.marge, this.containerSize.height).endFill()
     this.spriteSize = {
       width: this.outsideSprite.width,
       height: this.outsideSprite.height
@@ -57,7 +57,6 @@ export default class SceneDoor {
         break;
       case 'player2':
       setFullScreen(this.spriteDisadvantage, this.spriteSize.width, this.spriteSize.height, this.containerSize.width)
-      // console.log(this.spriteDisadvantage.width)
         break;
       default:
         console.log('Sorry, we are out of ' + this.player + '.')
@@ -74,7 +73,6 @@ export default class SceneDoor {
 
   splitScreen(pct) {
     if (this.player === "player2") {
-      // console.log('PLAYER 2',pct)
       let bgX = ((window.innerWidth * pct) - this.spriteDisadvantage.width) / 2
       let diffX = this.baseX - (window.innerWidth * pct)
       let spriteX = window.innerWidth - this.baseX + diffX
@@ -82,7 +80,9 @@ export default class SceneDoor {
       TweenMax.to(this.sprite, .5,{x: spriteX})
       TweenMax.to(this.spriteDisadvantage.position, .5,{x: bgX})
     } else {
-      // console.log('PLAYER 1',pct)
+      let masxW = (window.innerWidth * pct) - this.marge
+      TweenMax.to(this.mask, .5,{width:masxW})
+
       let bgX = ((window.innerWidth * pct) - this.outsideSprite.width) / 2
       TweenMax.to(this.outsideSprite.position, .5,{x: bgX})
     }
@@ -91,6 +91,8 @@ export default class SceneDoor {
   addToScene() {
     switch (this.player) {
       case 'player1':
+      this.container.mask = this.mask
+      this.container.addChild(this.mask)
       this.container.addChild(this.outsideSprite)
         break;
       case 'player2':
