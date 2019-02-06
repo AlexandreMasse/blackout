@@ -116,6 +116,7 @@ class MobileApp extends Component {
             <div className={classNames("dev-button", {"show": this.state.showDevButton})}>
               <p onClick={() => this.props.setCurrentStep(steps.FINGERPRINT.name)}>Step : fingerprint</p>
               <p onClick={() => this.props.setCurrentStep(steps.CURSOR.name)}>Step : cursor</p>
+              <p onClick={() => this.props.setCurrentStep(steps.CODE.name)}>Step : code</p>
             </div>
           </>
         ) : (

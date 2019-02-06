@@ -59,6 +59,15 @@ import {
 } from './FingerprintStep/transition'
 
 
+import {default as CodeStep} from './CodeStep/CodeStep'
+import {
+  onEnter as CodeStepOnEnter,
+  onExit as CodeStepOnExit,
+  onEnterTimeout as CodeStepOnEnterTimeout,
+  onExitTimeout as CodeStepOnExitTimeout
+} from './CodeStep/transition'
+
+
 export default {
   INTRO: {
     name: 'INTRO',
@@ -115,5 +124,13 @@ export default {
     timeout: {enter: FingerprintStepOnEnterTimeout, exit: FingerprintStepOnExitTimeout},
     onEnter: FingerprintStepOnEnter,
     onExit: FingerprintStepOnExit
+  },
+  CODE: {
+    name: 'CODE',
+    component: <CodeStep/>,
+    classNames: "",
+    timeout: {enter: CodeStepOnEnterTimeout, exit: CodeStepOnExitTimeout},
+    onEnter: CodeStepOnEnter,
+    onExit: CodeStepOnExit
   }
 }
