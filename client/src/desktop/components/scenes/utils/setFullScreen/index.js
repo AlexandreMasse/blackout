@@ -2,12 +2,7 @@
 export const setFullScreen = (bg, w, h, width = window.innerWidth) => {
     let height = window.innerHeight
     let imageRatio = w / h
-    console.log(imageRatio)
-    console.log(w)
-    console.log(h)
     let containerRatio = width / height
-    console.log('container ratio', containerRatio)
-    console.log('width', width)
 
     if(containerRatio > imageRatio) {
         console.log('ici')
@@ -18,6 +13,9 @@ export const setFullScreen = (bg, w, h, width = window.innerWidth) => {
     } else {
         console.log('la')
         bg.width = bg.width / (bg.height / height)
+        console.log('BG WIDTH', bg.width)
+        console.log('BG H', bg.height)
+        console.log('H', height)
         bg.height = height
         bg.position.y = 0
         bg.position.x = (width - bg.width) / 2

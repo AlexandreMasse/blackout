@@ -23,7 +23,7 @@ class SceneManager extends Component {
     })
 
     this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
-      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index]})
+      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], app: this.app})
     })
 
     this.nextSceneObjectArray = [null, null];
@@ -33,6 +33,8 @@ class SceneManager extends Component {
     this.app = null;
 
     this.init()
+    this.isSplitActive = false
+    this.setMargeSplitScreen()
   }
 
   init() {
@@ -41,7 +43,7 @@ class SceneManager extends Component {
     let width = parentRef.clientWidth
     let height = parentRef.clientHeight
 
-    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000, antialias: false})
+    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000000, antialias: false})
 
     parentRef.appendChild(this.app.view)
 
@@ -98,6 +100,25 @@ class SceneManager extends Component {
     })
 
     this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
+    if (!this.isSplitActive) {
+      this.margeSplitScreen.visible = true
+      this.margeSplitScreen.alpha = 1
+    }
+    this.isSplitActive = true
+
+    TweenMax.to(this.margeSplitScreen, 1, {
+      x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
+    })
+  }
+
+  setMargeSplitScreen() {
+    this.margeSplitScreen = new PIXI.Graphics()
+    this.margeSplitScreen.beginFill(0xffffff)
+    this.margeSplitScreen.drawRect(0, 0, 6, window.innerHeight)
+    this.margeSplitScreen.endFill()
+    this.margeSplitScreen.visible = false
+    this.margeSplitScreen.alpha = 0
+    this.app.stage.addChild(this.margeSplitScreen)
   }
 
 
@@ -121,7 +142,8 @@ class SceneManager extends Component {
       this.currentSceneInstanceArray[index] = new this.currentSceneObjectArray[index].scene({
         dispatch: this.props.dispatch,
         store: this.props.store,
-        player: this.players[index]
+        player: this.players[index],
+        app: this.app
       })
       // then go to next scene
       this.nextScene(nextScene, index)
@@ -133,7 +155,7 @@ class SceneManager extends Component {
     const player = this.players[index]
 
     this.nextSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === nextScene);
-    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player})
+    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player, app: this.app})
     this.app.stage.addChild(this.nextSceneInstanceArray[index].sprite)
     this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {
     })
@@ -200,14 +222,14 @@ class SceneManager extends Component {
           height: window.innerHeight,
           zIndex: 3,
         }}>
-          <div className="child" style={{
-            background: "linear-gradient(to right, red, blue)",
+        <div className="child" style={{
+            // background: "linear-gradient(to right, red, blue)",
             position: "absolute",
             left: "50%",
             top: "50%",
             width: "100%",
             height: "5rem",
-            transform: "translate(-50%, -50%)",
+            transform: "translate3d(-50%, -50%, 0)",
           }}/>
         </div>
 
@@ -222,14 +244,14 @@ class SceneManager extends Component {
           transform: `translateX(${window.innerWidth / 2}px)`,
           zIndex: 3,
         }}>
-          <div className="child" style={{
-            background: "linear-gradient(to right, red, blue)",
+        <div className="child" style={{
+            // background: "linear-gradient(to right, red, blue)",
             position: "absolute",
             left: "50%",
             top: "50%",
             width: "100%",
             height: "5rem",
-            transform: "translate(-50%, -50%)",
+            transform: "translate3d(-50%, -50%, 0)",
           }}/>
         </div>
       </>
