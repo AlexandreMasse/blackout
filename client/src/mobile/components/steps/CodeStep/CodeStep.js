@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {wsEmitFingerprint} from "../../../redux/actions/websockets/websocketsAction";
 //import {setCurrentStep} from "../../../redux/actions/mobileAction";
-import DigitRoll from 'digit-roll-react'
 //css
 import './CodeStep.scss'
 //lib

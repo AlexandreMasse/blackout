@@ -11,6 +11,7 @@
     "@types/react-transition-group": "^2.0.14",
     "classnames": "^2.2.6",
     "dat.gui": "^0.7.5",
+    "digit-roll-react": "^1.1.0",
     "gsap": "^2.0.2",
     "gyronorm": "^2.0.6",
     "is-promise": "^2.1.0",

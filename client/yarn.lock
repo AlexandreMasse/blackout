@@ -3035,6 +3035,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+digit-roll-react@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/digit-roll-react/-/digit-roll-react-1.1.0.tgz#b034f0f45814da250febf5b5554cc3f634ec04fb"
+  integrity sha512-8SS0Th7x5mqf8cEW548Zgw897Iz7+0BY5UQYyXFLIfBEWmTzVeFzeJztauRKMUbQwJaMtoVIkOASX9hPp6HjhA==
+
 dir-glob@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-2.0.0.tgz#0b205d2b6aef98238ca286598a8204d29d0a0034"
