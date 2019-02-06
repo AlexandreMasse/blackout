@@ -17,6 +17,8 @@
   $carousels-height: 15rem;
   $carousel-width: 8rem;
 
+  $rotation-duration: 0.3s;
+
   .carousels {
     height: $carousels-height;
     display: flex;
@@ -33,7 +35,7 @@
   .carousel {
     height: 100%;
     width: $carousel-width;
-    padding: $carousels-height / 4 0;
+    padding: $carousels-height/4 0;
     perspective: $viewer-distance;
     overflow: hidden;
 
@@ -48,12 +50,11 @@
     .items-container {
       margin: 0;
 
-      color:white;
       //width: $item-width;
       height: 100%;
       width: 100%;
       transform-style: preserve-3d;
-      transition: transform 0.5s;
+      transition: transform $rotation-duration;
 
       .item {
         height: 100%;
@@ -64,10 +65,20 @@
         align-items: center;
         justify-content: center;
         //padding: 0 $item-separation / 2;
+        color: white;
+
+        transition: all 0s 0s;
+
+        &.current {
+          background-color: $red;
+          color: black;
+          transition: all 0s $rotation-duration;
+        }
 
         p {
           margin: 0;
           font-size: 4rem;
+          font-variation-settings: $bold;
         }
 
         &:not(:first-of-type) {
@@ -80,7 +91,8 @@
   }
 
   nav {
-    display: flex;
+    display: none;
+    //display: flex;
     justify-content: center;
     margin: 50px 0 0;
     z-index: 200;

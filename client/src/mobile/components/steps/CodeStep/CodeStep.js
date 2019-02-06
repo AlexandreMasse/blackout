@@ -101,9 +101,10 @@ class CodeStep extends Component {
     for (let i = 1; i < n; i++) {
       carouselItems[i].style.transformOrigin = `50% 50% ${-apothem}px`;
       carouselItems[i].style.transform = `rotateX(${i * theta}rad)`;
+      carouselItems[i].style.backfaceVisibility = 'hidden';
     }
 
-    this.rotateCarousel(currImage, index)
+    this.changeCarouselCurrentImage(index,currImage)
 
   }
 
@@ -136,7 +137,7 @@ class CodeStep extends Component {
           }
         }
       }), () => {
-        this.rotateCarousel(currImage, carouselIndex)
+        this.changeCarouselCurrentImage(carouselIndex,currImage)
       })
 
     }
@@ -145,6 +146,27 @@ class CodeStep extends Component {
   }
 
   changeCarouselCurrentImage = (carouselIndex, newImage) => {
+    const {carouselItems, currImage} = this.state.carousels[carouselIndex]
+
+    const getItemIndex = (index) => {
+      if (index % 10 > 0) {
+        return index % 10
+      } else if (index % 10 < 0) {
+        return 10 - Math.abs(index % 10)
+      } else {
+        return 0
+      }
+    }
+
+    const currentIndex = getItemIndex(currImage)
+    const newIndex = getItemIndex(newImage)
+
+    console.log(currentIndex, newIndex);
+
+    carouselItems[currentIndex].classList.remove('current');
+    carouselItems[newIndex].classList.add('current');
+
+
     this.setState(prevState => ({
       carousels: {
         ...prevState.carousels,
@@ -209,25 +231,6 @@ class CodeStep extends Component {
       <div className="code-step" ref={ref => this.ref = ref}>
 
         <div className="carousels">
-          {/*<div className="carousel carousel-1">*/}
-          {/*<div className={"items-container"}>*/}
-          {/*<img src="https://source.unsplash.com/nvzvOPQW0gc/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/EbuaKnSm8Zw/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/kG38b7CFzTY/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/mCg0ZgD7BgU/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/VkwRmha1_tI/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/1FWICvPQdkY/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/bjhrzvzZeq4/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/7mUXaBBrhoA/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/7mUXaBBrhoA/800x533" alt="" className={"item"}/>*/}
-          {/*<img src="https://source.unsplash.com/7mUXaBBrhoA/800x533" alt="" className={"item"}/>*/}
-          {/*</div>*/}
-          {/*<nav>*/}
-          {/*<button className="nav prev">Prev</button>*/}
-          {/*<button className="nav next">Next</button>*/}
-          {/*</nav>*/}
-          {/*</div>*/}
-
 
           <div className="carousel carousel-1">
             <div className={"items-container"}>
@@ -269,7 +272,6 @@ class CodeStep extends Component {
           </div>
 
           <div className="separator"/>
-
 
           <div className="carousel carousel-2">
             <div className={"items-container"}>
