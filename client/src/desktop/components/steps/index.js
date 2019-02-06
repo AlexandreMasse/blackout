@@ -25,6 +25,14 @@ import {
   onExitTimeout as SceneStepOnExitTimeout
 } from "./SceneStep/transition";
 
+import {default as ConclusionStep} from './ConclusionStep/ConclusionStep'
+import {
+  onEnter as ConclusionStepOnEnter,
+  onExit as ConclusionStepOnExit,
+  onEnterTimeout as ConclusionStepOnEnterTimeout,
+  onExitTimeout as ConclusionStepOnExitTimeout
+} from "./ConclusionStep/transition";
+
 
 
 export default {
@@ -51,7 +59,15 @@ export default {
     timeout: {enter: SceneStepOnEnterTimeout, exit: SceneStepOnExitTimeout},
     onEnter: SceneStepOnEnter,
     onExit: SceneStepOnExit
-  }
+  },
+  CONCLUSION: {
+    name: "CONCLUSION",
+    classNames: "",
+    component: <ConclusionStep/>,
+    timeout: {enter: ConclusionStepOnEnterTimeout, exit: ConclusionStepOnExitTimeout},
+    onEnter: ConclusionStepOnEnter,
+    onExit: ConclusionStepOnExit
+  },
 }
 
 

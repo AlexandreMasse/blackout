@@ -85,7 +85,7 @@ class DesktopApp extends Component {
               this.setState({showDevButton: !this.state.showDevButton})
             }}>TOGGLE DEV</p>
             <div className={classNames("dev-button", {"show": this.state.showDevButton})}>
-
+              <p onClick={() => this.props.setCurrentStep(steps.CONCLUSION.name)}>Step : Conclusion</p>
               <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Step : analysis</p>
               <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>Step : scene</p>
               <p onClick={() => {
