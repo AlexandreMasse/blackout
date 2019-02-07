@@ -38,6 +38,7 @@ class SceneStep extends Component {
 
     return (
       <div className="scene-step step" ref={(ref) => this.ref = ref}>
+        <canvas className="canvas"/>
         <div className={"scene-step__menu"}>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>SCENE FLASHLIGHT</button>
           <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENEGENERATOR.name)}>SCENE GENERATOR</button>

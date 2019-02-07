@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types"
-import * as PIXI from "pixi.js";
+import * as PIXI from "pixi.js"
+import * as THREE from 'three'
 //Step
 import scenes from '../../scenes'
 
@@ -23,18 +24,75 @@ class SceneManager extends Component {
     })
 
     this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
-      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], app: this.app})
+      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], renderer2D: this.renderer2D, renderer3D: this.renderer3D})
     })
 
-    this.nextSceneObjectArray = [null, null];
+    this.nextSceneObjectArray = [null, null]
 
-    this.nextSceneInstanceArray = [null, null];
+    this.nextSceneInstanceArray = [null, null]
 
-    this.app = null;
+    this.app = null
 
-    this.init()
+    this.initThree()
+    this.initPIXI()
+    // this.init()
     this.isSplitActive = false
     this.setMargeSplitScreen()
+  }
+
+  initThree() {
+    const {parentRef} = this.props
+
+    this.canvasObj = {
+        el: parentRef.querySelector('.canvas'),
+        width: window.innerWidth,
+        height: window.innerHeight,
+        pixelRatio: 1
+    }
+
+    this.renderer3D = new THREE.WebGLRenderer({canvas: this.canvasObj.el, alpha: true})
+    this.renderer3D.setPixelRatio(this.canvasObj.pixelRatio)
+    this.renderer3D.setSize(this.canvasObj.width, this.canvasObj.height)
+  }
+
+  initPIXI() {
+    this.renderer2D = new PIXI.autoDetectRenderer(this.canvasObj.width, this.canvasObj.height, {
+        backgroundColor: 0x000000,
+        view: this.canvasObj.el
+    })
+    this.stage = new PIXI.Container()
+    this.ticker = new PIXI.ticker.Ticker()
+    this.ticker.start()
+
+    // setup interaction
+    this.interaction = new PIXI.interaction.InteractionManager({
+        root: this.stage,
+        ticker: this.ticker,
+        view: this.renderer2D.view
+    })
+
+    this.ticker.add(this.renderScene.bind(this))
+
+    this.currentSceneObjectArray.forEach((currentSceneObject, index) => {
+      //enter animation
+      currentSceneObject.onEnter(this.currentSceneInstanceArray[index])
+      // add texture scene
+      this.stage.addChild(this.currentSceneInstanceArray[index].sprite)
+    })
+
+    // window.addEventListener('resize', this.onWindowResize, false)
+    // const canvasTexture = PIXI.Texture.fromCanvas(this.sceneFBO.createTexture())
+    // canvasTexture.baseTexture.resolution = canvas.pixelRatio
+    // this.sprite3D = new PIXI.Sprite(canvasTexture)
+    // this.sprite3D.position.x += 110
+    
+    // const canvasTexture2 = PIXI.Texture.fromCanvas(this.sceneFBO2.createTexture())
+    // canvasTexture2.baseTexture.resolution = canvas.pixelRatio
+    // this.sprite3D2 = new PIXI.Sprite(canvasTexture2)
+    // this.sprite3D2.position.x += 100
+
+    // this.stage.addChild(this.sprite3D)
+    // this.stage.addChild(this.sprite3D2)
   }
 
   init() {
@@ -61,7 +119,7 @@ class SceneManager extends Component {
 
   renderScene() {
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
-      this.app.renderer.render(currentSceneInstance.container, currentSceneInstance.rt)
+      this.renderer2D.render(currentSceneInstance.container, currentSceneInstance.rt)
       if (currentSceneInstance.needUpdate) {
         currentSceneInstance.update()
       }
@@ -70,17 +128,19 @@ class SceneManager extends Component {
     // required only if nextScene enter before currentScene exited
     this.nextSceneInstanceArray.forEach(nextSceneInstance => {
       if (nextSceneInstance) {
-        this.app.renderer.render(nextSceneInstance.container, nextSceneInstance.rt)
+        this.renderer2D.render(nextSceneInstance.container, nextSceneInstance.rt)
         if (nextSceneInstance.needUpdate) {
           nextSceneInstance.update()
         }
       }
     })
+
+    this.renderer2D.render(this.stage)
   }
 
   onWindowResize = () => {
     const {parentRef} = this.props
-    this.app.renderer.resize(parentRef.clientWidth, parentRef.clientHeight)
+    this.renderer2D.resize(parentRef.clientWidth, parentRef.clientHeight)
   }
 
   calculWidthScene(pct) {
@@ -118,7 +178,7 @@ class SceneManager extends Component {
     this.margeSplitScreen.endFill()
     this.margeSplitScreen.visible = false
     this.margeSplitScreen.alpha = 0
-    this.app.stage.addChild(this.margeSplitScreen)
+    this.stage.addChild(this.margeSplitScreen)
   }
 
 
@@ -143,7 +203,8 @@ class SceneManager extends Component {
         dispatch: this.props.dispatch,
         store: this.props.store,
         player: this.players[index],
-        app: this.app
+        renderer2D: this.renderer2D,
+        renderer3D: this.renderer3D
       })
       // then go to next scene
       this.nextScene(nextScene, index)
@@ -155,8 +216,8 @@ class SceneManager extends Component {
     const player = this.players[index]
 
     this.nextSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === nextScene);
-    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player, app: this.app})
-    this.app.stage.addChild(this.nextSceneInstanceArray[index].sprite)
+    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player, renderer2D: this.renderer2D, renderer3D: this.renderer3D})
+    this.stage.addChild(this.nextSceneInstanceArray[index].sprite)
     this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {
     })
     this.currentSceneInstanceArray[index].sprite.destroy()

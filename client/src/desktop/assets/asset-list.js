@@ -10,6 +10,7 @@ import outline from './img/lueurgenerateur.png'
 import flashoff from './img/flash-off.png'
 import generator from './img/generator.png'
 import stairs from './obj/Escalier2801.glb'
+import stairs2 from './obj/Escalier2801-new.glb'
 import outside from './img/outside.png'
 import outsideTest from './img/outside-test.png'
 import outsideVoyant from './img/outside_voyant.png'
@@ -50,6 +51,7 @@ import middlePointImg from './spritesheet/generator/24fps/gen-03.png'
 
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
+    stairs2: { url: stairs2, type: 'gltf'},
     bureauItem: { url: bureauItem,  type: 'image'},
     cinematique: { url: cinematique, name:'cinematique', type:'video'},
     cinematiquePorte: { url: cinematiquePorte, name:'cinematiquePorte', type:'video'},

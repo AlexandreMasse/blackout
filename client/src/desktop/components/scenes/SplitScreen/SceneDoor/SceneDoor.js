@@ -6,8 +6,8 @@ import {SceneDoorAdvantage, SceneDoorDisavantage} from './SubScene'
 
 export default class SceneDoor {
 
-  constructor({dispatch, store, player, app}) {
-    this.app = app
+  constructor({dispatch, store, player, renderer2D}) {
+    this.renderer2D = renderer2D
     this.player = player
     this.store = store
     this.needUpdate = true;
@@ -43,17 +43,9 @@ export default class SceneDoor {
     let width = window.innerWidth
     let height = window.innerHeight
     this.container = new PIXI.Container()
-    // let outsideImg = AssetsManager.get('outsideTest')
-    // let baseTexture = new PIXI.BaseTexture(outsideImg)
-    // let texture = new PIXI.Texture(baseTexture)
-    // this.outsideSprite = new PIXI.Sprite(texture)
     this.marge = 3
     this.containerSize = {width: width * this.initialPrct, height:height}
     this.mask = new PIXI.Graphics().beginFill(0x8bc5ff).drawRect(0,0, this.containerSize.width - this.marge, this.containerSize.height).endFill()
-    // this.spriteSize = {
-    //   width: this.outsideSprite.width,
-    //   height: this.outsideSprite.height
-    // } 
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
@@ -64,7 +56,6 @@ export default class SceneDoor {
     switch (this.status) {
       case 'superior':
         setFullScreen(this.spriteAdvantage, this.spriteAdvantage.width, this.spriteAdvantage.height, this.containerSize.width)
-        // setFullScreen(this.outsideSprite, this.spriteSize.width, this.spriteSize.height, this.containerSize.width)
         break;
       case 'inferior':
       setFullScreen(this.spriteDisadvantage, this.spriteDisadvantage.width, this.spriteDisadvantage.height, this.containerSize.width)
@@ -141,11 +132,11 @@ export default class SceneDoor {
 
   update() {
     if (this.sceneDisadvantage) {
-      this.app.renderer.render(this.sceneDisadvantage.container, this.sceneDisadvantage.rt)
+      this.renderer2D.render(this.sceneDisadvantage.container, this.sceneDisadvantage.rt)
     }
 
     if (this.sceneAdvantage) {
-      this.app.renderer.render(this.sceneAdvantage.container, this.sceneAdvantage.rt)
+      this.renderer2D.render(this.sceneAdvantage.container, this.sceneAdvantage.rt)
     }
     //console.log("scene2 update");
     //console.log("update scene 2");

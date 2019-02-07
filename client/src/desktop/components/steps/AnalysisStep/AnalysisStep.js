@@ -47,21 +47,21 @@ class AnalysisStep extends Component {
     })
     this.tl.addLabel("analysis")
     this.tl.add(() => {this.playVideo()}, 0)
-    this.tl.add(() => {this.blockAppear.start(0)}, 4)
-    this.tl.add(() => {this.blockAppear.activeValue(0)}, 4.4)
-    this.tl.add(() => {this.blockAppear.start(1)}, 4.8)
-    this.tl.add(() => {this.blockAppear.start(2)}, 5.2)
-    this.tl.add(() => {this.blockAppear.activeValue(2)}, 5.6)
+    this.tl.add(() => {this.blockAppear.start(0)}, 4.8)
+    this.tl.add(() => {this.blockAppear.activeValue(0)}, 5.2)
+    this.tl.add(() => {this.blockAppear.start(1)}, 5.6)
+    this.tl.add(() => {this.blockAppear.start(2)}, 6)
+    this.tl.add(() => {this.blockAppear.activeValue(2)}, 6.4)
 
 
-    this.tl.add(() => {this.blockAppear.start(3)}, 4)
-    this.tl.add(() => {this.blockAppear.activeValue(3)}, 4.4)
-    this.tl.add(() => {this.blockAppear.start(4)}, 4.8)
-    this.tl.add(() => {this.blockAppear.start(5)}, 5.2)
-    this.tl.add(() => {this.blockAppear.activeValue(5)}, 5.6)
-    this.tl.add(() => {this.stopVideo()}, 5.6)
+    this.tl.add(() => {this.blockAppear.start(3)}, 4.8)
+    // this.tl.add(() => {this.stopVideo()}, 5)
+    this.tl.add(() => {this.blockAppear.activeValue(3)}, 5.2)
+    this.tl.add(() => {this.blockAppear.start(4)}, 5.6)
+    this.tl.add(() => {this.blockAppear.start(5)}, 6)
+    // this.tl.add(() => {this.playVideo()}, 6)
+    this.tl.add(() => {this.blockAppear.activeValue(5)}, 6.4)
 
-    this.tl.add(() => {this.playVideo()}, 6.8)
     this.tl.add(() => {this.blockAppear.removeblockActive()}, 7.2)
   }
   
@@ -82,7 +82,7 @@ class AnalysisStep extends Component {
     const dateUser2 = osReleaseDate2.split('/', 3)
     return (
       <div className="analysis-step step">
-            <video className="analysis-step__video" muted src={video.src}></video>
+            <video className="analysis-step__video" src={video.src}></video>
             <TextAnalysis
               handleBlockAppear={this.handleBlockAppear}
               position="left"
