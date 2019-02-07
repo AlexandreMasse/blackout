@@ -17,7 +17,6 @@ export const init = ( store ) => {
             switch (typeValue) {
                 case websocketsOnActionTypes.WEBSOCKET_ON_FINGERPRINT: {
                     console.log("receive fingerprint");
-                    console.log(store.getState());
                     const currentUser = store.getState().desktop.users.find(user => user.id === payload.userId)
                     // set desktop user currentScene
                     //TODO: replace with good data

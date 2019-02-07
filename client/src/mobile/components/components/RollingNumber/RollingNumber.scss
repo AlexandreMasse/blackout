@@ -1,0 +1,92 @@
+@import "../../../../stylesheets/global";
+
+.rolling-number  {
+
+  //$item-width: 40%;
+  //$item-separation: 0px;
+  $viewer-distance: 80rem;
+  $carousels-height: 15rem;
+  $carousel-width: 8rem;
+  $rotation-duration: 0.3s;
+
+  height: $carousels-height;
+  display: flex;
+  margin: auto;
+  border: 2px solid white;
+
+  &.full {
+    .carousel {
+      padding: 0 0;
+    }
+  }
+
+  .carousel {
+    height: 100%;
+    width: $carousel-width;
+    padding: $carousels-height/4 0;
+    perspective: $viewer-distance;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > * {
+      flex: 0 0 auto;
+    }
+
+    .items-container {
+      margin: 0;
+
+      //width: $item-width;
+      height: 100%;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform $rotation-duration;
+
+      .item {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        //padding: 0 $item-separation / 2;
+        color: white;
+        transition: all 0s 0s;
+
+        &.current {
+          background-color: $red;
+          color: black;
+          transition: all 0s $rotation-duration;
+        }
+
+        &.good {
+          background-color: #6ce288;
+          color: white;
+          transition: all 0s $rotation-duration;
+        }
+
+        p {
+          margin: 0;
+          font-size: 4rem;
+          font-variation-settings: $bold;
+        }
+
+        &:not(:first-of-type) {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+
+  .separator {
+    height: 100%;
+    width: 1px;
+    background-color: white;
+  }
+
+}
