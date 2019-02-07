@@ -18,10 +18,7 @@ const initialState = {
       id: "player1",
       isConnected: false,
       status: "inferior",
-      position: null,
-      sliderValue: null,
-      tapValue: null,
-      splitScreenPercentage:.5,
+      introProgression: 0,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 7,
@@ -40,8 +37,12 @@ const initialState = {
         },
         "score": 12.43252921697582
       },
+      position: null,
+      sliderValue: null,
+      tapValue: null,
+      code: [0, 0, 0],
+      splitScreenPercentage:.5,
       currentScene: scenes.SCENEFLASHLIGHT.name,
-      introProgression: 0,
       indication: {
         isActive: false,
         isOpen: false,
@@ -54,9 +55,7 @@ const initialState = {
       id: "player2",
       isConnected: false,
       status: "superior",
-      position: null,
-      sliderValue: null,
-      tapValue: null,
+      introProgression: 0,
       phoneData: {
         "os": "Android",
         "osVersionNumber": 8,
@@ -75,8 +74,11 @@ const initialState = {
         },
         "score": 15.43252921697582
       },
+      position: null,
+      sliderValue: null,
+      tapValue: null,
+      code: [0, 0, 0],
       currentScene: scenes.SCENEFLASHLIGHT.name,
-      introProgression: 0,
       indication: {
         isActive: false,
         isOpen: false,
@@ -374,6 +376,23 @@ export default (state = initialState, action) => {
             return {
               ...user,
               tapValue
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_CODE: {
+      const {code, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              code
             }
           } else {
             return user;

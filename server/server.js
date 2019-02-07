@@ -52,6 +52,7 @@ server.listen(app.get('port'), function () {
           user.phoneData(io, socket)
           user.introProgression(io, socket)
           user.fingerprint(io, socket)
+          user.code(io, socket)
         }
     })
   })

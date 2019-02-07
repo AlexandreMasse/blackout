@@ -7,6 +7,8 @@ import scenes from '../../scenes'
 
 import {TweenMax} from 'gsap'
 
+import {RollingNumber} from "../../../../mobile/components/components"
+
 class SceneManager extends Component {
 
   constructor(props) {
@@ -271,33 +273,46 @@ class SceneManager extends Component {
   }
 
   render() {
+    const {store} = this.props;
+
+    const player1 = store.users.find(user => user.id === "player1")
+    const player2 = store.users.find(user => user.id === "player2")
+
     return (
       <>
         <div ref={ref => this.refScene1 = ref} className="scene1" style={{
-          opacity: "0.5",
+          opacity: "1",
           transition: "clip-path 0.5s",
-          // backgroundColor:"rgba(20, 200, 170, 1)",
+          //backgroundColor:"rgba(20, 200, 170, 0.2)",
           position:"fixed",
+          display: "flex",
           top: 0,
           width: window.innerWidth / 2,
           height: window.innerHeight,
           zIndex: 3,
         }}>
-        <div className="child" style={{
-            // background: "linear-gradient(to right, red, blue)",
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            width: "100%",
-            height: "5rem",
-            transform: "translate3d(-50%, -50%, 0)",
-          }}/>
+
+        {/*<div className="child" style={{*/}
+            {/*background: "linear-gradient(to right, red, blue)",*/}
+            {/*position: "absolute",*/}
+            {/*left: "50%",*/}
+            {/*top: "50%",*/}
+            {/*width: "100%",*/}
+            {/*height: "5rem",*/}
+            {/*transform: "translate3d(-50%, -50%, 0)",*/}
+          {/*}}/>*/}
+
+          {player1.status === "inferior" &&
+            <RollingNumber className={"desktop"} numbers={player1.code}/>
+          }
+
+
         </div>
 
         <div ref={ref => this.refScene2 = ref} className="scene2" style={{
-          opacity: "0.5",
+          opacity: "1",
           transition: "clip-path 0.5s",
-          // backgroundColor:"rgba(200, 100, 80, 1)",
+          //backgroundColor:"rgba(200, 100, 80, 0.2)",
           position:"fixed",
           top: 0,
           width: window.innerWidth / 2,
@@ -305,15 +320,19 @@ class SceneManager extends Component {
           transform: `translateX(${window.innerWidth / 2}px)`,
           zIndex: 3,
         }}>
-        <div className="child" style={{
-            // background: "linear-gradient(to right, red, blue)",
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            width: "100%",
-            height: "5rem",
-            transform: "translate3d(-50%, -50%, 0)",
-          }}/>
+        {/*<div className="child" style={{*/}
+            {/*// background: "linear-gradient(to right, red, blue)",*/}
+            {/*position: "absolute",*/}
+            {/*left: "50%",*/}
+            {/*top: "50%",*/}
+            {/*width: "100%",*/}
+            {/*height: "5rem",*/}
+            {/*transform: "translate3d(-50%, -50%, 0)",*/}
+          {/*}}/>*/}
+
+          {player2.status === "inferior" &&
+            <RollingNumber className={"desktop"} numbers={player2.code}/>
+          }
         </div>
       </>
     )

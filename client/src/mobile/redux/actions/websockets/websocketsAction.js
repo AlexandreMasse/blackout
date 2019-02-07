@@ -83,3 +83,9 @@ export const wsEmitFingerprint = () => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_FINGERPRINT, {});
 }
 
+export const wsEmitCode = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_CODE, {
+        code: payload.code
+    });
+}
+

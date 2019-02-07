@@ -1,6 +1,6 @@
 @import "../../../../stylesheets/global";
 
-.rolling-number  {
+.rolling-number {
 
   //$item-width: 40%;
   //$item-separation: 0px;
@@ -13,10 +13,40 @@
   display: flex;
   margin: auto;
   border: 2px solid white;
+  align-items: center;
+  justify-content: center;
 
-  &.full {
+
+  &.desktop {
+
+    $carousels-height-desktop: 30rem;
+    $carousel-width-desktop: 18rem;
+    $carousel-margin-desktop: 2.5rem;
+
+    height: $carousels-height-desktop;
+    display: inline-flex;
+    margin: auto;
+    padding: $carousel-margin-desktop 0;
+    background-color: black;
+
     .carousel {
+      width: $carousel-width-desktop;
       padding: 0 0;
+      height: 100%;
+      margin: 0 $carousel-margin-desktop;
+
+      .items-container {
+        .item {
+          p {
+            font-size: 12rem;
+            font-variation-settings: $medium;
+          }
+        }
+      }
+    }
+
+    .separator {
+      height: 50%;
     }
   }
 
@@ -59,13 +89,13 @@
         &.current {
           background-color: $red;
           color: black;
-          transition: all 0s $rotation-duration;
+          transition: all 0.1s $rotation-duration;
         }
 
         &.good {
-          background-color: #6ce288;
-          color: white;
-          transition: all 0s $rotation-duration;
+          background-color: white;
+          color: black;
+          transition: all 0.1s $rotation-duration;
         }
 
         p {

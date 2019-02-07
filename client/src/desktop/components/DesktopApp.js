@@ -88,19 +88,23 @@ class DesktopApp extends Component {
               <p onClick={() => this.props.setCurrentStep(steps.CONCLUSION.name)}>Step : Conclusion</p>
               <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Step : analysis</p>
               <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>Step : scene</p>
-              <p onClick={() => {
-                this.props.setSplitScreen(true)
-                this.props.setUserCurrentScene("player1", scenes.SCENESTAIRS.name)
-                this.props.setUserCurrentScene("player2", scenes.SCENESTAIRS.name)
-              }}>SplitScreen : true</p>
+              <hr/>
               <p onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>Scene : flashlight</p>
               <p onClick={() => this.props.setCurrentScene(scenes.SCENEKINEMATIC2.name)}>Scene : kinematic 2</p>
+              <hr/>
+              <p onClick={() => {
+                this.props.setSplitScreen(true)
+              }}>SplitScreen : true</p>
               <p onClick={() => this.props.setUserCurrentScene("player1", scenes.SCENESTAIRS.name)}>Player 1 Scene : stair</p>
               <p onClick={() => this.props.setUserCurrentScene("player2", scenes.SCENESTAIRS.name)}>Player 2 Scene : stair</p>
+              <p onClick={() => this.props.setUserCurrentScene("player1", scenes.SCENEDOOR.name)}>Player 1 Scene : Door</p>
+              <p onClick={() => this.props.setUserCurrentScene("player2", scenes.SCENEDOOR.name)}>Player 2 Scene : Door</p>
+              <hr/>
               <p onClick={() => this.props.setUserIndicationActive("player1", true)}>Indication : player 1 active</p>
               <p onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
               <p onClick={() => this.props.setUserIndicationOpen("player1", true)}>Indication : player 1 open</p>
               <p onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
+              <hr/>
               <input onChange={(e) => 
                 { this.props.setPlayer1SplitScreenPercentage(Number(e.target.value) / 100)
                   this.setState({splitScreenPercentage:e.target.value})}}

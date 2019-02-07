@@ -30,14 +30,11 @@ class CodeStep extends Component {
   }
 
   render() {
-    const {className} = this.props
 
     return (
-      <div className={classNames("code-step", className)} ref={ref => this.ref = ref}>
+      <div className={classNames("code-step")} ref={ref => this.ref = ref}>
 
         <RollingNumber numbers={this.state.numbers}/>
-
-        <button onClick={() => this.setState({numbers:[0,2,1]})} style={{color: "red", height: "2rem", margin: "auto"}}> Change code 0 2 1</button>
 
       </div>
     )
@@ -51,9 +48,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    wsEmitFingerprint: () => dispatch(wsEmitFingerprint()),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CodeStep)

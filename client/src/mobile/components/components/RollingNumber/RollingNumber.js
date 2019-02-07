@@ -4,25 +4,25 @@ import {connect} from 'react-redux'
 //css
 import './RollingNumber.scss'
 //lib
-import {Power1, TweenMax} from 'gsap'
+import classNames from "classnames"
 import PropTypes from 'prop-types'
+import {wsEmitCode} from "../../../redux/actions/websockets/websocketsAction";
 
 class RollingNumber extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      carousels: {
-        0: {
-          currentItem: props.numbers[0]
-        },
-        1: {
-          currentItem: props.numbers[1]
-        },
-        2: {
-          currentItem: props.numbers[2]
-        }
+
+    this.carousels = {
+      0: {
+        currentPosition: props.numbers[0]
+      },
+      1: {
+        currentPosition: props.numbers[1]
+      },
+      2: {
+        currentPosition: props.numbers[2]
       }
     }
 
@@ -33,10 +33,12 @@ class RollingNumber extends Component {
     this.touchMoveListeners = []
     this.resizeListeners = []
 
+    this.itemsPerCarousel = 10
+
   }
 
   componentDidMount() {
-    this.carousels = this.ref.querySelectorAll(".carousel")
+    this.carouselsElements = this.ref.querySelectorAll(".carousel")
 
     this.initCarousels()
   }
@@ -51,9 +53,9 @@ class RollingNumber extends Component {
 
   componentWillUnmount() {
     if (this.props.isMobile) {
-      for (let i = 0; i < this.carousels.length; i++) {
-        this.carousels[i].removeEventListener('touchstart', this.touchStartListeners[i], false);
-        this.carousels[i].removeEventListener('touchmove', this.touchMoveListeners[i], false);
+      for (let i = 0; i < this.carouselsElements.length; i++) {
+        this.carouselsElements[i].removeEventListener('touchstart', this.touchStartListeners[i], false);
+        this.carouselsElements[i].removeEventListener('touchmove', this.touchMoveListeners[i], false);
         window.removeEventListener("resize", this.resizeListeners[i])
       }
     }
@@ -63,49 +65,53 @@ class RollingNumber extends Component {
     this.props.handleRef(el)
   }
 
-  initCarousels = () => {
-    for (let i = 0; i < this.carousels.length; i++) {
-      this.carousel(this.carousels[i], i);
+  getIndexFromPosition = (position) => {
+    if (position > 0) {
+      return position % this.itemsPerCarousel
+    } else if (position < 0) {
+      return this.itemsPerCarousel - Math.abs(position % this.itemsPerCarousel)
+    } else {
+      return 0
     }
   }
 
-  carousel = (root, index) => {
+  initCarousels = () => {
+    for (let i = 0; i < this.carouselsElements.length; i++) {
+      const root = this.carouselsElements[i]
+      const index = i
 
-    if(this.props.isMobile) {
-      root.addEventListener('touchstart', this.touchStartListeners[index] = (e) => this.handleTouchStart(e, index), false);
-      root.addEventListener('touchmove', this.touchMoveListeners[index] = (e) => this.handleTouchMove(e, index), false);
-    }
 
-    const
-      carouselItemsContainer = root.querySelector('.items-container'),
-      carouselItems = carouselItemsContainer.children,
-      n = carouselItems.length,
-      //gap = root.dataset.gap || 0,
-      //bfc = 'bfc' in root.dataset,
-      theta = 2 * Math.PI / n
-    ;
+      if (this.props.isMobile) {
+        root.addEventListener('touchstart', this.touchStartListeners[index] = (e) => this.handleTouchStart(e, index), false);
+        root.addEventListener('touchmove', this.touchMoveListeners[index] = (e) => this.handleTouchMove(e, index), false);
+      }
 
-    this.setState(prevState => ({
-      carousels: {
-        ...prevState.carousels,
+      const
+        carouselItemsContainer = root.querySelector('.items-container'),
+        carouselItems = carouselItemsContainer.children,
+        n = carouselItems.length,
+        theta = 2 * Math.PI / n
+      ;
+
+      this.carousels = {
+        ...this.carousels,
         [index]: {
-          ...prevState.carousels[index],
+          ...this.carousels[index],
           carouselItemsContainer,
           carouselItems,
           n,
           theta
         }
       }
-    }), () => {
       this.setupCarousel(index)
       window.addEventListener("resize", this.resizeListeners[index] = () => this.setupCarousel(index))
-    })
 
+    }
   }
 
-  setupCarousel = (index) => {
+  setupCarousel = (carouselIndex) => {
 
-    const {n, carouselItemsContainer, currentItem, carouselItems, theta} = this.state.carousels[index]
+    const {n, carouselItemsContainer, currentPosition, carouselItems, theta} = this.carousels[carouselIndex]
 
     const s = parseFloat(getComputedStyle(carouselItems[0]).height)
 
@@ -119,37 +125,21 @@ class RollingNumber extends Component {
       carouselItems[i].style.backfaceVisibility = 'hidden';
     }
 
-    this.changeCarouselCurrentImage(index, currentItem)
+    this.changeCarouselCurrentImage(carouselIndex, currentPosition)
 
   }
 
-  changeCarouselCurrentImage = (carouselIndex, newItem) => {
-    const {carouselItems, currentItem} = this.state.carousels[carouselIndex]
+  changeCarouselCurrentImage = (carouselIndex, newPosition) => {
+    const {carouselItems, currentPosition} = this.carousels[carouselIndex]
 
-    const getItemIndex = (index) => {
-      if (index % 10 > 0) {
-        return index % 10
-      } else if (index % 10 < 0) {
-        return 10 - Math.abs(index % 10)
-      } else {
-        return 0
-      }
-    }
+    const currentIndex = this.getIndexFromPosition(currentPosition)
+    const newIndex = this.getIndexFromPosition(newPosition)
 
-    const currentIndex = getItemIndex(currentItem)
-    const newIndex = getItemIndex(newItem)
-
-    //Todo: emit code : newIndex
-    if(this.props.isMobile) {
-      //this.props.
-    }
-
-
-
-
+    // Remove class to current item
     carouselItems[currentIndex].classList.remove('current');
     carouselItems[currentIndex].classList.remove('good');
 
+    // add class to new item
     if(this.props.code[carouselIndex] === newIndex) {
       carouselItems[newIndex].classList.add('good');
     } else {
@@ -157,21 +147,30 @@ class RollingNumber extends Component {
     }
 
 
-    this.setState(prevState => ({
-      carousels: {
-        ...prevState.carousels,
-        [carouselIndex]: {
-          ...prevState.carousels[carouselIndex],
-          currentItem: newItem,
-        }
+    // update currentPosition
+    this.carousels = {
+      ...this.carousels,
+      [carouselIndex]: {
+        ...this.carousels[carouselIndex],
+        currentPosition: newPosition,
       }
-    }), () => {
-      this.rotateCarousel(newItem, carouselIndex)
-    })
+    }
+
+    this.rotateCarousel(newPosition, carouselIndex)
+
+    // Emit code position to desktop
+    if (this.props.isMobile) {
+      const code = []
+      for (let carousel in this.carousels) {
+        code[carousel] = this.carousels[carousel].currentPosition;
+      }
+      this.props.wsEmitCode(code)
+    }
+
   }
 
   rotateCarousel = (imageIndex, carouselIndex) => {
-    const {carouselItemsContainer, theta} = this.state.carousels[carouselIndex];
+    const {carouselItemsContainer, theta} = this.carousels[carouselIndex];
     carouselItemsContainer.style.transform = `rotateX(${imageIndex * -theta}rad)`;
   }
 
@@ -179,22 +178,22 @@ class RollingNumber extends Component {
   // swipe logic
 
 
-  handleTouchStart = (evt, element) => {
+  handleTouchStart = (evt, index) => {
     const firstTouch = evt.touches[0];
-    this.xDown[element] = firstTouch.clientX;
-    this.yDown[element] = firstTouch.clientY;
+    this.xDown[index] = firstTouch.clientX;
+    this.yDown[index] = firstTouch.clientY;
   };
 
-  handleTouchMove = (evt, element) => {
-    if (typeof element == 'undefined' || !this.xDown[element] || !this.yDown[element]) {
+  handleTouchMove = (evt, index) => {
+    if (typeof index == 'undefined' || !this.xDown[index] || !this.yDown[index]) {
       return;
     }
 
     let xUp = evt.touches[0].clientX;
     let yUp = evt.touches[0].clientY;
 
-    let xDiff = this.xDown[element] - xUp;
-    let yDiff = this.yDown[element] - yUp;
+    let xDiff = this.xDown[index] - xUp;
+    let yDiff = this.yDown[index] - yUp;
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
       if (xDiff > 0) {
@@ -205,21 +204,22 @@ class RollingNumber extends Component {
     } else {
       if (yDiff > 0) {
         /* up swipe */
-        this.changeCarouselCurrentImage(element, this.state.carousels[element].currentItem - 1)
+        this.changeCarouselCurrentImage(index, this.carousels[index].currentPosition - 1)
       } else {
         /* down swipe */
-        this.changeCarouselCurrentImage(element, this.state.carousels[element].currentItem + 1)
+        this.changeCarouselCurrentImage(index, this.carousels[index].currentPosition + 1)
 
       }
     }
     /* reset values */
-    this.xDown[element] = null;
-    this.yDown[element] = null;
+    this.xDown[index] = null;
+    this.yDown[index] = null;
   };
 
   render() {
+    const {className} = this.props
     return (
-      <div className="rolling-number .carousels" ref={ref => this.ref = ref}>
+      <div className={classNames("rolling-number .carousels", className)} ref={ref => this.ref = ref}>
 
         <div className="carousel carousel-1">
           <div className={"items-container"}>
@@ -355,6 +355,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    wsEmitCode: (code) => dispatch(wsEmitCode({code})),
   }
 }
 
