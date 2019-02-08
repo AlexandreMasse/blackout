@@ -82,19 +82,6 @@ class SceneManager extends Component {
       this.stage.addChild(this.currentSceneInstanceArray[index].sprite)
     })
 
-    // window.addEventListener('resize', this.onWindowResize, false)
-    // const canvasTexture = PIXI.Texture.fromCanvas(this.sceneFBO.createTexture())
-    // canvasTexture.baseTexture.resolution = canvas.pixelRatio
-    // this.sprite3D = new PIXI.Sprite(canvasTexture)
-    // this.sprite3D.position.x += 110
-    
-    // const canvasTexture2 = PIXI.Texture.fromCanvas(this.sceneFBO2.createTexture())
-    // canvasTexture2.baseTexture.resolution = canvas.pixelRatio
-    // this.sprite3D2 = new PIXI.Sprite(canvasTexture2)
-    // this.sprite3D2.position.x += 100
-
-    // this.stage.addChild(this.sprite3D)
-    // this.stage.addChild(this.sprite3D2)
   }
 
   init() {

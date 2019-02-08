@@ -1,19 +1,28 @@
 import * as THREE from 'three'
 import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
+// redux
+import { setCurrentScene , setUserCurrentScene} from "../../../../../redux/actions/desktopAction"
+import {wsEmitCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
+
+//scenes
+import scenes from '../../../'
+import stepsMobile from '../../../../../../mobile/components/steps'
 
 export default class SceneTest {
-    constructor(status) {
+    constructor(status, player, dispatch) {
         this.status = status
+        this.player = player
         this.getGltfScene()
         this.set()
         this.setAnimation()
+        this.detectAnimationEnd(status, player, dispatch)
         this.isArrived = false
         this.addToScene()
     }
     
     getGltfScene() {
-        const gltf = AssetsManager.get('stairs')
+        const gltf = this.player === 'player1' ? AssetsManager.get('stairs') : AssetsManager.get('stairs2')
         this.gltf = gltf
     }
 
@@ -26,19 +35,19 @@ export default class SceneTest {
 
     set() {
         this.scene = new THREE.Scene()
-        this.camera = this.status === 'superior' ? this.gltf.cameras[1] : this.gltf.cameras[0]
-        this.scene.background = new THREE.Color('#FF0000')
+        this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
+        this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
         this.clock = new THREE.Clock()
-        this.renderTarget = new THREE.WebGLRenderTarget(window.innerWidth * 1, window.innerHeight * 1)
+        this.renderTarget = new THREE.WebGLRenderTarget(window.innerWidth * 2, window.innerHeight * 2)
     }
 
     setAnimation() {
         this.maxSpeed = this.status === 'superior' ? 1 : .6
         this.timing = this.status === 'superior' ? .8 : .6
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
-        this.mixer.timeScale = .5
+        this.mixer.timeScale = this.player === 'player1' ? .7 : 1
         var clips = this.gltf.animations        
-        const clip = this.status === 'superior' ? clips[0] : clips[1]
+        const clip = this.status === 'superior' ? clips[1] : clips[0]
         const action = this.mixer.clipAction(clip)
         action.loop = THREE.LoopOnce
         action.clampWhenFinished = true
@@ -67,6 +76,13 @@ export default class SceneTest {
             this.isArrived = true
         }
     }
+
+    detectAnimationEnd(status, player, dispatch) {
+		this.mixer.addEventListener( 'finished',() => {
+            console.log('le player ',player,' qui est ', status, 'a finito')
+            dispatch(setUserCurrentScene({userId: player, currentScene:scenes.SCENEDOOR.name}))
+		})
+	}
 
     resize(renderer) {
         this.size = new THREE.Vector2(window.innerWidth, window.innerHeight)
