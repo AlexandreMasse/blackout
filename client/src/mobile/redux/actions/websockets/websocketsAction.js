@@ -89,3 +89,9 @@ export const wsEmitCode = (payload) => (dispatch, getState, {emit}) => {
     });
 }
 
+export const wsEmitHandle = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_HANDLE, {
+        handle: payload.handle
+    });
+}
+

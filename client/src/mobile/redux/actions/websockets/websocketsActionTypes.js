@@ -11,6 +11,7 @@ export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_SHOW_DANGER: "showDanger",
     WEBSOCKET_EMIT_FINGERPRINT: "fingerprint",
     WEBSOCKET_EMIT_CODE: "code",
+    WEBSOCKET_EMIT_HANDLE: "handle",
 }
 
 export const websocketsOnActionTypes = {

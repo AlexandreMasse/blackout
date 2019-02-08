@@ -173,6 +173,15 @@ export default class User {
         })
     }
 
+    handle = (io, socket) => {
+        socket.on('handle', (data) => {
+            io.to(socket.room).emit('handle', {
+                handle: data.handle,
+                userId: socket.username
+            })
+        })
+    }
+
     sendUserId(io,userId, roomId) {
         const parts = roomId.split('-', 2)
         const roomIndex = parseInt(parts[1])

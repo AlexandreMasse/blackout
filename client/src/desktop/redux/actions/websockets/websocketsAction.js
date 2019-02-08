@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 
 import {websocketsOnActionTypes, websocketsEmitActionTypes} from './websocketsActionTypes';
-import {setUserCurrentScene} from './../desktopAction';
+import {setUserCurrentScene, setPlayer1SplitScreenPercentage} from './../desktopAction';
 import scenes from "../../../components/scenes"
 import mobileSteps from "../../../../mobile/components/steps"
 
@@ -27,6 +27,17 @@ export const init = ( store ) => {
                     const nextMobileStep = currentUser.status === "superior" ? mobileSteps.CURSOR.name : mobileSteps.CURSOR.name
                     store.dispatch(wsEmitUserCurrentStep({userId: payload.userId, currentStep: nextMobileStep }))
                 }
+                case websocketsOnActionTypes.WEBSOCKET_ON_HANDLE: {
+
+                    const isPlayer1 = payload.userId === "player1"
+                    const handlePourcentage = payload.handle / 2
+
+                    const splitScreenPercentage = isPlayer1 ? 0.5 + handlePourcentage : 0.5 - handlePourcentage;
+
+                    store.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+
+                }
+
             }
         })
     }

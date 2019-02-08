@@ -16,4 +16,5 @@ export const websocketsOnActionTypes = {
     WEBSOCKET_ON_INTRO_PROGRESSION: "introProgression",
     WEBSOCKET_ON_FINGERPRINT: "fingerprint",
     WEBSOCKET_ON_CODE: "code",
+    WEBSOCKET_ON_HANDLE: "handle",
 }

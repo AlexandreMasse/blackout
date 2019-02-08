@@ -293,6 +293,15 @@ class SceneManager extends Component {
             <RollingNumber className={"desktop"} numbers={player1.code}/>
           }
 
+          <p className={"handle-progression"} style={{
+            fontSize: "5rem",
+            color: "blue",
+            position: "absolute",
+            left: "50%",
+            top: "80%",
+            transform: 'translateX(-50%) translateY(-50%)'
+          }}>{player1.handle}</p>
+
 
         </div>
 

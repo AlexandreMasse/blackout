@@ -41,6 +41,7 @@ const initialState = {
       sliderValue: null,
       tapValue: null,
       code: [0, 0, 0],
+      handle: 0,
       splitScreenPercentage:.5,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
@@ -78,6 +79,7 @@ const initialState = {
       sliderValue: null,
       tapValue: null,
       code: [0, 0, 0],
+      handle: 0,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
         isActive: false,
@@ -393,6 +395,23 @@ export default (state = initialState, action) => {
             return {
               ...user,
               code
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_HANDLE: {
+      const {handle, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              handle
             }
           } else {
             return user;

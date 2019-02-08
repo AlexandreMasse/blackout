@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 // redux
 import {connect} from 'react-redux'
-import {wsEmitCode} from "../../../redux/actions/websockets/websocketsAction";
+import {wsEmitHandle} from "../../../redux/actions/websockets/websocketsAction";
 //css
 import './Handle.scss'
 //lib
@@ -15,6 +15,8 @@ class Handle extends Component {
     super(props);
 
     this.isDragging = false
+
+    this.lapsNumber = 2
   }
 
   componentDidMount() {
@@ -26,35 +28,34 @@ class Handle extends Component {
       type: "rotation",
       throwProps: false,
       trigger: this.targetElement,
-      onDrag: function () {
-        console.log(this)
+      bounds: {minRotation: 0, maxRotation: -360 * this.lapsNumber},
+      liveSnap: (value) => {
+        //stop rotation if not hover target
+        const hoveredElement = document.elementFromPoint(this.draggable.pointerX, this.draggable.pointerY);
+        if (hoveredElement !== this.targetElement) {
+          return this.draggable.rotation
+        } else {
+          return value
+        }
+      },
+      onDrag: () => {
+        const progression= this.draggable.rotation / (-360 * this.lapsNumber)
+        this.props.wsEmitHandle(progression)
       }
     });
     this.draggable.enable()
 
-    this.ref.addEventListener("touchmove", this.handleTouchMove, false)
-
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
+    // this.ref.addEventListener("touchmove", this.handleTouchMove, false)
 
   }
 
   componentWillUnmount() {
-    this.ref.removeEventListener("touchmove", this.handleTouchMove, false)
+    // this.ref.removeEventListener("touchmove", this.handleTouchMove, false)
     this.draggable.kill()
   }
 
   handleTouchMove = (e) => {
-    // TODO: use livesnap instead ?
-    //stop drag if not hover target
-    const hoveredElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
-    if(hoveredElement !== this.targetElement) {
-      this.draggable.endDrag()
-    }
   }
-
-
 
   render() {
     const {className} = this.props
@@ -62,9 +63,12 @@ class Handle extends Component {
       <div className={classNames("handle", className)} ref={ref => this.ref = ref}>
 
         <div className="handle__progression"/>
+
         <div className="handle__drag">
           <div className="handle__drag__target"/>
         </div>
+
+        <div className="handle__mask"/>
       </div>
     )
   }
@@ -85,7 +89,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //wsEmitCode: (code) => dispatch(wsEmitCode({code})),
+    wsEmitHandle: (handle) => dispatch(wsEmitHandle({handle})),
   }
 }
 
