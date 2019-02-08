@@ -57,9 +57,21 @@ const getOsReleaseDate = (os, osVersionNumber) => {
 
 // Operator
 export const getOperator = async () => {
-    const response = await fetch('http://ipinfo.io/json');
-    const json = await response.json();
-    return json;
+
+  const json = await (await (fetch('http://ipinfo.io/json')
+      .then(res => {
+        if(res.ok) {
+          return res.json()
+        } else {
+          console.log('Error to fetch http://ipinfo.io/json : ', res)
+          return null
+        }
+      })
+      .catch(err => {
+        console.log('Error to fetch http://ipinfo.io/json : ', err)
+        return null
+      })
+  ))
 }
 
 // Score
@@ -108,7 +120,7 @@ const getScore = (data) => {
   const regexOperator = (operator) => RegExp(operator, "i")
   for (let operator in operators) {
     const operatorName = operators[operator].name
-    if(regexOperator(operatorName).test(data.operator.org)) {
+    if(data.operator && regexOperator(operatorName).test(data.operator.org)) {
       operatorScore = operators[operator].score
     }
   }
