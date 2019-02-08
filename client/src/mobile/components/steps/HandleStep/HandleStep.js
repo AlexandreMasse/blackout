@@ -2,22 +2,27 @@ import React, {Component} from 'react'
 // redux
 import {connect} from 'react-redux'
 //css
-import './CodeStep.scss'
+import './HandleStep.scss'
 //lib
 import classNames from "classnames"
-//component
-import {RollingNumber} from '../../components'
+//Component
+import {Handle} from '../../components'
 
-class CodeStep extends Component {
+class HandleStep extends Component {
+
 
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+  }
+
   render() {
+
     return (
-      <div className={classNames("code-step")} ref={ref => this.ref = ref}>
-        <RollingNumber />
+      <div className={classNames("handle-step")} ref={ref => this.ref = ref}>
+        <Handle/>
       </div>
     )
   }
@@ -31,4 +36,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CodeStep)
+export default connect(mapStateToProps, mapDispatchToProps)(HandleStep)

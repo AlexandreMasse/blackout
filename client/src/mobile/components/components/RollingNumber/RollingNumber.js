@@ -61,10 +61,6 @@ class RollingNumber extends Component {
     }
   }
 
-  handleRef = (el) => {
-    this.props.handleRef(el)
-  }
-
   getIndexFromPosition = (position) => {
     if (position > 0) {
       return position % this.itemsPerCarousel

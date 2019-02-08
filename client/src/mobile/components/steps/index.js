@@ -67,6 +67,14 @@ import {
   onExitTimeout as CodeStepOnExitTimeout
 } from './CodeStep/transition'
 
+import {default as HandleStep} from './HandleStep/HandleStep'
+import {
+  onEnter as HandleStepOnEnter,
+  onExit as HandleStepOnExit,
+  onEnterTimeout as HandleStepOnEnterTimeout,
+  onExitTimeout as HandleStepOnExitTimeout
+} from './HandleStep/transition'
+
 
 export default {
   INTRO: {
@@ -132,5 +140,13 @@ export default {
     timeout: {enter: CodeStepOnEnterTimeout, exit: CodeStepOnExitTimeout},
     onEnter: CodeStepOnEnter,
     onExit: CodeStepOnExit
+  },
+  HANDLE: {
+    name: 'HANDLE',
+    component: <HandleStep/>,
+    classNames: "",
+    timeout: {enter: HandleStepOnEnterTimeout, exit: HandleStepOnExitTimeout},
+    onEnter: HandleStepOnEnter,
+    onExit: HandleStepOnExit
   }
 }

@@ -1,0 +1,42 @@
+@import "../../../../stylesheets/global";
+
+.handle {
+
+  $handle-drag-width: 7rem;
+  $handle-drag-height: 20rem;
+
+  $progression-width: 25rem;
+  $progression-height: 25rem;
+
+  margin: auto;
+  position: relative;
+
+  &__drag {
+    position: absolute;
+    width: $handle-drag-width;
+    height: $handle-drag-height;
+    background-color: blue;
+    transform-origin: center bottom;
+    top: -$handle-drag-height;
+    left: -$handle-drag-width / 2;
+
+    &__target {
+      background-color: $red;
+      width: 100%;
+      height: 10rem;
+    }
+  }
+
+  &__progression {
+    position: absolute;
+    background-color: green;
+    width: $progression-width;
+    height: $progression-height;
+    transform: translateY(-50%) translateX(-50%);
+    border-radius: 50%;
+
+  }
+
+
+
+}
