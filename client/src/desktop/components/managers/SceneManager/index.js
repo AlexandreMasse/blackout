@@ -281,28 +281,22 @@ class SceneManager extends Component {
           visibility: "hidden"
         }}>
 
-        {/*<div className="child" style={{*/}
-            {/*background: "linear-gradient(to right, red, blue)",*/}
-            {/*position: "absolute",*/}
-            {/*left: "50%",*/}
-            {/*top: "50%",*/}
-            {/*width: "100%",*/}
-            {/*height: "5rem",*/}
-            {/*transform: "translate3d(-50%, -50%, 0)",*/}
-          {/*}}/>*/}
-
-          {player1.status === "inferior" &&
+          {player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "inferior" &&
             <RollingNumber className={"desktop"} numbers={player1.code}/>
           }
 
-          <p className={"handle-progression"} style={{
-            fontSize: "5rem",
-            color: "blue",
-            position: "absolute",
-            left: "50%",
-            top: "80%",
-            transform: 'translateX(-50%) translateY(-50%)'
-          }}>{player1.handle}</p>
+          {player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "superior" &&
+            <LottieAnimation
+              autoplay={false}
+              loop={false}
+              play={false}
+              className={classNames("")}
+              animationData={animations.DoorCircle}
+              aspectRatio={"contain"}
+              progressionTweenDuration={0.1}
+              progression={player1.handle}
+            />
+          }
 
 
         </div>
@@ -319,30 +313,23 @@ class SceneManager extends Component {
           zIndex: 3,
           visibility: "hidden"
         }}>
-        {/*<div className="child" style={{*/}
-            {/*// background: "linear-gradient(to right, red, blue)",*/}
-            {/*position: "absolute",*/}
-            {/*left: "50%",*/}
-            {/*top: "50%",*/}
-            {/*width: "100%",*/}
-            {/*height: "5rem",*/}
-            {/*transform: "translate3d(-50%, -50%, 0)",*/}
-          {/*}}/>*/}
 
-          {player2.status === "inferior" &&
+          {player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "inferior" &&
             <RollingNumber className={"desktop"} numbers={player2.code}/>
           }
 
-          <LottieAnimation
-            autoplay={false}
-            loop={false}
-            play={false}
-            className={classNames("")}
-            animationData={animations.DoorCircle}
-            aspectRatio={"contain"}
-            progressionTweenDuration={0.1}
-            progression={player2.handle}
-          />
+          {player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "superior" &&
+            <LottieAnimation
+              autoplay={false}
+              loop={false}
+              play={false}
+              className={classNames("")}
+              animationData={animations.DoorCircle}
+              aspectRatio={"contain"}
+              progressionTweenDuration={0.1}
+              progression={player2.handle}
+            />
+          }
         </div>
       </>
     )

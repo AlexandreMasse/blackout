@@ -40,6 +40,7 @@ const initialState = {
       position: null,
       sliderValue: null,
       tapValue: null,
+      fingerprint: false,
       code: [0, 0, 0],
       handle: 0,
       splitScreenPercentage: .5,
@@ -78,6 +79,7 @@ const initialState = {
       position: null,
       sliderValue: null,
       tapValue: null,
+      fingerprint: false,
       code: [0, 0, 0],
       handle: 0,
       currentScene: scenes.SCENEFLASHLIGHT.name,
@@ -378,6 +380,23 @@ export default (state = initialState, action) => {
             return {
               ...user,
               tapValue
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case websocketsOnActionTypes.WEBSOCKET_ON_FINGERPRINT: {
+      const {userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              fingerprint: true
             }
           } else {
             return user;

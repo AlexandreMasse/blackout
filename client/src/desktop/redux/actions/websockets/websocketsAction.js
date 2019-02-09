@@ -1,8 +1,7 @@
 import io from 'socket.io-client'
 
 import {websocketsOnActionTypes, websocketsEmitActionTypes} from './websocketsActionTypes';
-import {setUserCurrentScene, setPlayer1SplitScreenPercentage} from './../desktopAction';
-import scenes from "../../../components/scenes"
+import {setPlayer1SplitScreenPercentage} from './../desktopAction';
 import mobileSteps from "../../../../mobile/components/steps"
 
 export const socket = io.connect(process.env.REACT_APP_SERVER_URL)
@@ -16,26 +15,18 @@ export const init = ( store ) => {
             store.dispatch({type:typeValue, payload})
             switch (typeValue) {
                 case websocketsOnActionTypes.WEBSOCKET_ON_FINGERPRINT: {
-                    console.log("receive fingerprint");
                     const currentUser = store.getState().desktop.users.find(user => user.id === payload.userId)
-                    // set desktop user currentScene
-                    //TODO: replace with good data
-                    const nextScene = currentUser.status === "superior" ? scenes.SCENEDOOR.name : scenes.SCENEDOOR.name
-                    store.dispatch(setUserCurrentScene({userId: payload.userId, currentScene: nextScene}))
                     // set mobile user currentStep
-                    //TODO: replace with good data
-                    const nextMobileStep = currentUser.status === "superior" ? mobileSteps.CURSOR.name : mobileSteps.CURSOR.name
+                    const nextMobileStep = currentUser.status === "superior" ? mobileSteps.HANDLE.name : mobileSteps.CODE.name
                     store.dispatch(wsEmitUserCurrentStep({userId: payload.userId, currentStep: nextMobileStep }))
+                    break;
                 }
                 case websocketsOnActionTypes.WEBSOCKET_ON_HANDLE: {
-
                     const isPlayer1 = payload.userId === "player1"
                     const handlePourcentage = payload.handle / 2
-
                     const splitScreenPercentage = isPlayer1 ? 0.5 + handlePourcentage : 0.5 - handlePourcentage;
-
                     store.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
-
+                    break;
                 }
 
             }
