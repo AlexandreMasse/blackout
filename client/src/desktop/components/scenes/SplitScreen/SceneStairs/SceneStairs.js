@@ -85,6 +85,8 @@ export default class SceneStairs {
     this.rt = new PIXI.RenderTexture(this.brt)
     this.rt2 = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
+    this.sprite.anchor.y = 1 
+    this.sprite.scale.y *= -1
     // if(this.player === "player1") {
     //   setFullScreen(this.stairSprite, this.stairSprite.width, this.stairSprite.height, this.containerSize.width)
     //   console.log(this.s)
@@ -135,17 +137,15 @@ export default class SceneStairs {
     //   console.log("added")
     //   // console.log('RENDerTARGET UPDATE', this.sceneThree.renderTarget)
     // }
-    
-    
-    
+
+    this.renderer2D.reset()    
     /* Three */
     // this.renderer3D.state.reset()
-   
+    // this.renderer3D.setRenderTarget(null)
     // this.sceneThree.render(this.renderer3D)
     // this.sceneThree.update()
     // this.renderer3D.state.reset()
-    console.log('reset')
-    this.renderer2D.reset()
+    // this.renderer2D.reset()
 
     // swap the buffers ...
     // var temp = this.rt

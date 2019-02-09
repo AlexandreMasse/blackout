@@ -97,7 +97,8 @@ export default class SceneGenerator {
     const topNumber = AssetsManager.get('topNumber')
     topNumber.parse(() => {
       let textures = Object.keys(topNumber.textures).map((t) => topNumber.textures[t])
-      this.topNumberAnim = new PIXI.extras.AnimatedSprite(textures)
+      // this.topNumberAnim = new PIXI.extras.AnimatedSprite(textures)
+      this.topNumberAnim = new PIXI.AnimatedSprite(textures)
       this.topNumberAnim.animationSpeed = (5/60)
       this.topNumberAnim.play()
     })
@@ -105,7 +106,8 @@ export default class SceneGenerator {
     const rightNumber = AssetsManager.get('rightNumber')
     rightNumber.parse(() => {
       let textures = Object.keys(rightNumber.textures).map((t) => rightNumber.textures[t])
-      this.rightNumberAnim = new PIXI.extras.AnimatedSprite(textures)
+      // this.rightNumberAnim = new PIXI.extras.AnimatedSprite(textures)
+      this.rightNumberAnim = new PIXI.AnimatedSprite(textures)
       this.rightNumberAnim.animationSpeed = (5/60)
       this.rightNumberAnim.play()
     })
@@ -119,21 +121,24 @@ export default class SceneGenerator {
 
     trait1Spritesheet.parse(() => {
       let textures = Object.keys(trait1Spritesheet.textures).map((t) => trait1Spritesheet.textures[t])
-      this.trait1anim = new PIXI.extras.AnimatedSprite(textures)
+      // this.trait1anim = new PIXI.extras.AnimatedSprite(textures)
+      this.trait1anim = new PIXI.AnimatedSprite(textures)
       this.trait1anim.animationSpeed = (5/60)
       this.trait1anim.play()
     })
 
     trait2Spritesheet.parse(() => {
       let textures = Object.keys(trait2Spritesheet.textures).map((t) => trait2Spritesheet.textures[t])
-      this.trait2anim = new PIXI.extras.AnimatedSprite(textures)
+      // this.trait2anim = new PIXI.extras.AnimatedSprite(textures)
+      this.trait2anim = new PIXI.AnimatedSprite(textures)
       this.trait2anim.animationSpeed = (5/60)
       this.trait2anim.play()
     })
 
     trait3Spritesheet.parse(() => {
       let textures = Object.keys(trait3Spritesheet.textures).map((t) => trait3Spritesheet.textures[t])
-      this.trait3anim = new PIXI.extras.AnimatedSprite(textures)
+      // this.trait3anim = new PIXI.extras.AnimatedSprite(textures)
+      this.trait3anim = new PIXI.AnimatedSprite(textures)
       this.trait3anim.animationSpeed = (5/60)
       this.trait3anim.play()
     })
@@ -144,7 +149,8 @@ export default class SceneGenerator {
 
     sinSpritesheet.parse(() => {
       let textures = Object.keys(sinSpritesheet.textures).map((t) => sinSpritesheet.textures[t])
-      this.sinanim = new PIXI.extras.AnimatedSprite(textures)
+      // this.sinanim = new PIXI.extras.AnimatedSprite(textures)
+      this.sinanim = new PIXI.AnimatedSprite(textures)
       this.sinanim.animationSpeed = (6/60)
       this.sinanim.play()
     })
@@ -157,21 +163,24 @@ export default class SceneGenerator {
 
     topPointSpritesheet.parse(() => {
       let textures = Object.keys(topPointSpritesheet.textures).map((t) => topPointSpritesheet.textures[t])
-      this.topPointanim = new PIXI.extras.AnimatedSprite(textures)
+      // this.topPointanim = new PIXI.extras.AnimatedSprite(textures)
+      this.topPointanim = new PIXI.AnimatedSprite(textures)
       this.topPointanim.animationSpeed = (24/60)
       this.topPointanim.play()
     })
     
     circleSpritesheet.parse(() => {
       let textures = Object.keys(circleSpritesheet.textures).map((t) => circleSpritesheet.textures[t])
-      this.circleanim = new PIXI.extras.AnimatedSprite(textures)
+      this.circleanim = new PIXI.AnimatedSprite(textures)
+      // this.circleanim = new PIXI.extras.AnimatedSprite(textures)
       this.circleanim.animationSpeed = (24/60)
       this.circleanim.play()
     })
 
     middlePointSpritesheet.parse(() => {
       let textures = Object.keys(middlePointSpritesheet.textures).map((t) => middlePointSpritesheet.textures[t])
-      this.middlePointanim = new PIXI.extras.AnimatedSprite(textures)
+      this.middlePointanim = new PIXI.AnimatedSprite(textures)
+      // this.middlePointanim = new PIXI.extras.AnimatedSprite(textures)
       this.middlePointanim.animationSpeed = (24/60)
       this.middlePointanim.play()
     })
@@ -184,21 +193,24 @@ export default class SceneGenerator {
 
     button1Spritesheet.parse(() => {
       let textures = Object.keys(button1Spritesheet.textures).map((t) => button1Spritesheet.textures[t])
-      this.button1anim = new PIXI.extras.AnimatedSprite(textures)
+      // this.button1anim = new PIXI.extras.AnimatedSprite(textures)
+      this.button1anim = new PIXI.AnimatedSprite(textures)
       this.button1anim.animationSpeed = (2/60)
       this.button1anim.play()
     })
     
     button2Spritesheet.parse(() => {
       let textures = Object.keys(button2Spritesheet.textures).map((t) => button2Spritesheet.textures[t])
-      this.button2anim = new PIXI.extras.AnimatedSprite(textures)
+      // this.button2anim = new PIXI.extras.AnimatedSprite(textures)
+      this.button2anim = new PIXI.AnimatedSprite(textures)
       this.button2anim.animationSpeed = (2/60)
       this.button2anim.play()
     })
 
     button3Spritesheet.parse(() => {
       let textures = Object.keys(button3Spritesheet.textures).map((t) => button3Spritesheet.textures[t])
-      this.button3anim = new PIXI.extras.AnimatedSprite(textures)
+      // this.button3anim = new PIXI.extras.AnimatedSprite(textures)
+      this.button3anim = new PIXI.AnimatedSprite(textures)
       this.button3anim.animationSpeed = (5/60)
       this.button3anim.play()
     })

@@ -10,8 +10,7 @@ export default class SceneDoor {
     this.renderer2D = renderer2D
     this.player = player
     this.store = store
-    this.dontRender = true
-    this.needUpdate = true;
+    this.needUpdate = true
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.status = this.store.users.find(user => user.id === player).status
     this.initialPrct = player === 'player1' ? pct : 1 - pct 

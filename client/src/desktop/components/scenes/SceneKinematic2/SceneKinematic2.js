@@ -30,9 +30,12 @@ export default class SceneKinematic2 {
     init() {
         this.container = new PIXI.Container()
         const porte = AssetsManager.get('cinematiquePorte')
-        this.textureVid = PIXI.Texture.fromVideo(porte)
+        // this.textureVid = PIXI.Texture.fromVideo(porte)
+        this.textureVid = PIXI.Texture.from(porte)
+        console.log(this.textureVid)
         this.bg = new PIXI.Sprite(this.textureVid)
-        this.video = this.textureVid.baseTexture.source 
+        // this.video = this.textureVid.baseTexture.source 
+        this.video = this.textureVid.baseTexture.resource.source 
         this.video.muted = false
         this.video.autoplay = true
         this.container.addChild(this.bg)
