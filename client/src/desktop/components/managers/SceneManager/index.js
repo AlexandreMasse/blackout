@@ -26,7 +26,7 @@ class SceneManager extends Component {
     })
 
     this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
-      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], renderer2D: this.renderer2D, renderer3D: this.renderer3D})
+      return new currentSceneObject.scene({dispatch : props.dispatch, store: props.store, player: this.players[index], renderer2D: this.renderer2D})
     })
 
     this.nextSceneObjectArray = [null, null]
@@ -34,15 +34,6 @@ class SceneManager extends Component {
     this.nextSceneInstanceArray = [null, null]
 
     this.app = null
-
-    this.initThree()
-    this.initPIXI()
-    // this.init()
-    this.isSplitActive = false
-    this.setMargeSplitScreen()
-  }
-
-  initThree() {
     const {parentRef} = this.props
 
     this.canvasObj = {
@@ -51,10 +42,11 @@ class SceneManager extends Component {
         height: window.innerHeight,
         pixelRatio: 1
     }
-
-    this.renderer3D = new THREE.WebGLRenderer({canvas: this.canvasObj.el, alpha: true})
-    this.renderer3D.setPixelRatio(this.canvasObj.pixelRatio)
-    this.renderer3D.setSize(this.canvasObj.width, this.canvasObj.height)
+    // this.initThree()
+    this.initPIXI()
+    // this.init()
+    this.isSplitActive = false
+    this.setMargeSplitScreen()
   }
 
   initPIXI() {
@@ -193,7 +185,7 @@ class SceneManager extends Component {
         store: this.props.store,
         player: this.players[index],
         renderer2D: this.renderer2D,
-        renderer3D: this.renderer3D
+    
       })
       // then go to next scene
       this.nextScene(nextScene, index)
@@ -205,7 +197,7 @@ class SceneManager extends Component {
     const player = this.players[index]
 
     this.nextSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === nextScene);
-    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player, renderer2D: this.renderer2D, renderer3D: this.renderer3D})
+    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({dispatch, store, player, renderer2D: this.renderer2D})
     this.stage.addChild(this.nextSceneInstanceArray[index].sprite)
     this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {
     })

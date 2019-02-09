@@ -1,16 +1,14 @@
-import SceneFBO from './three/SceneFBO'
-import SceneFBO2 from './three/SceneFBO2'
-import SceneTest from './three/SceneTest'
-import SceneTest2 from './three/SceneTest2'
+import SceneTest from './three/SceneThree'
 import * as dat from 'dat.gui'
 import {setFullScreen} from '../../utils'
+import {TweenMax} from 'gsap'
 
 // import {AssetsManager} from "../../../../managers";
 import * as PIXI from "pixi.js";
 
 export default class SceneStairs {
 
-  constructor({dispatch, store, player, renderer2D, renderer3D}) {
+  constructor({dispatch, store, player, renderer2D}) {
     this.dispatch = dispatch
     this.player = player
     this.store = store
@@ -19,7 +17,6 @@ export default class SceneStairs {
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.initialPrct = player === 'player1' ? pct : 1 - pct 
     this.renderer2D = renderer2D
-    this.renderer3D = renderer3D
     this.addedOnce = false
     this.addedOnce2 = false
 
@@ -58,108 +55,50 @@ export default class SceneStairs {
     this.initSceneThree()
     this.marge = 3
     this.containerSize = {width: width * this.initialPrct, height:height}
+    this.mask = new PIXI.Graphics().beginFill(0x8bc5ff).drawRect(0,0, this.containerSize.width - this.marge, this.containerSize.height).endFill()
     this.container = new PIXI.Container()
-
-    const THREE_TEXTURE = PIXI.Texture.fromCanvas(this.sceneThree.createTexture())
-    THREE_TEXTURE.baseTexture.resolution = 2
-    this.sprite = new PIXI.Sprite(THREE_TEXTURE)
-    this.sprite.anchor.y = 1 
-    this.sprite.scale.y *= -1
+    this.THREE_TEXTURE = PIXI.BaseTexture.fromCanvas(this.sceneThree.renderer.domElement, PIXI.SCALE_MODES.LINEAR) 
+    this.spriteStairs = new PIXI.Sprite.from(new PIXI.Texture(this.THREE_TEXTURE))
+    this.addToScene()
+    setFullScreen(this.spriteStairs, this.spriteStairs.width, this.spriteStairs.height, this.containerSize.width)
+    this.brt = new PIXI.BaseRenderTexture(this.spriteStairs.width, this.spriteStairs.height, PIXI.SCALE_MODES.LINEAR, 1)
+    this.rt = new PIXI.RenderTexture(this.brt)
+    this.sprite = new PIXI.Sprite(this.rt)
     this.sprite.x = this.player === 'player2' ? width - this.containerSize.width: 0 
-
-    // ==== OLD ====
-    // if (this.player === 'player1') {
-    //   const THREE_TEXTURE = PIXI.Texture.fromCanvas(this.sceneThree.createTexture())
-    //   THREE_TEXTURE.baseTexture.resolution = 1
-    //   this.sprite = new PIXI.Sprite(THREE_TEXTURE)
-    //   this.sprite.anchor.y = 1 
-    //   this.sprite.scale.y *= -1
-    //   setFullScreen(this.sprite, this.sprite.width, this.sprite.height, this.containerSize.width)
-    // } else {
-    //   console.log(this.sceneThree2.createTexture())
-    //   const THREE_TEXTURE = PIXI.Texture.fromCanvas(this.sceneThree2.createTexture())
-    //   THREE_TEXTURE.baseTexture.resolution = 1
-    //   this.sprite = new PIXI.Sprite(THREE_TEXTURE)
-    //   this.sprite.anchor.y = 1    /* 0 = top, 0.5 = center, 1 = bottom */
-    //   this.sprite.scale.y *= -1
-    //   setFullScreen(this.sprite, this.sprite.width, this.sprite.height, this.containerSize.width)
-    //   this.sprite.x =  width - this.containerSize.width
-    // }
-    // this.sprite.x = this.player === 'player1' ? 0 : window.innerWidth *.5 + 10 
-    // this.sprite.x = this.player === 'player2' ? width - this.containerSize.width: 0 
-    // this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
+    this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
   }
 
   initSceneThree() {
     this.sceneThree = new SceneTest(this.status, this.player, this.dispatch)
+  }
 
-    // === OLD ===
-    // if (this.player === 'player1') {
-    //   this.sceneThree = new SceneTest(this.status, this.player, this.dispatch)
-    // }
+  splitScreen(pct) {
+    if (this.player === "player2") {
+      let diffX = this.baseX - (window.innerWidth * pct)
+      let spriteX = window.innerWidth - this.baseX + diffX
+      TweenMax.to(this.sprite, 1,{x: spriteX})
+      let bgX = ((window.innerWidth * pct) - this.spriteStairs.width) / 2
+      TweenMax.to(this.spriteStairs.position, 1,{x: bgX})
+    } else {
+      let masxW = (window.innerWidth * pct) - this.marge
+      TweenMax.to(this.mask, 1,{width:masxW})
 
-    // if (this.player === 'player2') {
-    //   this.sceneThree2 = new SceneTest2(this.status, this.player, this.dispatch)
-    // }
-    // this.scenePlayer1 = this.sceneThree.sceneplayer1()
-    // this.scenePlayer2 = this.sceneThree.sceneplayer2()
+      let bgX = ((window.innerWidth * pct) - this.spriteStairs.width) / 2
+      TweenMax.to(this.spriteStairs.position, 1,{x: bgX})
+    }
   }
 
   addToScene() {
-    this.container.addChild(this.sprite)
+    if (this.player === 'player1') {
+      this.container.addChild(this.mask)
+      this.container.mask = this.mask
+    }
+    this.container.addChild(this.spriteStairs)
   }
 
   update() {
-    if (!this.addedOnce && this.sprite._texture.baseTexture._glTextures[0] != null && this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture != null) {
-
-          this.sprite._texture.baseTexture._glTextures[0].texture = this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture;
-          this.addedOnce = true
-          console.log("added")
-        }
-    
-        this.renderer2D.reset()
-        /* Three */
-        this.renderer3D.state.reset()
-        this.renderer3D.setRenderTarget(null)
-        this.sceneThree.render(this.renderer3D)
-        this.sceneThree.update()
-        this.renderer2D.reset()
-      
-    // }
-    // === OLD ===
-    // if (this.player === 'player1') {
-    //   if (!this.addedOnce && this.sprite._texture.baseTexture._glTextures[0] != null && this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture != null) {
-
-    //     this.sprite._texture.baseTexture._glTextures[0].texture = this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture;
-    //     this.addedOnce = true
-    //     console.log("added")
-    //   }
-  
-    //   this.renderer2D.reset()
-    //   /* Three */
-    //   this.renderer3D.state.reset()
-    //   this.renderer3D.setRenderTarget(null)
-    //   this.sceneThree.render(this.renderer3D)
-    //   this.sceneThree.update()
-    //   this.renderer2D.reset()
-    // } else {
-    //   if (this.player === 'player2') {
-    //     if (!this.addedOnce2 && this.sprite._texture.baseTexture._glTextures[0] != null && this.renderer3D.properties.get(this.sceneThree2.renderTarget.texture).__webglTexture != null) {
-  
-    //       this.sprite._texture.baseTexture._glTextures[0].texture = this.renderer3D.properties.get(this.sceneThree2.renderTarget.texture).__webglTexture;
-    //       this.addedOnce2 = true
-    //       console.log("added")
-    //     }
-    //   }
-
-    //   this.renderer2D.reset()
-    //   /* Three */
-    //   this.renderer3D.state.reset()
-    //   this.renderer3D.setRenderTarget(null)
-    //   this.sceneThree2.render(this.renderer3D)
-    //   this.sceneThree2.update()
-    //   this.renderer2D.reset()
-    // }
+    this.sceneThree.update()
+    this.spriteStairs.texture.update() 
   }
   
   resize() {

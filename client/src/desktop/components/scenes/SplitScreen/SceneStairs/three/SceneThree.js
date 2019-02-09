@@ -6,7 +6,7 @@ import { setCurrentScene , setUserCurrentScene} from "../../../../../redux/actio
 import {wsEmitCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
 
 //scenes
-import scenes from '../../../'
+import scenes from '../../..'
 import stepsMobile from '../../../../../../mobile/components/steps'
 
 export default class SceneTest {
@@ -38,7 +38,11 @@ export default class SceneTest {
         this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
         this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
         this.clock = new THREE.Clock()
-        this.renderTarget = new THREE.WebGLRenderTarget(window.innerWidth * 2, window.innerHeight * 2)
+        // this.renderTarget = new THREE.WebGLRenderTarget(window.innerWidth * 2, window.innerHeight * 2)
+
+        this.renderer = new THREE.WebGLRenderer( { antialias: false } )
+        this.renderer.setPixelRatio( window.devicePixelRatio )
+        this.renderer.setSize( window.innerWidth, window.innerHeight )
     }
 
     setAnimation() {
@@ -95,14 +99,23 @@ export default class SceneTest {
         this.scene.add(this.gltf.scene)
     }
 
-    render(renderer) {
-        renderer.render(this.scene, this.camera, this.renderTarget)
-    }
+    // render(renderer) {
+    //     renderer.render(this.scene, this.camera, this.renderTarget)
+    // }
+
+    // update() {
+    //     const delta = this.clock.getDelta()
+	// 	if (this.mixer) {
+    //         this.mixer.update(delta)
+    //     } 
+    // }
 
     update() {
+        // console.log('yo') 
         const delta = this.clock.getDelta()
 		if (this.mixer) {
             this.mixer.update(delta)
         } 
+        this.renderer.render(this.scene, this.camera)
     }
 }
