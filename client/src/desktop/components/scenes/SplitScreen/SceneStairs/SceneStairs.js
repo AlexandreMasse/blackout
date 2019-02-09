@@ -23,6 +23,7 @@ export default class SceneStairs {
     this.init()
 
   }
+  // setPlayer1SplitScreenPercentage: (splitScreenPercentage) => dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
 
   //required
   updateStore(newStore) {
@@ -87,6 +88,7 @@ export default class SceneStairs {
       TweenMax.to(this.spriteStairs.position, 1,{x: bgX})
     }
   }
+  
 
   addToScene() {
     if (this.player === 'player1') {

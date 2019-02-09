@@ -127,8 +127,14 @@ class SceneManager extends Component {
   calculWidthScene(pct) {
     const scenePlayer1 = this.currentSceneInstanceArray[0]
     const scenePlayer2 = this.currentSceneInstanceArray[1]
-    scenePlayer1.splitScreen(pct)
-    scenePlayer2.splitScreen(1 - pct)
+    
+    if (scenePlayer1) {
+      scenePlayer1.splitScreen(pct)
+    }
+
+    if (scenePlayer2) {
+      scenePlayer2.splitScreen(1 - pct)
+    }
 
     TweenMax.to(this.refScene1,0.5, {
       x: (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
@@ -269,6 +275,7 @@ class SceneManager extends Component {
           width: window.innerWidth / 2,
           height: window.innerHeight,
           zIndex: 3,
+          visibility: "hidden"
         }}>
 
         {/*<div className="child" style={{*/}
@@ -307,6 +314,7 @@ class SceneManager extends Component {
           height: window.innerHeight,
           transform: `translateX(${window.innerWidth / 2}px)`,
           zIndex: 3,
+          visibility: "hidden"
         }}>
         {/*<div className="child" style={{*/}
             {/*// background: "linear-gradient(to right, red, blue)",*/}

@@ -42,7 +42,7 @@ const initialState = {
       tapValue: null,
       code: [0, 0, 0],
       handle: 0,
-      splitScreenPercentage:.5,
+      splitScreenPercentage: .5,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
         isActive: false,
