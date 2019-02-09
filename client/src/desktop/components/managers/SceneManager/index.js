@@ -8,6 +8,9 @@ import scenes from '../../scenes'
 import {TweenMax} from 'gsap'
 
 import {RollingNumber} from "../../../../mobile/components/components"
+import {LottieAnimation} from "../../components";
+import classNames from "classnames";
+import animations from "../../components/LottieAnimation/animations";
 
 class SceneManager extends Component {
 
@@ -267,8 +270,8 @@ class SceneManager extends Component {
       <>
         <div ref={ref => this.refScene1 = ref} className="scene1" style={{
           opacity: "1",
-          transition: "clip-path 0.5s",
-          //backgroundColor:"rgba(20, 200, 170, 0.2)",
+          transition: "clip-path 1s",
+          backgroundColor:"rgba(20, 200, 170, 0.4)",
           position:"fixed",
           display: "flex",
           top: 0,
@@ -306,8 +309,8 @@ class SceneManager extends Component {
 
         <div ref={ref => this.refScene2 = ref} className="scene2" style={{
           opacity: "1",
-          transition: "clip-path 0.5s",
-          //backgroundColor:"rgba(200, 100, 80, 0.2)",
+          transition: "clip-path 1s",
+          backgroundColor:"rgba(200, 100, 80, 0.4)",
           position:"fixed",
           top: 0,
           width: window.innerWidth / 2,
@@ -329,10 +332,20 @@ class SceneManager extends Component {
           {player2.status === "inferior" &&
             <RollingNumber className={"desktop"} numbers={player2.code}/>
           }
+
+          <LottieAnimation
+            autoplay={false}
+            loop={false}
+            play={false}
+            className={classNames("")}
+            animationData={animations.DoorCircle}
+            aspectRatio={"contain"}
+            progressionTweenDuration={0.1}
+            progression={player2.handle}
+          />
         </div>
       </>
     )
-
   }
 }
 

@@ -30,13 +30,14 @@ class Handle extends Component {
       trigger: this.targetElement,
       bounds: {minRotation: 0, maxRotation: -360 * this.lapsNumber},
       liveSnap: (value) => {
-        //stop rotation if not hover target
-        const hoveredElement = document.elementFromPoint(this.draggable.pointerX, this.draggable.pointerY);
-        if (hoveredElement !== this.targetElement) {
-          return this.draggable.rotation
-        } else {
-          return value
-        }
+        // //stop rotation if not hover target
+        // const hoveredElement = document.elementFromPoint(this.draggable.pointerX, this.draggable.pointerY);
+        // if (hoveredElement !== this.targetElement) {
+        //   return this.draggable.rotation
+        // } else {
+        //   return value
+        // }
+        return value
       },
       onDrag: () => {
         const progression= this.draggable.rotation / (-360 * this.lapsNumber)

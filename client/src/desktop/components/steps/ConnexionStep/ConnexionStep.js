@@ -197,7 +197,6 @@ class ConnexionStep extends Component {
             aspectRatio={"cover-right"}
             progressionTweenDuration={0.1}
             progression={isCityLeftReady ? 1 : player1IntroProgression}
-            //progression={Number(this.state.cityLeftProgression)}
           />
           <LottieAnimation
             key={2}
