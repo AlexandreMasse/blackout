@@ -2,7 +2,7 @@ import {AssetsManager} from "../../../../../managers";
 import * as PIXI from "pixi.js";
 import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../../utils'
-import {SceneDoorAdvantage, SceneDoorDisavantage} from './SubScene'
+import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
 
 export default class SceneDoor {
 
@@ -21,6 +21,7 @@ export default class SceneDoor {
         break;
       case 'superior':
       this.initSceneAdvantage()
+      this.initSceneAdvantageInside()
         break;
       default:
         console.log('Sorry, we are out of ' + this.status + '.')
@@ -56,6 +57,7 @@ export default class SceneDoor {
     switch (this.status) {
       case 'superior':
         setFullScreen(this.spriteAdvantage, this.spriteAdvantage.width, this.spriteAdvantage.height, this.containerSize.width)
+        setFullScreen(this.spriteAdvantageInside, this.spriteAdvantageInside.width, this.spriteAdvantageInside.height, this.containerSize.width)
         break;
       case 'inferior':
       setFullScreen(this.spriteDisadvantage, this.spriteDisadvantage.width, this.spriteDisadvantage.height, this.containerSize.width)
@@ -78,6 +80,13 @@ export default class SceneDoor {
     this.sceneAdvantage = new SceneDoorAdvantage(this.initialPrct)
     this.spriteAdvantage = this.sceneAdvantage.spriteOutside
     console.log(this.spriteAdvantage)
+  }
+
+  initSceneAdvantageInside() {
+    console.log('INIT SCENE AVANTAGE INSIDE')
+    this.sceneAdvantageInside = new SceneDoorAdvantageInside(this.initialPrct)
+    this.spriteAdvantageInside = this.sceneAdvantageInside.spriteInside
+    console.log(this.spriteAdvantageInside)
   }
 
   splitScreen(pct) {
@@ -147,6 +156,7 @@ export default class SceneDoor {
       this.container.addChild(this.mask)
       if (this.status === 'superior') {
         this.container.addChild(this.spriteAdvantage)
+        this.container.addChild(this.spriteAdvantageInside)
       } else {
         this.container.addChild(this.spriteDisadvantage)
       }
@@ -154,6 +164,7 @@ export default class SceneDoor {
       case 'player2':
       if (this.status === 'superior') {
         this.container.addChild(this.spriteAdvantage)
+        this.container.addChild(this.spriteAdvantageInside)
       } else {
         this.container.addChild(this.spriteDisadvantage)
       }
@@ -170,6 +181,10 @@ export default class SceneDoor {
 
     if (this.sceneAdvantage) {
       this.renderer2D.render(this.sceneAdvantage.container, this.sceneAdvantage.rt)
+    }
+
+    if (this.sceneAdvantageInside) {
+      this.renderer2D.render(this.sceneAdvantageInside.container, this.sceneAdvantageInside.rt)
     }
     //console.log("scene2 update");
     //console.log("update scene 2");

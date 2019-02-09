@@ -25,7 +25,7 @@ export default class SceneDoorAdvantage {
           height: this.outsideSprite.height
         }
 
-        this.initAlertOverlay()
+        // this.initAlertOverlay()
         this.initFingerPrintSpriteSheet()
         this.addToScene()
 
@@ -87,6 +87,6 @@ export default class SceneDoorAdvantage {
     addToScene() {
         this.container.addChild(this.outsideSprite)
         this.container.addChild(this.empreinteAnim)
-        this.container.addChild(this.alertOverlay)
+        // this.container.addChild(this.alertOverlay)
     }
 }
