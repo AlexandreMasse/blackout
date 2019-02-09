@@ -9,6 +9,8 @@ import {TweenMax} from 'gsap'
 
 import {RollingNumber} from "../../../../mobile/components/components"
 
+var lastcene = {rt: null};
+
 class SceneManager extends Component {
 
   constructor(props) {
@@ -37,6 +39,7 @@ class SceneManager extends Component {
 
     this.initThree()
     this.initPIXI()
+   
     // this.init()
     this.isSplitActive = false
     this.setMargeSplitScreen()
@@ -46,22 +49,23 @@ class SceneManager extends Component {
     const {parentRef} = this.props
 
     this.canvasObj = {
-        el: parentRef.querySelector('.canvas'),
-        width: window.innerWidth,
-        height: window.innerHeight,
-        pixelRatio: 1
-    }
-
-    this.renderer3D = new THREE.WebGLRenderer({canvas: this.canvasObj.el, alpha: true})
+      el: parentRef.querySelector('.canvas'),
+      width: window.innerWidth,
+      height: window.innerHeight,
+      pixelRatio: 1
+  }
+    this.renderer3D = new THREE.WebGLRenderer({canvas: this.canvasObj.el, alpha: true, antialias: true})
     this.renderer3D.setPixelRatio(this.canvasObj.pixelRatio)
     this.renderer3D.setSize(this.canvasObj.width, this.canvasObj.height)
   }
 
   initPIXI() {
     this.renderer2D = new PIXI.autoDetectRenderer(this.canvasObj.width, this.canvasObj.height, {
+        context: this.renderer3D.context,
         backgroundColor: 0x000000,
         view: this.canvasObj.el
     })
+    // this.renderer2D.reset()
     this.stage = new PIXI.Container()
     this.ticker = new PIXI.ticker.Ticker()
     this.ticker.start()
@@ -107,23 +111,53 @@ class SceneManager extends Component {
   }
 
   renderScene() {
-    this.currentSceneInstanceArray.forEach(currentSceneInstance => {
-      this.renderer2D.render(currentSceneInstance.container, currentSceneInstance.rt)
-      if (currentSceneInstance.needUpdate) {
-        currentSceneInstance.update()
-      }
-    })
 
-    // required only if nextScene enter before currentScene exited
+   
+
+    this.currentSceneInstanceArray.forEach(currentSceneInstance => {
+
+     
+
+      if (currentSceneInstance.container) {
+        this.renderer2D.render(currentSceneInstance.container, currentSceneInstance.rt)
+      }
+      if (currentSceneInstance.needUpdate) {
+
+        // this.renderer2D.bindVao(null);
+        // this.renderer2D._activeShader = null;
+        
+         currentSceneInstance.update()
+          // this.renderer2D.reset()
+          // this.renderer2D.bindVao(null);
+          // this.renderer2D._activeShader = null;
+          // this.renderer2D.bindTexture(null, 0, true);
+          // this.renderer2D.bindTexture(null, 1, true);
+      }
+
+      
+    }) 
+
+    // if (currentSceneInstance.container) {
+      //this.renderer2D.render(this.currentSceneInstanceArray[0].container, this.currentSceneInstanceArray[0].rt)
+    // }
+
+    //  if (currentSceneInstance.container) {
+    //     this.renderer2D.render(currentSceneInstance.container, currentSceneInstance.rt)
+    //   }
+
+    //required only if nextScene enter before currentScene exited
     this.nextSceneInstanceArray.forEach(nextSceneInstance => {
       if (nextSceneInstance) {
         this.renderer2D.render(nextSceneInstance.container, nextSceneInstance.rt)
         if (nextSceneInstance.needUpdate) {
           nextSceneInstance.update()
         }
+      
       }
     })
 
+    this.renderer2D.reset()
+      //console.log(this.renderer2D.renderingToScreen)
     this.renderer2D.render(this.stage)
   }
 
@@ -135,6 +169,7 @@ class SceneManager extends Component {
   calculWidthScene(pct) {
     const scenePlayer1 = this.currentSceneInstanceArray[0]
     const scenePlayer2 = this.currentSceneInstanceArray[1]
+    console.log('scene PLAYER 2', scenePlayer2)
     scenePlayer1.splitScreen(pct)
     scenePlayer2.splitScreen(1 - pct)
 
@@ -209,6 +244,8 @@ class SceneManager extends Component {
     this.stage.addChild(this.nextSceneInstanceArray[index].sprite)
     this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {
     })
+    this.currentSceneInstanceArray[index].container.removeChild(this.currentSceneInstanceArray[index].sprite)
+    this.currentSceneInstanceArray[index].sprite.visible = false
     this.currentSceneInstanceArray[index].sprite.destroy()
     this.currentSceneInstanceArray[index] = this.nextSceneInstanceArray[index]
     this.nextSceneInstanceArray[index] = null
@@ -277,6 +314,7 @@ class SceneManager extends Component {
           width: window.innerWidth / 2,
           height: window.innerHeight,
           zIndex: 3,
+          display: 'none',
         }}>
 
         {/*<div className="child" style={{*/}
@@ -306,6 +344,7 @@ class SceneManager extends Component {
           height: window.innerHeight,
           transform: `translateX(${window.innerWidth / 2}px)`,
           zIndex: 3,
+          display: 'none',
         }}>
         {/*<div className="child" style={{*/}
             {/*// background: "linear-gradient(to right, red, blue)",*/}

@@ -10,6 +10,7 @@ export default class SceneDoor {
     this.renderer2D = renderer2D
     this.player = player
     this.store = store
+    this.dontRender = true
     this.needUpdate = true;
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.status = this.store.users.find(user => user.id === player).status
@@ -49,10 +50,11 @@ export default class SceneDoor {
     this.addToScene()
     this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
-    this.sprite = new PIXI.Sprite(this.rt) 
-    this.sprite.x = this.player === 'player2' ? width - this.containerSize.width: 0 
+    this.sprite = new PIXI.Sprite() 
+    // this.sprite.visible = false 
+    this.sprite.x = this.player === 'player2' ? width - this.containerSize.width : 0 
     this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
-
+    window.sprite = this.sprite
     switch (this.status) {
       case 'superior':
         setFullScreen(this.spriteAdvantage, this.spriteAdvantage.width, this.spriteAdvantage.height, this.containerSize.width)
