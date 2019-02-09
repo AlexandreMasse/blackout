@@ -60,8 +60,9 @@ export default class SceneKinematic2 {
                 // const currentStep = stepsMobile.STAIRS.name
                 // this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
                 this.dispatch(setSplitScreen({isSplitScreen: true}))
-                this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENESTAIRS.name}))
-                this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
+                //TODO: replace with scenestair
+                this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENEDOOR.name}))
+                this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENEDOOR.name}))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
             },500)    
         })

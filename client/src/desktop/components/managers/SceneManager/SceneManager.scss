@@ -1,0 +1,20 @@
+.scene-manager {
+
+  &__player1, &__player2 {
+    height: 100%;
+    position: fixed;
+    display: flex;
+    top: 0;
+    z-index: 3;
+    //visibility: hidden;
+  }
+
+  &__player1 {
+    background-color: rgba(20, 200, 170, 0.2);
+  }
+
+  &__player2 {
+    background-color: rgba(200, 100, 80, 0.2);
+  }
+
+}
