@@ -101,6 +101,7 @@ export default class SceneDoor {
       } else {
         let bgX = ((window.innerWidth * pct) - this.spriteAdvantage.width) / 2
         TweenMax.to(this.spriteAdvantage.position, 1,{x: bgX})
+        TweenMax.to(this.spriteAdvantageInside.position, 1,{x: bgX})
       }
     } else {
       let masxW = (window.innerWidth * pct) - this.marge
@@ -112,6 +113,7 @@ export default class SceneDoor {
       } else {
         let bgX = ((window.innerWidth * pct) - this.spriteAdvantage.width) / 2
         TweenMax.to(this.spriteAdvantage.position, 1,{x: bgX})
+        TweenMax.to(this.spriteAdvantageInside.position, 1,{x: bgX})
       }
     }
   }
@@ -131,6 +133,7 @@ export default class SceneDoor {
       } else {
         let bgX = ((window.innerWidth * pct) - this.spriteAdvantage.width) / 2
         TweenMax.to(this.spriteAdvantage.position, 1,{x: bgX})
+        TweenMax.to(this.spriteAdvantageInside.position, 1,{x: bgX})
       }
 
     } else {
@@ -143,6 +146,7 @@ export default class SceneDoor {
       } else {
         let bgX = ((window.innerWidth * pct) - this.spriteAdvantage.width) / 2
         TweenMax.to(this.spriteAdvantage.position, 1,{x: bgX})
+        TweenMax.to(this.spriteAdvantageInside.position, 1,{x: bgX})
       }
 
       // TweenMax.to(this.sprite, 2,{alpha: 1})

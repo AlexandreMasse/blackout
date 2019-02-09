@@ -9,7 +9,7 @@ export const onEnter = (instance) => (
         resolve();
       }
     })
-    timeline.fromTo(instance.sprite, 3, {
+    timeline.fromTo(instance.sprite, 1, {
       alpha: 0,
     },{
       alpha: 1,
