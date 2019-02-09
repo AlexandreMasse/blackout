@@ -1,0 +1,95 @@
+{"frames": {
+
+"BidulesINSIDE_00000.png":
+{
+	"frame": {"x":1,"y":1,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00001.png":
+{
+	"frame": {"x":1,"y":206,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00002.png":
+{
+	"frame": {"x":42,"y":1,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00003.png":
+{
+	"frame": {"x":42,"y":206,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00004.png":
+{
+	"frame": {"x":83,"y":1,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00005.png":
+{
+	"frame": {"x":83,"y":206,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00006.png":
+{
+	"frame": {"x":124,"y":1,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00007.png":
+{
+	"frame": {"x":124,"y":206,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00008.png":
+{
+	"frame": {"x":165,"y":1,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+},
+"BidulesINSIDE_00009.png":
+{
+	"frame": {"x":165,"y":206,"w":39,"h":203},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1235,"y":183,"w":39,"h":203},
+	"sourceSize": {"w":1920,"h":1080}
+}},
+"animations": {
+	"BidulesINSIDE": ["BidulesINSIDE_00000.png","BidulesINSIDE_00001.png","BidulesINSIDE_00002.png","BidulesINSIDE_00003.png","BidulesINSIDE_00004.png","BidulesINSIDE_00005.png","BidulesINSIDE_00006.png","BidulesINSIDE_00007.png","BidulesINSIDE_00008.png","BidulesINSIDE_00009.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "bidules.png",
+	"format": "RGBA8888",
+	"size": {"w":205,"h":410},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4d970f9db1cdac87135ffd06da4aded2:f3115f52600470944bb4dee15756887c:e49fe2985196a81dd682b5f5ab6e1efa$"
+}
+}

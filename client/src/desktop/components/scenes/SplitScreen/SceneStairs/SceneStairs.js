@@ -1,10 +1,14 @@
 import SceneTest from './three/SceneThree'
-import * as dat from 'dat.gui'
-import {setFullScreen} from '../../utils'
+// scene utils
+import {setFullScreen, requ} from '../../utils'
+// general utils
+import {requestTimeout} from '../../../../../utils'
+// libs
 import {TweenMax} from 'gsap'
+import * as PIXI from "pixi.js"
+// redux
+import {setPlayer1SplitScreenPercentage} from "../../../../redux/actions/desktopAction"
 
-// import {AssetsManager} from "../../../../managers";
-import * as PIXI from "pixi.js";
 
 export default class SceneStairs {
 
@@ -15,15 +19,11 @@ export default class SceneStairs {
     this.needUpdate = true
     this.status = this.store.users.find(user => user.id === this.player).status
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
-    this.initialPrct = player === 'player1' ? pct : 1 - pct 
+    this.initialPrct = player === 'player1' ? 0.1 : 1 
     this.renderer2D = renderer2D
-    this.addedOnce = false
-    this.addedOnce2 = false
-
     this.init()
 
   }
-  // setPlayer1SplitScreenPercentage: (splitScreenPercentage) => dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
 
   //required
   updateStore(newStore) {
@@ -40,9 +40,7 @@ export default class SceneStairs {
     this.newPlayer2TapValue = newStore.users.find(user => user.id === "player2").tapValue
 
     if (this.newPlayer2TapValue) {
-      this.sceneThree.moveCamera()    
-      // === OLD ===
-      // this.sceneThree2.moveCamera()    
+      this.sceneThree.moveCamera()      
     }
 
     // console.log("updateStore", newStore);
@@ -67,6 +65,12 @@ export default class SceneStairs {
     this.sprite = new PIXI.Sprite(this.rt)
     this.sprite.x = this.player === 'player2' ? width - this.containerSize.width: 0 
     this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
+
+    if (this.player === 'player2') {
+      requestTimeout(() => {
+        this.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage: .5}))
+      }, 1000)
+    }
   }
 
   initSceneThree() {
@@ -86,6 +90,24 @@ export default class SceneStairs {
 
       let bgX = ((window.innerWidth * pct) - this.spriteStairs.width) / 2
       TweenMax.to(this.spriteStairs.position, 1,{x: bgX})
+    }
+  }
+
+  enterAnimation(pct) {
+    if (this.player === "player2") {
+      let diffX = this.baseX - (window.innerWidth * pct)
+      let spriteX = window.innerWidth - this.baseX + diffX
+      TweenMax.to(this.sprite, 2,{x: spriteX})
+      let bgX = ((window.innerWidth * pct) - this.spriteStairs.width) / 2
+      TweenMax.to(this.spriteStairs.position, 2,{x: bgX})
+    } else {
+      let masxW = (window.innerWidth * pct) - this.marge
+      TweenMax.to(this.mask, 2,{width:masxW})
+
+      let bgX = ((window.innerWidth * pct) - this.spriteStairs.width) / 2
+      TweenMax.to(this.spriteStairs.position, 2,{x: bgX})
+
+      TweenMax.to(this.sprite, 2,{alpha: 1})
     }
   }
   

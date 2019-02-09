@@ -49,6 +49,13 @@ import circleImg from './spritesheet/generator/24fps/gen-02.png'
 import middlePoint from './spritesheet/generator/24fps/gen-03.json'
 import middlePointImg from './spritesheet/generator/24fps/gen-03.png'
 
+// SPRITE SHEET DOOR
+import empreinte from './spritesheet/door/24fps/empreinte.json'
+import empreinteImg from './spritesheet/door/24fps/empreinte.png'
+import bidules from './spritesheet/door/24fps/bidules.json'
+import bidulesImg from './spritesheet/door/24fps/bidules.png'
+
+
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
     stairs2: { url: stairs2, type: 'gltf'},
@@ -74,6 +81,8 @@ export const assetsToLoad = {
     button1: { url: button1Img, spritesheet: button1, name:'spritesheet', type: 'spritesheet'},
     button2: { url: button2Img, spritesheet: button2, name:'spritesheet', type: 'spritesheet'},
     button3: { url: button3Img, spritesheet: button3, name:'spritesheet', type: 'spritesheet'},
+    empreinte: { url: empreinteImg, spritesheet: empreinte, name:'spritesheet', type: 'spritesheet'},
+    bidules: { url: bidulesImg, spritesheet: bidules, name:'spritesheet', type: 'spritesheet'},
     outside: { url: outside, name:'outside', type: 'image'},
     outsideTest: { url: outsideTest, name:'outsideTest', type: 'image'},
     outsideVoyant: { url: outsideVoyant, name:'outsideVoyant', type: 'image'},

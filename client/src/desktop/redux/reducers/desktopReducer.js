@@ -43,7 +43,7 @@ const initialState = {
       fingerprint: false,
       code: [0, 0, 0],
       handle: 0,
-      splitScreenPercentage: .5,
+      splitScreenPercentage: 0,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
         isActive: false,

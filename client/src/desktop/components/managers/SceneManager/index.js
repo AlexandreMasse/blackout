@@ -49,6 +49,7 @@ class SceneManager extends Component {
     this.initPIXI()
     // this.init()
     this.isSplitActive = false
+    this.firstSplitAppear = true
     this.setMargeSplitScreen()
   }
 
@@ -76,29 +77,6 @@ class SceneManager extends Component {
       // add texture scene
       this.stage.addChild(this.currentSceneInstanceArray[index].sprite)
     })
-
-  }
-
-  init() {
-    const {parentRef, currentScene} = this.props
-
-    let width = parentRef.clientWidth
-    let height = parentRef.clientHeight
-
-    this.app = new PIXI.Application(width, height, {backgroundColor: 0x000000, antialias: false})
-
-    parentRef.appendChild(this.app.view)
-
-    this.app.ticker.add(this.renderScene.bind(this))
-
-    this.currentSceneObjectArray.forEach((currentSceneObject, index) => {
-      //enter animation
-      currentSceneObject.onEnter(this.currentSceneInstanceArray[index])
-      // add texture scene
-      this.app.stage.addChild(this.currentSceneInstanceArray[index].sprite)
-    })
-
-    window.addEventListener('resize', this.onWindowResize, false)
   }
 
   renderScene() {
@@ -130,35 +108,47 @@ class SceneManager extends Component {
   calculWidthScene(pct) {
     const scenePlayer1 = this.currentSceneInstanceArray[0]
     const scenePlayer2 = this.currentSceneInstanceArray[1]
-    
-    if (scenePlayer1) {
-      scenePlayer1.splitScreen(pct)
-    }
 
-    if (scenePlayer2) {
-      scenePlayer2.splitScreen(1 - pct)
-    }
-
-    TweenMax.to(this.refScene1,0.5, {
-      x: (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
-    })
-
-    this.refScene1.style.clipPath = `inset(0 ${(0.5 - pct) * 100}% 0 ${(0.5 - pct) * 100}%)`
-
-    TweenMax.to(this.refScene2, 0.5, {
-      x: window.innerWidth / 2 + (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
-    })
-
-    this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
-    if (!this.isSplitActive) {
+    if (this.firstSplitAppear) {
+      scenePlayer1.enterAnimation(pct)
+      scenePlayer2.enterAnimation(pct)
+      TweenMax.to(this.margeSplitScreen, 2, {
+        x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
+      })
       this.margeSplitScreen.visible = true
       this.margeSplitScreen.alpha = 1
-    }
-    this.isSplitActive = true
+      this.firstSplitAppear = false
+    } else {
+      if (scenePlayer1) {
+        scenePlayer1.splitScreen(pct)
+      }
 
-    TweenMax.to(this.margeSplitScreen, 1, {
-      x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
-    })
+      if (scenePlayer2) {
+        scenePlayer2.splitScreen(1 - pct)
+      }
+
+      TweenMax.to(this.refScene1, 0.5, {
+        x: (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
+      })
+  
+      this.refScene1.style.clipPath = `inset(0 ${(0.5 - pct) * 100}% 0 ${(0.5 - pct) * 100}%)`
+  
+      TweenMax.to(this.refScene2, 0.5, {
+        x: window.innerWidth / 2 + (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
+      })
+  
+      this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
+      if (!this.isSplitActive) {
+      
+      }
+      // this.isSplitActive = true
+  
+      TweenMax.to(this.margeSplitScreen, 1, {
+        x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
+      })
+    }
+
+
   }
 
   setMargeSplitScreen() {
@@ -256,6 +246,8 @@ class SceneManager extends Component {
       prevProps.store.users.find((user) => user.id === 'player1').splitScreenPercentage !==
       this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage 
     ) {
+      console.log("chaange chaaange chaaaange")
+      // console.log(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
       this.calculWidthScene(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
     }
   }

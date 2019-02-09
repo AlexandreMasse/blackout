@@ -9,11 +9,17 @@ export const onEnter = (instance) => (
         resolve();
       }
     })
-    timeline.fromTo(instance.sprite, 3, {
-      alpha: 0,
-    },{
-      alpha: 1,
-    })
+    
+    if (instance.player === "player1") {
+      instance.sprite.alpha = 0
+    } else {
+      timeline.fromTo(instance.sprite, 2, {
+        alpha: 0,
+      },{
+        alpha: 1,
+      })
+      
+    }
   })
 )
 
