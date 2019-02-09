@@ -130,25 +130,19 @@ class SceneManager extends Component {
       TweenMax.to(this.refScene1, 0.5, {
         x: (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
       })
-  
+
       this.refScene1.style.clipPath = `inset(0 ${(0.5 - pct) * 100}% 0 ${(0.5 - pct) * 100}%)`
-  
+
       TweenMax.to(this.refScene2, 0.5, {
         x: window.innerWidth / 2 + (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
       })
-  
+
       this.refScene2.style.clipPath = `inset(0 ${(pct - 0.5) * 100}% 0 ${(pct - 0.5) * 100}%)`
-      if (!this.isSplitActive) {
-      
-      }
-      // this.isSplitActive = true
-  
+
       TweenMax.to(this.margeSplitScreen, 1, {
         x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
       })
     }
-
-
   }
 
   setMargeSplitScreen() {
@@ -236,8 +230,6 @@ class SceneManager extends Component {
       prevProps.currentScene.length !== this.props.currentScene.length ||
       prevProps.currentScene[1] !== this.props.currentScene[1]
     ) {
-      // console.log(">>>>", this.props.currentScene);
-      // console.log(">>>>", this.props.currentScene[1]);
       this.changeScene(this.props.currentScene[1], 1)
     }
 
@@ -246,14 +238,12 @@ class SceneManager extends Component {
       prevProps.store.users.find((user) => user.id === 'player1').splitScreenPercentage !==
       this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage 
     ) {
-      console.log("chaange chaaange chaaaange")
-      // console.log(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
       this.calculWidthScene(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
     }
   }
 
   render() {
-    const {store} = this.props;
+    const {store} = this.props
 
     const player1 = store.users.find(user => user.id === "player1")
     const player2 = store.users.find(user => user.id === "player2")

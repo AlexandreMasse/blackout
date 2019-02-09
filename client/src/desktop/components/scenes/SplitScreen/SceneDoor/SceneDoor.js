@@ -107,6 +107,39 @@ export default class SceneDoor {
     }
   }
 
+
+  // JUST FOR DEBUG
+  enterAnimation(pct) {
+    if (this.player === "player2") {
+      let diffX = this.baseX - (window.innerWidth * pct)
+      let spriteX = window.innerWidth - this.baseX + diffX
+      TweenMax.to(this.sprite, 2,{x: spriteX})
+
+
+      if (this.status === 'inferior') {
+        let bgX = ((window.innerWidth * pct) - this.spriteDisadvantage.width) / 2
+        TweenMax.to(this.spriteDisadvantage.position, 1,{x: bgX})
+      } else {
+        let bgX = ((window.innerWidth * pct) - this.spriteAdvantage.width) / 2
+        TweenMax.to(this.spriteAdvantage.position, 1,{x: bgX})
+      }
+
+    } else {
+      let masxW = (window.innerWidth * pct) - this.marge
+      TweenMax.to(this.mask, 2,{width:masxW})
+
+      if (this.status === 'inferior') {
+        let bgX = ((window.innerWidth * pct) - this.spriteDisadvantage.width) / 2
+      TweenMax.to(this.spriteDisadvantage.position, 1,{x: bgX})
+      } else {
+        let bgX = ((window.innerWidth * pct) - this.spriteAdvantage.width) / 2
+        TweenMax.to(this.spriteAdvantage.position, 1,{x: bgX})
+      }
+
+      // TweenMax.to(this.sprite, 2,{alpha: 1})
+    }
+  }
+
   addToScene() {
     switch (this.player) {
       case 'player1':
