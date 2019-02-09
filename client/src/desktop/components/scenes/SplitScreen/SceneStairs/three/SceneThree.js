@@ -36,7 +36,9 @@ export default class SceneTest {
     set() {
         this.scene = new THREE.Scene()
         this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
-        this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
+        console.log(this.gltf.cameras)
+        // this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
+        this.scene.background = new THREE.Color('#000000')
         this.clock = new THREE.Clock()
         // this.renderTarget = new THREE.WebGLRenderTarget(window.innerWidth * 2, window.innerHeight * 2)
 
@@ -50,7 +52,8 @@ export default class SceneTest {
         this.timing = this.status === 'superior' ? .8 : .6
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
         this.mixer.timeScale = this.player === 'player1' ? .7 : 1
-        var clips = this.gltf.animations        
+        var clips = this.gltf.animations  
+        console.log('CLIPS =====',clips)      
         const clip = this.status === 'superior' ? clips[1] : clips[0]
         const action = this.mixer.clipAction(clip)
         action.loop = THREE.LoopOnce

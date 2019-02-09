@@ -25,6 +25,7 @@ export default class SceneDoorDisavantage {
         }
 
         this.initAlertOverlay()
+        this.initFingerPrintSpriteSheet()
         this.addToScene()
 
         this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
@@ -40,8 +41,21 @@ export default class SceneDoorDisavantage {
         this.alertOverlay.blendMode = PIXI.BLEND_MODES.MULTIPLY
     }
 
+    initFingerPrintSpriteSheet() {
+        const empreinte = AssetsManager.get('empreinte')
+        empreinte.parse(() => {
+          let textures = Object.keys(empreinte.textures).map((t) => empreinte.textures[t])
+          this.empreinteAnim = new PIXI.extras.AnimatedSprite(textures)
+          this.empreinteAnim.x = 220.5
+          this.empreinteAnim.animationSpeed = (24/60)
+        //   this.empreinteAnim.loop = false
+          this.empreinteAnim.play()
+        })
+    }
+
     addToScene() {
         this.container.addChild(this.outsideSprite)
+        this.container.addChild(this.empreinteAnim)
         this.container.addChild(this.alertOverlay)
     }
 }
