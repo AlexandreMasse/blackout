@@ -1,33 +1,19 @@
 import {TweenMax, TimelineMax, Power2} from 'gsap'
-// Howl
-import { Howl } from 'howler'
-import {AssetsManager} from "../../../../managers"
 
 export const onEnterDelay = 1
 export const onEnterDuration = .3
 export const onEnterTimeout = onEnterDelay + onEnterDuration
 
-// sound
-let flashSound = null
-
 export const onEnter = (instance) => (
   new Promise(resolve => {
+    const bgSound = instance.flashSound
+    bgSound.play()
+    bgSound.fade(0, 1, 4000)
+
     const timeline = new TimelineMax({
       onComplete: () => {
         console.log("onComplete");
-        // const flashSoundAsset = AssetsManager.get('flashSound')
-        // flashSound = new Howl({
-        //   src: flashSoundAsset.src,
-        //   volume: 0.5,
-        //   html5: true,
-        //   preload: true,
-        //   autoplay: false,
-        //   loop:true,
-        //   format: ['mp3']
-        // })
-
-        // flashSound.play()
-        // flashSound.fade(0, 1, 4000)
+      
         resolve('resolved');
       }
     })
@@ -45,13 +31,12 @@ export const onEnter = (instance) => (
 
 export const onExit = (instance) => (
   new Promise(resolve => {
+    const bgSound = instance.flashSound
+    bgSound.fade(1, 0, 2000)
+    bgSound.once( 'fade', () => {bgSound.stop()})
     const timeline = new TimelineMax({
       onComplete: () => {
         console.log("onComplete flash");
-        console.log(flashSound)
-        // fadeOut and pause flashSound
-        // flashSound.fade(1, 0, 2000)
-        // flashSound.once( 'fade', () => {flashSound.stop()})
         resolve('resolved');
       }
     })

@@ -34,6 +34,7 @@ export default class SceneFlashlight {
     this.player2Collision = false
     // FOR DEBUG
     this.getUsersStatus()
+    this.initBackgroundSound()
     this.init()
   }
 
@@ -71,6 +72,19 @@ export default class SceneFlashlight {
     this.store = newStore
   }
 
+  initBackgroundSound() {
+    const flashSoundAsset = AssetsManager.get('flashSound')
+    this.flashSound = new Howl({
+      src: flashSoundAsset.src,
+      volume: 0.5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+  }
+  
   getUsersStatus() {
     this.statusUser1 = this.store.users.find(user => user.id === "player1").status
     this.statusUser2 = this.store.users.find(user => user.id === "player2").status
