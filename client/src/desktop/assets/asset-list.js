@@ -3,6 +3,7 @@ import bureauItem from './img/bureauItem.jpg'
 import cinematique from './videos/cinematique.mp4'
 import cinematiquePorte from './videos/porte.mp4'
 import analyse from './videos/analyse.mp4'
+import bureauLight from './img/bureau_light.png'
 import bureau1 from './img/bureau_1.png'
 import bureau2 from './img/bureau_2.png'
 import bureau3 from './img/bureau_3.png'
@@ -59,7 +60,8 @@ import bidulesImg from './spritesheet/door/24fps/bidules.png'
 
 // MP3
 import introductionSound from './sounds/introduction.mp3'
-
+import flashSound from './sounds/flashSound.mp3'
+import gresillement from './sounds/gresillement.mp3'
 
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
@@ -68,6 +70,7 @@ export const assetsToLoad = {
     cinematique: { url: cinematique, name:'cinematique', type:'video'},
     cinematiquePorte: { url: cinematiquePorte, name:'cinematiquePorte', type:'video'},
     analyse: { url: analyse, name:'analyse' ,type:'video'},
+    bureauLight: { url: bureauLight, name:'bureauLight', type: 'image'},
     bureau1: { url: bureau1, name:'bureau2', type: 'image'},
     bureau2: { url: bureau2, name:'bureau1', type: 'image'},
     bureau3: { url: bureau3, name:'bureau3', type: 'image'},
@@ -93,5 +96,7 @@ export const assetsToLoad = {
     outsideVoyant: { url: outsideVoyant, name:'outsideVoyant', type: 'image'},
     insideWall: { url: insideWall, name:'insideWall', type: 'image'},
     insideDoor: { url: insideDoor, name:'insideDoor', type: 'image'},
-    introductionSound: {url: introductionSound, name :'introductionSound', type:'sound'}
+    introductionSound: {url: introductionSound, name :'introductionSound', type:'sound'},
+    flashSound: {url: flashSound, name :'flashSound', type:'sound'},
+    gresillement: {url: gresillement, name :'gresillement', type:'sound'},
 }

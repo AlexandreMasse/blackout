@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js"
 // import * as dat from 'dat.gui'
-
+import { Howl } from 'howler'
 import {AssetsManager} from "../../../../managers"
 import {TweenMax, RoughEase, TimelineMax} from 'gsap'
 //redux
@@ -15,7 +15,7 @@ import stepsMobile from '../../../../mobile/components/steps'
 // scenes utils
 import {setFullScreen, collisionDetection} from '../utils'
 // general utils
-import {requestTimeout} from '../../../../utils'
+import {requestTimeout, clearRequestTimeout} from '../../../../utils'
 //transition
 import {onEnterTimeout} from './transition'
 
@@ -31,7 +31,7 @@ export default class SceneFlashlight {
     this.isMoving2 = false
     this.player1Collision = false
     // FOR DEBUG
-    this.player2Collision = true
+    this.player2Collision = false
     // FOR DEBUG
     this.getUsersStatus()
     this.init()
@@ -46,6 +46,8 @@ export default class SceneFlashlight {
       // player1 position has changed
       if (this.isOff) {
         this.switchOnLight()
+        this.deskLight()
+        // console.log('CLEARRR =====')
       }
       if (this.canMove) {
         this.moveFlashLight()
@@ -75,6 +77,27 @@ export default class SceneFlashlight {
 
     console.log('status1', this.statusUser1)
     console.log('status2', this.statusUser2)
+  }
+
+  deskLight() {
+    const gresillementtAsset = AssetsManager.get('gresillement')
+    const gresillement = new Howl({
+      src: gresillementtAsset.src,
+      volume: 0.3,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      format: ['mp3']
+    })
+
+    const randomTime = () => {
+      const min = 5
+      const max = 15
+      var rand = Math.floor(Math.random() * (max - min + 1) + min)
+      gresillement.play()
+      this.timeOutId = requestTimeout(randomTime, rand * 1000)
+    }
+    randomTime()
   }
 
   init() {
@@ -343,24 +366,29 @@ export default class SceneFlashlight {
     const bureau1 = AssetsManager.get('bureau1')
     const bureau2 = AssetsManager.get('bureau2')
     const bureau3 = AssetsManager.get('bureau3')
+    const bureauLight = AssetsManager.get('bureauLight')
     const outline = AssetsManager.get('outline')
 
     const baseTextureBureau1 = new PIXI.BaseTexture(bureau1)
     const baseTextureBureau2 = new PIXI.BaseTexture(bureau2)
     const baseTextureBureau3 = new PIXI.BaseTexture(bureau3)
+    const baseTextureBureauLight = new PIXI.BaseTexture(bureauLight)
     const baseTextureOutline = new PIXI.BaseTexture(outline)
 
     const tBureau1 = new PIXI.Texture(baseTextureBureau1)
     const tBureau2 = new PIXI.Texture(baseTextureBureau2)
     const tBureau3 = new PIXI.Texture(baseTextureBureau3)
+    const tBureauLight = new PIXI.Texture(baseTextureBureauLight)
     const tOutline = new PIXI.Texture(baseTextureOutline)
 
     this.spriteBureau1 = new PIXI.Sprite(tBureau1)
     this.spriteBureau2 = new PIXI.Sprite(tBureau2)
     this.spriteBureau3 = new PIXI.Sprite(tBureau3)
+    this.spriteBureauLight = new PIXI.Sprite(tBureauLight)
     this.spriteOutline = new PIXI.Sprite(tOutline)
 
     this.spriteOutline.alpha = .2
+    // this.spriteBureauLight.alpha = 0
 
     this.sceneWH = {
       width: this.spriteBureau1.width,
@@ -378,24 +406,29 @@ export default class SceneFlashlight {
     const bureau1 = AssetsManager.get('bureau1')
     const bureau2 = AssetsManager.get('bureau2')
     const bureau3 = AssetsManager.get('bureau3')
+    const bureauLight = AssetsManager.get('bureauLight')
     const outline = AssetsManager.get('outline')
 
     const baseTextureBureau1 = new PIXI.BaseTexture(bureau1)
     const baseTextureBureau2 = new PIXI.BaseTexture(bureau2)
     const baseTextureBureau3 = new PIXI.BaseTexture(bureau3)
+    const baseTextureBureauLight = new PIXI.BaseTexture(bureauLight)
     const baseTextureOutline = new PIXI.BaseTexture(outline)
 
     const tBureau1 = new PIXI.Texture(baseTextureBureau1)
     const tBureau2 = new PIXI.Texture(baseTextureBureau2)
     const tBureau3 = new PIXI.Texture(baseTextureBureau3)
+    const tBureauLight = new PIXI.Texture(baseTextureBureauLight)
     const tOutline = new PIXI.Texture(baseTextureOutline)
 
     this.spriteBureau1_2 = new PIXI.Sprite(tBureau1)
     this.spriteBureau2_2 = new PIXI.Sprite(tBureau2)
     this.spriteBureau3_2 = new PIXI.Sprite(tBureau3)
+    this.spriteBureauLight_2 = new PIXI.Sprite(tBureauLight)
     this.spriteOutline_2 = new PIXI.Sprite(tOutline)
 
     this.spriteOutline_2.alpha = 0
+    this.spriteBureauLight_2.alpha = 0
 
     this.initMaskUser2(this.statusUser2)
     this.initFlashOff2()
@@ -559,6 +592,7 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau3)
     this.container.addChild(this.spriteBureau2)
     this.container.addChild(this.spriteBureau1)
+    // this.container.addChild(this.spriteBureauLight)
     this.container.addChild(this.box)
     this.container.addChild(this.circleDetection)
     this.container.addChild(this.spriteFlashOff)
@@ -571,6 +605,7 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteBureau3_2)
     this.container.addChild(this.spriteBureau2_2)
     this.container.addChild(this.spriteBureau1_2)
+    // this.container.addChild(this.spriteBureauLight_2)
     this.container.addChild(this.circleDetection_2)
     this.container.addChild(this.spriteFlashOff_2)
     this.container.addChild(this.spriteOutline_2)
@@ -628,6 +663,7 @@ export default class SceneFlashlight {
 
     if (this.player1Collision && this.player2Collision) {
       if (!this.isDiscover) {
+        clearRequestTimeout(this.timeOutId)
         this.discoverAnimation()
       }
     } 
