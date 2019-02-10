@@ -7,7 +7,6 @@ import classNames from 'classnames'
 import {TimelineMax} from "gsap";
 //asset
 import logotype from "../../../../assets/global/video/logotype.mp4"
-import {AssetsManager} from "../../../../managers"
 // style
 import './ConnexionStep.scss'
 //steps
@@ -18,8 +17,7 @@ import {LottieAnimation, TextAnimation} from "../../components";
 import animations from "../../components/LottieAnimation/animations"
 import {onEnterDelay} from "../ConnexionStep/transition";
 import {wsEmitCurrentStep} from "../../../redux/actions/websockets/websocketsAction";
-// Howl
-import { Howl } from 'howler'
+
 
 class ConnexionStep extends Component {
 
@@ -135,9 +133,7 @@ class ConnexionStep extends Component {
       opacity: 1
     }, "player2+=0.3")
     this.tl.add(() => {this.wordPlayer2Status.start()}, "player2+=0.6")
-    
-    // sound
-    this.setIntroSound()
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -156,28 +152,10 @@ class ConnexionStep extends Component {
       (this.state.isCityLeftReady && this.state.isCityRightReady)
     ) {
       console.log("city left and right ready -> analysis");
-      // fadeOut and pause introSOund
-      this.introSound.fade(1, 0, 4000)
-      this.introSound.once( 'fade', () => {this.introSound.stop()})
+
       this.props.setCurrentStep(steps.ANALYSIS.name)
       this.props.wsEmitCurrentStep(null)
     }
-  }
-
-  setIntroSound = () => {
-    const introSoundAsset = AssetsManager.get('introductionSound')
-    this.introSound = new Howl({
-      src: introSoundAsset.src,
-      volume: 0.5,
-      html5: true,
-      preload: true,
-      autoplay: false,
-      loop:true,
-      format: ['mp3']
-    })
-
-    this.introSound.play()
-    this.introSound.fade(0, 1, 4000)
   }
 
   render() {
