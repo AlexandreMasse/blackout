@@ -1,6 +1,6 @@
 import {AssetsManager} from "../../../../../managers";
 import * as PIXI from "pixi.js";
-import {TweenMax} from 'gsap'
+import {TweenMax, TimelineMax} from 'gsap'
 import {map, setFullScreen} from '../../utils'
 import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
 
@@ -33,6 +33,20 @@ export default class SceneDoor {
 
   //required
   updateStore(newStore) {
+
+    this.currentPlayerFingerprint = this.store.users.find(user => user.id === this.player).fingerprint
+    this.newPlayerFingerprint = newStore.users.find(user => user.id === this.player).fingerprint
+
+    if (this.currentPlayerFingerprint !== this.newPlayerFingerprint && this.newPlayerFingerprint === true) {
+      if (this.status === 'superior') {
+        // this.transitionAdvantageScene()
+        // console.log(this.spriteAdvantageInside)
+        // console.log(this.spriteAdvantage)
+        this.sceneAdvantage.playFingerPrintSpriteSheet()
+      } else {
+        this.sceneDisadvantage.playFingerPrintSpriteSheet()
+      }
+    }
     //update store
     // console.log("updateStore", newStore);
     this.store = newStore
@@ -87,6 +101,15 @@ export default class SceneDoor {
     this.sceneAdvantageInside = new SceneDoorAdvantageInside(this.initialPrct)
     this.spriteAdvantageInside = this.sceneAdvantageInside.spriteInside
     console.log(this.spriteAdvantageInside)
+  }
+
+  transitionAdvantageScene() {
+    // console.log(this.spriteAdvantage)
+    // TweenMax.to(this.spriteAdvantage, 2, {alpha: .5, scale: 1.1})
+    // TweenMax.to(this.spriteAdvantageInside, 2, {alpha: 1, scale: 1})
+    TweenMax.to(this.sceneAdvantageInside.spriteInside, 2, {alpha: 1, scale: 1})
+    console.log('INSIDE ======',this.spriteAdvantageInside)
+
   }
 
   splitScreen(pct) {

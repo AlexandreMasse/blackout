@@ -48,9 +48,12 @@ export default class SceneDoorDisavantage {
           this.empreinteAnim = new PIXI.extras.AnimatedSprite(textures)
           this.empreinteAnim.x = 220.5
           this.empreinteAnim.animationSpeed = (24/60)
-        //   this.empreinteAnim.loop = false
-          this.empreinteAnim.play()
+          this.empreinteAnim.loop = false
         })
+    }
+
+    playFingerPrintSpriteSheet() {
+        this.empreinteAnim.play()
     }
 
     addToScene() {

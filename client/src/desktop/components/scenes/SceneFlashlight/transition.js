@@ -32,8 +32,11 @@ export const onEnter = (instance) => (
 export const onExit = (instance) => (
   new Promise(resolve => {
     const bgSound = instance.flashSound
-    bgSound.fade(1, 0, 2000)
-    bgSound.once( 'fade', () => {bgSound.stop()})
+    if(bgSound) {
+      bgSound.fade(1, 0, 2000)
+      bgSound.once( 'fade', () => {bgSound.stop()})
+    }
+ 
     const timeline = new TimelineMax({
       onComplete: () => {
         console.log("onComplete flash");

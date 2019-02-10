@@ -62,7 +62,8 @@ class SceneManager extends Component {
   initPIXI() {
     this.renderer2D = new PIXI.autoDetectRenderer(this.canvasObj.width, this.canvasObj.height, {
         backgroundColor: 0x000000,
-        view: this.canvasObj.el
+        view: this.canvasObj.el,
+        resolution:window.devicePixelRatio
     })
     this.stage = new PIXI.Container()
     this.ticker = new PIXI.ticker.Ticker()
@@ -237,10 +238,10 @@ class SceneManager extends Component {
       .set(html, {
         opacity: 0
       })
-      .to(html, 3, {
+      .to(html, .8, {
         opacity: 1,
         ease: Power2.easeInOut
-      }, "+=2")
+      }, "+=.8")
   }
 
   onEnterRollingNumber = (html) => {
@@ -250,10 +251,10 @@ class SceneManager extends Component {
       .set(html, {
         opacity: 0
       })
-      .to(html, 3, {
+      .to(html, .2, {
         opacity: 1,
         ease: Power2.easeInOut
-      }, "+=2")
+      }, "+=.8")
   }
 
   onExitDoorCircle = (html) => {

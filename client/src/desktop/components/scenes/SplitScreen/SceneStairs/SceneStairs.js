@@ -12,6 +12,7 @@ import { Howl } from 'howler'
 import {setPlayer1SplitScreenPercentage} from "../../../../redux/actions/desktopAction"
 
 
+
 export default class SceneStairs {
 
   constructor({dispatch, store, player, renderer2D}) {
@@ -54,13 +55,6 @@ export default class SceneStairs {
     if (this.currentPlayerTapValue !== this.newPlayerTapValue) {
         this.sceneThree.moveCamera()
     }
-
-    // this.currentPlayer2TapValue = this.store.users.find(user => user.id === "player2").tapValue
-    // this.newPlayer2TapValue = newStore.users.find(user => user.id === "player2").tapValue
-
-    // if (this.currentPlayer2TapValue !== this.newPlayer2TapValue) {
-    //     this.sceneThree.moveCamera()
-    // }
 
     // console.log("updateStore", newStore);
     this.store = newStore

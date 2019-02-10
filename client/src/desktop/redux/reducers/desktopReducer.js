@@ -40,7 +40,7 @@ const initialState = {
       position: null,
       sliderValue: null,
       tapValue: null,
-      fingerprint: true, //TODO : false
+      fingerprint: false, //TODO : false
       code: [0, 0, 0],
       handle: 0,
       splitScreenPercentage: 0.1,
@@ -79,7 +79,7 @@ const initialState = {
       position: null,
       sliderValue: null,
       tapValue: null,
-      fingerprint: true, // TODO: false
+      fingerprint: false, // TODO: false
       code: [0, 0, 0],
       handle: 0,
       currentScene: scenes.SCENEFLASHLIGHT.name,

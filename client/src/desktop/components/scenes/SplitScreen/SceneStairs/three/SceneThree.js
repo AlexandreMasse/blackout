@@ -3,7 +3,7 @@ import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
 // redux
 import { setCurrentScene , setUserCurrentScene} from "../../../../../redux/actions/desktopAction"
-import {wsEmitCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
+import {wsEmitUserCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
 
 //scenes
 import scenes from '../../..'
@@ -87,6 +87,7 @@ export default class SceneTest {
 		this.mixer.addEventListener( 'finished',() => {
             console.log('le player ',player,' qui est ', status, 'a finito')
             dispatch(setUserCurrentScene({userId: player, currentScene:scenes.SCENEDOOR.name}))
+            dispatch(wsEmitUserCurrentStep({userId: player, currentStep:stepsMobile.FINGERPRINT.name}))
 		})
 	}
 
