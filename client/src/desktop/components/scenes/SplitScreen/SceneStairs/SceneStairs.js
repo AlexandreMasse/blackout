@@ -48,23 +48,19 @@ export default class SceneStairs {
   updateStore(newStore) {
     //update store
 
-    this.currentPlayer1TapValue = this.store.users.find(user => user.id === "player1").tapValue
-    this.newPlayer1TapValue = newStore.users.find(user => user.id === "player1").tapValue
+    this.currentPlayerTapValue = this.store.users.find(user => user.id === this.player).tapValue
+    this.newPlayerTapValue = newStore.users.find(user => user.id === this.player).tapValue
 
-    if (this.newPlayer1TapValue) {
-      if (this.player === "player1") {
+    if (this.currentPlayerTapValue !== this.newPlayerTapValue) {
         this.sceneThree.moveCamera()
-      } 
     }
 
-    this.currentPlayer2TapValue = this.store.users.find(user => user.id === "player2").tapValue
-    this.newPlayer2TapValue = newStore.users.find(user => user.id === "player2").tapValue
+    // this.currentPlayer2TapValue = this.store.users.find(user => user.id === "player2").tapValue
+    // this.newPlayer2TapValue = newStore.users.find(user => user.id === "player2").tapValue
 
-    if (this.newPlayer2TapValue) {
-      if (this.player === "player2") {
-        this.sceneThree.moveCamera()
-      } 
-    }
+    // if (this.currentPlayer2TapValue !== this.newPlayer2TapValue) {
+    //     this.sceneThree.moveCamera()
+    // }
 
     // console.log("updateStore", newStore);
     this.store = newStore

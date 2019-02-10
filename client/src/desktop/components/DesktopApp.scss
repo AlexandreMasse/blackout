@@ -7,7 +7,7 @@
   max-height: 100vh;
   overflow: hidden;
   font-variation-settings: $medium;
-
+  user-select: none;
 
   .dev-toggle {
     color: green;
