@@ -38,23 +38,22 @@ export default class SceneTest {
         this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
         console.log(this.gltf.cameras)
         // this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
-        this.scene.background = new THREE.Color('#000000')
+        this.scene.background = new THREE.Color('#FFFFFF')
         this.clock = new THREE.Clock()
-        // this.renderTarget = new THREE.WebGLRenderTarget(window.innerWidth * 2, window.innerHeight * 2)
-
         this.renderer = new THREE.WebGLRenderer( { antialias: false } )
         this.renderer.setPixelRatio( window.devicePixelRatio )
         this.renderer.setSize( window.innerWidth, window.innerHeight )
     }
 
     setAnimation() {
-        this.maxSpeed = this.status === 'superior' ? 1 : .6
-        this.timing = this.status === 'superior' ? .8 : .6
+        this.maxSpeed = this.status === 'superior' ? 1 : .7
+        this.timing = this.status === 'superior' ? .5 : 1.2
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
-        this.mixer.timeScale = this.player === 'player1' ? .7 : 1
+        // this.mixer.timeScale = this.player === 'player1' ? .5 : .8 
+        this.mixer.timeScale = this.player === 'player1' ? 0 : 0
         var clips = this.gltf.animations  
-        console.log('CLIPS =====',clips)      
-        const clip = this.status === 'superior' ? clips[1] : clips[0]
+        // console.log('CLIPS =====',clips)      
+        const clip = this.status === 'superior' ? clips[3] : clips[0]
         const action = this.mixer.clipAction(clip)
         action.loop = THREE.LoopOnce
         action.clampWhenFinished = true
@@ -69,14 +68,14 @@ export default class SceneTest {
                 timeScale: 0
             })
         } else {
-            this.mixer.timeScale = this.maxSpeed
+            this.mixer.timeScale = (this.maxSpeed / 2)
         }
         this.getProgression()
 
     }
     
     getProgression() {
-        const maxTime = 12
+        const maxTime = 8
         this.progression = this.mixer.time / maxTime
         // console.log(this.progression)
         if (this.mixer.time > maxTime) {

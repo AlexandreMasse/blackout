@@ -70,6 +70,7 @@ class AnalysisStep extends Component {
   render() {
     const video = AssetsManager.get('analyse')
     const {player1PhoneData, player2PhoneData} = this.props
+    console.log(player1PhoneData)
     const osUser1 = `${player1PhoneData.os} ${player1PhoneData.osVersionNumber}`
     const osUser2 = `${player2PhoneData.os} ${player2PhoneData.osVersionNumber}`
     const resolutionUSer1 = `${player1PhoneData.width}x${player1PhoneData.height}`
@@ -90,8 +91,8 @@ class AnalysisStep extends Component {
               os={osUser1}
               year={dateUser1[2]}
               resolution={resolutionUSer1}
-              state={player1PhoneData.operator.region}
-              country={player1PhoneData.operator.country}
+              // state={player1PhoneData.operator.region}
+              // country={player1PhoneData.operator.country}
               scoreUser1={score1.toFixed(3)}
               scoreUser2={score2.toFixed(3)}
             />
@@ -102,8 +103,8 @@ class AnalysisStep extends Component {
               os={osUser2}
               year={dateUser2[2]}
               resolution={resolutionUSer2}
-              state={player2PhoneData.operator.region}
-              country={player2PhoneData.operator.country}
+              // state={player2PhoneData.operator.region || 'yo'}
+              // country={player2PhoneData.operator.country}
               scoreUser1={score1.toFixed(3)}
               scoreUser2={score2.toFixed(3)}
             />

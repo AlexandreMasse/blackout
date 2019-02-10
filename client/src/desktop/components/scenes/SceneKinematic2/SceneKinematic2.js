@@ -56,8 +56,8 @@ export default class SceneKinematic2 {
     endVideo = () => {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
-                const currentStep = null
-                // const currentStep = stepsMobile.STAIRS.name
+                // const currentStep = null
+                const currentStep = stepsMobile.STAIRS.name
                 // this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
                 this.dispatch(setSplitScreen({isSplitScreen: true}))
                 //TODO: replace with scenestair
