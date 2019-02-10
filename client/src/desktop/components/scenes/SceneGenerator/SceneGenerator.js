@@ -1,5 +1,6 @@
-import {AssetsManager} from "../../../../managers";
-import * as PIXI from "pixi.js";
+import {AssetsManager} from "../../../../managers"
+import * as PIXI from "pixi.js"
+import { Howl } from 'howler'
 import * as dat from 'dat.gui'
 import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../utils'
@@ -21,6 +22,7 @@ export default class SceneGenerator {
     this.player2Ready = true
     // FOR DEBUG
     this.isReady = true
+    this.initBackgroundSound()
     this.init()
   }
 
@@ -54,6 +56,19 @@ export default class SceneGenerator {
     }
     //update store
     this.store = newStore
+  }
+
+  initBackgroundSound() {
+    const generatorSoundAsset = AssetsManager.get('generatorSound')
+    this.generatorSound = new Howl({
+      src: generatorSoundAsset.src,
+      volume: 0.2,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
   }
 
   init() {

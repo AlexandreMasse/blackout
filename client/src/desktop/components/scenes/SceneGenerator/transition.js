@@ -3,7 +3,10 @@ import {TweenMax, TimelineMax, Power2} from 'gsap'
 
 export const onEnter = (instance) => (
   new Promise(resolve => {
-    
+    const bgSound = instance.generatorSound
+    bgSound.play()
+    bgSound.fade(0, .5, 4000)
+
     const sprite = instance.sprite
     sprite.alpha = 0
     const tl = new TimelineMax({
@@ -21,6 +24,9 @@ export const onEnter = (instance) => (
 
 export const onExit = (instance) => (
   new Promise(resolve => {
+    const bgSound = instance.generatorSound
+    bgSound.fade(.5, 0, 2000)
+    bgSound.once( 'fade', () => {bgSound.stop()})
     const timeline = new TimelineMax({
       onComplete: () => {
         console.log("onComplete");

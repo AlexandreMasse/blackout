@@ -62,6 +62,7 @@ import bidulesImg from './spritesheet/door/24fps/bidules.png'
 import introductionSound from './sounds/introduction.mp3'
 import flashSound from './sounds/flashSound.mp3'
 import gresillement from './sounds/gresillement.mp3'
+import generatorSound from './sounds/generatorSound.mp3'
 
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
@@ -99,4 +100,5 @@ export const assetsToLoad = {
     introductionSound: {url: introductionSound, name :'introductionSound', type:'sound'},
     flashSound: {url: flashSound, name :'flashSound', type:'sound'},
     gresillement: {url: gresillement, name :'gresillement', type:'sound'},
+    generatorSound: {url: generatorSound, name :'generatorSound', type:'sound'},
 }

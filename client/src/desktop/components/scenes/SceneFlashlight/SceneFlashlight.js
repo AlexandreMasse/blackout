@@ -76,7 +76,7 @@ export default class SceneFlashlight {
     const flashSoundAsset = AssetsManager.get('flashSound')
     this.flashSound = new Howl({
       src: flashSoundAsset.src,
-      volume: 0.5,
+      volume: 0.3,
       html5: true,
       preload: true,
       autoplay: false,
