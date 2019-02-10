@@ -68,7 +68,8 @@ class ConclusionStep extends Component {
         </div>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--4">
-            <p className="conclusion-step__substep__text">Dans<span className="bold">Black|out,</span> le modèle de votre</p>
+          <div className="conclusion-step__substep__wrapper">
+          <p className="conclusion-step__substep__text">Dans <span className="bold">Black|out,</span> le modèle de votre</p>
             <p className="conclusion-step__substep__text">smartphone vous attribue un rôle et</p>
             <p className="conclusion-step__substep__text">définit dès le départ vos chances  de</p>
             <p className="conclusion-step__substep__text">
@@ -80,6 +81,7 @@ class ConclusionStep extends Component {
               <span>e</span>
               <span>.</span>
             </p>
+          </div>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--5">
           <div className="conclusion-step__substep conclusion-step__substep--left">

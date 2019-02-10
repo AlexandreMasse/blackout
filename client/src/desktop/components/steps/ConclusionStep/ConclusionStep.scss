@@ -28,6 +28,10 @@
             &--white {
                 color: $white;
             }
+
+            &--red {
+                color: $red;
+            }
         }
 
         &--2 {
@@ -49,7 +53,6 @@
         }
 
         &--3 {
-            visibility: visible;   
             .conclusion-step__substep__text {
                 margin: 0;
 
@@ -66,6 +69,33 @@
                 width: 17.6vw;
             }
         }
-        
+
+        &--4 {
+            .conclusion-step__substep__text {
+                margin: 0;
+                &:last-child {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    // margin-top: 2rem;
+                    // margin-bottom: 2rem;
+                }
+            }
+            .conclusion-step__substep__wrapper {
+                width: 29.16vw;
+            }
+        }
+
+
+        &--6 {
+            display: flex;
+            flex-direction: column;
+            background: $white;
+            visibility: visible;   
+
+            .conclusion-step__substep__text {
+                margin: 0;
+            }
+        }
     }
 }
