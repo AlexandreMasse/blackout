@@ -133,19 +133,12 @@ class SceneManager extends Component {
         scenePlayer2.splitScreen(1 - pct)
       }
 
-    TweenMax.to(this.refScene1,1, {
-      x: (window.innerWidth * pct) / 2 - this.refScene1.clientWidth / 2,
-    })
-
-    TweenMax.to(this.refScene2, 1, {
-       x: (window.innerWidth * pct) / 2,
-    })
-
     TweenMax.to(this, 1, {
       player1SplitScreenPourcentage: pct,
       onUpdate: () => {
-        this.refScene1.style.clipPath = `inset(0 calc(${(0.5 - (this.player1SplitScreenPourcentage * 0.5)) * 100}% + 2px) 0 ${(0.5 - (this.player1SplitScreenPourcentage * 0.5)) * 100}%)`
-        this.refScene2.style.clipPath = `inset(0 ${(this.player1SplitScreenPourcentage - (0.5 * this.player1SplitScreenPourcentage)) * 100}% 0 calc(${(this.player1SplitScreenPourcentage - (0.5 * this.player1SplitScreenPourcentage)) * 100}% + 0px))`
+        this.refScene1.style.width = `calc(${this.player1SplitScreenPourcentage * window.innerWidth}px - 3px)`
+        this.refScene2.style.width = `${(1 - this.player1SplitScreenPourcentage) * window.innerWidth}px`
+        TweenMax.set(this.refScene2, {x: this.refScene1.clientWidth})
       }
     })
 
@@ -293,12 +286,6 @@ class SceneManager extends Component {
 
   componentDidMount() {
 
-    const player1SplitSCreenPoucentage = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
-
-    TweenMax.to(this.refScene2, 1, {
-      x: window.innerWidth / 2 + (window.innerWidth * player1SplitSCreenPoucentage) / 2 - this.refScene1.clientWidth,
-      // x: (window.innerWidth * pct) - this.refScene2.clientWidth / 2,
-    })
   }
 
 
@@ -326,10 +313,6 @@ class SceneManager extends Component {
             <RollingNumber className={"desktop"} numbers={player1.code}/>
           </Transition>
 
-          {/*{player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "inferior" &&*/}
-            {/*<RollingNumber className={"desktop"} numbers={player1.code}/>*/}
-          {/*}*/}
-
 
           <Transition
             in={store.isSplitScreen && player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "superior"}
@@ -352,20 +335,6 @@ class SceneManager extends Component {
             />
           </Transition>
 
-
-          {/*{player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "superior" &&*/}
-            {/*<LottieAnimation*/}
-              {/*autoplay={false}*/}
-              {/*loop={false}*/}
-              {/*play={false}*/}
-              {/*className={classNames("")}*/}
-              {/*animationData={animations.DoorCircle}*/}
-              {/*aspectRatio={"contain"}*/}
-              {/*progressionTweenDuration={0.1}*/}
-              {/*progression={player1.handle}*/}
-            {/*/>*/}
-          {/*}*/}
-
         </div>
 
         <div ref={ref => this.refScene2 = ref} className="scene-manager__player2" style={{
@@ -384,12 +353,6 @@ class SceneManager extends Component {
           >
             <RollingNumber className={"desktop"} numbers={player2.code}/>
           </Transition>
-
-
-          {/*{player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "inferior" &&*/}
-            {/*<RollingNumber className={"desktop"} numbers={player2.code}/>*/}
-          {/*}*/}
-
 
           <Transition
             in={store.isSplitScreen && player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "superior"}
