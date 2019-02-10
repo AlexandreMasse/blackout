@@ -18,7 +18,7 @@ export default class SceneStairs {
     this.store = store
     this.needUpdate = true
     this.status = this.store.users.find(user => user.id === this.player).status
-    let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
+    // let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.initialPrct = player === 'player1' ? 0.1 : 1 
     this.renderer2D = renderer2D
     this.init()

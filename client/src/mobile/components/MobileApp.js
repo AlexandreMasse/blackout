@@ -1,4 +1,5 @@
-import 'gyronorm/dist/gyronorm.complete.min.js';
+import 'gyronorm/dist/gyronorm.complete.min.js'
+import { disableBodyScroll } from 'body-scroll-lock'
 import React,{ Component} from 'react'
 //Redux
 import { Provider } from 'react-redux'
@@ -60,6 +61,9 @@ class MobileApp extends Component {
 
   componentDidMount() {
     this.disconnected()
+    const app = document.querySelector(".mobile-app")
+
+    disableBodyScroll(app)
   }
 
   reconnect = () => {

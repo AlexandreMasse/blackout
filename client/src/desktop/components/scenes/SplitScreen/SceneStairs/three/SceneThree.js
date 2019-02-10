@@ -38,7 +38,7 @@ export default class SceneTest {
         this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
         console.log(this.gltf.cameras)
         // this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
-        this.scene.background = new THREE.Color('#FFFFFF')
+        this.scene.background = new THREE.Color('#000000')
         this.clock = new THREE.Clock()
         this.renderer = new THREE.WebGLRenderer( { antialias: false } )
         this.renderer.setPixelRatio( window.devicePixelRatio )
@@ -46,8 +46,8 @@ export default class SceneTest {
     }
 
     setAnimation() {
-        this.maxSpeed = this.status === 'superior' ? 1 : .7
-        this.timing = this.status === 'superior' ? .5 : 1.2
+        this.maxSpeed = this.status === 'superior' ? 1.2 : .6
+        this.timing = this.status === 'superior' ? .5 : 1.5
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
         // this.mixer.timeScale = this.player === 'player1' ? .5 : .8 
         this.mixer.timeScale = this.player === 'player1' ? 0 : 0
@@ -77,7 +77,7 @@ export default class SceneTest {
     getProgression() {
         const maxTime = 8
         this.progression = this.mixer.time / maxTime
-        // console.log(this.progression)
+        // console.log('PROGRESSIONN ====',this.progression)
         if (this.mixer.time > maxTime) {
             this.isArrived = true
         }
