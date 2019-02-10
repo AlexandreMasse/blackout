@@ -84,8 +84,8 @@ class ConclusionStep extends Component {
           </div>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--5">
-          <div className="conclusion-step__substep conclusion-step__substep--left">
-            <p className="conclusion-step__substep__title">
+          <div className="conclusion-step__substep__wrapper conclusion-step__substep__wrapper--left">
+            <p className="conclusion-step__substep__text title">
               <span>J</span>
               <span>o</span>
               <span>u</span>
@@ -96,10 +96,10 @@ class ConclusionStep extends Component {
               <span>1</span>
             </p>
             <div className="conclusion-step__substep__description">
-              <p>Votre smartphone iOs11, de</p>
-              <p>résolution 1920x1080, connecté au</p>
-              <p>réseau Free vous a attribué le</p>
-              <p>
+              <p className="conclusion-step__substep__text">Votre smartphone iOs11, de</p>
+              <p className="conclusion-step__substep__text">résolution 1920x1080, connecté au</p>
+              <p className="conclusion-step__substep__text">réseau Free vous a attribué le</p>
+              <p className="conclusion-step__substep__text">
                 <span>s</span>
                 <span>c</span>
                 <span>o</span>
@@ -108,12 +108,12 @@ class ConclusionStep extends Component {
               </p>
             </div>
             <div className="conclusion-step__substep__score">
-              <span>11.4</span>
+              <span className="conclusion-step__substep__text">11.4</span>
             </div>
           </div>
           
-          <div className="conclusion-step__substep conclusion-step__substep--right">
-            <p className="conclusion-step__substep__title">
+          <div className="conclusion-step__substep__wrapper conclusion-step__substep__wrapper--right">
+            <p className="conclusion-step__substep__text title">
               <span>J</span>
               <span>o</span>
               <span>u</span>
@@ -124,10 +124,10 @@ class ConclusionStep extends Component {
               <span>2</span>
             </p>
             <div className="conclusion-step__substep__description">
-              <p>Votre smartphone iOs11, de</p>
-              <p>résolution 1920x1080, connecté au</p>
-              <p>réseau Free vous a attribué le</p>
-              <p>
+              <p className="conclusion-step__substep__text">Votre smartphone iOs11, de</p>
+              <p className="conclusion-step__substep__text">résolution 1920x1080, connecté au</p>
+              <p className="conclusion-step__substep__text">réseau Free vous a attribué le</p>
+              <p className="conclusion-step__substep__text">
                 <span>s</span>
                 <span>c</span>
                 <span>o</span>
@@ -136,7 +136,7 @@ class ConclusionStep extends Component {
               </p>
             </div>
             <div className="conclusion-step__substep__score">
-              <span>11.4</span>
+              <span className="conclusion-step__substep__text">11.4</span>
             </div>
           </div>
         </div>
