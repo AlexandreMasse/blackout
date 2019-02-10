@@ -12,6 +12,10 @@ export const onEnter = (instance) => (
     
     if (instance.player === "player1") {
       instance.sprite.alpha = 0
+      
+      const bgSound = instance.stairsSound
+      bgSound.play()
+      bgSound.fade(0, .5, 4000)
     } else {
       timeline.fromTo(instance.sprite, 2, {
         alpha: 0,

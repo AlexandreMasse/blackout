@@ -3,9 +3,11 @@ import SceneTest from './three/SceneThree'
 import {setFullScreen, requ} from '../../utils'
 // general utils
 import {requestTimeout} from '../../../../../utils'
+import {AssetsManager} from "../../../../../managers"
 // libs
 import {TweenMax} from 'gsap'
 import * as PIXI from "pixi.js"
+import { Howl } from 'howler'
 // redux
 import {setPlayer1SplitScreenPercentage} from "../../../../redux/actions/desktopAction"
 
@@ -23,6 +25,23 @@ export default class SceneStairs {
     this.renderer2D = renderer2D
     this.init()
 
+    if (this.player === 'player1') {
+      this.initBackgroundSound()
+    }
+
+  }
+
+  initBackgroundSound() {
+    const stairsSoundAsset = AssetsManager.get('stairsSound')
+    this.stairsSound = new Howl({
+      src: stairsSoundAsset.src,
+      volume: 0.2,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
   }
 
   //required
