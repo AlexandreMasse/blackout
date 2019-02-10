@@ -60,7 +60,7 @@ export default class SceneTest {
         action.play()
     }
 
-    moveCamera() { 
+    moveCamera() {
         if (!this.isArrived) {
             TweenMax.fromTo(this.mixer, this.timing, {
                 timeScale: this.maxSpeed,

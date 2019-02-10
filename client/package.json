@@ -35,7 +35,7 @@
     "xhr": "^2.4.1"
   },
   "devDependencies": {
-    "howler": "^2.0.15",
+    "howler": "^2.1.1",
     "redux-devtools-extension": "^2.13.7"
   },
   "scripts": {

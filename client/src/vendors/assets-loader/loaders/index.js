@@ -5,6 +5,7 @@ const loadImage = require('./loadImage');
 const loadGltf = require('./loadGltf');
 const loadHDR = require('./loadHDR');
 const loadVideo = require('./loadVideo');
+const loadAudio = require('./loadAudio');
 
 module.exports = [
   // json
@@ -25,10 +26,6 @@ module.exports = [
     match: /\.(jpg|jpeg|svg|png|gif|webp|bmp|tga|tif|apng|wbpm|ico)$/i,
     load: loadImage
   },
-  // audio
-  createMediaLoader('audio', function () {
-    return new window.Audio();
-  }),
   // binary
   {
     key: 'binary',
@@ -65,5 +62,11 @@ module.exports = [
     key: 'video',
     // match: /\.mp4$/i,
     load: loadVideo
+  },
+  // Audio
+  {
+    key: 'sound',
+    // match: /\.mp3$/i,
+    load: loadAudio
   }
 ];

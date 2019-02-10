@@ -57,6 +57,9 @@ import empreinteImg from './spritesheet/door/24fps/empreinte.png'
 import bidules from './spritesheet/door/24fps/bidules.json'
 import bidulesImg from './spritesheet/door/24fps/bidules.png'
 
+// MP3
+import introductionSound from './sounds/introduction.mp3'
+
 
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
@@ -90,4 +93,5 @@ export const assetsToLoad = {
     outsideVoyant: { url: outsideVoyant, name:'outsideVoyant', type: 'image'},
     insideWall: { url: insideWall, name:'insideWall', type: 'image'},
     insideDoor: { url: insideDoor, name:'insideDoor', type: 'image'},
+    introductionSound: {url: introductionSound, name :'introductionSound', type:'sound'}
 }
