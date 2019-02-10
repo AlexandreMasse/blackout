@@ -31,10 +31,11 @@ class ConclusionStep extends Component {
     return (
       <div className="conclusion-step step">
         <div className="conclusion-step__substep conclusion-step__substep--1">
-            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white">Vous avez échoué</p>
-            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white">Vous avez échoué</p>
+            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white">Vous avez échoué.</p>
+            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white">Vous avez échoué.</p>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--2">
+          <div className="conclusion-step__substep__wrapper">
             <p className="conclusion-step__substep__text">Seul</p>
             <p className="conclusion-step__substep__text conclusion-step__substep__text--white">
               <span>J</span>
@@ -47,9 +48,12 @@ class ConclusionStep extends Component {
               <span>1</span>
             </p>
             <p className="conclusion-step__substep__text">a pu se mettre à l’abri.</p>
+          </div>
+          
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--3">
-            <p className="conclusion-step__substep__text">Votre destin était</p>
+        <div className="conclusion-step__substep__wrapper">
+        <p className="conclusion-step__substep__text">Votre destin était</p>
             <p className="conclusion-step__substep__text">
               <span>p</span>
               <span>o</span>
@@ -61,6 +65,7 @@ class ConclusionStep extends Component {
               <span>t</span>
             </p>
             <p className="conclusion-step__substep__text">entre vos mains.</p>
+        </div>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--4">
             <p className="conclusion-step__substep__text">Dans<span className="bold">Black|out,</span> le modèle de votre</p>
