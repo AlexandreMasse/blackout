@@ -136,15 +136,27 @@ class SceneManager extends Component {
     TweenMax.to(this, 1, {
       player1SplitScreenPourcentage: pct,
       onUpdate: () => {
-        this.refScene1.style.width = `calc(${this.player1SplitScreenPourcentage * window.innerWidth}px - 3px)`
-        this.refScene2.style.width = `${(1 - this.player1SplitScreenPourcentage) * window.innerWidth}px`
-        TweenMax.set(this.refScene2, {x: this.refScene1.clientWidth})
+        // this.refScene1.style.width = `calc(${this.player1SplitScreenPourcentage * window.innerWidth}px - 3px)`
+        // this.refScene2.style.width = `${(1 - this.player1SplitScreenPourcentage) * window.innerWidth}px`
+        TweenMax.set(this.refScene1, {scaleX: this.player1SplitScreenPourcentage, x: -3})
+        if(this.player1SplitScreenPourcentage > 0) {
+          TweenMax.set(this.refScene1.querySelector(".scene-manager__player1__wrapper"), {scaleX: 1 / this.player1SplitScreenPourcentage})
+        }
+
+        TweenMax.set(this.refScene2, {x: this.refScene1.getBoundingClientRect().width , scaleX: 1 - this.player1SplitScreenPourcentage})
+        if (this.player1SplitScreenPourcentage < 1) {
+          TweenMax.set(this.refScene2.querySelector(".scene-manager__player2__wrapper"), {scaleX: 1 / (1 - this.player1SplitScreenPourcentage)})
+        }
+
+        TweenMax.set(this.margeSplitScreen, {
+          x: this.refScene1.getBoundingClientRect().width - this.margeSplitScreen.width / 2
+        })
       }
     })
 
-      TweenMax.to(this.margeSplitScreen, 1, {
-        x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
-      })
+      // TweenMax.to(this.margeSplitScreen, 1, {
+      //   x: (window.innerWidth * pct) - this.margeSplitScreen.width / 2
+      // })
     }
   }
 
@@ -300,40 +312,46 @@ class SceneManager extends Component {
         <div ref={ref => this.refScene1 = ref} className="scene-manager__player1" style={{
           width: window.innerWidth,
         }}>
+          <div className="scene-manager__player1__wrapper" style={{
+            width: window.innerWidth,
+          }}>
 
-          <Transition
-            in={store.isSplitScreen && player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "inferior"}
-            timeout={{enter: 10, exit: 5000}}
-            appear={true}
-            mountOnEnter={true}
-            unmountOnExit={true}
-            onEnter={this.onEnterRollingNumber}
-            onExit={this.onExitRollingNumber}
-          >
-            <RollingNumber className={"desktop"} numbers={player1.code}/>
-          </Transition>
+            <Transition
+              in={store.isSplitScreen && player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "inferior"}
+              timeout={{enter: 10, exit: 5000}}
+              appear={true}
+              mountOnEnter={true}
+              unmountOnExit={true}
+              onEnter={this.onEnterRollingNumber}
+              onExit={this.onExitRollingNumber}
+            >
+              <RollingNumber className={"desktop"} numbers={player1.code}/>
+            </Transition>
 
 
-          <Transition
-            in={store.isSplitScreen && player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "superior"}
-            timeout={{enter: 10, exit: 5000}}
-            appear={true}
-            mountOnEnter={true}
-            unmountOnExit={true}
-            onEnter={this.onEnterDoorCircle}
-            onExit={this.onExitDoorCircle}
-          >
-            <LottieAnimation
-              autoplay={false}
-              loop={false}
-              play={false}
-              className={classNames("")}
-              animationData={animations.DoorCircle}
-              aspectRatio={"cover"}
-              progressionTweenDuration={0.1}
-              progression={player1.handle}
-            />
-          </Transition>
+            <Transition
+              in={store.isSplitScreen && player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "superior"}
+              timeout={{enter: 10, exit: 5000}}
+              appear={true}
+              mountOnEnter={true}
+              unmountOnExit={true}
+              onEnter={this.onEnterDoorCircle}
+              onExit={this.onExitDoorCircle}
+            >
+              <LottieAnimation
+                autoplay={false}
+                loop={false}
+                play={false}
+                className={classNames("")}
+                animationData={animations.DoorCircle}
+                aspectRatio={"cover"}
+                progressionTweenDuration={0.1}
+                progression={player1.handle}
+              />
+            </Transition>
+          </div>
+
+
 
         </div>
 
@@ -342,38 +360,43 @@ class SceneManager extends Component {
           height: window.innerHeight,
         }}>
 
-          <Transition
-            in={store.isSplitScreen && player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "inferior"}
-            timeout={{enter: 10, exit: 5000}}
-            appear={true}
-            mountOnEnter={true}
-            unmountOnExit={true}
-            onEnter={this.onEnterRollingNumber}
-            onExit={this.onExitRollingNumber}
-          >
-            <RollingNumber className={"desktop"} numbers={player2.code}/>
-          </Transition>
+          <div className="scene-manager__player2__wrapper" style={{
+            width: window.innerWidth,
+          }}>
+            <Transition
+              in={store.isSplitScreen && player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "inferior"}
+              timeout={{enter: 10, exit: 5000}}
+              appear={true}
+              mountOnEnter={true}
+              unmountOnExit={true}
+              onEnter={this.onEnterRollingNumber}
+              onExit={this.onExitRollingNumber}
+            >
+              <RollingNumber className={"desktop"} numbers={player2.code}/>
+            </Transition>
 
-          <Transition
-            in={store.isSplitScreen && player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "superior"}
-            timeout={{enter: 10, exit: 5000}}
-            appear={true}
-            mountOnEnter={true}
-            unmountOnExit={true}
-            onEnter={this.onEnterDoorCircle}
-            onExit={this.onExitDoorCircle}
-          >
-            <LottieAnimation
-              autoplay={false}
-              loop={false}
-              play={false}
-              className={classNames("")}
-              animationData={animations.DoorCircle}
-              aspectRatio={"cover"}
-              progressionTweenDuration={0.1}
-              progression={player2.handle}
-            />
-          </Transition>
+            <Transition
+              in={store.isSplitScreen && player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "superior"}
+              timeout={{enter: 10, exit: 5000}}
+              appear={true}
+              mountOnEnter={true}
+              unmountOnExit={true}
+              onEnter={this.onEnterDoorCircle}
+              onExit={this.onExitDoorCircle}
+            >
+              <LottieAnimation
+                autoplay={false}
+                loop={false}
+                play={false}
+                className={classNames("")}
+                animationData={animations.DoorCircle}
+                aspectRatio={"cover"}
+                progressionTweenDuration={0.1}
+                progression={player2.handle}
+              />
+            </Transition>
+          </div>
+
 
         </div>
       </>
