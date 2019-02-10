@@ -18,16 +18,15 @@ class ConclusionStep extends Component {
 
   render() {
     const {player1PhoneData, player2PhoneData} = this.props
+    console.log(player1PhoneData)
     const osUser1 = `${player1PhoneData.os} ${player1PhoneData.osVersionNumber}`
     const osUser2 = `${player2PhoneData.os} ${player2PhoneData.osVersionNumber}`
     const resolutionUSer1 = `${player1PhoneData.width}x${player1PhoneData.height}`
     const resolutionUSer2 = `${player2PhoneData.width}x${player2PhoneData.height}`
     const score1 = player1PhoneData.score
     const score2 = player2PhoneData.score
-    const osReleaseDate1 = player1PhoneData.osReleaseDate
-    const dateUser1 =  osReleaseDate1.split('/', 3)
-    const osReleaseDate2 = player2PhoneData.osReleaseDate
-    const dateUser2 = osReleaseDate2.split('/', 3)
+    const operator1 = player1PhoneData.operator.org
+    const operator2 = player2PhoneData.operator.org
     return (
       <div className="conclusion-step step">
         <div className="conclusion-step__substep conclusion-step__substep--1">
@@ -96,8 +95,8 @@ class ConclusionStep extends Component {
               <span>1</span>
             </p>
             <div className="conclusion-step__substep__description">
-              <p className="conclusion-step__substep__text">Votre smartphone iOs11, de</p>
-              <p className="conclusion-step__substep__text">résolution 1920x1080, connecté au</p>
+              <p className="conclusion-step__substep__text">Votre smartphone {osUser1}, de</p>
+              <p className="conclusion-step__substep__text">résolution {resolutionUSer1}, connecté au</p>
               <p className="conclusion-step__substep__text">réseau Free vous a attribué le</p>
               <p className="conclusion-step__substep__text">
                 <span>s</span>
@@ -108,7 +107,7 @@ class ConclusionStep extends Component {
               </p>
             </div>
             <div className="conclusion-step__substep__score">
-              <span className="conclusion-step__substep__text">11.4</span>
+              <span className="conclusion-step__substep__text">{score1.toFixed(1)}</span>
             </div>
           </div>
           
@@ -124,8 +123,8 @@ class ConclusionStep extends Component {
               <span>2</span>
             </p>
             <div className="conclusion-step__substep__description">
-              <p className="conclusion-step__substep__text">Votre smartphone iOs11, de</p>
-              <p className="conclusion-step__substep__text">résolution 1920x1080, connecté au</p>
+              <p className="conclusion-step__substep__text">Votre smartphone {osUser2}, de</p>
+              <p className="conclusion-step__substep__text">résolution {resolutionUSer2}, connecté au</p>
               <p className="conclusion-step__substep__text">réseau Free vous a attribué le</p>
               <p className="conclusion-step__substep__text">
                 <span>s</span>
@@ -136,7 +135,7 @@ class ConclusionStep extends Component {
               </p>
             </div>
             <div className="conclusion-step__substep__score">
-              <span className="conclusion-step__substep__text">11.4</span>
+              <span className="conclusion-step__substep__text">{score2.toFixed(1)}</span>
             </div>
           </div>
         </div>
