@@ -93,6 +93,11 @@ export default class SceneTest {
         }
     
         if (this.mixer.time > maxTime) {
+            if (!this.stairDone) {
+                this.bgSound.fade(.5, 0, 4000)
+                this.bgSound.once( 'fade', () => {this.bgSound.stop()})     
+            }
+            this.stairDone = true
             this.isArrived = true
         }
     }

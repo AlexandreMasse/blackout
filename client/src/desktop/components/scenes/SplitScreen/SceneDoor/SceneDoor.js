@@ -1,5 +1,6 @@
-import {AssetsManager} from "../../../../../managers";
-import * as PIXI from "pixi.js";
+import {AssetsManager} from "../../../../../managers"
+import * as PIXI from "pixi.js"
+import { Howl } from 'howler'
 import {TweenMax, TimelineMax} from 'gsap'
 import {map, setFullScreen} from '../../utils'
 import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
@@ -14,7 +15,6 @@ export default class SceneDoor {
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.status = this.store.users.find(user => user.id === player).status
     this.initialPrct = player === 'player1' ? pct : 1 - pct 
-
     switch (this.status) {
       case 'inferior':
         this.initSceneDisadvantage()
@@ -26,7 +26,7 @@ export default class SceneDoor {
       default:
         console.log('Sorry, we are out of ' + this.status + '.')
     }
-
+    this.initFingerPrintSound()
     this.init()
 
   }
@@ -39,12 +39,14 @@ export default class SceneDoor {
 
     if (this.currentPlayerFingerprint !== this.newPlayerFingerprint && this.newPlayerFingerprint === true) {
       if (this.status === 'superior') {
+        this.fingerAdvantage.play()
         this.sceneAdvantage.playFingerPrintSpriteSheet()
         const timeline = new TimelineMax({delay: .8})
         timeline.add('transition')
                 .to(this.spriteAdvantage, .4, {alpha:0}, 'transition')
                 .to(this.spriteAdvantageInside, .4, {alpha:1}, "transition+=0.4")
       } else {
+        this.fingerDisadvantage.play()
         this.sceneDisadvantage.playFingerPrintSpriteSheet()
       }
     }
@@ -92,7 +94,30 @@ export default class SceneDoor {
       default:
         console.log('Sorry, we are out of ' + this.player + '.')
     }
+  }
 
+  initFingerPrintSound() {
+    const fingerAdvantageAsset = AssetsManager.get('fingerprintAdvandtage')
+    const fingerDisadvantageAsset = AssetsManager.get('fingerprintDisadvandtage')
+    this.fingerAdvantage = new Howl({
+      src: fingerAdvantageAsset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
+
+    this.fingerDisadvantage = new Howl({
+      src: fingerDisadvantageAsset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
   }
 
   initSceneDisadvantage() {

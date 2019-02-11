@@ -3,6 +3,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {wsEmitFingerprint} from "../../../redux/actions/websockets/websocketsAction";
 //import {setCurrentStep} from "../../../redux/actions/mobileAction";
+import { Howl } from 'howler'
+// assets
+import {AssetsManager} from "./../../../../managers"
 //css
 import './FingerprintStep.scss'
 //lib
@@ -16,10 +19,36 @@ class FingerprintStep extends Component {
 
     this.pressHoldDuration = 2.5;
     this.counter = 0
+    this.fingerPrintSound()
   }
 
   handleRef = (el) => {
     this.props.handleRef(el)
+  }
+
+  fingerPrintSound = () => {
+    const fingerAdvantageAsset = AssetsManager.get('fingerprintAdvandtage')
+    const fingerDisadvantageAsset = AssetsManager.get('fingerprintDisadvandtage')
+
+    this.fingerAdvantage = new Howl({
+      src: fingerAdvantageAsset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
+
+    this.fingerDisadvantage = new Howl({
+      src: fingerDisadvantageAsset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
   }
 
   componentDidMount() {
@@ -51,6 +80,8 @@ class FingerprintStep extends Component {
   }
 
   timer = () => {
+    const {playerStatus} = this.props
+
     console.log("Timer!");
     if (this.counter < this.pressHoldDuration * 60) {
       this.timerID = requestAnimationFrame(this.timer);
@@ -59,7 +90,12 @@ class FingerprintStep extends Component {
 
       this.progressionAnimation(0.05)
     } else {
-      console.log("Press threshold reached!");
+      console.log("Press threshold reached!")
+      if (playerStatus === 'superior') {
+        this.fingerAdvantage.play()
+      } else {
+        this.fingerDisadvantage.play()
+      }
       this.props.wsEmitFingerprint()
     }
   }
@@ -78,6 +114,8 @@ class FingerprintStep extends Component {
 const mapStateToProps = (state, props) => {
   return {
     //playerStatus: state.mobile.users.find(user => user.id === state.mobile.userId).status,
+    player: state.mobile.userId,
+    playerStatus: state.mobile.users.find(user => user.id === state.mobile.userId).status,
   }
 }
 
