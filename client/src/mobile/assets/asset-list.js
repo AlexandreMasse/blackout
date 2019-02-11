@@ -3,6 +3,7 @@ import map from './img/map.jpg'
 import logotype from './video/logotype.mp4'
 import trame from './img/trame.jpg'
 import notification from './sounds/notification.mp3'
+import mobileFlash from './sounds/mobileFlash.mp3'
 
 export const assetsToLoad = {
     arrowDonw: {url:arrowDonw, name: "arrowDonw", type:"image"},
@@ -10,4 +11,5 @@ export const assetsToLoad = {
     trame: {url:trame, name: "trame", type:"image"},
     logotype: {url:logotype, name: "logotype", type:"video"},
     notification: {url:notification, name: "notification", type:"sound"},
+    mobileFlash: {url:mobileFlash, name: "mobileFlash", type:"sound"},
 }

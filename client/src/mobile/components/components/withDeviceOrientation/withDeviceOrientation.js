@@ -1,12 +1,13 @@
 import React from 'react';
-
+import {AssetsManager} from "./../../../../managers"
+import { Howl } from 'howler'
 const withDeviceOrientation = (WrappedComponent) => {
 
   class HOC extends React.Component {
 
     constructor(props) {
       super(props)
-
+      this.initFlashlightSound()
       // The angle at which we stop listening for input from the phone's gyro.
       this.MAX_X_ANGLE = 20;
       this.MAX_Y_ANGLE = 24;
@@ -16,12 +17,24 @@ const withDeviceOrientation = (WrappedComponent) => {
       this.latestAlpha = 0;
       this.baseAlpha = null;
       this.touching = false;
+      this.isfirstTrigger = true
 
       this.state = {
         positionListened: this.position
       }
     }
-
+    initFlashlightSound = () => {
+      const mobileFlashAsset = AssetsManager.get('mobileFlash')
+      this.mobileFlash = new Howl({
+        src: mobileFlashAsset.src,
+        volume: 1,
+        html5: true,
+        preload: true,
+        autoplay: false,
+        loop: false,
+        format: ['mp3']
+      })
+    }
 
     // Convert the phone's gyro data into screen coordinates.
     handleDeviceOrientation = (data) => {
@@ -78,7 +91,10 @@ const withDeviceOrientation = (WrappedComponent) => {
     handleTouchStartEvent = (e) => {
       e.preventDefault();
       e.target.parentNode.classList.add('power-button--active')
-
+      if (this.isfirstTrigger) {
+        this.mobileFlash.play()
+      }
+      this.isfirstTrigger = false
       // Every time we touch and hold we calibrate to the center of the screen.
       this.baseAlpha = this.latestAlpha;
       this.touching = true;

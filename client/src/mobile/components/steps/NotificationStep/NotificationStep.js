@@ -53,7 +53,6 @@ class NotificationStep extends Component {
   }
 
   emitShowDanger = () => {
-    this.notification.play()
     const {player} = this.props
     const otherPlayer = player === "player1" ? "player2" : "player1"
     this.props.wsEmitShowDanger(otherPlayer, true)
@@ -71,7 +70,7 @@ class NotificationStep extends Component {
           <span className="notification-step__title">Danger</span>
           <div className="notification-step__wrapper">
             <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src}/>
-            </div>
+          </div>
           {playerStatus === 'superior' &&
             <button className="notification-step__button button" onClick={this.emitShowDanger}>
               <span>{'> Partager l\'alerte <'}</span>
