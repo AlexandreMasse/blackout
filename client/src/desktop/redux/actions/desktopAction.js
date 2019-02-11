@@ -70,6 +70,13 @@ export const setUserIndicationTheme = (payload) => (dispatch, getState, {emit}) 
  })
 }
 
+export const setStairsProgression = (payload) => (dispatch, getState, {emit}) => {
+ dispatch({
+  type: desktopActionTypes.SET_USER_STAIRS_PROGRESSION,
+  payload
+ })
+}
+
 export const setPlayer1SplitScreenPercentage = (payload) => (dispatch, getState, {emit}) => {
  dispatch({
   type: desktopActionTypes.SET_PLAYER1_SPLIT_SCREEN_PERCENTAGE,

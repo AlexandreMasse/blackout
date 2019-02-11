@@ -2,17 +2,22 @@ import * as THREE from 'three'
 import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
 // redux
-import { setCurrentScene , setUserCurrentScene} from "../../../../../redux/actions/desktopAction"
+import {setUserCurrentScene, setStairsProgression} from "../../../../../redux/actions/desktopAction"
 import {wsEmitUserCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
 
 //scenes
 import scenes from '../../..'
 import stepsMobile from '../../../../../../mobile/components/steps'
+// scene utils 
+
+import {map} from '../../../utils'
+
 
 export default class SceneTest {
     constructor(status, player, dispatch) {
         this.status = status
         this.player = player
+        this.dispatch = dispatch
         this.getGltfScene()
         this.set()
         this.setAnimation()
@@ -75,9 +80,12 @@ export default class SceneTest {
     }
     
     getProgression() {
-        const maxTime = 8
+        const maxTime = 7.8
         this.progression = this.mixer.time / maxTime
-        // console.log('PROGRESSIONN ====',this.progression)
+        let mapProgression = map(this.progression,0, 1, 0, 0.35)
+        this.dispatch(setStairsProgression({userId: this.player, stairsProgression: mapProgression}))
+        console.log('PROGRESSIONN ====',this.progression)
+        console.log('MAP PROGRESSIONN ====', mapProgression)
         if (this.mixer.time > maxTime) {
             this.isArrived = true
         }

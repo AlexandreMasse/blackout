@@ -249,6 +249,23 @@ export default (state = initialState, action) => {
       }
     }
 
+    case desktopActionTypes.SET_USER_STAIRS_PROGRESSION: {
+      const {stairsProgression, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              stairsProgression
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
     case desktopActionTypes.SET_PLAYER1_SPLIT_SCREEN_PERCENTAGE: {
       const {splitScreenPercentage} = action.payload
       return {
