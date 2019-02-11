@@ -99,11 +99,7 @@ export default class SceneTest {
     }
 
     render(renderer, player) {
-
-       
         renderer.render(this.scene, this.camera, this.renderTarget)
-        
-        console.log('RENDERTARGET', this.renderTarget)
     }
 
     update() {

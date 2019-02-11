@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types"
-import * as PIXI from "pixi.js"
+import * as PIXI from "pixi.js/dist/pixi"
 import * as THREE from 'three'
 //Step
 import scenes from '../../scenes'
@@ -58,12 +58,12 @@ class SceneManager extends Component {
   }
 
   initPIXI() {
-    this.renderer2D = new PIXI.Renderer(this.canvasObj.width, this.canvasObj.height, {
+    this.renderer2D = new PIXI.autoDetectRenderer(this.canvasObj.width, this.canvasObj.height, {
         backgroundColor: 0x000000,
         view: this.canvasObj.el
     })
     this.stage = new PIXI.Container()
-    this.ticker = new PIXI.Ticker()
+    this.ticker = new PIXI.ticker.Ticker()
     this.ticker.start()
 
     // setup interaction

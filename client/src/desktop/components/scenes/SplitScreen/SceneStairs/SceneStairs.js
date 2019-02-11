@@ -66,20 +66,7 @@ export default class SceneStairs {
     this.container = new PIXI.Container()
     const THREE_TEXTURE = PIXI.Texture.fromCanvas(this.sceneThree.createTexture())
     THREE_TEXTURE.baseTexture.resolution = 2
-    // this.stairSprite = new PIXI.Sprite(THREE_TEXTURE)
-    // this.stairSprite.anchor.y = 1 
-    // this.stairSprite.scale.y *= -1
-    // console.log('STAIR SPRITE,', this.stairSprite)
-    // this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
-    // this.rt = new PIXI.RenderTexture(this.brt)
-    // this.rt2 = new PIXI.RenderTexture(this.brt)
-    // var currentTexture = this.rt;
-    // this.sprite = new PIXI.Sprite(this.rt)
-
     this.sprite3D = new PIXI.Sprite(THREE_TEXTURE)
-    // this.sprite.anchor.y = 1 
-    // this.sprite.scale.y *= -1
-    
 
     this.brt = new PIXI.BaseRenderTexture(width, height, PIXI.SCALE_MODES.LINEAR, 1)
     this.rt = new PIXI.RenderTexture(this.brt)
@@ -87,18 +74,11 @@ export default class SceneStairs {
     this.sprite = new PIXI.Sprite(this.rt)
     this.sprite.anchor.y = 1 
     this.sprite.scale.y *= -1
-    // if(this.player === "player1") {
-    //   setFullScreen(this.stairSprite, this.stairSprite.width, this.stairSprite.height, this.containerSize.width)
-    //   console.log(this.s)
-    // }
-    // this.stairSprite.x = this.player === 'player2' ? width - this.containerSize.width: 0 
+      setFullScreen(this.sprite3D, this.sprite3D.width, this.sprite3D.height, this.containerSize.width)
     this.sprite.x = this.player === 'player2' ? width - this.containerSize.width : 0 
     this.baseX = this.player === 'player2' ? this.containerSize.width + this.marge : 0
     
     this.addToScene()
-    // if(this.player === "player2") {
-    //   this.sprite.visible = true
-    // }
   }
 
   initSceneThree() {
@@ -131,26 +111,20 @@ export default class SceneStairs {
   }
 
   update() {
-    // if (!this.addedOnce && this.sprite3D._texture.baseTexture._glTextures[0] != null && this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture != null) {
-    //   this.sprite3D._texture.baseTexture._glTextures[0].texture = this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture;
-    //   this.addedOnce = true
-    //   console.log("added")
-    //   // console.log('RENDerTARGET UPDATE', this.sceneThree.renderTarget)
-    // }
+    if (!this.addedOnce && this.sprite3D._texture.baseTexture._glTextures[0] != null && this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture != null) {
+      this.sprite3D._texture.baseTexture._glTextures[0].texture = this.renderer3D.properties.get(this.sceneThree.renderTarget.texture).__webglTexture;
+      this.addedOnce = true
+      console.log("added")
+    }
 
     this.renderer2D.reset()    
     /* Three */
-    // this.renderer3D.state.reset()
-    // this.renderer3D.setRenderTarget(null)
-    // this.sceneThree.render(this.renderer3D)
-    // this.sceneThree.update()
-    // this.renderer3D.state.reset()
-    // this.renderer2D.reset()
-
-    // swap the buffers ...
-    // var temp = this.rt
-    // this.rt = this.rt2
-    // this.rt = temp
+    this.renderer3D.state.reset()
+    this.renderer3D.setRenderTarget(null)
+    this.sceneThree.render(this.renderer3D)
+    this.sceneThree.update()
+    this.renderer3D.state.reset()
+    this.renderer2D.reset()
   }
   
   resize() {

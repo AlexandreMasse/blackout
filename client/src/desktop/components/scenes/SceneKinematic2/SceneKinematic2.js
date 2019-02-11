@@ -30,12 +30,10 @@ export default class SceneKinematic2 {
     init() {
         this.container = new PIXI.Container()
         const porte = AssetsManager.get('cinematiquePorte')
-        // this.textureVid = PIXI.Texture.fromVideo(porte)
-        this.textureVid = PIXI.Texture.from(porte)
+        this.textureVid = PIXI.Texture.fromVideo(porte)
         console.log(this.textureVid)
         this.bg = new PIXI.Sprite(this.textureVid)
-        // this.video = this.textureVid.baseTexture.source 
-        this.video = this.textureVid.baseTexture.resource.source 
+        this.video = this.textureVid.baseTexture.source 
         this.video.muted = false
         this.video.autoplay = true
         this.container.addChild(this.bg)
@@ -60,8 +58,6 @@ export default class SceneKinematic2 {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
                 const currentStep = null
-                // const currentStep = stepsMobile.STAIRS.name
-                // this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
                 this.dispatch(setSplitScreen({isSplitScreen: true}))
                 this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENESTAIRS.name}))
                 this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
