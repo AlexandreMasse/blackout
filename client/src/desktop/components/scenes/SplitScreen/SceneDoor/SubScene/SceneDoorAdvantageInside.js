@@ -5,8 +5,9 @@ import {map, setFullScreen} from '../../../utils'
 import * as dat from 'dat.gui'
 
 export default class SceneDoorAdvantageInside {
-    constructor(pct) {
+    constructor(pct, player) {
         this.initialPct = pct
+        this.player = player
         this.init()
         this.initGUI()
     }
@@ -24,7 +25,7 @@ export default class SceneDoorAdvantageInside {
         let baseTextureDoor = new PIXI.BaseTexture(doorImg)
         let textureDoor = new PIXI.Texture(baseTextureDoor)
         this.doorSprite = new PIXI.Sprite(textureDoor)
-        this.doorSprite.x = 460
+        this.doorSprite.x = this.player === "player2" ? 460 : -460
       
         this.containerSize = {width:width * this.initialPct, height:height}
         this.spriteSize = {

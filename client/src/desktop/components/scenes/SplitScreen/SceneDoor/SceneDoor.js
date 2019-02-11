@@ -53,7 +53,11 @@ export default class SceneDoor {
     this.newPlayerHandle = newStore.users.find(user => user.id === this.player).handle
     
     if (this.currentPlayerHandle !== this.newPlayerHandle) {
-      let mapValue  = map(this.newPlayerHandle, 0, 1, 460, 0)
+      if (this.player === "player2") {
+        var mapValue  = map(this.newPlayerHandle, 0, 1, 460, 0)
+      } else {
+        var mapValue  = map(this.newPlayerHandle, 0, 1, -460, 0)
+      }
       TweenMax.to(this.sceneAdvantageInside.doorSprite, 2, {x:mapValue})
     }
     //update store
@@ -107,7 +111,7 @@ export default class SceneDoor {
 
   initSceneAdvantageInside() {
     console.log('INIT SCENE AVANTAGE INSIDE')
-    this.sceneAdvantageInside = new SceneDoorAdvantageInside(this.initialPrct)
+    this.sceneAdvantageInside = new SceneDoorAdvantageInside(this.initialPrct, this.player)
     this.spriteAdvantageInside = this.sceneAdvantageInside.spriteInside
     // console.log(this.spriteAdvantageInside)
   }
