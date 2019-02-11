@@ -4,12 +4,18 @@ import { Howl } from 'howler'
 import * as dat from 'dat.gui'
 import {TweenMax} from 'gsap'
 import {map, setFullScreen} from '../utils'
-
 // redux
-import {setCurrentScene} from "../../../redux/actions/desktopAction"
+import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen,
+  setUserIndicationTheme} from "../../../redux/actions/desktopAction"
 import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
+// components
+import {themes as IndicationThemes} from '../../components/Indication/Indication'
 //scenes
 import scenes from ".."
+// general utils
+import {requestTimeout} from '../../../../utils'
+// transition
+import {onEnterTimeout} from './transition'
 
 export default class SceneGenerator {
 
@@ -100,6 +106,25 @@ export default class SceneGenerator {
     this.rt = new PIXI.RenderTexture(this.brt)
     this.sprite = new PIXI.Sprite(this.rt)
     setFullScreen(this.sprite, this.spriteSize.width, this.spriteSize.height)
+
+    // indication
+    this.dispatch(setUserIndicationTheme({userId: "player1", theme: IndicationThemes.white}))
+    this.dispatch(setUserIndicationTheme({userId: "player2", theme: IndicationThemes.white}))
+    this.dispatch(setUserIndicationTitle({userId: "player1", title: "Rétablissez le courant"}))
+    this.dispatch(setUserIndicationTitle({userId: "player2", title: "Rétablissez le courant"}))
+    this.dispatch(setUserIndicationDescription({userId: "player1", description: "Soulevez le levier pour libérer l’électricité."}))
+    this.dispatch(setUserIndicationDescription({userId: "player2", description: "Soulevez le levier pour libérer l’électricité."}))
+
+    requestTimeout(() => {
+      this.dispatch(setUserIndicationActive({
+        userId: "player1",
+        isActive: true
+      }))
+      this.dispatch(setUserIndicationActive({
+        userId: "player2",
+        isActive: true
+      }))
+    }, onEnterTimeout * 1000)
   }
 
   nextScene() {

@@ -1,5 +1,8 @@
 import {TweenMax, TimelineMax, Power2} from 'gsap'
 
+// export const onEnterDelay = .5
+// export const onEnterDuration = .3
+export const onEnterTimeout = 2
 
 export const onEnter = (instance) => (
   new Promise(resolve => {
