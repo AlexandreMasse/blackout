@@ -38,8 +38,9 @@ export default class SceneDoorAdvantageInside {
         this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
         this.rt = new PIXI.RenderTexture(this.brt)
         this.spriteInside = new PIXI.Sprite(this.rt) 
-        // this.spriteInside.alpha = 0
-        this.spriteInside.scale = 0.9
+        this.spriteInside.alpha = 0
+        // this.spriteInside.scale.x = 0.9
+        // this.spriteInside.scale.y = 0.9
     }
 
     // setAlpha() {

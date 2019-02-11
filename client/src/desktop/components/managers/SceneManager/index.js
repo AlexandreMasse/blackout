@@ -238,10 +238,10 @@ class SceneManager extends Component {
       .set(html, {
         opacity: 0
       })
-      .to(html, .8, {
+      .to(html, .2, {
         opacity: 1,
         ease: Power2.easeInOut
-      }, "+=.8")
+      }, "+=1.2")
   }
 
   onEnterRollingNumber = (html) => {
@@ -254,7 +254,7 @@ class SceneManager extends Component {
       .to(html, .2, {
         opacity: 1,
         ease: Power2.easeInOut
-      }, "+=.8")
+      }, "+=1.2")
   }
 
   onExitDoorCircle = (html) => {

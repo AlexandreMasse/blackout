@@ -39,10 +39,13 @@ export default class SceneDoor {
 
     if (this.currentPlayerFingerprint !== this.newPlayerFingerprint && this.newPlayerFingerprint === true) {
       if (this.status === 'superior') {
-        // this.transitionAdvantageScene()
-        // console.log(this.spriteAdvantageInside)
-        // console.log(this.spriteAdvantage)
         this.sceneAdvantage.playFingerPrintSpriteSheet()
+        const timeline = new TimelineMax({delay: .8})
+        timeline.add('transition')
+                .to(this.spriteAdvantage, .4, {alpha:0}, 'transition')
+                // .to(this.spriteAdvantage.scale, .4, {x:1.1, y:1.1}, "transition")
+                .to(this.spriteAdvantageInside, .4, {alpha:1}, "transition+=0.4")
+                // .to(this.spriteAdvantageInside, .4, {x:1,y:1}, "transition+=0.4")
       } else {
         this.sceneDisadvantage.playFingerPrintSpriteSheet()
       }
