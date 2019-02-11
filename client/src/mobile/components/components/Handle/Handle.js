@@ -37,25 +37,38 @@ class Handle extends Component {
         // } else {
         //   return value
         // }
+        const progression = this.draggable.rotation / (-360 * this.lapsNumber)
+        if (progression === 1) {
+          this.props.wsEmitHandle(progression)
+        }
         return value
       },
-      onDrag: () => {
-        const progression= this.draggable.rotation / (-360 * this.lapsNumber)
-        this.props.wsEmitHandle(progression)
-      }
+      onDrag: this.throttle(this.onDragThrottled, 80)
     });
     this.draggable.enable()
 
-    // this.ref.addEventListener("touchmove", this.handleTouchMove, false)
+  }
 
+  onDragThrottled = () => {
+    const progression = this.draggable.rotation / (-360 * this.lapsNumber)
+    this.props.wsEmitHandle(progression)
+  }
+
+
+  throttle = (fn, delay) => {
+    let lastCall = 0;
+    return function (...args) {
+      const now = (new Date).getTime();
+      if (now - lastCall < delay) {
+        return;
+      }
+      lastCall = now;
+      return fn(...args);
+    }
   }
 
   componentWillUnmount() {
-    // this.ref.removeEventListener("touchmove", this.handleTouchMove, false)
     this.draggable.kill()
-  }
-
-  handleTouchMove = (e) => {
   }
 
   render() {

@@ -22,10 +22,10 @@ export const init = ( store ) => {
                     break;
                 }
                 case websocketsOnActionTypes.WEBSOCKET_ON_HANDLE: {
-                    const isPlayer1 = payload.userId === "player1"
-                    const handlePourcentage = payload.handle / 2
-                    const splitScreenPercentage = isPlayer1 ? 0.5 + handlePourcentage : 0.5 - handlePourcentage;
-                    store.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+                    // const isPlayer1 = payload.userId === "player1"
+                    // const handlePourcentage = payload.handle * 0.5
+                    // const splitScreenPercentage = isPlayer1 ? 0.5 + handlePourcentage : 0.5 - handlePourcentage;
+                    // store.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
                     break;
                 }
 

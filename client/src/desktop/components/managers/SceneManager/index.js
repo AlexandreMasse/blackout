@@ -15,6 +15,7 @@ import animations from "../../components/LottieAnimation/animations";
 //style
 import "./SceneManager.scss"
 import {Transition} from "react-transition-group";
+import {setPlayer1SplitScreenPercentage} from "../../../redux/actions/desktopAction";
 
 class SceneManager extends Component {
 
@@ -27,6 +28,7 @@ class SceneManager extends Component {
     ]
 
     this.player1SplitScreenPourcentage = props.store.users.find(user => user.id === "player1").splitScreenPercentage
+    this.splitScreenPercentageBeforeHandle = null
 
     this.scenesArray = Object.keys(scenes).map(i => scenes[i])
 
@@ -263,6 +265,18 @@ class SceneManager extends Component {
     })
   }
 
+  onReceiveHandle = (handle, player) => {
+    if(this.splitScreenPercentageBeforeHandle !== null) {
+      const isPlayer1 = player === "player1"
+      const handlePourcentage = handle * (1 - this.splitScreenPercentageBeforeHandle)
+      const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : (1 - this.splitScreenPercentageBeforeHandle) - handlePourcentage;
+      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+    } else {
+      this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
+    }
+
+  }
+
   componentWillReceiveProps(nextProps, nextContext) {
 
     //update store if it change
@@ -288,10 +302,21 @@ class SceneManager extends Component {
       this.changeScene(this.props.currentScene[1], 1)
     }
 
+    // player 1 handle change
+    if (prevProps.store.users.find((user) => user.id === 'player1').handle !== this.props.store.users.find((user) => user.id === 'player1').handle
+    ) {
+      this.onReceiveHandle(this.props.store.users.find((user) => user.id === 'player1').handle, "player1")
+    }
+    // player 2 handle change
+    if (prevProps.store.users.find((user) => user.id === 'player2').handle !== this.props.store.users.find((user) => user.id === 'player2').handle
+    ) {
+      this.onReceiveHandle(this.props.store.users.find((user) => user.id === 'player2').handle, "player2")
+    }
+
     // update player 1 scene split screen percentage
     if (
       prevProps.store.users.find((user) => user.id === 'player1').splitScreenPercentage !==
-      this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage 
+      this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage
     ) {
       this.calculWidthScene(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
     }
