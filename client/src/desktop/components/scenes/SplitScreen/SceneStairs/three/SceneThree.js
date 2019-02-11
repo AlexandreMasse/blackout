@@ -14,7 +14,8 @@ import {map} from '../../../utils'
 
 
 export default class SceneTest {
-    constructor(status, player, dispatch) {
+    constructor(status, player, dispatch, bgSound) {
+        this.bgSound = bgSound
         this.status = status
         this.player = player
         this.dispatch = dispatch
@@ -25,6 +26,7 @@ export default class SceneTest {
         this.isArrived = false
         this.stairDone = false
         this.addToScene()
+        this.stairDone = false
     }
     
     getGltfScene() {
@@ -89,7 +91,7 @@ export default class SceneTest {
             // console.log('PROGRESSIONN ====',this.progression)
             // console.log('MAP PROGRESSIONN ====', mapProgression)
         }
-  
+    
         if (this.mixer.time > maxTime) {
             this.isArrived = true
         }

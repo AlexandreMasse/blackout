@@ -5,14 +5,13 @@ export const onEnter = (instance) => (
   new Promise(resolve => {
     const timeline = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete : scene stairs enter");
-        resolve();
+        console.log("onComplete : scene stairs enter")
+        resolve()
       }
     })
     
     if (instance.player === "player1") {
       instance.sprite.alpha = 0
-      
       const bgSound = instance.stairsSound
       bgSound.play()
       bgSound.fade(0, .5, 4000)

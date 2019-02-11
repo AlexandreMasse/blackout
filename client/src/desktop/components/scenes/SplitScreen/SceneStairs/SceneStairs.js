@@ -24,19 +24,17 @@ export default class SceneStairs {
     // let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.initialPrct = player === 'player1' ? 0.1 : 1 
     this.renderer2D = renderer2D
-    this.init()
-
     if (this.player === 'player1') {
       this.initBackgroundSound()
     }
-
+    this.init()
   }
 
   initBackgroundSound() {
     const stairsSoundAsset = AssetsManager.get('stairsSound')
     this.stairsSound = new Howl({
       src: stairsSoundAsset.src,
-      volume: 0.2,
+      volume: 0.5,
       html5: true,
       preload: true,
       autoplay: false,
@@ -86,7 +84,7 @@ export default class SceneStairs {
   }
 
   initSceneThree() {
-    this.sceneThree = new SceneTest(this.status, this.player, this.dispatch)
+    this.sceneThree = new SceneTest(this.status, this.player, this.dispatch, this.stairsSound)
   }
 
   splitScreen(pct) {

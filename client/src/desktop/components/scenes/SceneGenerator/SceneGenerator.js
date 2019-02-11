@@ -103,6 +103,8 @@ export default class SceneGenerator {
   }
 
   nextScene() {
+    this.generatorSound.fade(.2, 0, 2000)
+    this.generatorSound.once( 'fade', () => {this.generatorSound.stop()})
     const currentStep = null
     this.dispatch(setCurrentScene(scenes.SCENEKINEMATIC2.name))
     this.dispatch(wsEmitCurrentStep({currentStep}))

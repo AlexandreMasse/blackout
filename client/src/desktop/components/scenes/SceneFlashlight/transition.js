@@ -31,11 +31,13 @@ export const onEnter = (instance) => (
 
 export const onExit = (instance) => (
   new Promise(resolve => {
-    const bgSound = instance.flashSound
-    if(bgSound) {
-      bgSound.fade(1, 0, 2000)
-      bgSound.once( 'fade', () => {bgSound.stop()})
-    }
+    // console.log('BONSOIIIIR PARRIIIIIIIIS')
+    // const bgSound = instance.flashSound
+    // console.log(bgSound)
+    // if(bgSound) {
+    //   bgSound.fade(1, 0, 2000)
+    //   bgSound.once( 'fade', () => {bgSound.stop()})
+    // }
  
     const timeline = new TimelineMax({
       onComplete: () => {
