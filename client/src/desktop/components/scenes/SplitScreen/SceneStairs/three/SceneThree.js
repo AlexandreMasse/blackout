@@ -23,6 +23,7 @@ export default class SceneTest {
         this.setAnimation()
         this.detectAnimationEnd(status, player, dispatch)
         this.isArrived = false
+        this.stairDone = false
         this.addToScene()
     }
     
@@ -83,15 +84,14 @@ export default class SceneTest {
         const maxTime = 7.8
         this.progression = this.mixer.time / maxTime
         if (this.progression < 1) {
-            var mapProgression = map(this.progression,0, 1, 0, 0.15)
+            var mapProgression = map(this.progression,0, 1, 0, 0.2)
             this.dispatch(setStairsProgression({userId: this.player, stairsProgression: mapProgression}))
-            console.log('PROGRESSIONN ====',this.progression)
-            console.log('MAP PROGRESSIONN ====', mapProgression)
+            // console.log('PROGRESSIONN ====',this.progression)
+            // console.log('MAP PROGRESSIONN ====', mapProgression)
         }
   
         if (this.mixer.time > maxTime) {
             this.isArrived = true
-            this.dispatch(setStairFinished({userId: this.player, stairFinished:true}))
         }
     }
 

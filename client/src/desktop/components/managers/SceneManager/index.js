@@ -328,20 +328,26 @@ class SceneManager extends Component {
       this.onReceiveHandle(this.props.store.users.find((user) => user.id === 'player2').handle, "player2")
     }
 
-    //stair progression Player1
+    // stair progression Player1
     if (
       prevProps.store.users.find((user) => user.id === 'player1').stairsProgression !== 
       this.props.store.users.find((user) => user.id === 'player1').stairsProgression) {
         let stairsProgression1 = this.props.store.users.find((user) => user.id === 'player1').stairsProgression
-        this.onStairProgression1(stairsProgression1)
+        let stairsProgression2 = this.props.store.users.find((user) => user.id === 'player2').stairsProgression
+        if (stairsProgression1 < 0.19 && stairsProgression2 < 0.19) {
+          this.onStairProgression1(stairsProgression1)
+        }
     }
 
-    // //  stair progression Player2
+    // stair progression Player2
     if (
       prevProps.store.users.find((user) => user.id === 'player2').stairsProgression !== 
       this.props.store.users.find((user) => user.id === 'player2').stairsProgression) {
         let stairsProgression2 = this.props.store.users.find((user) => user.id === 'player2').stairsProgression
-        this.onStairProgression2(stairsProgression2)
+        let stairsProgression1 = this.props.store.users.find((user) => user.id === 'player1').stairsProgression
+        if (stairsProgression1 < 0.19 && stairsProgression2 < 0.19) {
+          this.onStairProgression2(stairsProgression2)
+        }
     }
 
     // update player 1 scene split screen percentage
