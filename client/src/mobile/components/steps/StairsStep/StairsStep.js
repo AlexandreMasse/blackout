@@ -15,8 +15,6 @@ class StairsStep extends Component {
       tap: "tapRight",
     }
 
-    this.tapAllowed = true
-
     this.containerActiveScale = 1.37
     this.containerNotActiveScale = 2 - this.containerActiveScale
   }
@@ -51,10 +49,11 @@ class StairsStep extends Component {
       })
       TweenMax.to(this.leftCircle, 0.1, {
         scale: 1,
-        delay: 0.1
+        delay: 0.1,
       })
       TweenMax.to(this.rightCircle, 0.1, {
-        scale: 0
+        scale: 0,
+        overwrite: "all"
       })
       TweenMax.to(this.separator, 0.2, {
         x: this.left.clientWidth * this.containerActiveScale
@@ -72,37 +71,25 @@ class StairsStep extends Component {
       })
       TweenMax.to(this.leftCircle, 0.1, {
         scale: 0,
+        overwrite: "all"
       })
       TweenMax.to(this.rightCircle, 0.1, {
         scale: 1,
-        delay: 0.1
+        delay: 0.1,
       })
       TweenMax.to(this.separator, 0.2, {
         x: this.left.clientWidth * this.containerNotActiveScale
       })
     }
 
-
   }
 
   handleClickLeft = () => {
-    if (this.tapAllowed) {
-      this.tapAllowed = false
-      setTimeout(() => {
-        this.tapAllowed = true
-      }, 200)
-      this.setState({tap: "tapLeft"})
-    }
+    this.setState({tap: "tapLeft"})
   }
 
   handleClickRight = () => {
-    if(this.tapAllowed) {
-      this.tapAllowed = false
-      setTimeout(() => {
-        this.tapAllowed = true
-      }, 200)
-      this.setState({tap: "tapRight"})
-    }
+    this.setState({tap: "tapRight"})
   }
 
   render() {
