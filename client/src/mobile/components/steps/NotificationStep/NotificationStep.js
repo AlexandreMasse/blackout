@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 // assets
 import {AssetsManager} from "./../../../../managers"
 import {assetsToLoad} from "../../../assets/asset-list"
+import { Howl } from 'howler'
 
 import {TimelineMax} from 'gsap'
 //css
@@ -15,6 +16,11 @@ import {setCurrentStep, setPassword} from "../../../redux/actions/mobileAction";
 
 class NotificationStep extends Component {
 
+  constructor(props) {
+    super(props)
+    
+    this.initSoundNotification()
+  }
 
   handleRef = (el) => {
     this.props.handleRef(el)
@@ -26,13 +32,28 @@ class NotificationStep extends Component {
     }
   }
 
+  initSoundNotification = () => {
+    const notificationAsset = AssetsManager.get('notification')
+    this.notification = new Howl({
+      src: notificationAsset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
+  }
+
   showAlert = () => {
     console.log("Show alert");
     const tl = new TimelineMax()
     tl.to(this.ref, 1, {opacity:1}, "+=0.2")
+    this.notification.play()
   }
 
   emitShowDanger = () => {
+    this.notification.play()
     const {player} = this.props
     const otherPlayer = player === "player1" ? "player2" : "player1"
     this.props.wsEmitShowDanger(otherPlayer, true)

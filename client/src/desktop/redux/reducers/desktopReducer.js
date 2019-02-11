@@ -43,6 +43,7 @@ const initialState = {
       fingerprint: false, //TODO : false
       code: [0, 0, 0],
       handle: 0,
+      stairsProgression:0,
       splitScreenPercentage: 0.1,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
@@ -82,6 +83,7 @@ const initialState = {
       fingerprint: false, // TODO: false
       code: [0, 0, 0],
       handle: 0,
+      stairsProgression:0,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
         isActive: false,
