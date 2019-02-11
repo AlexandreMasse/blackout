@@ -10,16 +10,47 @@
   left: 0;
   right: 0;
 
-  .left, .right {
+  &__left, &__right {
     height: 100%;
     width: 50%;
+
+    &__circle {
+      position: absolute;
+      bottom: 22rem;
+      transform: translateX(-50%);
+      width: 14rem;
+      height: 14rem;
+      background-color:$red;
+      border-radius: 50%;
+      pointer-events: none;
+    }
   }
 
-  .left {
-    background-color: rgba(232, 46, 46, 0.25);
+  &__left {
+    transform-origin: 0 50%;
+    //background-color: rgba(232, 46, 46, 0.25);
+    background-color: black;
+    &__circle {
+      left: 31.5%;
+    }
   }
 
-  .right {
-    background-color: rgba(0, 0, 255, 0.25);
+  &__right {
+    //background-color: rgba(0, 0, 255, 0.25);
+    background-color: black;
+    transform-origin: 100% 50%;
+
+    &__circle {
+      left: 68.5%;
+    }
+  }
+
+  &__separator {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #fff;
+    transform: translateX(-50%);
   }
 }
