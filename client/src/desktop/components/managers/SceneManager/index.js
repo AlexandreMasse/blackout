@@ -279,7 +279,8 @@ class SceneManager extends Component {
   onStairProgression1 = (stairProgressionPlayer1) => {
       let stairProgressionPlayer2 = this.props.store.users.find(user => user.id === "player2").stairsProgression
       let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
-      let currentSplitScreenPercentage = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
+      console.log('ADVANTAGE ===', advantage)
+      let currentSplitScreenPercentage = .5
       const splitScreenPercentage = currentSplitScreenPercentage + advantage
       this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
   }
@@ -287,7 +288,7 @@ class SceneManager extends Component {
   onStairProgression2 = (stairProgressionPlayer2) => {
       let stairProgressionPlayer1 = this.props.store.users.find(user => user.id === "player1").stairsProgression
       let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
-      let currentSplitScreenPercentage = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
+      let currentSplitScreenPercentage = .5
       const splitScreenPercentage = currentSplitScreenPercentage + advantage
       this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
   }
@@ -329,20 +330,20 @@ class SceneManager extends Component {
     }
 
     //stair progression Player1
-    // if (
-    //   prevProps.store.users.find((user) => user.id === 'player1').stairsProgression !== 
-    //   this.props.store.users.find((user) => user.id === 'player1').stairsProgression) {
-    //     let stairsProgression1 = this.props.store.users.find((user) => user.id === 'player1').stairsProgression
-    //     this.onStairProgression1(stairsProgression1)
-    // }
+    if (
+      prevProps.store.users.find((user) => user.id === 'player1').stairsProgression !== 
+      this.props.store.users.find((user) => user.id === 'player1').stairsProgression) {
+        let stairsProgression1 = this.props.store.users.find((user) => user.id === 'player1').stairsProgression
+        this.onStairProgression1(stairsProgression1)
+    }
 
     // //  stair progression Player2
-    // if (
-    //   prevProps.store.users.find((user) => user.id === 'player2').stairsProgression !== 
-    //   this.props.store.users.find((user) => user.id === 'player2').stairsProgression) {
-    //     let stairsProgression2 = this.props.store.users.find((user) => user.id === 'player2').stairsProgression
-    //     this.onStairProgression2(stairsProgression2)
-    // }
+    if (
+      prevProps.store.users.find((user) => user.id === 'player2').stairsProgression !== 
+      this.props.store.users.find((user) => user.id === 'player2').stairsProgression) {
+        let stairsProgression2 = this.props.store.users.find((user) => user.id === 'player2').stairsProgression
+        this.onStairProgression2(stairsProgression2)
+    }
 
     // update player 1 scene split screen percentage
     if (

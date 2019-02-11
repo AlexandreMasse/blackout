@@ -82,10 +82,14 @@ export default class SceneTest {
     getProgression() {
         const maxTime = 7.8
         this.progression = this.mixer.time / maxTime
-        let mapProgression = map(this.progression,0, 1, 0, 0.35)
-        this.dispatch(setStairsProgression({userId: this.player, stairsProgression: mapProgression}))
-        console.log('PROGRESSIONN ====',this.progression)
-        console.log('MAP PROGRESSIONN ====', mapProgression)
+        if (this.progression < 1) {
+            var mapProgression = map(this.progression,0, 1, 0, 0.15)
+            this.dispatch(setStairsProgression({userId: this.player, stairsProgression: mapProgression}))
+            console.log('PROGRESSIONN ====',this.progression)
+            console.log('MAP PROGRESSIONN ====', mapProgression)
+        }
+        
+  
         if (this.mixer.time > maxTime) {
             this.isArrived = true
         }
