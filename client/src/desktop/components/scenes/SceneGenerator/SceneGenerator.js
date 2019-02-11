@@ -131,6 +131,15 @@ export default class SceneGenerator {
     this.generatorSound.fade(.2, 0, 2000)
     this.generatorSound.once( 'fade', () => {this.generatorSound.stop()})
     const currentStep = null
+    this.dispatch(setUserIndicationActive({
+      userId: "player1",
+      isActive: false
+    }))
+    
+    this.dispatch(setUserIndicationActive({
+      userId: "player2",
+      isActive: false
+    }))
     this.dispatch(setCurrentScene(scenes.SCENEKINEMATIC2.name))
     this.dispatch(wsEmitCurrentStep({currentStep}))
   }
