@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
 // redux
-import {setUserCurrentScene, setStairsProgression} from "../../../../../redux/actions/desktopAction"
+import {setUserCurrentScene, setStairsProgression, setStairFinished} from "../../../../../redux/actions/desktopAction"
 import {wsEmitUserCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
 
 //scenes
@@ -88,10 +88,10 @@ export default class SceneTest {
             console.log('PROGRESSIONN ====',this.progression)
             console.log('MAP PROGRESSIONN ====', mapProgression)
         }
-        
   
         if (this.mixer.time > maxTime) {
             this.isArrived = true
+            this.dispatch(setStairFinished({userId: this.player, stairFinished:true}))
         }
     }
 

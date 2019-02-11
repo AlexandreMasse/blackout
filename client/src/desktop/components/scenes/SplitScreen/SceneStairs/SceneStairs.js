@@ -55,7 +55,6 @@ export default class SceneStairs {
     if (this.currentPlayerTapValue !== this.newPlayerTapValue) {
         this.sceneThree.moveCamera()
     }
-
     // console.log("updateStore", newStore);
     this.store = newStore
   }

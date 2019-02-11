@@ -44,6 +44,7 @@ const initialState = {
       code: [0, 0, 0],
       handle: 0,
       stairsProgression:0,
+      stairsFinished: false,
       splitScreenPercentage: 0.1,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
@@ -83,7 +84,7 @@ const initialState = {
       fingerprint: false, // TODO: false
       code: [0, 0, 0],
       handle: 0,
-      stairsProgression:0,
+      stairsFinished: false,
       currentScene: scenes.SCENEFLASHLIGHT.name,
       indication: {
         isActive: false,
@@ -258,6 +259,23 @@ export default (state = initialState, action) => {
             return {
               ...user,
               stairsProgression
+            }
+          } else {
+            return user;
+          }
+        }),
+      }
+    }
+
+    case desktopActionTypes.SET_USER_STAIRS_FINISHED: {
+      const {stairsFinished, userId} = action.payload
+      return {
+        ...state,
+        users: state.users.map(user => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              stairsFinished
             }
           } else {
             return user;

@@ -196,7 +196,6 @@ class SceneManager extends Component {
         store: this.props.store,
         player: this.players[index],
         renderer2D: this.renderer2D,
-    
       })
       // then go to next scene
       this.nextScene(nextScene, index)
@@ -279,7 +278,7 @@ class SceneManager extends Component {
   onStairProgression1 = (stairProgressionPlayer1) => {
       let stairProgressionPlayer2 = this.props.store.users.find(user => user.id === "player2").stairsProgression
       let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
-      console.log('ADVANTAGE ===', advantage)
+      // console.log('ADVANTAGE ===', advantage)
       let currentSplitScreenPercentage = .5
       const splitScreenPercentage = currentSplitScreenPercentage + advantage
       this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
