@@ -2,6 +2,7 @@
   pointer-events: none;
 
   &__player1, &__player2 {
+    pointer-events: none;
     height: 100%;
     position: fixed;
     display: flex;

@@ -43,12 +43,18 @@ export default class SceneDoor {
         const timeline = new TimelineMax({delay: .8})
         timeline.add('transition')
                 .to(this.spriteAdvantage, .4, {alpha:0}, 'transition')
-                // .to(this.spriteAdvantage.scale, .4, {x:1.1, y:1.1}, "transition")
                 .to(this.spriteAdvantageInside, .4, {alpha:1}, "transition+=0.4")
-                // .to(this.spriteAdvantageInside, .4, {x:1,y:1}, "transition+=0.4")
       } else {
         this.sceneDisadvantage.playFingerPrintSpriteSheet()
       }
+    }
+
+    this.currentPlayerHandle = this.store.users.find(user => user.id === this.player).handle
+    this.newPlayerHandle = newStore.users.find(user => user.id === this.player).handle
+    
+    if (this.currentPlayerHandle !== this.newPlayerHandle) {
+      let mapValue  = map(this.newPlayerHandle, 0, 1, 460, 0)
+      TweenMax.to(this.sceneAdvantageInside.doorSprite, 2, {x:mapValue})
     }
     //update store
     // console.log("updateStore", newStore);
@@ -89,30 +95,21 @@ export default class SceneDoor {
     console.log('INIT SCENE DESAVANTAGE')
     this.sceneDisadvantage = new SceneDoorDisavantage(this.initialPrct)
     this.spriteDisadvantage = this.sceneDisadvantage.spriteOutside
-    console.log(this.spriteDisadvantage)
+    // console.log(this.spriteDisadvantage)
   }
 
   initSceneAdvantage() {
     console.log('INIT SCENE AVANTAGE')
     this.sceneAdvantage = new SceneDoorAdvantage(this.initialPrct)
     this.spriteAdvantage = this.sceneAdvantage.spriteOutside
-    console.log(this.spriteAdvantage)
+    // console.log(this.spriteAdvantage)
   }
 
   initSceneAdvantageInside() {
     console.log('INIT SCENE AVANTAGE INSIDE')
     this.sceneAdvantageInside = new SceneDoorAdvantageInside(this.initialPrct)
     this.spriteAdvantageInside = this.sceneAdvantageInside.spriteInside
-    console.log(this.spriteAdvantageInside)
-  }
-
-  transitionAdvantageScene() {
-    // console.log(this.spriteAdvantage)
-    // TweenMax.to(this.spriteAdvantage, 2, {alpha: .5, scale: 1.1})
-    // TweenMax.to(this.spriteAdvantageInside, 2, {alpha: 1, scale: 1})
-    TweenMax.to(this.sceneAdvantageInside.spriteInside, 2, {alpha: 1, scale: 1})
-    console.log('INSIDE ======',this.spriteAdvantageInside)
-
+    // console.log(this.spriteAdvantageInside)
   }
 
   splitScreen(pct) {

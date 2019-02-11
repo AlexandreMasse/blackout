@@ -24,6 +24,7 @@ export default class SceneDoorAdvantageInside {
         let baseTextureDoor = new PIXI.BaseTexture(doorImg)
         let textureDoor = new PIXI.Texture(baseTextureDoor)
         this.doorSprite = new PIXI.Sprite(textureDoor)
+        this.doorSprite.x = 460
       
         this.containerSize = {width:width * this.initialPct, height:height}
         this.spriteSize = {
@@ -39,13 +40,7 @@ export default class SceneDoorAdvantageInside {
         this.rt = new PIXI.RenderTexture(this.brt)
         this.spriteInside = new PIXI.Sprite(this.rt) 
         this.spriteInside.alpha = 0
-        // this.spriteInside.scale.x = 0.9
-        // this.spriteInside.scale.y = 0.9
     }
-
-    // setAlpha() {
-    //     TweenMax.to(this.spriteInside, 2, {alpha:1, scale:1})
-    // }
 
     initAlertOverlay() {
         this.alertOverlay = new PIXI.Graphics()
@@ -73,17 +68,17 @@ export default class SceneDoorAdvantageInside {
         var customContainer = document.querySelector('.desktop-app')
         customContainer.appendChild(this.gui.domElement)
         const fillBoxPos = {
-          x: this.bidulesAnim.x,
-          y: this.bidulesAnim.y,
-          width: this.bidulesAnim.width,
-          height: this.bidulesAnim.height
+          x: this.doorSprite.x,
+          y: this.doorSprite.y,
+          width: this.doorSprite.width,
+          height: this.doorSprite.height
         }
     
         let fillBoxChanger = () => {
-            this.bidulesAnim.x = fillBoxPos.x
-            this.bidulesAnim.y = fillBoxPos.y
-            this.bidulesAnim.width = fillBoxPos.width
-            this.bidulesAnim.height = fillBoxPos.height
+            this.doorSprite.x = fillBoxPos.x
+            this.doorSprite.y = fillBoxPos.y
+            this.doorSprite.width = fillBoxPos.width
+            this.doorSprite.height = fillBoxPos.height
         }
     
         let f1 = this.gui.addFolder('SPRITE POSITION')

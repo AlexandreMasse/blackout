@@ -39,6 +39,7 @@ export default class SceneDoorDisavantage {
         this.alertOverlay.drawRect(0, 0, this.spriteSize.width, this.spriteSize.height)
         this.alertOverlay.endFill()
         this.alertOverlay.blendMode = PIXI.BLEND_MODES.MULTIPLY
+        this.alertOverlay.alpha = 0
     }
 
     initFingerPrintSpriteSheet() {
