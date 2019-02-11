@@ -1,3 +1,5 @@
+@import "../../../../stylesheets/global";
+
 .scene-manager {
   pointer-events: none;
 
@@ -20,6 +22,15 @@
       height: 100%;
       transform-origin: 50% 50%;
       display: flex;
+
+      .lottie-animation {
+        .dot path {
+          //fill: $red!important;
+        }
+        .red path{
+          //fill: $red !important;
+        }
+      }
     }
   }
 

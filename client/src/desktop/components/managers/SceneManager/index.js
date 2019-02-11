@@ -407,14 +407,12 @@ class SceneManager extends Component {
                 play={false}
                 className={classNames("")}
                 animationData={animations.DoorCircle}
-                aspectRatio={"cover"}
+                aspectRatio={"contain"}
                 progressionTweenDuration={0.1}
                 progression={player1.handle}
               />
             </Transition>
           </div>
-
-
 
         </div>
 
@@ -453,7 +451,7 @@ class SceneManager extends Component {
                 play={false}
                 className={classNames("")}
                 animationData={animations.DoorCircle}
-                aspectRatio={"cover"}
+                aspectRatio={"contain"}
                 progressionTweenDuration={0.1}
                 progression={player2.handle}
               />
