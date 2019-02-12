@@ -39,18 +39,6 @@ class SceneStep extends Component {
     return (
       <div className="scene-step step" ref={(ref) => this.ref = ref}>
         <canvas className="canvas"/>
-        <div className={"scene-step__menu"}>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>SCENE FLASHLIGHT</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENEGENERATOR.name)}>SCENE GENERATOR</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setCurrentScene(scenes.SCENESTAIRS.name)}>SCENE STAIRS</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setSplitScreen(true)}>Enable split screen</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setSplitScreen(false)}>Disable split screen</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setUserCurrentScene("player1", scenes.SCENE1.name)}>PLAYER 1 : SCENE 1</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setUserCurrentScene("player1", scenes.SCENE2.name)}>PLAYER 1 : SCENE 2</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setUserCurrentScene("player2", scenes.SCENE1.name)}>PLAYER 2 : SCENE 1</button>
-          <button className={"scene-step__menu__button"} onClick={() => this.props.setUserCurrentScene("player2", scenes.SCENE2.name)}>PLAYER 2 : SCENE 2</button>
-        </div>
-
         {currentScenesArray.length > 0 && isMounted && <SceneManager currentScene={currentScenesArray} parentRef={this.ref} dispatch={dispatch} store={store}/>}
       </div>
     )
