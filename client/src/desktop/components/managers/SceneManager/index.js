@@ -388,7 +388,7 @@ class SceneManager extends Component {
               onEnter={this.onEnterRollingNumber}
               onExit={this.onExitRollingNumber}
             >
-              <RollingNumber className={"desktop"} numbers={player1.code}/>
+              <RollingNumber className={"desktop"} numbers={player1.code} isMobile={false}/>
             </Transition>
 
 
@@ -433,7 +433,7 @@ class SceneManager extends Component {
               onEnter={this.onEnterRollingNumber}
               onExit={this.onExitRollingNumber}
             >
-              <RollingNumber className={"desktop"} numbers={player2.code}/>
+              <RollingNumber className={"desktop"} numbers={player2.code} isMobile={false}/>
             </Transition>
 
             <Transition

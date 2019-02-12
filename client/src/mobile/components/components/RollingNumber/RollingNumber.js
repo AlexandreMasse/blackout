@@ -26,6 +26,8 @@ class RollingNumber extends Component {
       }
     }
 
+    this.code = props.code
+
     this.xDown = {};
     this.yDown = {};
 
@@ -46,6 +48,7 @@ class RollingNumber extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     for(let i = 0; i < this.props.numbers.length; i++) {
       if(nextProps.numbers[i] !== this.props.numbers[i]) {
+        console.log("update ", this.props.numbers);
         this.changeCarouselCurrentImage(i, nextProps.numbers[i])
       }
     }
@@ -136,7 +139,7 @@ class RollingNumber extends Component {
     carouselItems[currentIndex].classList.remove('good');
 
     // add class to new item
-    if(this.props.code[carouselIndex] === newIndex) {
+    if(this.code[carouselIndex] === newIndex) {
       carouselItems[newIndex].classList.add('good');
     } else {
       carouselItems[newIndex].classList.add('current');
@@ -154,14 +157,35 @@ class RollingNumber extends Component {
 
     this.rotateCarousel(newPosition, carouselIndex)
 
-    // Emit code position to desktop
+
     if (this.props.isMobile) {
+
+      // Emit code position to desktop
       const code = []
       for (let carousel in this.carousels) {
         code[carousel] = this.carousels[carousel].currentPosition;
       }
+      console.log("emit code ", code.map(i => this.getIndexFromPosition(i)));
       this.props.wsEmitCode(code)
+
+      //check if good code
+      if(
+        this.code[0] === this.getIndexFromPosition(code[0]) &&
+        this.code[1] === this.getIndexFromPosition(code[1]) &&
+        this.code[2] === this.getIndexFromPosition(code[2])
+      ) {
+        // change other numbers randomly
+        const otherIndexs = [0,1,2]
+        otherIndexs.splice(carouselIndex, 1)
+        setTimeout(() => {
+          otherIndexs.forEach(otherIndex => {
+            this.changeCarouselCurrentImage(otherIndex, this.carousels[otherIndex].currentPosition + Math.floor(Math.random() * 9) + 1)
+          })
+        }, 500)
+      }
     }
+
+
 
   }
 
