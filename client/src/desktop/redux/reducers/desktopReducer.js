@@ -49,8 +49,8 @@ const initialState = {
       indication: {
         isActive: false,
         isOpen: false,
-        title: "Retrouver le générateur",
-        description: "Description test",
+        title: "Allumer votre lampe",
+        description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton",
         theme: 'black'
       }
     },
@@ -88,8 +88,8 @@ const initialState = {
       indication: {
         isActive: false,
         isOpen: false,
-        title: "Retrouver le générateur",
-        description: "Description test player 2",
+        title: "Allumer votre lampe",
+        description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton",
         theme: 'black'
       }
     }

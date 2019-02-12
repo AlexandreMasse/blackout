@@ -25,7 +25,7 @@ export default class SceneGenerator {
     this.needUpdate = true;
     this.player1Ready = false
     // FOR DEBUG
-    this.player2Ready = true
+    this.player2Ready = false
     // FOR DEBUG
     this.isReady = true
     this.initBackgroundSound()

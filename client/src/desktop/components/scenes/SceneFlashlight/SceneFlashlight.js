@@ -31,7 +31,7 @@ export default class SceneFlashlight {
     this.isMoving2 = false
     this.player1Collision = false
     // FOR DEBUG
-    this.player2Collision = false
+    this.player2Collision = true
     // FOR DEBUG
     this.getUsersStatus()
     this.initBackgroundSound()
@@ -132,10 +132,10 @@ export default class SceneFlashlight {
     //indication
     this.dispatch(setUserIndicationTheme({userId: "player1", theme: IndicationThemes.white}))
     this.dispatch(setUserIndicationTheme({userId: "player2", theme: IndicationThemes.white}))
-    this.dispatch(setUserIndicationTitle({userId: "player1", title: "Allumer votre lampe"}))
-    this.dispatch(setUserIndicationTitle({userId: "player2", title: "Allumer votre lampe"}))
-    this.dispatch(setUserIndicationDescription({userId: "player1", description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton"}))
-    this.dispatch(setUserIndicationDescription({userId: "player2", description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton"}))
+    // this.dispatch(setUserIndicationTitle({userId: "player1", title: "Allumer votre lampe"}))
+    // this.dispatch(setUserIndicationTitle({userId: "player2", title: "Allumer votre lampe"}))
+    // this.dispatch(setUserIndicationDescription({userId: "player1", description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton"}))
+    // this.dispatch(setUserIndicationDescription({userId: "player2", description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton"}))
 
     requestTimeout(() => {
       this.dispatch(setUserIndicationActive({
@@ -159,6 +159,8 @@ export default class SceneFlashlight {
       this.canMove = true
     }}) 
     this.isOff = false
+    this.dispatch(setUserIndicationTitle({userId: "player1", title: " Retrouvez le générateur"}))
+    this.dispatch(setUserIndicationDescription({userId: "player1", description: "Visez tous les deux vers l’appareil."}))
 
     this.dispatch(setUserIndicationOpen({
       userId: "player1",

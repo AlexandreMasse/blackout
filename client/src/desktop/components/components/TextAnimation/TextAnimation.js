@@ -20,20 +20,18 @@ export default class TextAnimation extends Component {
     this.initWord()
   }
 
-  initWord() {
+  initWord(needStart = false) {
     const {text, handleWord, autoPlay, letterDuration, letterMinSpeed, letterMaxSpeed} = this.props
     this.word = new Word(this.ref, text, letterDuration, letterMinSpeed, letterMaxSpeed)
-
-    if(autoPlay) this.word.start()
+    if(autoPlay || needStart) this.word.start()
 
     if(handleWord) handleWord(this.word)
   }
-
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentDidUpdate(prevProps, prevState) {
     // console.log("indication next ", nextProps.text);
-    if(nextProps.text !== this.props.text) {
+    if(prevProps.text !== this.props.text) {
       console.log("test change")
-      this.initWord()
+      this.initWord(true)
     }
   }
 
