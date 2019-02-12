@@ -1,10 +1,13 @@
 import {AssetsManager} from "../../../../../managers"
+import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
+// libs
 import * as PIXI from "pixi.js"
 import { Howl } from 'howler'
 import {TweenMax, TimelineMax} from 'gsap'
+// utils
 import {map, setFullScreen} from '../../utils'
-import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
-
+// general utils
+import {requestTimeout} from '../../../../../utils'
 // redux
 import {setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../../redux/actions/desktopAction"
 

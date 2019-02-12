@@ -9,6 +9,7 @@ import {TweenMax} from 'gsap'
 // assets
 import {AssetsManager} from "./../../../../managers"
 import {assetsToLoad} from "../../../assets/asset-list"
+import { Howl } from 'howler'
 // utils
 import {map, clamp} from '../../../../utils'
 //css
@@ -28,10 +29,27 @@ class SliderStep extends Component {
         }
     }
 
+    componentDidMount() {
+      this.initSoundSliderEnd()
+    }
+
     handleRef = (ref) => {
       if (ref) {
         this.initSlider(ref)
       }
+    }
+
+    initSoundSliderEnd = () => {
+      const sliderEndAsset = AssetsManager.get('sliderEnd')
+      this.sliderEnd = new Howl({
+        src: sliderEndAsset.src,
+        volume: 1,
+        html5: true,
+        preload: true,
+        autoplay: false,
+        loop: false,
+        format: ['mp3']
+      })
     }
 
     initSlider = (ref) => {
@@ -108,6 +126,7 @@ class SliderStep extends Component {
       }
 
       function unlock() {
+        self.sliderEnd.play()
         outer.classList.add('unlocked')
         dragStop(false)
         lock.removeEventListener('mousedown', dragStart)
