@@ -20,6 +20,7 @@ class NotificationStep extends Component {
     super(props)
     
     this.initSoundNotification()
+
   }
 
   handleRef = (el) => {
@@ -30,6 +31,10 @@ class NotificationStep extends Component {
     if (!prevProps.showDanger && this.props.showDanger ) {
       this.showAlert()
     }
+  }
+
+  componentDidMount() {
+    this.setAudioContext()
   }
 
   initSoundNotification = () => {
@@ -61,6 +66,22 @@ class NotificationStep extends Component {
     const tl = new TimelineMax()
     tl.to(this.ref, 1, {opacity:1}, "+=0.2")
     this.notification.play()
+  }
+
+  setAudioContext = () => {
+    var AudioContext = window.AudioContext || window.webkitAudioContext
+    var context = new AudioContext()
+    if (context.state === 'suspended' && 'ontouchstart' in window) {
+      var unlock = function () {
+        context.resume().then(function () {
+          document.body.removeEventListener('touchstart', unlock)
+          document.body.removeEventListener('touchend', unlock)
+        });
+      };
+
+      document.body.addEventListener('touchstart', unlock, false)
+      document.body.addEventListener('touchend', unlock, false)
+    }
   }
 
   emitShowDanger = (e) => {
