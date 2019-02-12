@@ -11,6 +11,7 @@ import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, s
 export default class SceneDoor {
 
   constructor({dispatch, store, player, renderer2D}) {
+    this.dispatch = dispatch
     this.renderer2D = renderer2D
     this.player = player
     this.store = store
@@ -90,11 +91,13 @@ export default class SceneDoor {
       case 'superior':
         setFullScreen(this.spriteAdvantage, this.spriteAdvantage.width, this.spriteAdvantage.height, this.containerSize.width)
         setFullScreen(this.spriteAdvantageInside, this.spriteAdvantageInside.width, this.spriteAdvantageInside.height, this.containerSize.width)
+        // console.log('PLAYER=====',this.player)
         this.dispatch(setUserIndicationTitle({userId: this.player, title: "Accédez au refuge"}))
         this.dispatch(setUserIndicationDescription({userId: this.player, description: "Apposez votre doigt sur l’écran pour vous identifier."}))
         break;
       case 'inferior':
       setFullScreen(this.spriteDisadvantage, this.spriteDisadvantage.width, this.spriteDisadvantage.height, this.containerSize.width)
+      // console.log('PLAYER YO=====',this.player)
       this.dispatch(setUserIndicationTitle({userId: this.player, title: "Accédez au refuge"}))
       this.dispatch(setUserIndicationDescription({userId: this.player, description: "Apposez votre doigt sur l’écran pour vous identifier."}))
         break;
