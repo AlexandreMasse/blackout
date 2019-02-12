@@ -25,9 +25,11 @@
       width: 100%;
       left: 0;
       bottom: 0;
-      transform: scaleY(0);
+      transform: translateY(100%);
       transform-origin: bottom;
       background-color: white;
+      background-position: 50% 50%;
+      background-size: 8rem;
     }
   }
 }

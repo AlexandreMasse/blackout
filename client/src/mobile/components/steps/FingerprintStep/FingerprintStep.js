@@ -10,6 +10,7 @@ import {AssetsManager} from "./../../../../managers"
 import './FingerprintStep.scss'
 //lib
 import {TweenMax} from 'gsap'
+import {assetsToLoad} from "../../../assets/asset-list";
 
 class FingerprintStep extends Component {
 
@@ -60,7 +61,7 @@ class FingerprintStep extends Component {
 
   progressionAnimation = (duration) => {
     TweenMax.to(this.buttonProgression, duration, {
-      scaleY: (this.counter / 60) / this.pressHoldDuration
+      y: 100 - ((this.counter / 60) / this.pressHoldDuration) * 100 + "%"
     })
   }
 
@@ -104,7 +105,8 @@ class FingerprintStep extends Component {
     return (
       <div className="fingerprint-step" ref={ref => this.ref = ref}>
         <div className="fingerprint-step__button">
-          <div className="fingerprint-step__button__progression"/>
+          <div className="fingerprint-step__button__progression"
+               style={{backgroundImage: `url(${AssetsManager.get(assetsToLoad.trame.name).src})`}}/>
         </div>
       </div>    
     )
