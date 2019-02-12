@@ -9,6 +9,10 @@
   font-variation-settings: $medium;
   user-select: none;
 
+  &.overlay {
+    mix-blend-mode: multiply;
+  }
+
   .dev-toggle {
     color: green;
     z-index: 100;

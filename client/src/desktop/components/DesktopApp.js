@@ -22,12 +22,13 @@ import {Loading, Indication} from "./components"
 import {StepManager} from "./managers";
 import steps from "./steps"
 //utils
-import {toggleFullscreen} from '../../utils'
+import {requestTimeout, toggleFullscreen} from '../../utils'
 import classNames from "classnames"
 // style
 import './DesktopApp.scss'
 //scenes
 import scenes from "./scenes";
+import {TimelineMax} from "gsap";
 
 
 class DesktopApp extends Component {
@@ -45,6 +46,7 @@ class DesktopApp extends Component {
     this.state = {
       showDevButton: true,
       splitScreenPercentage: 50,
+      durationOverlay: 1,
     }
   }
 
@@ -53,7 +55,7 @@ class DesktopApp extends Component {
       toggleFullscreen()
     }
   }
-  
+
   handleWindowResize = (e) => {
     const ratio = window.innerWidth / 1920
     document.querySelector('html').style.fontSize = 10 * ratio + "px"
@@ -73,10 +75,27 @@ class DesktopApp extends Component {
     })
   }
 
+  overlay = () => {
+
+    const root = window.document.querySelector("#root")
+    const app = window.document.querySelector(".desktop-app")
+
+    root.classList.add("overlay")
+    app.classList.add("overlay")
+
+    requestTimeout(() => {
+      root.classList.remove("overlay")
+      app.classList.remove("overlay")
+    }, (this.state.durationOverlay / 2) * 1000)
+
+    requestTimeout(this.overlay, (this.state.durationOverlay) * 1000)
+
+  }
+
   render() {
     const {isLoaded, currentStep} = this.props
     return (
-      <div className="App desktop-app">
+      <div className="app desktop-app">
         {!isLoaded ? (
           <Loading/>
         ) : (
@@ -105,7 +124,9 @@ class DesktopApp extends Component {
               <p onClick={() => this.props.setUserIndicationOpen("player1", true)}>Indication : player 1 open</p>
               <p onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
               <hr/>
-              <input onChange={(e) => 
+              <p onClick={() => this.overlay()}>Overlay</p>
+              <hr/>
+              <input onChange={(e) =>
                 { this.props.setPlayer1SplitScreenPercentage(Number(e.target.value) / 100)
                   this.setState({splitScreenPercentage:e.target.value})}}
                   className="range"
@@ -113,7 +134,19 @@ class DesktopApp extends Component {
                   value={this.state.splitScreenPercentage}
                   // step="0.01"
                   max="100"
-                  min="0" />
+                  min="0"
+              />
+
+              <input onChange={(e) => {
+                this.setState({durationOverlay: Number(e.target.value)})
+              }}
+                 className="range"
+                 type="range"
+                 value={this.state.durationOverlay}
+                 step="0.01"
+                 max="2"
+                 min="0"
+              />
             </div>
             <Indication player={"player1"}/>
             <Indication player={"player2"}/>

@@ -25,9 +25,10 @@ html,body {
   //overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+#root {
+  &.overlay {
+    background-color: $red;
+  }
 }
 
 .dg {

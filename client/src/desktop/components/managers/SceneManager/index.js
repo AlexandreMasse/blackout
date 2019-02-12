@@ -2,20 +2,22 @@ import React, {Component} from 'react'
 import PropTypes from "prop-types"
 import * as PIXI from "pixi.js"
 import * as THREE from 'three'
+//redux
+import {setPlayer1SplitScreenPercentage} from "../../../redux/actions/desktopAction"
 //Step
 import scenes from '../../scenes'
-
+//lib
 import {TweenMax, TimelineMax, Power2} from 'gsap'
-
+import classNames from "classnames";
+import {Transition} from "react-transition-group";
+//components
 import {RollingNumber} from "../../../../mobile/components/components"
 import {LottieAnimation} from "../../components";
-import classNames from "classnames";
 import animations from "../../components/LottieAnimation/animations";
-
 //style
 import "./SceneManager.scss"
-import {Transition} from "react-transition-group";
-import {setPlayer1SplitScreenPercentage} from "../../../redux/actions/desktopAction"
+//utils
+import {requestTimeout} from "../../../../utils";
 
 class SceneManager extends Component {
 
@@ -151,9 +153,6 @@ class SceneManager extends Component {
           TweenMax.set(this.refScene2.querySelector(".scene-manager__player2__wrapper"), {scaleX: 1 / (1 - this.player1SplitScreenPourcentage)})
         }
 
-        // TweenMax.set(this.margeSplitScreen, {
-        //   x: this.refScene1.getBoundingClientRect().width - this.margeSplitScreen.width / 2
-        // })
       }
     })
 
@@ -225,6 +224,59 @@ class SceneManager extends Component {
     })
   }
 
+  onStairProgression1 = (stairProgressionPlayer1) => {
+      let stairProgressionPlayer2 = this.props.store.users.find(user => user.id === "player2").stairsProgression
+      let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
+      // console.log('ADVANTAGE ===', advantage)
+      let currentSplitScreenPercentage = .5
+      const splitScreenPercentage = currentSplitScreenPercentage + advantage
+      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+  }
+
+  onStairProgression2 = (stairProgressionPlayer2) => {
+      let stairProgressionPlayer1 = this.props.store.users.find(user => user.id === "player1").stairsProgression
+      let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
+      let currentSplitScreenPercentage = .5
+      const splitScreenPercentage = currentSplitScreenPercentage + advantage
+      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+  }
+
+
+  // handle
+
+  onReceiveHandle = (handle, player) => {
+    if (this.splitScreenPercentageBeforeHandle !== null) {
+      const isPlayer1 = player === "player1"
+      const handlePourcentage = handle * (1 - this.splitScreenPercentageBeforeHandle)
+      const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : (1 - this.splitScreenPercentageBeforeHandle) - handlePourcentage;
+      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+    } else {
+      this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
+
+      //TODO: init overlay
+    }
+  }
+
+  // overlay
+
+  overlay = () => {
+    const root = window.document.querySelector("#root")
+    const app = window.document.querySelector(".desktop-app")
+
+    root.classList.add("overlay")
+    app.classList.add("overlay")
+
+    requestTimeout(() => {
+      root.classList.remove("overlay")
+      app.classList.remove("overlay")
+    }, (this.state.durationOverlay / 2) * 1000)
+
+    requestTimeout(this.overlay, (this.state.durationOverlay) * 1000)
+  }
+
+
+
+  // dom elements transitions
 
   onExitRollingNumber = (html) => {
     TweenMax.to(html, 4, {
@@ -264,33 +316,7 @@ class SceneManager extends Component {
     })
   }
 
-  onReceiveHandle = (handle, player) => {
-    if(this.splitScreenPercentageBeforeHandle !== null) {
-      const isPlayer1 = player === "player1"
-      const handlePourcentage = handle * (1 - this.splitScreenPercentageBeforeHandle)
-      const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : (1 - this.splitScreenPercentageBeforeHandle) - handlePourcentage;
-      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
-    } else {
-      this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
-    }
-  }
-
-  onStairProgression1 = (stairProgressionPlayer1) => {
-      let stairProgressionPlayer2 = this.props.store.users.find(user => user.id === "player2").stairsProgression
-      let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
-      // console.log('ADVANTAGE ===', advantage)
-      let currentSplitScreenPercentage = .5
-      const splitScreenPercentage = currentSplitScreenPercentage + advantage
-      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
-  }
-
-  onStairProgression2 = (stairProgressionPlayer2) => {
-      let stairProgressionPlayer1 = this.props.store.users.find(user => user.id === "player1").stairsProgression
-      let advantage = stairProgressionPlayer1 - stairProgressionPlayer2
-      let currentSplitScreenPercentage = .5
-      const splitScreenPercentage = currentSplitScreenPercentage + advantage
-      this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
-  }
+  // hooks
 
   componentWillReceiveProps(nextProps, nextContext) {
 
@@ -359,10 +385,6 @@ class SceneManager extends Component {
     }
   }
 
-  componentDidMount() {
-
-  }
-
 
   render() {
     const {store} = this.props
@@ -408,8 +430,9 @@ class SceneManager extends Component {
                 className={classNames("")}
                 animationData={animations.DoorCircle}
                 aspectRatio={"contain"}
-                progressionTweenDuration={0.1}
+                progressionTweenDuration={0.05}
                 progression={player1.handle}
+                clampLastFrames={1}
               />
             </Transition>
           </div>
@@ -452,8 +475,9 @@ class SceneManager extends Component {
                 className={classNames("")}
                 animationData={animations.DoorCircle}
                 aspectRatio={"contain"}
-                progressionTweenDuration={0.1}
+                progressionTweenDuration={0.05}
                 progression={player2.handle}
+                clampLastFrames={1}
               />
             </Transition>
           </div>
