@@ -12,7 +12,7 @@ export const onEnter = (instance) => (
 
     const timeline = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete");
+        console.log("onComplete")
       
         resolve('resolved');
       }
@@ -31,14 +31,6 @@ export const onEnter = (instance) => (
 
 export const onExit = (instance) => (
   new Promise(resolve => {
-    // console.log('BONSOIIIIR PARRIIIIIIIIS')
-    // const bgSound = instance.flashSound
-    // console.log(bgSound)
-    // if(bgSound) {
-    //   bgSound.fade(1, 0, 2000)
-    //   bgSound.once( 'fade', () => {bgSound.stop()})
-    // }
- 
     const timeline = new TimelineMax({
       onComplete: () => {
         console.log("onComplete flash");
