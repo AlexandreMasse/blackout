@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //css
 import './RollingNumber.scss'
+import { Howl } from 'howler'
+import {AssetsManager} from "./../../../../managers"
 //lib
 import classNames from "classnames"
 import PropTypes from 'prop-types'
@@ -43,6 +45,7 @@ class RollingNumber extends Component {
     this.carouselsElements = this.ref.querySelectorAll(".carousel")
 
     this.initCarousels()
+    this.initSoundRolling()
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -72,6 +75,19 @@ class RollingNumber extends Component {
     } else {
       return 0
     }
+  }
+  
+  initSoundRolling = () => {
+    const codeAsset = AssetsManager.get('codeSound')
+    this.codeSound = new Howl({
+      src: codeAsset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
   }
 
   initCarousels = () => {
@@ -205,6 +221,8 @@ class RollingNumber extends Component {
   };
 
   handleTouchMove = (evt, index) => {
+    // SOUND
+    this.codeSound.play()
     if (typeof index == 'undefined' || !this.xDown[index] || !this.yDown[index]) {
       return;
     }
