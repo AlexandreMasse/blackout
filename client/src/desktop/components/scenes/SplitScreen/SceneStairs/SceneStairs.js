@@ -9,7 +9,7 @@ import {TweenMax} from 'gsap'
 import * as PIXI from "pixi.js"
 import { Howl } from 'howler'
 // redux
-import {setPlayer1SplitScreenPercentage} from "../../../../redux/actions/desktopAction"
+import {setPlayer1SplitScreenPercentage, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, } from "../../../../redux/actions/desktopAction"
 
 
 
@@ -24,9 +24,9 @@ export default class SceneStairs {
     // let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.initialPrct = player === 'player1' ? 0.1 : 1 
     this.renderer2D = renderer2D
-    if (this.player === 'player1') {
-      this.initBackgroundSound()
-    }
+    // if (this.player === 'player1') {
+    this.initBackgroundSound()
+    // }
     this.init()
   }
 
@@ -81,6 +81,23 @@ export default class SceneStairs {
         this.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage: .5}))
       }, 1000)
     }
+
+    // indication
+    this.dispatch(setUserIndicationTitle({userId: "player1", title: "Rejoignez l’étage -3"}))
+    this.dispatch(setUserIndicationTitle({userId: "player2", title: "Rejoignez l’étage -3"}))
+    this.dispatch(setUserIndicationDescription({userId: "player1", description: "Appuyez en rythme à droite et à gauche pour garder l’équilibre."}))
+    this.dispatch(setUserIndicationDescription({userId: "player2", description: "Appuyez en rythme à droite et à gauche pour garder l’équilibre."}))
+
+    requestTimeout(() => {
+      this.dispatch(setUserIndicationActive({
+        userId: "player1",
+        isActive: true
+      }))
+      this.dispatch(setUserIndicationActive({
+        userId: "player2",
+        isActive: true
+      }))
+    }, 2000)
   }
 
   initSceneThree() {

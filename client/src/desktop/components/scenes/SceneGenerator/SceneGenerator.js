@@ -23,6 +23,8 @@ export default class SceneGenerator {
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
+    this.firstTouchPL1 = true 
+    this.firstTouchPL2 = true
     this.player1Ready = false
     // FOR DEBUG
     this.player2Ready = false
@@ -42,6 +44,14 @@ export default class SceneGenerator {
       let mapValue  = map(value, 0, 100, 0, 648)
       TweenMax.to(this.fillbox, .1, {height:mapValue})
       this.player1Ready = value === 100 ? true : false 
+
+      if (this.firstTouchPL1) {
+        this.dispatch(setUserIndicationOpen({
+          userId: "player1",
+          isOpen: false
+        }))
+      }
+      this.firstTouchPL1 = false
     }
 
     this.currentPlayer2SliderValue = this.store.users.find(user => user.id === "player2").sliderValue
@@ -52,6 +62,14 @@ export default class SceneGenerator {
       let mapValue2  = map(value2, 0, 100, 0, 648)
       TweenMax.to(this.fillbox2, .1, {height:mapValue2})
       this.player2Ready = value2 === 100 ? true : false 
+
+      if (this.firstTouchPL2) {
+        this.dispatch(setUserIndicationOpen({
+          userId: "player2",
+          isOpen: false
+        }))
+      }
+      this.firstTouchPL2 = false
     }
 
     if (this.player1Ready && this.player2Ready) {

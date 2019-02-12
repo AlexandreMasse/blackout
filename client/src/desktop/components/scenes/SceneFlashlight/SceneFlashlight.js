@@ -132,10 +132,6 @@ export default class SceneFlashlight {
     //indication
     this.dispatch(setUserIndicationTheme({userId: "player1", theme: IndicationThemes.white}))
     this.dispatch(setUserIndicationTheme({userId: "player2", theme: IndicationThemes.white}))
-    // this.dispatch(setUserIndicationTitle({userId: "player1", title: "Allumer votre lampe"}))
-    // this.dispatch(setUserIndicationTitle({userId: "player2", title: "Allumer votre lampe"}))
-    // this.dispatch(setUserIndicationDescription({userId: "player1", description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton"}))
-    // this.dispatch(setUserIndicationDescription({userId: "player2", description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton"}))
 
     requestTimeout(() => {
       this.dispatch(setUserIndicationActive({
@@ -162,10 +158,12 @@ export default class SceneFlashlight {
     this.dispatch(setUserIndicationTitle({userId: "player1", title: " Retrouvez le générateur"}))
     this.dispatch(setUserIndicationDescription({userId: "player1", description: "Visez tous les deux vers l’appareil."}))
 
-    this.dispatch(setUserIndicationOpen({
-      userId: "player1",
-      isOpen: false
-    }))
+    requestTimeout(() => {
+      this.dispatch(setUserIndicationOpen({
+        userId: "player1",
+        isOpen: false
+      }))
+    }, 2000)
   }
 
   switchOffLight() {
@@ -187,10 +185,15 @@ export default class SceneFlashlight {
     }})
 
     this.isOff2 = false
-    this.dispatch(setUserIndicationOpen({
-      userId: "player2",
-      isOpen: false
-    }))
+    this.dispatch(setUserIndicationTitle({userId: "player2", title: " Retrouvez le générateur"}))
+    this.dispatch(setUserIndicationDescription({userId: "player2", description: "Visez tous les deux vers l’appareil."}))
+
+    requestTimeout(() => {
+      this.dispatch(setUserIndicationOpen({
+        userId: "player2",
+        isOpen: false
+      }))
+    }, 2000)
   }
 
   switchOffLight2() {

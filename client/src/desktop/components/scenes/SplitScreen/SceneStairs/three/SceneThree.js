@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
 // redux
-import {setUserCurrentScene, setStairsProgression, setStairFinished} from "../../../../../redux/actions/desktopAction"
+import {setUserCurrentScene, setStairsProgression, setUserIndicationOpen, setUserIndicationActive} from "../../../../../redux/actions/desktopAction"
 import {wsEmitUserCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
 
 //scenes
@@ -27,6 +27,9 @@ export default class SceneTest {
         this.stairDone = false
         this.addToScene()
         this.stairDone = false
+        
+        this.firstTouchPL1 = true 
+        this.firstTouchPL2 = true
     }
     
     getGltfScene() {
@@ -44,8 +47,7 @@ export default class SceneTest {
     set() {
         this.scene = new THREE.Scene()
         this.camera = this.status === 'superior' ? this.gltf.cameras[0] : this.gltf.cameras[1]
-        console.log(this.gltf.cameras)
-        // this.scene.background =  this.player === 'player1' ? new THREE.Color('#FF0000') : new THREE.Color('#FF00FF')
+        // console.log(this.gltf.cameras)
         this.scene.background = new THREE.Color('#000000')
         this.clock = new THREE.Clock()
         this.renderer = new THREE.WebGLRenderer( { antialias: false } )
@@ -69,6 +71,22 @@ export default class SceneTest {
     }
 
     moveCamera() {
+        if (this.player === "player1" && this.firstTouchPL1) {
+            this.dispatch(setUserIndicationOpen({
+                userId: "player1",
+                isOpen: true
+              }))
+        }
+        this.firstTouchPL1 = false
+
+        if (this.player === "player2" && this.firstTouchPL2) {
+            this.dispatch(setUserIndicationOpen({
+                userId: "player2",
+                isOpen: true
+              }))
+        }
+        this.firstTouchPL2 = false
+
         if (!this.isArrived) {
             TweenMax.fromTo(this.mixer, this.timing, {
                 timeScale: this.maxSpeed,
@@ -88,8 +106,6 @@ export default class SceneTest {
         if (this.progression < 1) {
             var mapProgression = map(this.progression,0, 1, 0, 0.2)
             this.dispatch(setStairsProgression({userId: this.player, stairsProgression: mapProgression}))
-            // console.log('PROGRESSIONN ====',this.progression)
-            // console.log('MAP PROGRESSIONN ====', mapProgression)
         }
     
         if (this.mixer.time > maxTime) {
@@ -105,6 +121,10 @@ export default class SceneTest {
     detectAnimationEnd(status, player, dispatch) {
 		this.mixer.addEventListener( 'finished',() => {
             console.log('le player ',player,' qui est ', status, 'a finito')
+            dispatch(setUserIndicationActive({
+                userId: player,
+                isActive: false
+            }))
             dispatch(setUserCurrentScene({userId: player, currentScene:scenes.SCENEDOOR.name}))
             dispatch(wsEmitUserCurrentStep({userId: player, currentStep:stepsMobile.FINGERPRINT.name}))
 		})

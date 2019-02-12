@@ -21,7 +21,6 @@ class Indication extends Component {
     this.description = this.ref.querySelector('.indication__description')
     this.title = this.ref.querySelector('.textAnimation')
 
-
     if (this.props.playerIndication.isActive) {
       this.onActive()
     }
@@ -54,6 +53,7 @@ class Indication extends Component {
 
   onNotActive = () => {
     console.log("not active");
+    this.props.setUserIndicationOpen(this.props.player, false)
     TweenMax.to(this.ref, .6, {
       transform: 'translateY(30%)',
       opacity: 0,
