@@ -4,7 +4,7 @@ import {AssetsManager} from "../../../../managers"
 import steps from '..'
 import stepsMobile from '../../../../mobile/components/steps'
 
-import {TimelineMax} from 'gsap'
+import {TimelineMax, TweenMax} from 'gsap'
 
 import {requestTimeout} from '../../../../utils'
 //transition
@@ -12,9 +12,89 @@ import {onEnterDelay} from './transition'
 // style
 import './ConclusionStep.scss'
 
+
 class ConclusionStep extends Component {  
   
   handleBlockAppear = (blockAppear) => {this.blockAppear = blockAppear}
+
+  componentDidMount() {
+    this.setTimeLineConclusion()
+  }
+
+  wordSplit = () => {
+    
+  }
+  
+  setTimeLineConclusion = () => {
+    this.timeLineStep1()
+  }
+
+  timeLineStep1 = () => {
+    const parent = document.querySelector('.conclusion-step__substep--1')
+    const $wordSplit = parent.querySelectorAll('.wordSplit')
+    let arrSentence = []
+
+    this.init()
+
+    // $wordSplit.forEach((sentence) => {
+    //   var parentEl = sentence
+    //   // console.log('PARENT EL',parentEl)
+    //   const words = sentence.textContent.split(" ")
+    //   // console.log('WORDS',words)
+    //   let countWord = 0
+    //   words.forEach((word) => {
+    //     if (countWord === 0) {
+    //       sentence.innerHTML = ''
+    //     }
+    //     createSpan(parentEl,word)
+    //     countWord++
+    //   })
+    //   arrSentence.push({el:sentence, words : sentence.textContent.split(" ")})
+    // })
+
+    // function createSpan(parentEl ,word) {
+    //   console.log('PARENT EL', parentEl)
+    //   let span = document.createElement('span')
+    //   span.innerHTML = word
+    //   parentEl.appendChild(span)
+    // }
+  }
+
+  init = () => {
+    let duration = 500
+    const parent = document.querySelector('.conclusion-step__substep--1')
+    const $wordSplit = parent.querySelectorAll('.wordSplit')
+    $wordSplit.forEach((sentence) => {
+        const sentenceText = sentence.textContent
+        sentence.innerHTML = ''
+        const words = sentenceText.split(" ")
+        const wordNb = words.length
+        let wordArr = []
+        for (let i = 0; i < wordNb; i++) {
+            var span = document.createElement("span")
+            span.classList.add('hide')
+            span.innerText = words[i]
+            sentence.appendChild(span)
+            wordArr.push(span)
+        }
+
+        let timer = setInterval(() => {
+            if (wordArr.length > 0) {
+                let i = 0 
+                wordArr[i].classList.remove('hide')
+                wordArr[i].classList.add('show')
+                wordArr.splice(i, 1)
+                i++
+            } else {
+                clearInterval(timer)
+            }
+        }, duration)
+    })
+  }
+
+  timeLineStep2 = () => {
+
+  }
 
   render() {
     const {player1PhoneData, player2PhoneData} = this.props
@@ -30,8 +110,8 @@ class ConclusionStep extends Component {
     return (
       <div className="conclusion-step step">
         <div className="conclusion-step__substep conclusion-step__substep--1">
-            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white">Vous avez échoué.</p>
-            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white">Vous avez échoué.</p>
+            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white wordSplit">Vous avez échoué.</p>
+            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white text-over wordSplit">Vous avez échoué.</p>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--2">
           <div className="conclusion-step__substep__wrapper">

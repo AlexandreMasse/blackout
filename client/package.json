@@ -15,11 +15,13 @@
     "digit-roll-react": "^1.1.0",
     "gsap": "^2.0.2",
     "gyronorm": "^2.0.6",
+    "install": "^0.12.2",
     "is-promise": "^2.1.0",
     "lottie-web": "^5.4.3",
     "mobile-detect": "^1.4.3",
     "node-sass": "^4.10.0",
     "nosleep.js": "^0.9.0",
+    "npm": "^6.7.0",
     "object-assign": "^4.1.1",
     "pixi.js": "^4.8.5",
     "prop-types": "^15.6.2",
@@ -32,6 +34,8 @@
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.1.1",
     "three": "^0.99.0",
+    "three-effectcomposer-es6": "^0.0.4",
+    "three-shader-fxaa": "^5.1.1",
     "xhr": "^2.4.1"
   },
   "devDependencies": {

@@ -1,6 +1,12 @@
 @import "../../../../stylesheets/global";
 
 .conclusion-step {
+    .hide {
+        opacity: 0;
+    }
+    .show {
+        opacity: 1;
+    }
     &__substep {
         position: absolute;
         height: 100vh;
@@ -42,6 +48,17 @@
             padding-top: 0.2rem;
             padding-bottom: 0.2rem;
             margin-top: 7rem;
+        }
+
+        &--1 {
+            visibility: visible;
+            .conclusion-step__substep__text--white {
+                margin: 0;
+                &.text-over {
+                    position: absolute;
+                    color: $black;
+                }
+            }
         }
 
         &--2 {
@@ -97,7 +114,6 @@
         }
 
         &--5 {
-            visibility: visible;
             display: flex;
 
             .conclusion-step__substep__text.title{

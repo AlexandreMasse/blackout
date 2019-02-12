@@ -1,6 +1,8 @@
 import * as THREE from 'three'
+import EffectComposer, { RenderPass, ShaderPass } from 'three-effectcomposer-es6'
 import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
+
 // redux
 import {setUserCurrentScene, setStairsProgression, setUserIndicationOpen, setUserIndicationActive} from "../../../../../redux/actions/desktopAction"
 import {wsEmitUserCurrentStep} from '../../../../../redux/actions/websockets/websocketsAction'
@@ -12,6 +14,7 @@ import stepsMobile from '../../../../../../mobile/components/steps'
 
 import {map} from '../../../utils'
 
+var fxaa = require('three-shader-fxaa')
 
 export default class SceneTest {
     constructor(status, player, dispatch, bgSound) {
@@ -26,6 +29,7 @@ export default class SceneTest {
         this.isArrived = false
         this.stairDone = false
         this.addToScene()
+        // this.initPostProcess()
         this.stairDone = false
         
         this.firstTouchPL1 = true 
@@ -159,5 +163,19 @@ export default class SceneTest {
             this.mixer.update(delta)
         } 
         this.renderer.render(this.scene, this.camera)
+        // this.composer.render()
     }
+
+    initPostProcess() {
+        // Setup bare-bones composer
+        this.composer =  new EffectComposer(this.renderer)
+		let shaderPass = new ShaderPass(fxaa())
+		shaderPass.renderToScreen = true
+		shaderPass.uniforms.resolution.value.set(window.innerWidth, window.innerHeight)
+		this.renderPass = new RenderPass(this.scene, this.camera)
+
+        this.composer.addPass(this.renderPass)
+		this.composer.addPass(shaderPass)
+	}
+
 }
