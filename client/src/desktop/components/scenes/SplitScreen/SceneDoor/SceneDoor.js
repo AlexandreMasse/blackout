@@ -6,7 +6,7 @@ import {map, setFullScreen} from '../../utils'
 import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
 
 // redux
-import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../../redux/actions/desktopAction"
+import {setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../../redux/actions/desktopAction"
 
 export default class SceneDoor {
 
@@ -49,9 +49,30 @@ export default class SceneDoor {
         timeline.add('transition')
                 .to(this.spriteAdvantage, .4, {alpha:0}, 'transition')
                 .to(this.spriteAdvantageInside, .4, {alpha:1}, "transition+=0.4")
+
+        this.dispatch(setUserIndicationTitle({userId: this.player, title: "Sécurisez votre abri"}))
+        this.dispatch(setUserIndicationDescription({userId: this.player, description: "Tournez la manivelle pour condamner l’accès."}))
+       
+        requestTimeout(() => {
+          this.dispatch(setUserIndicationOpen({
+            userId: this.player,
+            isOpen: false
+          }))
+        }, 2000)
+     
       } else {
         this.fingerDisadvantage.play()
         this.sceneDisadvantage.playFingerPrintSpriteSheet()
+
+        this.dispatch(setUserIndicationTitle({userId: this.player, title: "Entrez le mot de passe"}))
+        this.dispatch(setUserIndicationDescription({userId: this.player, description: "Tournez les roues jusqu’à trouver la bonne combinaison."}))
+      
+        requestTimeout(() => {
+          this.dispatch(setUserIndicationOpen({
+            userId: this.player,
+            isOpen: false
+          }))
+        }, 2000)
       }
     }
 
