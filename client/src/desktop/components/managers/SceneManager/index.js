@@ -146,7 +146,7 @@ class SceneManager extends Component {
           TweenMax.set(this.refScene1.querySelector(".scene-manager__player1__wrapper"), {scaleX: 1 / this.player1SplitScreenPourcentage})
         }
 
-        TweenMax.set(this.refScene2, {x: this.refScene1.getBoundingClientRect().width , scaleX: 1 - this.player1SplitScreenPourcentage})
+        TweenMax.set(this.refScene2, {x: window.innerWidth * this.player1SplitScreenPourcentage, scaleX: 1 - this.player1SplitScreenPourcentage})
         if (this.player1SplitScreenPourcentage < 1) {
           TweenMax.set(this.refScene2.querySelector(".scene-manager__player2__wrapper"), {scaleX: 1 / (1 - this.player1SplitScreenPourcentage)})
         }
