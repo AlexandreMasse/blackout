@@ -74,17 +74,20 @@ class LottieAnimation extends Component {
     }
 
     if(prevProps.progression !== this.props.progression) {
-
-      TweenMax.to(this, this.props.progressionTweenDuration, {
-        progression: this.props.progression,
-        ease: Power2.easeInOut,
-        onUpdate: () => {
-          if (this.animation) {
-            this.animation.goToAndStop(Math.round(this.progression * this.totalFrames),true)
-          }
-        }
-      })
+      this.animate()
     }
+  }
+
+  animate = () => {
+    TweenMax.to(this, this.props.progressionTweenDuration, {
+      progression: this.props.progression,
+      ease: Power2.easeInOut,
+      onUpdate: () => {
+        if (this.animation) {
+          this.animation.goToAndStop(Math.round(this.progression * (this.totalFrames - this.props.clampLastFrames)), true)
+        }
+      },
+    })
   }
 
   render() {
@@ -108,7 +111,8 @@ LottieAnimation.propTypes = {
   speed: PropTypes.number,
   progression: PropTypes.number,
   progressionTweenDuration: PropTypes.number,
-  assetsPath: PropTypes.string
+  assetsPath: PropTypes.string,
+  clampLastFrames: PropTypes.number
 }
 
 LottieAnimation.defaultProps = {
@@ -123,7 +127,8 @@ LottieAnimation.defaultProps = {
   speed: 1,
   progression: null,
   progressionTweenDuration: 1,
-  assetsPath: null
+  assetsPath: null,
+  clampLastFrames: 0
 }
 
 

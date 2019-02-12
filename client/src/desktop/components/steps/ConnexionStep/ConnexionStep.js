@@ -192,7 +192,6 @@ class ConnexionStep extends Component {
             key={1}
             autoplay={false}
             loop={false}
-            play={isPlayer1Connected}
             className={classNames("connexion-step__city__left", {"connected": isPlayer1Connected})}
             animationData={animations.HomeCityLeft}
             aspectRatio={"cover-right"}
@@ -203,13 +202,11 @@ class ConnexionStep extends Component {
             key={2}
             autoplay={false}
             loop={false}
-            play={isPlayer2Connected}
             className={classNames("connexion-step__city__right", {"connected": isPlayer2Connected})}
             animationData={animations.HomeCityRight}
             aspectRatio={"cover-left"}
             progressionTweenDuration={0.1}
             progression={isCityRightReady ? 1 : player2IntroProgression}
-            //progression={Number(this.state.cityRightProgression)}
           />
         </div>
 
