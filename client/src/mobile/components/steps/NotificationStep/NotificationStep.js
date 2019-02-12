@@ -43,16 +43,30 @@ class NotificationStep extends Component {
       loop: false,
       format: ['mp3']
     })
+
+    const sendNotifAsset = AssetsManager.get('sendNotif')
+    this.sendNotif = new Howl({
+      src: sendNotifAsset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
   }
 
   showAlert = () => {
-    console.log("Show alert");
+    console.log("Show alert")
     const tl = new TimelineMax()
     tl.to(this.ref, 1, {opacity:1}, "+=0.2")
     this.notification.play()
   }
 
-  emitShowDanger = () => {
+  emitShowDanger = (e) => {
+    const btn = e.target
+    btn.classList.add('isSend')
+    this.sendNotif.play()
     const {player} = this.props
     const otherPlayer = player === "player1" ? "player2" : "player1"
     this.props.wsEmitShowDanger(otherPlayer, true)
@@ -72,15 +86,16 @@ class NotificationStep extends Component {
             <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src}/>
           </div>
           {playerStatus === 'superior' &&
-            <button className="notification-step__button button" onClick={this.emitShowDanger}>
+            <button className="notification-step__button button" onClick={(e) => this.emitShowDanger(e)}>
               <span>{'> Partager l\'alerte <'}</span>
             </button>
           }
-          {playerStatus === 'inferior' &&
+          
+          {/* {playerStatus === 'inferior' &&
             <button className="notification-step__button button">
               <span>{"> Fuir le danger <"}</span>
             </button>
-          }
+          } */}
         </>}
       </div>    
     )

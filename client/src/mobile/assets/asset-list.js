@@ -9,6 +9,7 @@ import mobileDown from './sounds/mobileDown.mp3'
 import fingerprintDisadvandtage from './sounds/fingerprintDisadvandtage.mp3'
 import fingerprintAdvandtage from './sounds/fingerprintAdvandtage.mp3'
 import sliderEnd from './sounds/sliderEnd.mp3'
+import sendNotif from './sounds/sendNotif.mp3'
 
 export const assetsToLoad = {
     arrowDonw: {url:arrowDonw, name: "arrowDonw", type:"image"},
@@ -22,4 +23,5 @@ export const assetsToLoad = {
     fingerprintDisadvandtage: {url:fingerprintDisadvandtage, name: "fingerprintDisadvandtage", type:"sound"},
     fingerprintAdvandtage: {url:fingerprintAdvandtage, name: "fingerprintAdvandtage", type:"sound"},
     sliderEnd: {url:sliderEnd, name: "sliderEnd", type:"sound"},
+    sendNotif: {url:sendNotif, name: "sendNotif", type:"sound"},
 }
