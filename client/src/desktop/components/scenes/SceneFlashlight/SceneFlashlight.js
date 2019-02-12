@@ -142,7 +142,7 @@ export default class SceneFlashlight {
         userId: "player2",
         isActive: true
       }))
-    }, onEnterTimeout * 1000)
+    }, (onEnterTimeout - .5) * 1000)
   }
 
   switchOnLight() {
