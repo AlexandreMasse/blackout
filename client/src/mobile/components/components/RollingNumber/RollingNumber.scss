@@ -6,7 +6,7 @@
   //$item-separation: 0px;
   $viewer-distance: 80rem;
   $carousels-height: 15rem;
-  $carousel-width: 8rem;
+  $carousel-width: 9rem;
   $rotation-duration: 0.3s;
 
   height: $carousels-height;
@@ -19,9 +19,9 @@
 
   &.desktop {
 
-    $carousels-height-desktop: 30rem;
-    $carousel-width-desktop: 18rem;
-    $carousel-margin-desktop: 2.5rem;
+    $carousels-height-desktop: 22vh;
+    $carousel-width-desktop: 12vh;
+    $carousel-margin-desktop: 2vh;
 
     height: $carousels-height-desktop;
     display: inline-flex;
@@ -38,7 +38,7 @@
       .items-container {
         .item {
           p {
-            font-size: 12rem;
+            font-size: 11vh;
             font-variation-settings: $medium;
           }
         }
