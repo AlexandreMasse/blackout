@@ -124,6 +124,7 @@ class MobileApp extends Component {
               <p onClick={() => this.props.setCurrentStep(steps.CODE.name)}>Step : code</p>
               <p onClick={() => this.props.setCurrentStep(steps.HANDLE.name)}>Step : handle</p>
               <p onClick={() => this.props.setCurrentStep(steps.SLIDER.name)}>Step : slider</p>
+              <p onClick={() => this.props.setCurrentStep(steps.NOTIFICATION.name)}>Step : notif</p>
             </div>
           </>
         ) : (

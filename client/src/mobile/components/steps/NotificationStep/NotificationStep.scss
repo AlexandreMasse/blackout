@@ -6,28 +6,54 @@
     margin:0 auto;
     opacity: 0;
     &__title {
-        margin-top: 22.5vw;
+        display: block;
+        margin-top: 19.5vw;
         position: relative;
         font-size: 4.5rem;
         text-transform: uppercase;
-        display: inline-block;
         color:$white;
         font-variation-settings: $bold;
+        text-align: center;
     }
 
-    &__map {
-        border: 2px solid $white;
-        width: 100%;
+    &__subtitle {
+        font-variation-settings: $bold;
+        font-size: 2.5rem;
+        text-align: center;
+        color:$white;
+        display: block;
     }
 
-    &__wrapper {
-        margin-bottom: 14.5vw;
+    &__icon {
+        position: fixed;
+        width: 30%;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        svg{
+            width: 100%;
+            fill:$red;
+        } 
     }
 
-    &__button {
+    // &__button {
+       
+    // }
+    .button{
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        top:auto;
+        width: 74vw;
+        bottom: 6.5rem;
         &.isSend {
             background: $white;
             color: $red;
+
+            &:hover{
+                background: $white;
+                color: $red;    
+            }
         }
     }
 

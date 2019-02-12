@@ -80,22 +80,17 @@ class NotificationStep extends Component {
 
     return (
       <div className="notification-step" ref={ref => this.ref = ref}>
-        {showDanger && <>
+        {showDanger && <> 
           <span className="notification-step__title">Danger</span>
-          <div className="notification-step__wrapper">
-            <img className="notification-step__map" src={AssetsManager.get(assetsToLoad.map.name).src}/>
-          </div>
-          {playerStatus === 'superior' &&
+          <span className="notification-step__subtitle">Incendie</span>
+          <span className="notification-step__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121.06 162"><defs></defs><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path className="cls-1" d="M113.58,81s2.1,25.11-17.18,38.07c0,0,37.75-74.84-42.93-119.07,0,0,11.34,19.28-15.22,42.44-22.2,19.28-75,83,2.59,119.56,0,0-31.43-41.15,7.61-63.83,0,0-14.9,24,11.83,44.23,15.87-16.53,11.66-25,11.66-25s23,18.47,6,44.55C77.94,162,142.57,146.45,113.58,81Z"/></g></g></svg>
+          </span>
+          {playerStatus === 'superior' && 
             <button className="notification-step__button button" onClick={(e) => this.emitShowDanger(e)}>
               <span>{'> Partager l\'alerte <'}</span>
             </button>
           }
-          
-          {/* {playerStatus === 'inferior' &&
-            <button className="notification-step__button button">
-              <span>{"> Fuir le danger <"}</span>
-            </button>
-          } */}
         </>}
       </div>    
     )
