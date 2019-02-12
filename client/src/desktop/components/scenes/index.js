@@ -1,4 +1,7 @@
 
+import {default as SceneBase} from './SceneBase/SceneBase'
+import {onEnter as onEnterSceneBase, onExit as onExitSceneBase} from './SceneBase/transition'
+
 import {default as SceneFlashlight} from './SceneFlashlight/SceneFlashlight'
 import {onEnter as onEnterSceneFlashlight, onExit as onExitSceneFlashlight} from './SceneFlashlight/transition'
 
@@ -18,6 +21,12 @@ import {default as SceneDoor} from './SplitScreen/SceneDoor/SceneDoor'
 import {onEnter as onEnterSceneDoor, onExit as onExitSceneDoor} from './SplitScreen/SceneDoor/transition'
 
 export default {
+  SCENEBASE: {
+    name:"SCENEBASE",
+    scene: SceneBase,
+    onEnter: onEnterSceneBase,
+    onExit: onExitSceneBase,
+  },
   SCENEFLASHLIGHT: {
     name:"SCENEFLASHLIGHT",
     scene: SceneFlashlight,

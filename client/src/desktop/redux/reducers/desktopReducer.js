@@ -45,13 +45,13 @@ const initialState = {
       handle: 0,
       stairsProgression:0,
       splitScreenPercentage: 0.1,
-      currentScene: scenes.SCENEFLASHLIGHT.name,
+      currentScene: scenes.SCENEBASE.name,
       indication: {
         isActive: false,
         isOpen: false,
         title: "Allumer votre lampe",
         description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton",
-        theme: 'black'
+        theme: 'white'
       }
     },
     {
@@ -84,13 +84,13 @@ const initialState = {
       code: [0, 0, 0],
       handle: 0,
       stairsProgression:0,
-      currentScene: scenes.SCENEFLASHLIGHT.name,
+      currentScene: scenes.SCENEBASE.name,
       indication: {
         isActive: false,
         isOpen: false,
         title: "Allumer votre lampe",
         description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton",
-        theme: 'black'
+        theme: 'white'
       }
     }
   ],

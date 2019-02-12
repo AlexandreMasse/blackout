@@ -13,12 +13,12 @@ export default class SceneGenerator {
   //required
   updateStore(newStore) {
     //update store
-    console.log("updateStore", newStore);
+    // console.log("updateStore", newStore);
     this.store = newStore
   }
 
   init() {
-    console.log("scene2 init");
+    console.log("scene base init")
 
     let width = window.innerWidth
     let height = window.innerHeight
