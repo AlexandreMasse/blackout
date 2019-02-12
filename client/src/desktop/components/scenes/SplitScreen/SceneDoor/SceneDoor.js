@@ -5,6 +5,9 @@ import {TweenMax, TimelineMax} from 'gsap'
 import {map, setFullScreen} from '../../utils'
 import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from './SubScene'
 
+// redux
+import {setCurrentScene, setUserIndicationTitle, setUserIndicationDescription, setUserIndicationActive, setUserIndicationOpen} from "../../../../redux/actions/desktopAction"
+
 export default class SceneDoor {
 
   constructor({dispatch, store, player, renderer2D}) {
@@ -87,9 +90,13 @@ export default class SceneDoor {
       case 'superior':
         setFullScreen(this.spriteAdvantage, this.spriteAdvantage.width, this.spriteAdvantage.height, this.containerSize.width)
         setFullScreen(this.spriteAdvantageInside, this.spriteAdvantageInside.width, this.spriteAdvantageInside.height, this.containerSize.width)
+        this.dispatch(setUserIndicationTitle({userId: this.player, title: "Accédez au refuge"}))
+        this.dispatch(setUserIndicationDescription({userId: this.player, description: "Apposez votre doigt sur l’écran pour vous identifier."}))
         break;
       case 'inferior':
       setFullScreen(this.spriteDisadvantage, this.spriteDisadvantage.width, this.spriteDisadvantage.height, this.containerSize.width)
+      this.dispatch(setUserIndicationTitle({userId: this.player, title: "Accédez au refuge"}))
+      this.dispatch(setUserIndicationDescription({userId: this.player, description: "Apposez votre doigt sur l’écran pour vous identifier."}))
         break;
       default:
         console.log('Sorry, we are out of ' + this.player + '.')
