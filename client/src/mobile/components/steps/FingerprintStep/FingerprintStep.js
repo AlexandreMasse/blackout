@@ -18,7 +18,8 @@ class FingerprintStep extends Component {
   constructor(props) {
     super(props);
 
-    this.pressHoldDuration = 2.5;
+    this.pressHoldDone = false;
+    this.pressHoldDuration = 1.5;
     this.counter = 0
     this.fingerPrintSound()
   }
@@ -77,7 +78,9 @@ class FingerprintStep extends Component {
     // Stop the timer
     cancelAnimationFrame(this.timerID);
     this.counter = 0;
-    this.progressionAnimation(0.5)
+    if(!this.pressHoldDone)  {
+      this.progressionAnimation(0.5)
+    }
   }
 
   timer = () => {
@@ -87,11 +90,9 @@ class FingerprintStep extends Component {
     if (this.counter < this.pressHoldDuration * 60) {
       this.timerID = requestAnimationFrame(this.timer);
       this.counter++;
-      console.log(this.counter);
-
       this.progressionAnimation(0.05)
     } else {
-      console.log("Press threshold reached!")
+      this.pressHoldDone = true
       if (playerStatus === 'superior') {
         this.fingerAdvantage.play()
       } else {
@@ -107,6 +108,9 @@ class FingerprintStep extends Component {
         <div className="fingerprint-step__button">
           <div className="fingerprint-step__button__progression"
                style={{backgroundImage: `url(${AssetsManager.get(assetsToLoad.trame.name).src})`}}/>
+          <svg>
+            <use xlinkHref="#fingerprint"/>
+          </svg>
         </div>
       </div>    
     )

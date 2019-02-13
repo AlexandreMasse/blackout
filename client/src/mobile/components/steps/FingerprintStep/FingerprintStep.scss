@@ -31,5 +31,13 @@
       background-position: 50% 50%;
       background-size: 8rem;
     }
+
+    svg {
+      position: absolute;
+      height: 70%;
+      top: 50%;
+      left:50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
   }
 }
