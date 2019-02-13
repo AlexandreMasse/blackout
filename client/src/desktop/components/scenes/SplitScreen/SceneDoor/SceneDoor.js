@@ -50,6 +50,8 @@ export default class SceneDoor {
         this.sceneAdvantage.playFingerPrintSpriteSheet()
         const timeline = new TimelineMax({delay: .8})
         timeline.add('transition')
+                // .to(this.spriteAdvantage.doorSprite, .5, {x: this.player === 'player1' ? -460:460}, 'transition')
+                // .to(this.spriteAdvantage, .4, {alpha:0}, 'transition+=0.5')
                 .to(this.spriteAdvantage, .4, {alpha:0}, 'transition')
                 .to(this.spriteAdvantageInside, .4, {alpha:1}, "transition+=0.4")
 

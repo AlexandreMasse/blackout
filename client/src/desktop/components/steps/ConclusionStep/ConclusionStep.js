@@ -179,7 +179,7 @@ class ConclusionStep extends Component {
       parent.classList.remove('is-active')
       this.tlStep6.play()
     }})
-    }, 7)
+    }, 8.5)
   }
 
   timeLineStep6 = () => {
