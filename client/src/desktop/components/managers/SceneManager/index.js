@@ -303,7 +303,7 @@ class SceneManager extends Component {
       .to(html, .2, {
         opacity: 1,
         ease: Power2.easeInOut
-      }, "+=1.2")
+      }, "+=2")
   }
 
   onEnterRollingNumber = (html) => {

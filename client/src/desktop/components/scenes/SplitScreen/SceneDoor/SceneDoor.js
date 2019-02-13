@@ -3,7 +3,7 @@ import {SceneDoorAdvantage, SceneDoorDisavantage, SceneDoorAdvantageInside} from
 // libs
 import * as PIXI from "pixi.js"
 import { Howl } from 'howler'
-import {TweenMax, TimelineMax} from 'gsap'
+import {TweenMax, TimelineMax, Expo} from 'gsap'
 // utils
 import {map, setFullScreen} from '../../utils'
 // general utils
@@ -49,11 +49,11 @@ export default class SceneDoor {
         this.fingerAdvantage.play()
         this.sceneAdvantage.playFingerPrintSpriteSheet()
         const timeline = new TimelineMax({delay: .8})
-        timeline.add('transition')
-                // .to(this.spriteAdvantage.doorSprite, .5, {x: this.player === 'player1' ? -460:460}, 'transition')
-                // .to(this.spriteAdvantage, .4, {alpha:0}, 'transition+=0.5')
-                .to(this.spriteAdvantage, .4, {alpha:0}, 'transition')
-                .to(this.spriteAdvantageInside, .4, {alpha:1}, "transition+=0.4")
+        // timeline.add('transition')
+        timeline.to(this.sceneAdvantage.doorSprite, 2, { ease: Expo.easeOut, x: this.player === 'player1' ? 460:-460}, 0)
+        timeline.to(this.spriteAdvantage, .3, {alpha:0}, .35)
+        timeline.to(this.spriteAdvantageInside, .3, {alpha:1}, 1.2)
+        // timeline.to(this.spriteAdvantageInside, .2, {alpha:1}, "transition+=2")
 
         this.dispatch(setUserIndicationTitle({userId: this.player, title: "Sécurisez votre abri"}))
         this.dispatch(setUserIndicationDescription({userId: this.player, description: "Tournez la manivelle pour condamner l’accès."}))
