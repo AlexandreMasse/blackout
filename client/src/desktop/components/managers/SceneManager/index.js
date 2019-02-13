@@ -403,7 +403,9 @@ class SceneManager extends Component {
 
     return (
       <>
-        <div ref={ref => this.refScene1 = ref} className="scene-manager__player1" style={{
+        <div ref={ref => this.refScene1 = ref} className={classNames("scene-manager__player1", {
+          "door-circle": store.isSplitScreen && player1.currentScene === scenes.SCENEDOOR.name && player1.fingerprint && player1.status === "superior"
+        })} style={{
           width: window.innerWidth,
         }}>
           <div className="scene-manager__player1__wrapper" style={{
@@ -448,7 +450,9 @@ class SceneManager extends Component {
 
         </div>
 
-        <div ref={ref => this.refScene2 = ref} className="scene-manager__player2" style={{
+        <div ref={ref => this.refScene2 = ref} className={classNames("scene-manager__player2", {
+          "door-circle": store.isSplitScreen && player2.currentScene === scenes.SCENEDOOR.name && player2.fingerprint && player2.status === "superior"
+        })} style={{
           width: window.innerWidth,
           height: window.innerHeight,
         }}>
