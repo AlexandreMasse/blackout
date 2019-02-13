@@ -101,10 +101,11 @@ class IntroStep extends Component {
       if (yDiff > 0) {
         /* up swipe */
         const formHeight = this.ref.querySelector(".intro-step__form").clientHeight
-        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut,transform: `translateY(-${formHeight * 0.9}px)`})
+        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut,y: `-${formHeight * 0.9}px`})
       } else {
         /* down swipe */
-        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut, transform: 'translateY(0)'})
+        window.scrollTo(0, 0) // for safari top bar
+        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut, y: this.ref._gsTransform.y - this.ref._gsTransform.y})
       }
     }
     /* reset values */
