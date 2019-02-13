@@ -183,6 +183,24 @@
 
   }
 
+  &__icon {
+    width: 2vw;
+    position: fixed;
+    right: 4rem;
+    bottom: 2.5rem;
+  }
+
+  &__credits {
+    position: fixed;
+    left: 4rem;
+    bottom: 2.5rem;
+
+    p {
+      font-size: 1.6rem;
+      font-variation-settings: $light;
+      margin: 0;
+    }
+  }
 
 
 }
