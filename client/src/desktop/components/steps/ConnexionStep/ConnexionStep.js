@@ -136,16 +136,18 @@ class ConnexionStep extends Component {
 
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
-    if(!this.state.isCityLeftReady && prevProps.player1IntroProgression >= 1){
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.state.isCityLeftReady && nextProps.player1IntroProgression >= 1) {
       console.log("city left ready !");
       this.setState({isCityLeftReady: true})
     }
-    if(!this.state.isCityRightReady && prevProps.player2IntroProgression >= 1){
+    if (!this.state.isCityRightReady && nextProps.player2IntroProgression >= 1) {
       console.log("city right ready !");
       this.setState({isCityRightReady: true})
     }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
 
     if (
       (!prevState.isCityLeftReady || !prevState.isCityRightReady) &&

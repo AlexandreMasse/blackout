@@ -40,6 +40,7 @@ class LunchStep extends Component {
 
     this.gn.init(args).then(() => {
       this.gn.start((data) => {
+        console.log(data.do.beta);
         const minBeta = 0
         const maxBeta = 90
         const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
@@ -50,7 +51,8 @@ class LunchStep extends Component {
           this.props.wsEmitIntroProgression(progressionRounded)
         } else {
           this.updateProgression(1)
-          this.props.wsEmitIntroProgression(progressionRounded)
+          this.props.wsEmitIntroProgression(1)
+          this.gn.stop()
         }
       });
     }).catch((e) => {
