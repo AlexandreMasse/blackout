@@ -39,13 +39,17 @@ class RollingNumber extends Component {
 
     this.itemsPerCarousel = 10
 
+    if (this.props.isMobile) {
+      this.initSoundRolling()
+    }
+
   }
 
   componentDidMount() {
     this.carouselsElements = this.ref.querySelectorAll(".carousel")
-
     this.initCarousels()
-    this.initSoundRolling()
+
+
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -201,8 +205,6 @@ class RollingNumber extends Component {
       }
     }
 
-
-
   }
 
   rotateCarousel = (imageIndex, carouselIndex) => {
@@ -221,10 +223,12 @@ class RollingNumber extends Component {
   };
 
   handleTouchMove = (evt, index) => {
-    // SOUND
-    this.codeSound.play()
     if (typeof index == 'undefined' || !this.xDown[index] || !this.yDown[index]) {
       return;
+    }
+
+    if (this.props.isMobile) {
+      this.codeSound.play()
     }
 
     let xUp = evt.touches[0].clientX;
