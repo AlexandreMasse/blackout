@@ -15,7 +15,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        visibility: hidden;
+        // visibility: hidden;
+        opacity: 0;
         
         &__wrapper {
             display: flex;
@@ -24,12 +25,18 @@
         } 
 
         &__text {
+            opacity: 0;
             font-size: 3.3rem;
             font-variation-settings: $light;
 
+            &.show {
+                opacity: 1;
+            }
+
             &--title {
                 font-size: 4.5rem;
-                font-variation-settings: $medium;
+                font-variation-settings: $light;
+                // font-variation-settings: $medium;
             }
             &--white {
                 color: $white;
@@ -41,6 +48,7 @@
         }
 
         &__score {
+            opacity: 0;
             background:$black;
             width: 100%;
             color:$white;
@@ -48,15 +56,57 @@
             padding-top: 0.2rem;
             padding-bottom: 0.2rem;
             margin-top: 7rem;
+            min-height: 30px;
+            // height: 0.2rem;
+
+            .textAnimation {
+                opacity: 1;
+            }
+
+            &.show{
+                opacity: 1;
+            }
+        }
+
+        &__icon {
+            width: 6.7%;
+            position: absolute;
+            bottom: 0;
+            transform: translateY(100%);
+            transition:transform .3s ease-in;
+
+            &.show {
+                transform: translateY(40%);
+            }
+        }
+
+       &__wrapperDescription {
+                display: flex;
+            justify-content: space-between;
+            width: 100%;
+       }
+
+        &.is-active{
+            opacity: 1;
+            // visibility: visible;
         }
 
         &--1 {
-            visibility: visible;
             .conclusion-step__substep__text--white {
                 margin: 0;
+                display: flex;
+                justify-content: space-between;
+                width: 19.4vw;
                 &.text-over {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 19.4vw;
                     position: absolute;
                     color: $black;
+
+                    &.hide{
+                        opacity: 0;
+                    }
                 }
             }
         }
@@ -68,6 +118,18 @@
 
             .conclusion-step__substep__text {
                 margin: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                &:first-child {
+                    width: auto;
+                }
+
+                &.textAnimation{
+                    opacity: 1;
+                }
             }
 
             .conclusion-step__substep__text--white {
@@ -82,6 +144,13 @@
         &--3 {
             .conclusion-step__substep__text {
                 margin: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+
+                &.show {
+                    opacity: 1;
+                }
 
                 &:nth-child(2) {
                     display: flex;
@@ -100,12 +169,15 @@
         &--4 {
             .conclusion-step__substep__text {
                 margin: 0;
+                margin-bottom: 2rem;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
                 &:last-child {
                     display: flex;
                     width: 100%;
                     justify-content: space-between;
-                    // margin-top: 2rem;
-                    // margin-bottom: 2rem;
+                    margin-bottom: 0;
                 }
             }
             .conclusion-step__substep__wrapper {
@@ -114,7 +186,10 @@
         }
 
         &--5 {
+            // position: relative;
+            z-index: 2;
             display: flex;
+            justify-content: space-around;
 
             .conclusion-step__substep__text.title{
                 display: flex;
@@ -129,12 +204,48 @@
             }
 
             .conclusion-step__substep__description {
+                width: 100%;
+                .largeWord{
+                    display: flex;
+                    justify-content: space-between;
+                }
                 .conclusion-step__substep__text {
                     margin: 0;
 
-                    &:last-child{
+                    &.textAnimation {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .conclusion-step__substep__wrapperDescription {
+                margin-bottom: 1.3rem;
+                &--1 {
+                    .first {
+                        width: 50%;
                         display: flex;
-                        width: 100%;
+                        justify-content: space-between;
+                    }
+                }
+
+                &--2 {
+                    .first{
+                        width: 45%;
+                    }
+                    .last {
+                        width: 59%;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
+
+                &--3 {
+                    // .first{
+                    //     width: 32%;
+                    // }
+                    .last {
+                        width: 54%;
+                        display: flex;
                         justify-content: space-between;
                     }
                 }
@@ -142,12 +253,20 @@
         }
 
         &--6 {
+            // position: relative;
+            // z-index: 1;
             display: flex;
             flex-direction: column;
             background: $white;
 
             .conclusion-step__substep__text {
                 margin: 0;
+                transition:opacity .2s ease-in; 
+
+                &.show{
+                    opacity: 1;
+                    transition:opacity .2s ease-in; 
+                }
             }
 
         }
