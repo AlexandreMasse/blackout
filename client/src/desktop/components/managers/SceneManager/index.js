@@ -29,9 +29,6 @@ class SceneManager extends Component {
       "player2",
     ]
 
-    this.player1SplitScreenPourcentage = props.store.users.find(user => user.id === "player1").splitScreenPercentage
-    this.splitScreenPercentageBeforeHandle = null
-
     this.scenesArray = Object.keys(scenes).map(i => scenes[i])
 
     this.currentSceneObjectArray = props.currentScene.map(currentScene => {
@@ -45,6 +42,15 @@ class SceneManager extends Component {
     this.nextSceneObjectArray = [null, null]
 
     this.nextSceneInstanceArray = [null, null]
+
+
+    this.player1SplitScreenPourcentage = props.store.users.find(user => user.id === "player1").splitScreenPercentage
+
+    this.splitScreenPercentageBeforeHandle = null
+    this.handlePourcentage = null
+
+    this.overlayMinDuration = 0.1
+    this.overlayMaxDuration = 2
 
     this.app = null
     const {parentRef} = this.props
@@ -245,6 +251,7 @@ class SceneManager extends Component {
   // handle
 
   onReceiveHandle = (handle, player) => {
+    this.handlePourcentage = handle
     if (this.splitScreenPercentageBeforeHandle !== null) {
       const isPlayer1 = player === "player1"
       const handlePourcentage = handle * (1 - this.splitScreenPercentageBeforeHandle)
@@ -253,7 +260,7 @@ class SceneManager extends Component {
     } else {
       this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
 
-      //TODO: init overlay
+      this.overlay()
     }
   }
 
@@ -263,15 +270,17 @@ class SceneManager extends Component {
     const root = window.document.querySelector("#root")
     const app = window.document.querySelector(".desktop-app")
 
+    const duration = (this.overlayMaxDuration - this.overlayMinDuration) * (1 - this.handlePourcentage) + this.overlayMinDuration
+
     root.classList.add("overlay")
     app.classList.add("overlay")
 
     requestTimeout(() => {
       root.classList.remove("overlay")
       app.classList.remove("overlay")
-    }, (this.state.durationOverlay / 2) * 1000)
+    }, (duration / 2) * 1000)
 
-    requestTimeout(this.overlay, (this.state.durationOverlay) * 1000)
+    requestTimeout(this.overlay, (duration) * 1000)
   }
 
 

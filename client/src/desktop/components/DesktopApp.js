@@ -46,7 +46,6 @@ class DesktopApp extends Component {
     this.state = {
       showDevButton: true,
       splitScreenPercentage: 50,
-      durationOverlay: 1,
     }
   }
 
@@ -73,23 +72,6 @@ class DesktopApp extends Component {
       console.log(assets)
         this.props.setAppLoaded()
     })
-  }
-
-  overlay = () => {
-
-    const root = window.document.querySelector("#root")
-    const app = window.document.querySelector(".desktop-app")
-
-    root.classList.add("overlay")
-    app.classList.add("overlay")
-
-    requestTimeout(() => {
-      root.classList.remove("overlay")
-      app.classList.remove("overlay")
-    }, (this.state.durationOverlay / 2) * 1000)
-
-    requestTimeout(this.overlay, (this.state.durationOverlay) * 1000)
-
   }
 
   render() {
@@ -123,8 +105,6 @@ class DesktopApp extends Component {
               <p onClick={() => this.props.setUserIndicationOpen("player1", false)}>Indication : player 1 not open</p>
               <p onClick={() => this.props.setUserIndicationOpen("player1", true)}>Indication : player 1 open</p>
               <p onClick={() => this.props.setUserIndicationActive("player1", false)}>Indication : player 1 not active</p>
-              <hr/>
-              <p onClick={() => this.overlay()}>Overlay</p>
               <hr/>
               <input onChange={(e) =>
                 { this.props.setPlayer1SplitScreenPercentage(Number(e.target.value) / 100)
