@@ -8,6 +8,8 @@ import {setCurrentStep} from "../../../redux/actions/mobileAction";
 //lib
 import GyroNorm from  'gyronorm';
 import {TweenMax} from 'gsap'
+import {Howl} from 'howler'
+import {AssetsManager} from "./../../../../managers"
 //css
 import './LunchStep.scss'
 
@@ -20,7 +22,12 @@ class LunchStep extends Component {
       finish: false
     }
 
+    this.lastBeta = null
+    this.currentDirection = null
+
     this.listenDeviceOrientation()
+
+    this.initSound()
 
   }
 
@@ -40,12 +47,38 @@ class LunchStep extends Component {
 
     this.gn.init(args).then(() => {
       this.gn.start((data) => {
-        console.log(data.do.beta);
         const minBeta = 0
         const maxBeta = 90
         const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
         const progressionClamped = Math.min(Math.max(progression, 0), 1);
         const progressionRounded = Number(progressionClamped.toPrecision(4))
+
+        this.soundMobileUp.volume(progressionRounded)
+
+
+        // if(this.lastBeta) {
+        //   if(this.lastBeta < data.do.beta) {
+        //     if(this.currentDirection === "down" || this.currentDirection === null) {
+        //       console.log("up");
+        //       this.soundMobileUp.play()
+        //       this.soundMobileUp.fade(this.soundMobileUp.volume(), 1, 200)
+        //       //this.soundMobileDown.fade(this.soundMobileDown.volume(), 0, 200)
+        //
+        //       this.currentDirection = "up"
+        //     }
+        //   } else {
+        //     if (this.currentDirection === "up" || this.currentDirection === null) {
+        //       console.log("down");
+        //       // this.soundMobileDown.play()
+        //       // this.soundMobileDown.fade(this.soundMobileDown.volume(), 1, 200)
+        //       this.soundMobileUp.fade(this.soundMobileUp.volume(), 0, 200)
+        //       //
+        //       this.currentDirection = "down"
+        //     }
+        //   }
+        // }
+        // this.lastBeta = data.do.beta
+
         if(!this.state.finish) {
           this.updateProgression(progressionRounded)
           this.props.wsEmitIntroProgression(progressionRounded)
@@ -67,6 +100,34 @@ class LunchStep extends Component {
         this.setState({finish: true})
       }
     }
+  }
+
+
+  initSound = () => {
+    const soundMobileUp = AssetsManager.get('mobileUp')
+    this.soundMobileUp = new Howl({
+      src: soundMobileUp.src,
+      volume: 0,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+
+    this.soundMobileUp.play()
+
+    const soundMobileDown = AssetsManager.get('mobileDown')
+    this.soundMobileDown = new Howl({
+      src: soundMobileDown.src,
+      volume: 0,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
+
   }
 
   componentWillUnmount() {
