@@ -156,6 +156,53 @@ export default class SceneDoor {
     })
   }
 
+
+  initBackgroundSound() {
+    const loveAsset = AssetsManager.get('love')
+    const bassesAsset = AssetsManager.get('basses')
+    const wavedeepAsset = AssetsManager.get('wavedeep')
+
+    this.loveSound = new Howl({
+      src: loveAsset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+
+    this.bassesSound = new Howl({
+      src: bassesAsset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+
+    this.wavedeepSound = new Howl({
+      src: wavedeepAsset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+  }
+
+  initBgSoundAdvantage() {
+    const loveAsset = AssetsManager.get('love')
+    const bassesAsset = AssetsManager.get('basses')
+    const wavedeepAsset = AssetsManager.get('wavedeep')
+  }
+
+  initBgSoundDisadvantage() {
+
+  }
+
   initSceneDisadvantage() {
     console.log('INIT SCENE DESAVANTAGE')
     this.sceneDisadvantage = new SceneDoorDisavantage(this.initialPrct)
