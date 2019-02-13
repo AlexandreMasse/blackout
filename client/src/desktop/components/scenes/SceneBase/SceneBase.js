@@ -1,7 +1,7 @@
 import {AssetsManager} from "../../../../managers";
 import * as PIXI from "pixi.js";
 
-export default class SceneGenerator {
+export default class SceneBase {
 
   constructor({dispatch, store}) {
     this.store = store

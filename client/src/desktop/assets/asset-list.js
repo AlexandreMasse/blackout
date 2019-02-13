@@ -67,6 +67,11 @@ import stairsSound from './sounds/stairsSound.mp3'
 import fingerprintDisadvandtage from './sounds/fingerprintDisadvandtage.mp3'
 import fingerprintAdvandtage from './sounds/fingerprintAdvandtage.mp3'
 
+// SOUND DOOR BG GENERAL
+import love from './sounds/love.mp3'
+import basses from './sounds/basses.mp3'
+import wavedeep from './sounds/wavedeep.mp3'
+
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
     stairs2: { url: stairs2, type: 'gltf'},
@@ -107,4 +112,7 @@ export const assetsToLoad = {
     stairsSound: {url: stairsSound, name :'stairsSound', type:'sound'},
     fingerprintAdvandtage: {url: fingerprintAdvandtage, name :'fingerprintAdvandtage', type:'sound'},
     fingerprintDisadvandtage: {url: fingerprintDisadvandtage, name :'fingerprintDisadvandtage', type:'sound'},
+    love: {url: love, name :'love', type:'sound'},
+    basses: {url: basses, name :'basses', type:'sound'},
+    wavedeep: {url: wavedeep, name :'wavedeep', type:'sound'},
 }
