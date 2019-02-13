@@ -26,7 +26,7 @@ export const onExit = (instance) => (
       }
     })
 
-    timeline.to(instance.sprite, 3, {
+    timeline.to(instance.sprite, 1, {
       alpha: 0,
     })
   })

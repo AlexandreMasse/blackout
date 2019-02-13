@@ -83,21 +83,23 @@ export default class SceneStairs {
     }
 
     // indication
-    this.dispatch(setUserIndicationTitle({userId: "player1", title: "Rejoignez l’étage -3"}))
-    this.dispatch(setUserIndicationTitle({userId: "player2", title: "Rejoignez l’étage -3"}))
-    this.dispatch(setUserIndicationDescription({userId: "player1", description: "Appuyez en rythme à droite et à gauche pour garder l’équilibre."}))
-    this.dispatch(setUserIndicationDescription({userId: "player2", description: "Appuyez en rythme à droite et à gauche pour garder l’équilibre."}))
+    if (this.player === 'player2') {
+      this.dispatch(setUserIndicationTitle({userId: "player1", title: "Rejoignez l’étage -3"}))
+      this.dispatch(setUserIndicationTitle({userId: "player2", title: "Rejoignez l’étage -3"}))
+      this.dispatch(setUserIndicationDescription({userId: "player1", description: "Appuyez en rythme à droite et à gauche pour garder l’équilibre."}))
+      this.dispatch(setUserIndicationDescription({userId: "player2", description: "Appuyez en rythme à droite et à gauche pour garder l’équilibre."}))
 
-    requestTimeout(() => {
-      this.dispatch(setUserIndicationActive({
-        userId: "player1",
-        isActive: true
-      }))
-      this.dispatch(setUserIndicationActive({
-        userId: "player2",
-        isActive: true
-      }))
-    }, 2000)
+      requestTimeout(() => {
+        this.dispatch(setUserIndicationActive({
+          userId: "player1",
+          isActive: true
+        }))
+        this.dispatch(setUserIndicationActive({
+          userId: "player2",
+          isActive: true
+        }))
+      }, 2000)
+    }
   }
 
   initSceneThree() {

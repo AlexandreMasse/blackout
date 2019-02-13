@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import EffectComposer, { RenderPass, ShaderPass } from 'three-effectcomposer-es6'
+// import fxaa from 'three-shader-fxaa'
+// import EffectComposer, { RenderPass, ShaderPass } from 'three-effectcomposer-es6'
 import {AssetsManager} from '../../../../../../managers'
 import {TweenMax} from 'gsap'
 
@@ -13,8 +14,6 @@ import stepsMobile from '../../../../../../mobile/components/steps'
 // scene utils 
 
 import {map} from '../../../utils'
-
-var fxaa = require('three-shader-fxaa')
 
 export default class SceneTest {
     constructor(status, player, dispatch, bgSound) {
@@ -166,16 +165,16 @@ export default class SceneTest {
         // this.composer.render()
     }
 
-    initPostProcess() {
-        // Setup bare-bones composer
-        this.composer =  new EffectComposer(this.renderer)
-		let shaderPass = new ShaderPass(fxaa())
-		shaderPass.renderToScreen = true
-		shaderPass.uniforms.resolution.value.set(window.innerWidth, window.innerHeight)
-		this.renderPass = new RenderPass(this.scene, this.camera)
+    // initPostProcess() {
+    //     // Setup bare-bones composer
+    //     this.composer =  new EffectComposer(this.renderer)
+	// 	let shaderPass = new ShaderPass(fxaa())
+	// 	shaderPass.renderToScreen = true
+	// 	shaderPass.uniforms.resolution.value.set(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio)
+	// 	this.renderPass = new RenderPass(this.scene, this.camera)
 
-        this.composer.addPass(this.renderPass)
-		this.composer.addPass(shaderPass)
-	}
+    //     this.composer.addPass(this.renderPass)
+	// 	this.composer.addPass(shaderPass)
+	// }
 
 }
