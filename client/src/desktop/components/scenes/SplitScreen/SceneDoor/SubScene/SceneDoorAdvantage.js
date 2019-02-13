@@ -15,10 +15,22 @@ export default class SceneDoorAdvantage {
         let width = window.innerWidth
         let height = window.innerHeight
         this.container = new PIXI.Container()
-        let outsideImg = AssetsManager.get('outsideTest')
+
+        let outsideImg = AssetsManager.get('outsideWall')
         let baseTexture = new PIXI.BaseTexture(outsideImg)
         let texture = new PIXI.Texture(baseTexture)
         this.outsideSprite = new PIXI.Sprite(texture)
+        
+        let doorImg = AssetsManager.get('outsideDoor')
+        let baseTextureDoor = new PIXI.BaseTexture(doorImg)
+        let textureDoor = new PIXI.Texture(baseTextureDoor)
+        this.doorSprite = new PIXI.Sprite(textureDoor)
+
+
+        // let outsideImg = AssetsManager.get('outsideTest')
+        // let baseTexture = new PIXI.BaseTexture(outsideImg)
+        // let texture = new PIXI.Texture(baseTexture)
+        // this.outsideSprite = new PIXI.Sprite(texture)
         this.containerSize = {width:width * this.initialPct, height:height}
         this.spriteSize = {
           width: this.outsideSprite.width,
@@ -89,6 +101,7 @@ export default class SceneDoorAdvantage {
 
     addToScene() {
         this.container.addChild(this.outsideSprite)
+        this.container.addChild(this.doorSprite)
         this.container.addChild(this.empreinteAnim)
         // this.container.addChild(this.alertOverlay)
     }

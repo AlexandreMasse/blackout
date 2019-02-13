@@ -16,6 +16,8 @@ import stairs from './obj/Escalier-v2.glb'
 import stairs2 from './obj/Escalier-newnew.glb'
 import outside from './img/outside.png'
 import outsideTest from './img/outside-test.png'
+import outsideWall from './img/outside-wall.png'
+import outsideDoor from './img/outside-door.png'
 import outsideVoyant from './img/outside_voyant.png'
 import insideWall from './img/inside_mur.png'
 import insideDoor from './img/inside_porte.png'
@@ -102,6 +104,8 @@ export const assetsToLoad = {
     bidules: { url: bidulesImg, spritesheet: bidules, name:'spritesheet', type: 'spritesheet'},
     outside: { url: outside, name:'outside', type: 'image'},
     outsideTest: { url: outsideTest, name:'outsideTest', type: 'image'},
+    outsideWall: { url: outsideWall, name:'outsideWall', type: 'image'},
+    outsideDoor: { url: outsideDoor, name:'outsideDoor', type: 'image'},
     outsideVoyant: { url: outsideVoyant, name:'outsideVoyant', type: 'image'},
     insideWall: { url: insideWall, name:'insideWall', type: 'image'},
     insideDoor: { url: insideDoor, name:'insideDoor', type: 'image'},
