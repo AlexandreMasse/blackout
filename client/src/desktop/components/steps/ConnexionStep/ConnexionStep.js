@@ -285,13 +285,13 @@ class ConnexionStep extends Component {
               <TextAnimation
                 letterDuration={200}
                 className={"connexion-step__intro__codes__instructions__1"}
-                text="Lancez Blackout.io sur votre smartphone et"
+                text="Lancez Blackout.io sur votre smartphone et entrez"
                 handleWord={this.handleWordInstructions1}
               />
               <TextAnimation
                 letterDuration={200}
                 className={"connexion-step__intro__codes__instructions__2"}
-                text="entrez un des codes pour démarrer."
+                text=" un des codes pour démarrer."
                 handleWord={this.handleWordInstructions2}
               />
             </div>
