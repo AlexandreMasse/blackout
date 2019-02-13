@@ -3,8 +3,10 @@ import PropTypes from "prop-types"
 import * as PIXI from "pixi.js"
 import * as THREE from 'three'
 //redux
-import {setPlayer1SplitScreenPercentage} from "../../../redux/actions/desktopAction"
-//Step
+import {setPlayer1SplitScreenPercentage, setCurrentStep} from "../../../redux/actions/desktopAction"
+//Steps
+import steps from '../../steps'
+//Scene
 import scenes from '../../scenes'
 //lib
 import {TweenMax, TimelineMax, Power2} from 'gsap'
@@ -17,7 +19,7 @@ import animations from "../../components/LottieAnimation/animations";
 //style
 import "./SceneManager.scss"
 //utils
-import {requestTimeout} from "../../../../utils";
+import {requestTimeout, clearRequestTimeout} from "../../../../utils";
 
 class SceneManager extends Component {
 
@@ -49,8 +51,8 @@ class SceneManager extends Component {
     this.splitScreenPercentageBeforeHandle = null
     this.handlePourcentage = null
 
-    this.overlayMinDuration = 0.1
-    this.overlayMaxDuration = 2
+    this.overlayMinDuration = 0.22
+    this.overlayMaxDuration = 2.5
 
     this.app = null
     const {parentRef} = this.props
@@ -257,10 +259,23 @@ class SceneManager extends Component {
       const handlePourcentage = handle * (1 - this.splitScreenPercentageBeforeHandle)
       const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : (1 - this.splitScreenPercentageBeforeHandle) - handlePourcentage;
       this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
+
+      //TODO: play sound when handle is 80%
+      // if(handle >= 0.8 && sound not already played) {
+      //   //play sound
+      // }
+
+      if(handle === 1) {
+        requestTimeout(() => {
+          this.isConclusion = true
+        }, 2000)
+
+      }
     } else {
       this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
-
       this.overlay()
+
+      //TODO: play sound on first time user turn the handle
     }
   }
 
@@ -280,7 +295,16 @@ class SceneManager extends Component {
       app.classList.remove("overlay")
     }, (duration / 2) * 1000)
 
-    requestTimeout(this.overlay, (duration) * 1000)
+    this.overlayRequestTimeout = requestTimeout(this.overlay, (duration) * 1000)
+
+    if(this.isConclusion) {
+      requestTimeout(() => {
+        //TODO: stop sound
+        this.props.dispatch(setCurrentStep(steps.CONCLUSION.name))
+        clearRequestTimeout(this.overlayRequestTimeout)
+      }, (duration / 2) * 1000)
+    }
+
   }
 
 

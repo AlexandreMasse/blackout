@@ -16,7 +16,7 @@ class Handle extends Component {
 
     this.isDragging = false
 
-    this.lapsNumber = 2
+    this.lapsNumber = 6
   }
 
   componentDidMount() {
