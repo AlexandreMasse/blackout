@@ -49,7 +49,7 @@ const initialState = {
       indication: {
         isActive: false,
         isOpen: false,
-        title: "Allumer votre lampe",
+        title: "Allumez votre lampe",
         description: "Pointez votre téléphone vers le + à gauche et appuyez sur le boutton",
         theme: 'white'
       }
@@ -88,7 +88,7 @@ const initialState = {
       indication: {
         isActive: false,
         isOpen: false,
-        title: "Allumer votre lampe",
+        title: "Allumez votre lampe",
         description: "Pointez votre téléphone vers le + à droite et appuyez sur le boutton",
         theme: 'white'
       }
