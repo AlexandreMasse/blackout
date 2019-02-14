@@ -120,6 +120,8 @@ class IntroStep extends Component {
 
     this.xDown = null;
     this.yDown = null;
+    
+    TweenMax.set(this.ref, {y: 0})
   }
 
   componentWillUnmount() {
