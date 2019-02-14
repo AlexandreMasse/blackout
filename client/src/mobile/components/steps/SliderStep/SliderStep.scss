@@ -34,8 +34,11 @@
         left: 50%;
         transform: translateX(-50%);
         bottom: 60px;
+        svg{
+            fill:$white;
+        }
     }
-    
+
     &__lock {
         z-index: 2;
         position: absolute;
