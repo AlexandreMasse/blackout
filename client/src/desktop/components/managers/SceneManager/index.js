@@ -259,8 +259,8 @@ class SceneManager extends Component {
     this.handlePourcentage = handle
     if (this.splitScreenPercentageBeforeHandle !== null) {
       const isPlayer1 = player === "player1"
-      const handlePourcentage = handle * (1 - this.splitScreenPercentageBeforeHandle)
-      const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : (1 - this.splitScreenPercentageBeforeHandle) - handlePourcentage;
+      const handlePourcentage = isPlayer1 ? handle * (1 - this.splitScreenPercentageBeforeHandle) : handle * this.splitScreenPercentageBeforeHandle
+      const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : this.splitScreenPercentageBeforeHandle - handlePourcentage;
       this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
 
       // TODO: play sound when handle is 80%
