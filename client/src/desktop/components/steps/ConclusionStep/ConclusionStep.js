@@ -208,8 +208,8 @@ class ConclusionStep extends Component {
     })
     
     this.tlStep6.add(() => {texts[0].classList.add('show')}, 0)
-    this.tlStep6.add(() => {texts[1].classList.add('show')}, 0)
-    this.tlStep6.add(() => {texts[2].classList.add('show')}, 0)
+    this.tlStep6.add(() => {texts[1].classList.add('show')}, 2.2)
+    this.tlStep6.add(() => {texts[2].classList.add('show')}, 2.2)
     this.tlStep6.add(() => {icon.classList.add('show')}, 4)
   }
 
