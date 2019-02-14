@@ -9,7 +9,7 @@ export default class SceneDoorAdvantageInside {
         this.initialPct = pct
         this.player = player
         this.init()
-        this.initGUI()
+        // this.initGUI()
     }
 
     init() {

@@ -59,7 +59,7 @@ export default class SceneTest {
     }
 
     setAnimation() {
-        this.maxSpeed = this.status === 'superior' ? 1.2 : .6
+        this.maxSpeed = this.status === 'superior' ? 1.2 : .65
         this.timing = this.status === 'superior' ? .5 : 1.5
         this.mixer = new THREE.AnimationMixer(this.gltf.scene)
         // this.mixer.timeScale = this.player === 'player1' ? .5 : .8 
@@ -113,7 +113,7 @@ export default class SceneTest {
     
         if (this.mixer.time > maxTime) {
             if (!this.stairDone) {
-                this.bgSound.fade(.5, 0, 4000)
+                this.bgSound.fade(.5, 0, 1000)
                 this.bgSound.once( 'fade', () => {this.bgSound.stop()})     
             }
             this.stairDone = true

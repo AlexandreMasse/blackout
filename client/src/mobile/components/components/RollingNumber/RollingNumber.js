@@ -55,7 +55,7 @@ class RollingNumber extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     for(let i = 0; i < this.props.numbers.length; i++) {
       if(nextProps.numbers[i] !== this.props.numbers[i]) {
-        console.log("update ", this.props.numbers);
+        // console.log("update ", this.props.numbers);
         this.changeCarouselCurrentImage(i, nextProps.numbers[i])
       }
     }

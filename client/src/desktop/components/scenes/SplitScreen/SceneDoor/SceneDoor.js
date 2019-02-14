@@ -22,13 +22,19 @@ export default class SceneDoor {
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.status = this.store.users.find(user => user.id === player).status
     this.initialPrct = player === 'player1' ? pct : 1 - pct 
+    this.isSceneDoor = true 
     switch (this.status) {
       case 'inferior':
+        this.setSoundDisadvantage()
         this.initSceneDisadvantage()
+        this.isUserAdvantage = false
         break;
       case 'superior':
+      this.setSceneSoundAdv()
+      this.initBackgroundSound()
       this.initSceneAdvantage()
       this.initSceneAdvantageInside()
+      this.isUserAdvantage = true
         break;
       default:
         console.log('Sorry, we are out of ' + this.status + '.')
@@ -52,7 +58,12 @@ export default class SceneDoor {
         // timeline.add('transition')
         timeline.to(this.sceneAdvantage.doorSprite, 2, { ease: Expo.easeOut, x: this.player === 'player1' ? 460:-460}, 0)
         timeline.to(this.spriteAdvantage, .3, {alpha:0}, .35)
+        timeline.add(() => {this.doorOpen.play()}, .35)
         timeline.to(this.spriteAdvantageInside, .3, {alpha:1}, 1.2)
+        timeline.add(() => {
+          this.bgDoor2.play()
+          this.bgDoor2.fade(0, 1, 2000)
+        }, 1.2)
         // timeline.to(this.spriteAdvantageInside, .2, {alpha:1}, "transition+=2")
 
         this.dispatch(setUserIndicationTitle({userId: this.player, title: "Sécurisez votre abri"}))
@@ -68,6 +79,7 @@ export default class SceneDoor {
       } else {
         this.fingerDisadvantage.play()
         this.sceneDisadvantage.playFingerPrintSpriteSheet()
+        this.codeDesktop.play()
 
         this.dispatch(setUserIndicationTitle({userId: this.player, title: "Entrez le mot de passe"}))
         this.dispatch(setUserIndicationDescription({userId: this.player, description: "Tournez les roues jusqu’à trouver la bonne combinaison."}))
@@ -90,7 +102,7 @@ export default class SceneDoor {
       } else {
         var mapValue  = map(this.newPlayerHandle, 0, 1, -460, 0)
       }
-      TweenMax.to(this.sceneAdvantageInside.doorSprite, 2, {x:mapValue})
+      TweenMax.to(this.sceneAdvantageInside.doorSprite, 2.3, {x:mapValue})
     }
     //update store
     // console.log("updateStore", newStore);
@@ -161,6 +173,10 @@ export default class SceneDoor {
     const loveAsset = AssetsManager.get('love')
     const bassesAsset = AssetsManager.get('basses')
     const wavedeepAsset = AssetsManager.get('wavedeep')
+    const bgDoor1Asset = AssetsManager.get('bgDoor1')
+    const bgDoor2Asset = AssetsManager.get('bgDoor2')
+    const doorClosingAsset = AssetsManager.get('doorClosing')
+    const doorClosedAsset = AssetsManager.get('doorClosed')
 
     this.loveSound = new Howl({
       src: loveAsset.src,
@@ -191,16 +207,118 @@ export default class SceneDoor {
       loop: true,
       format: ['mp3']
     })
+
+    this.bgDoor1 = new Howl({
+      src: bgDoor1Asset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+
+    this.bgDoor2 = new Howl({
+      src: bgDoor2Asset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+
+    this.doorClosing = new Howl({
+      src: doorClosingAsset.src,
+      volume: .85,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+
+    this.doorClosed = new Howl({
+      src: doorClosedAsset.src,
+      volume: .65,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
+
+    this.loveSound.play()
+    this.loveSound.fade(0, .3, 4000)
+
+    this.wavedeepSound.play()
+    this.wavedeepSound.fade(0, .5, 4000)
+
+    this.bassesSound.play()
+    this.bassesSound.fade(0, .5, 4000)
+
+    this.bgDoor1.play()
+    this.bgDoor1.fade(0, .5, 4000)
   }
 
-  initBgSoundAdvantage() {
-    const loveAsset = AssetsManager.get('love')
-    const bassesAsset = AssetsManager.get('basses')
-    const wavedeepAsset = AssetsManager.get('wavedeep')
+  playDoorClosing() {
+    // console.log('CLOSING THE DOOR')
+    this.doorClosing.play()
+    this.doorClosing.fade(0, .85, 1000)
   }
 
-  initBgSoundDisadvantage() {
+  playDoorAlmostClose() {
+    // console.log('THE DOOR IS CLOOOOSED')
+    this.doorClosed.play()
+    this.doorClosed.fade(0, .85, 500)
 
+    this.loveSound.fade(.3, 0, 500)
+    this.loveSound.once( 'fade', () => {this.loveSound.stop()})
+ 
+    this.wavedeepSound.fade(.5, 0, 500)
+    this.wavedeepSound.once( 'fade', () => {this.wavedeepSound.stop()})
+
+    this.bassesSound.fade(.5, 0, 500)
+    this.bassesSound.once( 'fade', () => {this.bassesSound.stop()})
+
+    this.doorClosing.fade(.85, 0, 500)
+    this.doorClosing.once( 'fade', () => {this.doorClosing.stop()})
+
+    this.bgDoor2.fade(1, 0, 500)
+    this.bgDoor2.once( 'fade', () => {this.bgDoor2.stop()})
+  }
+
+  stopSoundBgDoor1() {
+    this.bgDoor1.fade(.5, 0, 500)
+    this.bgDoor1.once( 'fade', () => {this.bgDoor1.stop()})
+  }
+
+  setSceneSoundAdv() {
+    const doorOpenAsset = AssetsManager.get('doorOpen')
+
+    this.doorOpen = new Howl({
+      src: doorOpenAsset.src,
+      volume: .8,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
+  }
+
+  setSoundDisadvantage() {
+    const codeDesktopAsset = AssetsManager.get('codeDesktop')
+
+    this.codeDesktop = new Howl({
+      src: codeDesktopAsset.src,
+      volume: .8,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: false,
+      format: ['mp3']
+    })
   }
 
   initSceneDisadvantage() {

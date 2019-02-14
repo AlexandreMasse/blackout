@@ -73,6 +73,13 @@ import fingerprintAdvandtage from './sounds/fingerprintAdvandtage.mp3'
 import love from './sounds/love.mp3'
 import basses from './sounds/basses.mp3'
 import wavedeep from './sounds/wavedeep.mp3'
+import doorOpen from './sounds/doorOpen.mp3'
+import codeDesktop from './sounds/codeDesktop.mp3'
+import bgDoor1 from './sounds/bgDoor1.mp3'
+import bgDoor2 from './sounds/bgDoor2.mp3'
+import doorClosing from './sounds/doorClosing.mp3'
+import doorClosed from './sounds/doorClosed.mp3'
+import conclusion from './sounds/conclusion.mp3'
 
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
@@ -119,4 +126,11 @@ export const assetsToLoad = {
     love: {url: love, name :'love', type:'sound'},
     basses: {url: basses, name :'basses', type:'sound'},
     wavedeep: {url: wavedeep, name :'wavedeep', type:'sound'},
+    doorOpen: {url: doorOpen, name :'doorOpen', type:'sound'},
+    codeDesktop: {url: codeDesktop, name :'codeDesktop', type:'sound'},
+    bgDoor1: {url: bgDoor1, name :'bgDoor1', type:'sound'},
+    bgDoor2: {url: bgDoor2, name :'bgDoor2', type:'sound'},
+    doorClosing: {url: doorClosing, name :'doorClosing', type:'sound'},
+    doorClosed: {url: doorClosed, name :'doorClosed', type:'sound'},
+    conclusion: {url: conclusion, name :'conclusion', type:'sound'},
 }

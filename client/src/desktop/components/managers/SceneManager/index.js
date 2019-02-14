@@ -68,6 +68,7 @@ class SceneManager extends Component {
     // this.init()
     this.isSplitActive = false
     this.firstSplitAppear = true
+    this.soundHandle = true
     this.setMargeSplitScreen()
   }
 
@@ -260,10 +261,17 @@ class SceneManager extends Component {
       const splitScreenPercentage = isPlayer1 ? this.splitScreenPercentageBeforeHandle + handlePourcentage : (1 - this.splitScreenPercentageBeforeHandle) - handlePourcentage;
       this.props.dispatch(setPlayer1SplitScreenPercentage({splitScreenPercentage}))
 
-      //TODO: play sound when handle is 80%
-      // if(handle >= 0.8 && sound not already played) {
-      //   //play sound
-      // }
+      // TODO: play sound when handle is 80%
+      if(handle >= 0.98) {
+        if (this.soundHandle) {
+          this.currentSceneInstanceArray.forEach((scene) => {
+            if (scene.isSceneDoor && scene.isUserAdvantage) {
+              scene.playDoorAlmostClose()
+            }
+          })
+        }
+        this.soundHandle = false        
+      }
 
       if(handle === 1) {
         requestTimeout(() => {
@@ -274,8 +282,11 @@ class SceneManager extends Component {
     } else {
       this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage
       this.overlay()
-
-      //TODO: play sound on first time user turn the handle
+      this.currentSceneInstanceArray.forEach((scene) => {
+        if (scene.isSceneDoor && scene.isUserAdvantage) {
+          scene.playDoorClosing()
+        }
+      })
     }
   }
 
@@ -299,15 +310,19 @@ class SceneManager extends Component {
 
     if(this.isConclusion) {
       requestTimeout(() => {
-        //TODO: stop sound
-        this.props.dispatch(setUserIndicationOpen({
-          userId: "player1",
-          isOpen: false
-        }))
-        this.props.dispatch(setUserIndicationOpen({
-          userId: "player2",
-          isOpen: false
-        }))
+        this.currentSceneInstanceArray.forEach((scene) => {
+          if (scene.isSceneDoor && scene.isUserAdvantage) {
+            scene.stopSoundBgDoor1()
+          }
+        })
+        // this.props.dispatch(setUserIndicationOpen({
+        //   userId: "player1",
+        //   isOpen: false
+        // }))
+        // this.props.dispatch(setUserIndicationOpen({
+        //   userId: "player2",
+        //   isOpen: false
+        // }))
         this.props.dispatch(setCurrentStep(steps.CONCLUSION.name))
         clearRequestTimeout(this.overlayRequestTimeout)
       }, (duration / 2) * 1000)

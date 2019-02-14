@@ -52,9 +52,8 @@ class LunchStep extends Component {
         const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
         const progressionClamped = Math.min(Math.max(progression, 0), 1);
         const progressionRounded = Number(progressionClamped.toPrecision(4))
-
+ 
         this.soundMobileUp.volume(progressionRounded)
-
 
         // if(this.lastBeta) {
         //   if(this.lastBeta < data.do.beta) {
@@ -132,6 +131,7 @@ class LunchStep extends Component {
 
   componentWillUnmount() {
     this.gn.end()
+    this.soundMobileUp.stop()
   }
 
   componentDidMount() {

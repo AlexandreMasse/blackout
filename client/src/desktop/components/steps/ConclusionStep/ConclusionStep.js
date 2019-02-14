@@ -6,6 +6,7 @@ import stepsMobile from '../../../../mobile/components/steps'
 import {SentenceAppear} from './components'
 import {TimelineMax, TweenMax} from 'gsap'
 import {TextAnimation} from '../../components'
+import { Howl } from 'howler'
 
 import {requestTimeout} from '../../../../utils'
 //transition
@@ -17,6 +18,7 @@ import './ConclusionStep.scss'
 class ConclusionStep extends Component {  
   
   componentDidMount() {
+    this.initBackgroundSound()
     this.setTimeLineConclusion()
     this.sentenceAppear = new SentenceAppear()
     this.substeps = document.querySelectorAll('.conclusion-step__substep')
@@ -34,6 +36,21 @@ class ConclusionStep extends Component {
     this.timeLineStep2()
     this.timeLineStep1()
   }
+
+  initBackgroundSound = () => {
+    const conclusionSoundAsset = AssetsManager.get('conclusion')
+    this.conclusionSound = new Howl({
+      src: conclusionSoundAsset.src,
+      volume: .5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop: true,
+      format: ['mp3']
+    })
+    this.conclusionSound.play()
+    this.conclusionSound.fade(0, .5, 500)
+  } 
 
   timeLineStep1 = () => {
     const parent = document.querySelector('.conclusion-step__substep--1')
@@ -274,7 +291,7 @@ class ConclusionStep extends Component {
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--2">
                 <p className="conclusion-step__substep__text wordSplit first">résolution</p>
                 <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={360} letterMinSpeed={10} letterMaxSpeed={40} text={resolutionUSer1} handleWord={word => this.resAnimation = word}/>
-                <p className="conclusion-step__substep__text wordSplit last"> ,connecté au</p>
+                <p className="conclusion-step__substep__text wordSplit last"> connecté au</p>
               </div>
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--3">
                 <p className="conclusion-step__substep__text first wordSplit">réseau</p>
@@ -314,7 +331,7 @@ class ConclusionStep extends Component {
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--2">
                 <p className="conclusion-step__substep__text wordSplit first">résolution</p>
                 <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={360} letterMinSpeed={10} letterMaxSpeed={40} text={resolutionUSer2} handleWord={word => this.resAnimation2 = word}/>
-                <p className="conclusion-step__substep__text wordSplit last"> ,connecté au</p>
+                <p className="conclusion-step__substep__text wordSplit last"> connecté au</p>
               </div>
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--3">
                 <p className="conclusion-step__substep__text first wordSplit">réseau</p>
