@@ -182,6 +182,9 @@ class SliderStep extends Component {
             <div className="slider-step">
                 <div className="slider-step__wrapper">
                      <div className="slider-step__outer outer" id="outer" ref={this.handleRef}>
+                        <span className="slider-step__arrow">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46.56 71.95"><defs></defs><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path class="cls-1" d="M30.55,42.35l22.71-27H54.5l22.61,27-4,4.72L53.57,23.84h.62L34.45,47.07ZM50.8,22.51H57V87.26H50.8Z" transform="translate(-30.55 -15.31)"/></g></g></svg>
+                        </span>
                         <div className="slider-step__lock lock" id="lock"></div>
                         <div className="slider-step__mask mask"   style={ { backgroundImage: `url(${ AssetsManager.get(assetsToLoad.trame.name).src})` } }  /> 
                     </div>

@@ -27,6 +27,15 @@
         position: relative;
         user-select: none;
     }
+
+    &__arrow {
+        position: absolute;
+        width: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 60px;
+    }
+    
     &__lock {
         z-index: 2;
         position: absolute;
