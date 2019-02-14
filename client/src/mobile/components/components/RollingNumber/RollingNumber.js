@@ -136,11 +136,11 @@ class RollingNumber extends Component {
 
     const apothem = s / (2 * Math.tan(Math.PI / n));
 
-    carouselItemsContainer.style.transformOrigin = `50% 50% ${-apothem}px`;
+    carouselItemsContainer.style.transformOrigin = `50% 50%`;
 
-    for (let i = 1; i < n; i++) {
-      carouselItems[i].style.transformOrigin = `50% 50% ${-apothem}px`;
-      carouselItems[i].style.transform = `rotateX(${i * theta}rad)`;
+    for (let i = 0; i < n; i++) {
+      carouselItems[i].style.transformOrigin = `50% 50%`;
+      carouselItems[i].style.transform = `rotateX(${i * theta}rad) translateZ(${apothem}px)`;
       carouselItems[i].style.backfaceVisibility = 'hidden';
     }
 
