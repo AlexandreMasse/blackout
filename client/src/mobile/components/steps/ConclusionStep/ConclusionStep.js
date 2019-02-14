@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 //redux
 import {connect} from 'react-redux';
+import {disableBodyScroll} from 'body-scroll-lock'
 
 //lib
 import {TweenMax, Power1, Power2, Back, TimelineMax} from 'gsap'
@@ -112,6 +113,10 @@ class ConclusionStep extends Component {
 
     this.xDown = null;
     this.yDown = null;
+
+    this.cardsContainer = this.ref.querySelectorAll(".conclusion-step__cards")
+
+    disableBodyScroll(this.cardsContainer)
 
     this.cards = this.ref.querySelectorAll(".conclusion-step__cards__card")
 

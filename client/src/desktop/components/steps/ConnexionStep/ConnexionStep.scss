@@ -49,18 +49,17 @@
     justify-content: flex-start;
     align-items: center;
     width: 75%;
-    //background: rgba(255, 0, 0, 0.05);
     height: 50vh;
     margin-top: 22vh;
     margin-bottom: auto;
     padding-top: 2rem;
     z-index: 2;
-    mix-blend-mode: darken;
+    //mix-blend-mode: darken;
 
     video {
       opacity: 0;
       margin-bottom: 2rem;
-      mix-blend-mode: darken;
+      //mix-blend-mode: darken;
     }
 
     &__baseline {
@@ -143,7 +142,7 @@
             &:nth-child(15),
             &:nth-child(16),
             &:nth-child(17),
-            &:nth-child(18),
+            &:nth-child(18)
              {
               font-variation-settings: $bold;
             }
@@ -157,7 +156,7 @@
             &:nth-child(10),
             &:nth-child(11),
             &:nth-child(12),
-            &:nth-child(13),
+            &:nth-child(13)
              {
               font-variation-settings: $bold;
             }
@@ -224,7 +223,7 @@
   }
 
   &__icon {
-    width: 2vw;
+    width: 3.5rem;
     position: fixed;
     right: 4rem;
     bottom: 2.5rem;
