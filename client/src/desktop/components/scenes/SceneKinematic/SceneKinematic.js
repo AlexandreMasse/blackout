@@ -71,7 +71,7 @@ export default class SceneKinematic {
     showDanger = () => {
         this.isDanger = false
         this.video.addEventListener('timeupdate', () => { 
-            if (this.video.currentTime > 17) {
+            if (this.video.currentTime > 13) {
                 if (!this.isDanger) {
                     this.dispatch(wsEmitShowDanger({
                         userId: this.superiorPlayer.id,

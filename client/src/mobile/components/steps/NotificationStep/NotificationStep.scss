@@ -35,10 +35,7 @@
             fill:$red;
         } 
     }
-
-    // &__button {
-       
-    // }
+    
     .button{
         position: fixed;
         left: 50%;
@@ -47,13 +44,7 @@
         width: 74vw;
         bottom: 6.5rem;
         &.isSend {
-            background: $white;
-            color: $red;
-
-            &:hover{
-                background: $white;
-                color: $red;    
-            }
+            opacity: 0;
         }
     }
 

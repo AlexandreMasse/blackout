@@ -134,7 +134,7 @@ class ConclusionStep extends Component {
     parent.classList.remove('is-active')
     this.substeps[4].classList.add('is-active')
     this.tlStep5.play()
-    }, 7.3)
+    }, 9.3)
   }
 
   timeLineStep5 = () => {
@@ -209,10 +209,10 @@ class ConclusionStep extends Component {
     })
     
     this.tlStep6.add(() => {texts[0].classList.add('show')}, 0)
-    this.tlStep6.add(() => {texts[1].classList.add('show')}, 2.2)
-    this.tlStep6.add(() => {texts[2].classList.add('show')}, 2.2)
-    this.tlStep6.add(() => {icon.classList.add('show')}, 4)
-    this.tlStep6.add(() => {this.props.wsEmitCurrentStep(stepsMobile.CONCLUSION.name)}, 4)
+    this.tlStep6.add(() => {texts[1].classList.add('show')}, 3)
+    this.tlStep6.add(() => {texts[2].classList.add('show')}, 6)
+    this.tlStep6.add(() => {icon.classList.add('show')}, 8)
+    this.tlStep6.add(() => {this.props.wsEmitCurrentStep(stepsMobile.CONCLUSION.name)}, 8)
   }
 
 

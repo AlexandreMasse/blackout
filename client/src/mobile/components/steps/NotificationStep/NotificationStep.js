@@ -85,7 +85,7 @@ class NotificationStep extends Component {
   }
 
   emitShowDanger = (e) => {
-    const btn = e.target
+    const btn = document.querySelector('.notification-step__button')
     btn.classList.add('isSend')
     this.sendNotif.play()
     const {player} = this.props

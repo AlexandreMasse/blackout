@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js"
 import {AssetsManager} from "../../../../managers"
+import {TweenMax} from 'gsap'
 // scene utils
 import {setFullScreen} from '../utils'
 // general utils
@@ -55,7 +56,7 @@ export default class SceneKinematic2 {
 
     endVideo = () => {
         this.video.addEventListener('ended',() => {
-            requestTimeout(() => {
+            TweenMax.to(this.bg, .5, {alpha:0, onComplete: () => {
                 // const currentStep = null
                 const currentStep = stepsMobile.STAIRS.name
                 // this.dispatch(setCurrentScene(scenes.SCENESTAIRS.name))
@@ -64,7 +65,10 @@ export default class SceneKinematic2 {
                 this.dispatch(setUserCurrentScene({userId:'player1', currentScene:scenes.SCENESTAIRS.name}))
                 this.dispatch(setUserCurrentScene({userId:'player2', currentScene:scenes.SCENESTAIRS.name}))
                 this.dispatch(wsEmitCurrentStep({currentStep}))
-            },500)    
+            }})
+            // requestTimeout(() => {
+             
+            // },500)    
         })
     }
 
