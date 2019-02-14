@@ -343,7 +343,7 @@ export default (state = initialState, action) => {
                    if (currentScore > otherScore) {
                      return "superior"
                    } else if (currentScore === otherScore) {
-                     return "equal"
+                     return user.id === "player1" ? "superior" : "inferior"
                    } else {
                      return "inferior"
                    }
