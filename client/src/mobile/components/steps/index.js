@@ -75,6 +75,14 @@ import {
   onExitTimeout as HandleStepOnExitTimeout
 } from './HandleStep/transition'
 
+import {default as ConclusionStep} from './ConclusionStep/ConclusionStep'
+import {
+  onEnter as ConclusionStepOnEnter,
+  onExit as ConclusionStepOnExit,
+  onEnterTimeout as ConclusionStepOnEnterTimeout,
+  onExitTimeout as ConclusionStepOnExitTimeout
+} from './ConclusionStep/transition'
+
 
 export default {
   INTRO: {
@@ -148,5 +156,13 @@ export default {
     timeout: {enter: HandleStepOnEnterTimeout, exit: HandleStepOnExitTimeout},
     onEnter: HandleStepOnEnter,
     onExit: HandleStepOnExit
+  },
+  CONCLUSION: {
+    name: 'CONCLUSION',
+    component: <ConclusionStep/>,
+    classNames: "",
+    timeout: {enter: ConclusionStepOnEnterTimeout, exit: ConclusionStepOnExitTimeout},
+    onEnter: ConclusionStepOnEnter,
+    onExit: ConclusionStepOnExit
   }
 }
