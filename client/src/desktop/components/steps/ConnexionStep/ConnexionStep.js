@@ -426,7 +426,7 @@ class ConnexionStep extends Component {
         </span>
         <div className="connexion-step__credits">
           <p>Composé en Scope, par Jonas Pelzer.</p>
-          <p>Robin Blanc--Beyne | Manon Carrour | Alexandre Massé | Alan Michel | Jean Ndoulou.</p>
+          <p>Robin Blanc--Beyne | Manon Carrour | Alexandre Massé | Allan Michel | Jean Ndoulou.</p>
         </div>
       </div>
     )
