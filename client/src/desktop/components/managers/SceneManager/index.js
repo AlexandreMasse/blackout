@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import * as PIXI from "pixi.js"
 import * as THREE from 'three'
 //redux
-import {setPlayer1SplitScreenPercentage, setCurrentStep, setUserIndicationOpen} from "../../../redux/actions/desktopAction"
+import {setPlayer1SplitScreenPercentage, setCurrentStep, setUserIndicationActive} from "../../../redux/actions/desktopAction"
 //Steps
 import steps from '../../steps'
 //Scene
@@ -315,14 +315,14 @@ class SceneManager extends Component {
             scene.stopSoundBgDoor1()
           }
         })
-        // this.props.dispatch(setUserIndicationOpen({
-        //   userId: "player1",
-        //   isOpen: false
-        // }))
-        // this.props.dispatch(setUserIndicationOpen({
-        //   userId: "player2",
-        //   isOpen: false
-        // }))
+        this.props.dispatch(setUserIndicationActive({
+          userId: "player1",
+          isActive: false
+        }))
+        this.props.dispatch(setUserIndicationActive({
+          userId: "player2",
+          isActive: false
+        }))
         this.props.dispatch(setCurrentStep(steps.CONCLUSION.name))
         clearRequestTimeout(this.overlayRequestTimeout)
       }, (duration / 2) * 1000)

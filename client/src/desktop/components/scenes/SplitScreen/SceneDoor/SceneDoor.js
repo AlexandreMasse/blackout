@@ -74,7 +74,7 @@ export default class SceneDoor {
             userId: this.player,
             isOpen: false
           }))
-        }, 2000)
+        }, 3000)
      
       } else {
         this.fingerDisadvantage.play()
@@ -89,7 +89,7 @@ export default class SceneDoor {
             userId: this.player,
             isOpen: false
           }))
-        }, 2000)
+        }, 3000)
       }
     }
 
@@ -132,12 +132,22 @@ export default class SceneDoor {
         // console.log('PLAYER=====',this.player)
         this.dispatch(setUserIndicationTitle({userId: this.player, title: "Accédez au refuge"}))
         this.dispatch(setUserIndicationDescription({userId: this.player, description: "Apposez votre doigt sur l’écran pour vous identifier."}))
+        requestTimeout(() => {
+          this.dispatch(setUserIndicationActive({
+            userId: this.player,
+            isActive: true
+          }))
+        }, 2000)
         break;
       case 'inferior':
       setFullScreen(this.spriteDisadvantage, this.spriteDisadvantage.width, this.spriteDisadvantage.height, this.containerSize.width)
       // console.log('PLAYER YO=====',this.player)
       this.dispatch(setUserIndicationTitle({userId: this.player, title: "Accédez au refuge"}))
       this.dispatch(setUserIndicationDescription({userId: this.player, description: "Apposez votre doigt sur l’écran pour vous identifier."}))
+      this.dispatch(setUserIndicationActive({
+        userId: this.player,
+        isActive: true
+      }))
         break;
       default:
         console.log('Sorry, we are out of ' + this.player + '.')
