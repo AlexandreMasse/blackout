@@ -77,7 +77,7 @@ export default class SceneTest {
         if (this.player === "player1" && this.firstTouchPL1) {
             this.dispatch(setUserIndicationOpen({
                 userId: "player1",
-                isOpen: true
+                isOpen: false
               }))
         }
         this.firstTouchPL1 = false
@@ -85,7 +85,7 @@ export default class SceneTest {
         if (this.player === "player2" && this.firstTouchPL2) {
             this.dispatch(setUserIndicationOpen({
                 userId: "player2",
-                isOpen: true
+                isOpen: false
               }))
         }
         this.firstTouchPL2 = false

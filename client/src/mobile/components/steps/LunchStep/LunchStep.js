@@ -53,7 +53,7 @@ class LunchStep extends Component {
         const progressionClamped = Math.min(Math.max(progression, 0), 1);
         const progressionRounded = Number(progressionClamped.toPrecision(4))
  
-        this.soundMobileUp.volume(progressionRounded)
+        // this.soundMobileUp.volume(progressionRounded)
 
         // if(this.lastBeta) {
         //   if(this.lastBeta < data.do.beta) {
@@ -114,7 +114,7 @@ class LunchStep extends Component {
       format: ['mp3']
     })
 
-    this.soundMobileUp.play()
+    // this.soundMobileUp.play()
 
     const soundMobileDown = AssetsManager.get('mobileDown')
     this.soundMobileDown = new Howl({
