@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types"
 import * as PIXI from "pixi.js"
-import * as THREE from 'three'
+// import * as THREE from 'three'
 //redux
 import {setPlayer1SplitScreenPercentage, setCurrentStep, setUserIndicationActive} from "../../../redux/actions/desktopAction"
+import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
+
 //Steps
 import steps from '../../steps'
 //Scene
@@ -324,13 +326,13 @@ class SceneManager extends Component {
           isActive: false
         }))
         this.props.dispatch(setCurrentStep(steps.CONCLUSION.name))
+        const currentStep = null
+        this.props.dispatch(wsEmitCurrentStep({currentStep}))
         clearRequestTimeout(this.overlayRequestTimeout)
       }, (duration / 2) * 1000)
     }
 
   }
-
-
 
   // dom elements transitions
 

@@ -13,6 +13,8 @@ import './ConnexionStep.scss'
 import steps from "..";
 //components
 import {LottieAnimation, TextAnimation} from "../../components";
+import { Howl } from 'howler'
+import {AssetsManager} from "../../../../managers"
 //LottieAnimation
 import animations from "../../components/LottieAnimation/animations"
 import {onEnterDelay} from "../ConnexionStep/transition";
@@ -75,7 +77,9 @@ class ConnexionStep extends Component {
 
 
   componentDidMount() {
-
+    this.setSound()
+    this.setStartTimeline()
+    this.fullscreen = document.querySelector('.connexion-step__intro__fullscreen')
     this.tl = new TimelineMax({
       delay: onEnterDelay
     })
@@ -98,42 +102,99 @@ class ConnexionStep extends Component {
     this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__2"), 0, {
       opacity: 1
     }, "baseline+=0.3")
+    // button
+    this.tl.addLabel("button", "baseline+=.8")
+    this.tl.to(this.button,.8, {opacity:1}, "button")
+    // fullscren instruction
+    this.tl.addLabel("fullscreen", "button+=.4")
+    this.tl.to(this.fullscreen, .8, {opacity:1}, "fullscreen")
+    // Credits
+    this.tl.addLabel("credits", "fullscreen+=0.7")
+    this.tl.to(this.credits, .8, {opacity: 1}, "credits")
+    // // Icon
+    this.tl.addLabel("icon", "fullscreen+=0.7")
+    this.tl.to(this.icon, .8, {opacity: 1}, "icon")
+  }
 
+  setStartTimeline = () => {
+    this.button = document.querySelector('.connexion-step__intro__start')
+    this.icon = document.querySelector('.connexion-step__icon')
+    this.credits = document.querySelector('.connexion-step__credits')
+
+    this.startTl = new TimelineMax({
+      // delay: onEnterDelay
+      paused:true
+    })
+    // button 
+    this.startTl.addLabel("button")
+    this.startTl.to(this.button, .8, {opacity: 0}, "button")
     //instructions
-    this.tl.addLabel("instructions", "baseline+=0.7")
-    this.tl.add(() => {this.wordInstructions1.start()}, "instructions")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__1"), 0, {
+    this.startTl.addLabel("instructions", "button+=0.7")
+    this.startTl.add(() => {this.wordInstructions1.start()}, "instructions")
+    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__1"), 0, {
       opacity: 1
     }, "instructions")
-    this.tl.add(() => {this.wordInstructions2.start()}, "instructions+=0.3")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__2"), 0, {
+    this.startTl.add(() => {this.wordInstructions2.start()}, "instructions+=0.3")
+    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__2"), 0, {
       opacity: 1
     }, "instructions+=0.3")
 
     //Player1
-    this.tl.addLabel("player1", "instructions+=0.7")
-    this.tl.add(() => {this.wordPlayer1Password.start()}, "player1")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__password"), 0, {
+    this.startTl.addLabel("player1", "instructions+=0.7")
+    this.startTl.add(() => {this.wordPlayer1Password.start()}, "player1")
+    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__password"), 0, {
       opacity: 1
     }, "player1")
-    this.tl.add(() => {this.wordPlayer1Name.start()}, "player1+=0.3")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__name"), 0, {
+    this.startTl.add(() => {this.wordPlayer1Name.start()}, "player1+=0.3")
+    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__name"), 0, {
       opacity: 1
     }, "player1+=0.3")
-    this.tl.add(() => {this.wordPlayer1Status.start()}, "player1+=0.6")
+    this.startTl.add(() => {this.wordPlayer1Status.start()}, "player1+=0.6")
 
     //Player2
-    this.tl.addLabel("player2", "instructions+=0.7")
-    this.tl.add(() => {this.wordPlayer2Password.start()}, "player2")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__password"), 0, {
+    this.startTl.addLabel("player2", "instructions+=0.7")
+    this.startTl.add(() => {this.wordPlayer2Password.start()}, "player2")
+    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__password"), 0, {
       opacity: 1
     }, "player2")
-    this.tl.add(() => {this.wordPlayer2Name.start()}, "player2+=0.3")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__name"), 0, {
+    this.startTl.add(() => {this.wordPlayer2Name.start()}, "player2+=0.3")
+    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__name"), 0, {
       opacity: 1
     }, "player2+=0.3")
-    this.tl.add(() => {this.wordPlayer2Status.start()}, "player2+=0.6")
+    this.startTl.add(() => {this.wordPlayer2Status.start()}, "player2+=0.6")
 
+  }
+
+  startExperience = () => {
+    this.startTl.play()
+    this.doorOpen.play()
+    this.introSound.play()
+    this.introSound.fade(0, 1, 4000)
+  }
+
+  setSound = () => {
+    const introSoundAsset = AssetsManager.get('introductionSound')
+    const doorOpenAsset = AssetsManager.get('doorOpen')
+
+    this.doorOpen = new Howl({
+      src: doorOpenAsset.src,
+      volume: .8,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop:false,
+      format: ['mp3']
+    })
+
+    this.introSound = new Howl({
+      src: introSoundAsset.src,
+      volume: 0.5,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop:true,
+      format: ['mp3']
+    })
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -154,7 +215,8 @@ class ConnexionStep extends Component {
       (this.state.isCityLeftReady && this.state.isCityRightReady)
     ) {
       console.log("city left and right ready -> analysis");
-
+      this.introSound.fade(1, 0, 4000)
+      this.introSound.once( 'fade', () => {this.introSound.stop()})
       this.props.setCurrentStep(steps.ANALYSIS.name)
       this.props.wsEmitCurrentStep(null)
     }
@@ -294,6 +356,8 @@ class ConnexionStep extends Component {
                 text=" un des codes pour démarrer."
                 handleWord={this.handleWordInstructions2}
               />
+              <button className="connexion-step__intro__start" onClick={() => this.startExperience()}>Démarrer l'expérience</button>
+              <p className="connexion-step__intro__fullscreen">Appuyez sur la touche <span className="spacebar">espace</span> pour passer en plein écran</p>
             </div>
 
             <div className={classNames("connexion-step__intro__codes__player2", {"connected": isPlayer2Connected})}>

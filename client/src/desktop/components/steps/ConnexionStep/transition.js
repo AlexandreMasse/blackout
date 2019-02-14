@@ -1,35 +1,15 @@
 import {TweenMax, TimelineMax, Power1} from 'gsap'
-// Howl
-import { Howl } from 'howler'
-import {AssetsManager} from "../../../../managers"
-
 export const onEnterDuration = 1
 export const onEnterDelay = 0
 export const onEnterTimeout = onEnterDuration + onEnterDelay
 
-// sound
-let introSound = null
-
 export const onEnter = (html) => {
-  const introSoundAsset = AssetsManager.get('introductionSound')
-  introSound = new Howl({
-    src: introSoundAsset.src,
-    volume: 0.5,
-    html5: true,
-    preload: true,
-    autoplay: false,
-    loop:true,
-    format: ['mp3']
-  })
-
   TweenMax.fromTo(html, onEnterDuration, {
     opacity: 0,
   },{
     delay: onEnterDelay,
     opacity: 1
   })
-  introSound.play()
-  introSound.fade(0, 1, 4000)
 }
 
 
@@ -69,8 +49,4 @@ export const onExit = (html) => {
     delay:0,
     opacity: 0
   })
-
-   // fadeOut and pause introSOund
-   introSound.fade(1, 0, 4000)
-   introSound.once( 'fade', () => {introSound.stop()})
 }
