@@ -175,6 +175,7 @@ class ConnexionStep extends Component {
   setSound = () => {
     const introSoundAsset = AssetsManager.get('introductionSound')
     const doorOpenAsset = AssetsManager.get('doorOpen')
+    const playerReadyAsset = AssetsManager.get('playerReady')
 
     this.doorOpen = new Howl({
       src: doorOpenAsset.src,
@@ -195,15 +196,27 @@ class ConnexionStep extends Component {
       loop:true,
       format: ['mp3']
     })
+
+    this.playerReady = new Howl({
+      src: playerReadyAsset.src,
+      volume: 1,
+      html5: true,
+      preload: true,
+      autoplay: false,
+      loop:false,
+      format: ['mp3']
+    })
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (!this.state.isCityLeftReady && nextProps.player1IntroProgression >= 1) {
       console.log("city left ready !");
+      this.playerReady.play()
       this.setState({isCityLeftReady: true})
     }
     if (!this.state.isCityRightReady && nextProps.player2IntroProgression >= 1) {
       console.log("city right ready !");
+      this.playerReady.play()
       this.setState({isCityRightReady: true})
     }
   }

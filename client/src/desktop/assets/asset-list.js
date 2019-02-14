@@ -80,6 +80,7 @@ import bgDoor2 from './sounds/bgDoor2.mp3'
 import doorClosing from './sounds/doorClosing.mp3'
 import doorClosed from './sounds/doorClosed.mp3'
 import conclusion from './sounds/conclusion.mp3'
+import playerReady from './sounds/playerReady.mp3'
 
 export const assetsToLoad = {
     stairs: { url: stairs, type: 'gltf'},
@@ -133,4 +134,5 @@ export const assetsToLoad = {
     doorClosing: {url: doorClosing, name :'doorClosing', type:'sound'},
     doorClosed: {url: doorClosed, name :'doorClosed', type:'sound'},
     conclusion: {url: conclusion, name :'conclusion', type:'sound'},
+    playerReady: {url: playerReady, name :'playerReady', type:'sound'},
 }
