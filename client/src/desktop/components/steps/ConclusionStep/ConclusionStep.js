@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {AssetsManager} from "../../../../managers"
 import steps from '..'
 import stepsMobile from '../../../../mobile/components/steps'
+import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
 import {SentenceAppear} from './components'
 import {TimelineMax, TweenMax} from 'gsap'
 import {TextAnimation} from '../../components'
@@ -211,6 +212,7 @@ class ConclusionStep extends Component {
     this.tlStep6.add(() => {texts[1].classList.add('show')}, 2.2)
     this.tlStep6.add(() => {texts[2].classList.add('show')}, 2.2)
     this.tlStep6.add(() => {icon.classList.add('show')}, 4)
+    this.tlStep6.add(() => {this.props.wsEmitCurrentStep(stepsMobile.CONCLUSION.name)}, 4)
   }
 
 
@@ -376,12 +378,12 @@ const mapStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
-//     wsEmitCurrentStep: (currentStep) => dispatch(wsEmitCurrentStep({currentStep}))
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    // setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
+    wsEmitCurrentStep: (currentStep) => dispatch(wsEmitCurrentStep({currentStep}))
+  }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ConclusionStep)
-export default connect(mapStateToProps)(ConclusionStep)
+export default connect(mapStateToProps, mapDispatchToProps)(ConclusionStep)
+// export default connect(mapStateToProps)(ConclusionStep)
