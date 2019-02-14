@@ -418,7 +418,7 @@ class SceneManager extends Component {
       this.props.store.users.find((user) => user.id === 'player1').stairsProgression) {
         let stairsProgression1 = this.props.store.users.find((user) => user.id === 'player1').stairsProgression
         let stairsProgression2 = this.props.store.users.find((user) => user.id === 'player2').stairsProgression
-        if (stairsProgression1 < 0.29 && stairsProgression2 < 0.29) {
+        if (stairsProgression1 < 0.34 && stairsProgression2 < 0.34) {
           this.onStairProgression1(stairsProgression1)
         }
     }
@@ -429,7 +429,7 @@ class SceneManager extends Component {
       this.props.store.users.find((user) => user.id === 'player2').stairsProgression) {
         let stairsProgression2 = this.props.store.users.find((user) => user.id === 'player2').stairsProgression
         let stairsProgression1 = this.props.store.users.find((user) => user.id === 'player1').stairsProgression
-        if (stairsProgression1 < 0.29 && stairsProgression2 < 0.29) {
+        if (stairsProgression1 < 0.34 && stairsProgression2 < 0.34) {
           this.onStairProgression2(stairsProgression2)
         }
     }
