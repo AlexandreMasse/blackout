@@ -53,7 +53,7 @@ export default class SceneTest {
         // console.log(this.gltf.cameras)
         this.scene.background = new THREE.Color('#000000')
         this.clock = new THREE.Clock()
-        this.renderer = new THREE.WebGLRenderer( { antialias: false } )
+        this.renderer = new THREE.WebGLRenderer( { antialias: true } )
         this.renderer.setPixelRatio( window.devicePixelRatio )
         this.renderer.setSize( window.innerWidth, window.innerHeight )
     }

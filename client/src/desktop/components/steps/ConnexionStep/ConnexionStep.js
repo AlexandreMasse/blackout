@@ -369,7 +369,7 @@ class ConnexionStep extends Component {
                 text=" un des codes pour démarrer."
                 handleWord={this.handleWordInstructions2}
               />
-              <button className="connexion-step__intro__start" onClick={() => this.startExperience()}>Démarrer l'expérience</button>
+              <button className="connexion-step__intro__start" onClick={() => this.startExperience()}>Démarrez l'expérience</button>
               <p className="connexion-step__intro__fullscreen">Appuyez sur la touche <span className="spacebar">espace</span> pour passer en plein écran</p>
             </div>
 
