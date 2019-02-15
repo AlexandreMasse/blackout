@@ -34,7 +34,7 @@
       }
       &:nth-of-type(4n+3) {
         background-color: white;
-        p {
+        p, span {
           color: black;
         }
       }
@@ -84,6 +84,13 @@
         }
       }
 
+    }
+    &__number {
+      color:$white;
+      position: absolute;
+      bottom: 15rem;
+      right: 5rem;
+      font-size: 1.6rem;
     }
   }
 
