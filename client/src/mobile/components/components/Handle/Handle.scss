@@ -1,38 +1,25 @@
 @import "../../../../stylesheets/global";
 
 .handle {
-  $progression-width: 27.6rem;
-  $progression-height: 27.6rem;
+
+  $lottie-container-size: 30rem;
 
   $handle-drag-width: 7rem;
-  $handle-drag-height: 17rem;
+  $handle-drag-height: $lottie-container-size / 2;
 
-  $handle-drag-target-height: 9rem;
-
-
-
+  $handle-drag-target-height: 90%;
 
   margin: auto;
   position: relative;
-
-
-  &__progression {
-    position: absolute;
-    background-color: green;
-    width: $progression-width;
-    height: $progression-height;
-    transform: translateY(-50%) translateX(-50%);
-    border-radius: 50%;
-  }
 
   &__drag {
     position: absolute;
     width: $handle-drag-width;
     height: $handle-drag-height;
-    background-color: blue;
+    background-color: black;
     transform-origin: center bottom;
-    top: -$handle-drag-height;
-    left: -$handle-drag-width / 2;
+    top: 0;
+    left: $lottie-container-size / 2 - $handle-drag-width / 2;
 
     &__target {
       background-color: $red;
@@ -41,16 +28,26 @@
     }
   }
 
-  &__mask {
-    position: absolute;
-    background-color: black;
-    width: 10rem;
-    height: 10rem;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    border-radius: 50%;
+
+  &__lottie-container {
+    position: relative;
+    width: $lottie-container-size;
+    height: $lottie-container-size;
+
+    .lottie-animation {
+    }
+
+    svg.mobile-handle-center {
+      position: absolute;
+      width: $lottie-container-size;
+      height: $lottie-container-size;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
   }
+
+
 
 
 
