@@ -113,6 +113,11 @@
         background:$black;
         color:$white;
       }
+
+      &.disabled {
+        cursor: auto;
+        pointer-events: none;
+      }
     }
     &__codes {
       display: flex;

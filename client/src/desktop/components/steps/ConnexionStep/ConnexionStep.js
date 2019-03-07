@@ -20,7 +20,6 @@ import animations from "../../components/LottieAnimation/animations"
 import {onEnterDelay} from "../ConnexionStep/transition";
 import {wsEmitCurrentStep} from "../../../redux/actions/websockets/websocketsAction";
 
-
 class ConnexionStep extends Component {
 
   constructor(props) {
@@ -128,6 +127,7 @@ class ConnexionStep extends Component {
     // button 
     this.startTl.addLabel("button")
     this.startTl.to(this.button, .8, {opacity: 0}, "button")
+    this.startTl.add(() => {this.button.classList.add('disabled')},"button")
     //instructions
     this.startTl.addLabel("instructions", "button+=0.7")
     this.startTl.add(() => {this.wordInstructions1.start()}, "instructions")
