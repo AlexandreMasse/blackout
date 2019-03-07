@@ -242,6 +242,11 @@
     left: 4rem;
     bottom: 2.5rem;
 
+    a{
+      text-decoration: none;
+      color: $black;
+    }
+
     p {
       font-size: 1.6rem;
       font-variation-settings: $light;

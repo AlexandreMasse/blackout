@@ -1,6 +1,7 @@
 @import "../../../../stylesheets/global.scss";
 
 .indication {
+    pointer-events: none; 
     position: fixed;
     bottom: -22.5rem;
     z-index: 10;
