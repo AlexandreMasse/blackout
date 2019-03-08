@@ -47,6 +47,7 @@ server.listen(app.get('port'), function () {
           user.disconnect(io, socket)
           user.showDanger(io, socket)
           user.position(io, socket)
+          user.lightOn(io, socket)
           user.slider(io, socket)
           user.tap(io, socket)
           user.phoneData(io, socket)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import withDeviceOrientation from '../../components/withDeviceOrientation/withDeviceOrientation'
-import {wsEmitPosition} from '../../../redux/actions/websockets/websocketsAction'
+import {wsEmitPosition, wsEmitIsLightOn} from '../../../redux/actions/websockets/websocketsAction'
 
 //css
 import './CursorStep.scss'
@@ -16,6 +16,7 @@ class CursorStep extends Component {
 
   render() {
     this.props.wsEmitPosition(this.props.deviceOrientationPosition)
+    this.props.wsEmitIsLightOn(this.props.isLightOn)
 
     return (
       <div className="cursor-step" ref={this.handleRef}>
@@ -36,7 +37,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    wsEmitPosition: (position) => dispatch(wsEmitPosition({position}))
+    wsEmitPosition: (position) => dispatch(wsEmitPosition({position})),
+    wsEmitIsLightOn: (isLightOn) => dispatch(wsEmitIsLightOn({isLightOn}))
   }
 }
 

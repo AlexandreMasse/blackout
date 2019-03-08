@@ -14,7 +14,7 @@
   }
 
   .dev-toggle {
-    display: none;
+    // display: none;
     color: green;
     z-index: 100;
     position: absolute;
@@ -27,9 +27,9 @@
   }
 
   .dev-button {
-    display: none;
+    // display: none;
     &.show {
-      //display: flex;
+      // display: flex;
       display: none;
     }
     position: absolute;

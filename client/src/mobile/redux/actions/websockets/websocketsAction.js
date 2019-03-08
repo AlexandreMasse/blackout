@@ -67,6 +67,12 @@ export const wsEmitPosition = (payload) => (dispatch, getState, {emit}) => {
     })
 }
 
+export const wsEmitIsLightOn = (payload) => (dispatch, getState, {emit}) => {
+    emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_LIGHT_ON, {
+        isLightOn: payload.isLightOn,
+    })
+}
+
 export const wsEmitSliderValue = (payload) => (dispatch, getState, {emit}) => {
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_SLIDER_VALUE, {
         sliderValue: payload.sliderValue,

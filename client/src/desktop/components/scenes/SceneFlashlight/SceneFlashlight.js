@@ -42,13 +42,22 @@ export default class SceneFlashlight {
   updateStore(newStore) {
     this.currentPlayer1Position = this.store.users.find(user => user.id === "player1").position
     this.newPlayer1Position = newStore.users.find(user => user.id === "player1").position
+   
+    this.currentPlayer1LightState = this.store.users.find(user => user.id === "player1").isLightOn
+    this.newPlayer1LightState = newStore.users.find(user => user.id === "player1").isLightOn
+
+    if (this.currentPlayer1LightState !== this.newPlayer1LightState) {
+      if (this.isOff) {
+        this.switchOnLight()
+      } else {
+        this.switchOffLight()
+      }
+    }
 
     if (this.currentPlayer1Position !== this.newPlayer1Position) {
       // player1 position has changed
       if (this.isOff) {
-        this.switchOnLight()
         this.deskLight()
-        // console.log('CLEARRR =====')
       }
       if (this.canMove) {
         this.moveFlashLight()
@@ -58,11 +67,19 @@ export default class SceneFlashlight {
     this.currentPlayer2Position = this.store.users.find(user => user.id === "player2").position
     this.newPlayer2Position = newStore.users.find(user => user.id === "player2").position
 
-    if (this.currentPlayer2Position !== this.newPlayer2Position) {
-      // player2 position has changed
+    this.currentPlayer2LightState = this.store.users.find(user => user.id === "player2").isLightOn
+    this.newPlayer2LightState = newStore.users.find(user => user.id === "player2").isLightOn
+
+    if (this.currentPlayer2LightState !== this.newPlayer2LightState) {
       if (this.isOff2) {
         this.switchOnLight2()
+      } else {
+        this.switchOffLight2()
       }
+    }
+
+    if (this.currentPlayer2Position !== this.newPlayer2Position) {
+      // player2 position has changed
       if (this.canMove2) {
         this.moveFlashLight2()
       }
@@ -167,12 +184,12 @@ export default class SceneFlashlight {
   }
 
   switchOffLight() {
-    TweenMax.to(this.spriteFlashOff, .3, {alpha:1 , delay:1, onComplete:() => {
+    TweenMax.to(this.spriteFlashOff, .3, {alpha:1 , delay:.7, onComplete:() => {
       this.isOff = true
     }})
-    TweenMax.to(this.spriteBureau1, 1, {alpha:0, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau2, 1, {alpha:0, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau3, 1, {alpha:0, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
+    TweenMax.to(this.maskUSer[0].scale, .3, {x:0, y:0, delay:.3})
+    TweenMax.to(this.maskUSer[1].scale, .3, {x:0, y:0, delay:.3})
+    TweenMax.to(this.maskUSer[2].scale, .3, {x:0, y:0, delay:.3})
   }
 
   switchOnLight2() {
@@ -197,12 +214,12 @@ export default class SceneFlashlight {
   }
 
   switchOffLight2() {
-    TweenMax.to(this.spriteFlashOff_2, 1, {alpha:1 , delay:1, onComplete:() => {
-      this.isOff = true
+    TweenMax.to(this.spriteFlashOff_2, 1, {alpha:1 , delay:.7, onComplete:() => {
+      this.isOff2 = true
     }})
-    TweenMax.to(this.spriteBureau1_2, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau2_2, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
-    TweenMax.to(this.spriteBureau3_2, 1, {alpha:1, ease:RoughEase.ease.config({points:10, strength:2, clamp:true}), delay:1})
+    TweenMax.to(this.maskUSer2[0].scale, .3, {x:0, y:0, delay:.3})
+    TweenMax.to(this.maskUSer2[1].scale, .3, {x:0, y:0, delay:.3})
+    TweenMax.to(this.maskUSer2[2].scale, .3, {x:0, y:0, delay:.3})
   }
 
   fillBox() {

@@ -129,6 +129,15 @@ export default class User {
         })
     }
 
+    lightOn = (io,socket) => {
+        socket.on('isLightOn', (data) => {
+            io.to(socket.room).emit('isLightOn', {
+            isLightOn: data.isLightOn,
+            userId: socket.username
+            })
+        })
+    }
+
     slider = (io, socket) => {
         socket.on('sliderValue', (data) => {
             io.to(socket.room).emit('sliderValue', {
