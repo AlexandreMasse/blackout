@@ -425,8 +425,8 @@ class ConnexionStep extends Component {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.94 56.58"><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M31,14.5A14.52,14.52,0,1,1,16.54,0,14.51,14.51,0,0,1,31,14.5Zm-11.26,0a3.25,3.25,0,0,0-3.27-3.13,3.16,3.16,0,0,0-3.18,3.36,3.22,3.22,0,0,0,3.32,3.07A3.32,3.32,0,0,0,19.72,14.5Z"/><path d="M29.29,56.58c1.62-2.76,1-4.25-1.76-5.12-6.24-2-12.51-3.79-18.72-5.83A17.45,17.45,0,0,1,3.56,43a9.09,9.09,0,0,1-.49-14c0,.7-.32,1.81.09,2.48a4.51,4.51,0,0,0,2.41,1.66c6.16,2,12.38,3.8,18.54,5.79A18.38,18.38,0,0,1,29,41.16C34.07,44.76,34.34,52.21,29.29,56.58Z"/></g></g></svg>
         </span>
         <div className="connexion-step__credits">
-          <p>Composé en <a hRef="http://scope-typeface.com/" target="blank">Scope</a>, par <a hRef="http://jonaspelzer.com/" target="blank">Jonas Pelzer.</a></p>
-          <p><a hRef="http://www.robinblancbeyne.fr/" target="blank">Robin Blanc--Beyne</a> | <a hRef="http://www.manoncarrour.fr/" target="blank">Manon Carrour</a> | <a hRef="https://twitter.com/alexandre_masse?lang=fr" target="blank">Alexandre Massé</a> | Allan Michel | <a hRef="https://twitter.com/johnfordman_7" target="blank">Jean Ndoulou</a></p>
+          <p>Composé en <a href="http://scope-typeface.com/" target="blank">Scope</a>, par <a href="http://jonaspelzer.com/" target="blank">Jonas Pelzer.</a></p>
+          <p><a href="http://www.robinblancbeyne.fr/" target="blank">Robin Blanc--Beyne</a> | <a href="http://www.manoncarrour.fr/" target="blank">Manon Carrour</a> | <a href="https://twitter.com/alexandre_masse?lang=fr" target="blank">Alexandre Massé</a> | Allan Michel | <a href="https://twitter.com/johnfordman_7" target="blank">Jean Ndoulou</a></p>
         </div>
       </div>
     )

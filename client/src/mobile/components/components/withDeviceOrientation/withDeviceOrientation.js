@@ -15,7 +15,6 @@ const withDeviceOrientation = WrappedComponent => {
       this.latestAlpha = 0;
       this.baseAlpha = null;
       this.touching = false;
-      this.isfirstTrigger = true;
 
       this.state = {
         positionListened: this.position,
@@ -88,13 +87,9 @@ const withDeviceOrientation = WrappedComponent => {
 
     handleTouchStartEvent = e => {
       e.preventDefault();
-      e.target.parentNode.classList.add('power-button--active');
+      e.target.parentNode.classList.add('power-button--active')
       this.setState({isLightOn : true})
-
-      if (this.isfirstTrigger) {
-        this.mobileFlash.play();
-      }
-      this.isfirstTrigger = false;
+      this.mobileFlash.play()
       // Every time we touch and hold we calibrate to the center of the screen.
       this.baseAlpha = this.latestAlpha;
       this.touching = true;

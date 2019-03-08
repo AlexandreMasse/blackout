@@ -25,6 +25,7 @@ export default class SceneFlashlight {
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true;
+    this.isSoundStart = true
     this.isOff = true
     this.isOff2 = true
     this.isMoving = false
@@ -47,7 +48,7 @@ export default class SceneFlashlight {
     this.newPlayer1LightState = newStore.users.find(user => user.id === "player1").isLightOn
 
     if (this.currentPlayer1LightState !== this.newPlayer1LightState) {
-      if (this.isOff) {
+      if (this.newPlayer1LightState) {
         this.switchOnLight()
       } else {
         this.switchOffLight()
@@ -56,7 +57,7 @@ export default class SceneFlashlight {
 
     if (this.currentPlayer1Position !== this.newPlayer1Position) {
       // player1 position has changed
-      if (this.isOff) {
+      if (this.isSoundStart) {
         this.deskLight()
       }
       if (this.canMove) {
@@ -71,7 +72,7 @@ export default class SceneFlashlight {
     this.newPlayer2LightState = newStore.users.find(user => user.id === "player2").isLightOn
 
     if (this.currentPlayer2LightState !== this.newPlayer2LightState) {
-      if (this.isOff2) {
+      if (this.newPlayer2LightState) {
         this.switchOnLight2()
       } else {
         this.switchOffLight2()
@@ -111,6 +112,7 @@ export default class SceneFlashlight {
   }
 
   deskLight() {
+    this.isSoundStart = false
     const gresillementtAsset = AssetsManager.get('gresillement')
     const gresillement = new Howl({
       src: gresillementtAsset.src,
