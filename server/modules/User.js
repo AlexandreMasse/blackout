@@ -56,7 +56,7 @@ export default class User {
                     io.to(socket.room).emit('phoneData', phoneData)
                 }
                 
-                //Emit phone data after connexion
+                // Emit phone data after connexion
                 // io.to(socket.room).emit('phoneData', {
                 //     phoneData: this.phoneDataObject,
                 //     userId: socket.username

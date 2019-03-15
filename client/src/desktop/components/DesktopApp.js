@@ -17,7 +17,7 @@ import {
 //assets
 import load from '../../vendors/assets-loader'
 import {assetsToLoad} from '../assets/asset-list'
-import {Loading, Indication} from "./components"
+import {Loading, Indication, Deconnection} from "./components"
 //steps
 import {StepManager} from "./managers";
 import steps from "./steps"
