@@ -181,6 +181,8 @@
         margin: 0;
         text-align: center;
         width: 25rem;
+      // opacity: 0;
+        
 
         &.connected &__password {
           //$shadow-color: black;
@@ -211,6 +213,7 @@
 
         &__status {
           margin-top: 1rem;
+          opacity: 0;
           p {
             margin: 0;
             height: 1.3em;

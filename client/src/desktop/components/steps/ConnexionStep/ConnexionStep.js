@@ -149,11 +149,15 @@ class ConnexionStep extends Component {
     this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__name"), 0, {
       opacity: 1
     }, "player1+=0.3")
-    this.startTl.add(() => {this.wordPlayer1Status.start()}, "player1+=0.6")
+    this.startTl.add(() => {
+      this.wordPlayer1Status.start()
+      this.wordPlayer1Status.parent.parentNode.style.opacity = 1
+      }, "player1+=0.6")
 
     //Player2
     this.startTl.addLabel("player2", "instructions+=0.7")
-    this.startTl.add(() => {this.wordPlayer2Password.start()}, "player2")
+    this.startTl.add(() => {
+      this.wordPlayer2Password.start()}, "player2")
     this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__password"), 0, {
       opacity: 1
     }, "player2")
@@ -161,7 +165,10 @@ class ConnexionStep extends Component {
     this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__name"), 0, {
       opacity: 1
     }, "player2+=0.3")
-    this.startTl.add(() => {this.wordPlayer2Status.start()}, "player2+=0.6")
+    this.startTl.add(() => {
+      this.wordPlayer2Status.start()
+      this.wordPlayer2Status.parent.parentNode.style.opacity = 1
+    }, "player2+=0.6")
 
   }
 
@@ -332,6 +339,7 @@ class ConnexionStep extends Component {
                     text="LIBRE"
                     className={"connexion-step__intro__codes__player1__status__free"}
                     handleWord={this.handleWordPlayer1Status}
+                    autoPlay={true}
                   />
                 }
                 {isPlayer1Connected && !isCityLeftReady &&
