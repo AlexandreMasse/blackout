@@ -98,6 +98,8 @@ export default class User {
         socket.on('disconnect', () => {
             let code = socket.code
             console.log(code) 
+            password.activePasswordObj[ code ] = `${socket.room}_${socket.username}`
+            // console.log(password.activePasswordObj)
             password.passwordArr.push(code)
             io.to(socket.room).emit('disconnectToRoom', {
             roomId: socket.room,

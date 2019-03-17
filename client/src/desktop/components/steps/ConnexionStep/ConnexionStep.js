@@ -405,6 +405,7 @@ class ConnexionStep extends Component {
                   text="LIBRE"
                   className={"connexion-step__intro__codes__player2__status__free"}
                   handleWord={this.handleWordPlayer2Status}
+                  autoPlay={true}
                 />
                 }
                 {isPlayer2Connected && !isCityRightReady &&
