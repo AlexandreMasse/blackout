@@ -276,8 +276,8 @@ export default class SceneFlashlight {
         this.flashSound.fade(1, 0, 2000)
         this.flashSound.once( 'fade', () => {this.flashSound.stop()})
         const currentStep = stepsMobile.SLIDER.name
-        this.dispatch(setCurrentScene(scenes.SCENEGENERATOR.name))
         this.dispatch(wsEmitCurrentStep({currentStep}))
+        this.dispatch(setCurrentScene(scenes.SCENEGENERATOR.name))
       }
     })
 

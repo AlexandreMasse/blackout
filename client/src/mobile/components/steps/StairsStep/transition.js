@@ -3,7 +3,7 @@ import {Power2, TimelineMax, TweenMax} from 'gsap'
 //enter
 
 export const onEnterDuration = 2
-export const onEnterDelay = 0.5
+export const onEnterDelay = 4
 export const onEnterTimeout = onEnterDuration + onEnterDelay
 
 export const onEnter = (html) => {

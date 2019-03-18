@@ -62,10 +62,10 @@ export default class SceneKinematic {
     endVideo = () => {
         this.video.addEventListener('ended',() => {
             requestTimeout(() => {
-                const currentStep = stepsMobile.CURSOR.name
                 this.dispatch(setCurrentScene(scenes.SCENEFLASHLIGHT.name))
+                const currentStep = stepsMobile.CURSOR.name
                 this.dispatch(wsEmitCurrentStep({currentStep}))
-            },500)    
+            },500) 
         })
     }
 

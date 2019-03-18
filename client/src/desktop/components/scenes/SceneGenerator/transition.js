@@ -12,6 +12,7 @@ export const onEnter = (instance) => (
 
     const sprite = instance.sprite
     sprite.alpha = 0
+    
     const tl = new TimelineMax({
       onComplete: () => {
         console.log("onComplete : scene generator enter")
