@@ -17,6 +17,7 @@ export default class SceneKinematic {
         this.dispatch = dispatch
         this.store = store
         this.needUpdate = true
+        this.canStop = true
 
         this.init()
         this.endVideo()
@@ -81,6 +82,10 @@ export default class SceneKinematic {
                 }
             }
         })
+    }
+
+    stopTicker = () => {
+       this.pauseVideo()
     }
 
     update() {

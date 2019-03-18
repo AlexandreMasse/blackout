@@ -1,1 +1,15 @@
 @import "../../../../stylesheets/global.scss";
+
+.deconnection {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+    background: black;
+    color: white;
+    font-size: 10rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}

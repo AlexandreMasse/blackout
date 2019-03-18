@@ -331,7 +331,6 @@ class SceneManager extends Component {
         clearRequestTimeout(this.overlayRequestTimeout)
       }, (duration / 2) * 1000)
     }
-
   }
 
   // dom elements transitions
@@ -386,6 +385,7 @@ class SceneManager extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    
     // update first scene if number of scene change or scene change
     if (
       prevProps.currentScene.length !== this.props.currentScene.length ||
@@ -440,6 +440,33 @@ class SceneManager extends Component {
       this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage
     ) {
       this.calculWidthScene(this.props.store.users.find((user) => user.id === 'player1').splitScreenPercentage)
+    }
+
+
+    if (
+      prevProps.store.users.find((user) => user.id === 'player1').isConnected !==
+      this.props.store.users.find((user) => user.id === 'player1').isConnected &&
+      this.props.store.users.find((user) => user.id === 'player1').isConnected === false 
+    ) {
+      this.ticker.stop()
+      this.currentSceneInstanceArray.forEach(currentSceneInstance => {
+        if (currentSceneInstance.canStop) {
+          currentSceneInstance.stopTicker()
+        }
+      })
+    }
+
+    if (
+      prevProps.store.users.find((user) => user.id === 'player2').isConnected !==
+      this.props.store.users.find((user) => user.id === 'player2').isConnected &&
+      this.props.store.users.find((user) => user.id === 'player2').isConnected === false
+    ) {
+      this.ticker.stop()
+      this.currentSceneInstanceArray.forEach(currentSceneInstance => {
+        if (currentSceneInstance.canStop) {
+          currentSceneInstance.stopTicker()
+        }
+      })
     }
   }
 

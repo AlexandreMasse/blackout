@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from "prop-types"
 
 import './Deconnection.scss'
 
@@ -12,22 +13,19 @@ class Deconnection extends Component {
 
     render() {
 
-        const {isPlayer1Connected, isPlayer2Connected} = this.props
+        const {player} = this.props
 
         return (
             <div className="deconnection">
-                Deconnection
+                <p>Deconnection du {player}</p>
             </div>
         )
     }
 }
 
-const mapStateToProps = state => {
-    return {
-      isPlayer1Connected: state.desktop.users.find(user => user.id === "player1").isConnected,
-      isPlayer2Connected: state.desktop.users.find(user => user.id === "player2").isConnected
-    }
-  }
-  
-  export default connect(mapStateToProps, '')(Deconnection)
+Deconnection.propTypes = {
+    player: PropTypes.oneOf(["player 1", "player 2"]).isRequired,
+}
+
+export default Deconnection
 

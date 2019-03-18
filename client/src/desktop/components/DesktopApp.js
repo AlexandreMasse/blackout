@@ -75,13 +75,20 @@ class DesktopApp extends Component {
   }
 
   render() {
-    const {isLoaded, currentStep} = this.props
+    const {isLoaded, currentStep, isPlayer1Connected, isPlayer2Connected} = this.props
     return (
       <div className="app desktop-app">
         {!isLoaded ? (
           <Loading/>
         ) : (
           <>
+            {!isPlayer1Connected && currentStep === 'SCENE' &&
+              <Deconnection player={"player 1"} />
+            }
+
+            {!isPlayer2Connected && currentStep === 'SCENE' &&
+              <Deconnection player={"player 2"} />
+            }
             <p className={"dev-toggle"} onClick={() => {
               this.setState({showDevButton: !this.state.showDevButton})
             }}>TOGGLE DEV</p>
@@ -141,7 +148,9 @@ class DesktopApp extends Component {
 const mapStateToProps = state => {
   return {
     isLoaded : state.desktop.app.isLoaded,
-    currentStep : state.desktop.currentStep
+    currentStep : state.desktop.currentStep,
+    isPlayer1Connected: state.desktop.users.find(user => user.id === "player1").isConnected,
+    isPlayer2Connected: state.desktop.users.find(user => user.id === "player2").isConnected
   }
 }
 
