@@ -18,7 +18,8 @@ export default class SceneDoor {
     this.renderer2D = renderer2D
     this.player = player
     this.store = store
-    this.needUpdate = true;
+    this.needUpdate = true
+    this.needResize = true
     let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.status = this.store.users.find(user => user.id === player).status
     this.initialPrct = player === 'player1' ? pct : 1 - pct 
@@ -115,7 +116,7 @@ export default class SceneDoor {
     let width = window.innerWidth
     let height = window.innerHeight
     this.container = new PIXI.Container()
-    this.marge = 3
+    this.marge = 1.5
     this.containerSize = {width: width * this.initialPrct, height:height}
     this.mask = new PIXI.Graphics().beginFill(0x8bc5ff).drawRect(0,0, this.containerSize.width - this.marge, this.containerSize.height).endFill()
     this.addToScene()
@@ -440,6 +441,23 @@ export default class SceneDoor {
         console.log('Sorry, we are out of ' + this.player + '.')
     }
   }
+
+  resize() {
+    switch (this.status) {
+      case 'superior':
+      this.containerSize.width = window.innerWidth * this.initialPrct
+        setFullScreen(this.spriteAdvantage, this.spriteAdvantage.width, this.spriteAdvantage.height, this.containerSize.width)
+        setFullScreen(this.spriteAdvantageInside, this.spriteAdvantageInside.width, this.spriteAdvantageInside.height, this.containerSize.width)
+        break;
+      case 'inferior':
+        this.containerSize.width = window.innerWidth * this.initialPrct
+        setFullScreen(this.spriteDisadvantage, this.spriteDisadvantage.width, this.spriteDisadvantage.height, this.containerSize.width)
+        break;
+      default:
+        console.log('Sorry, we are out of ' + this.player + '.')
+    }
+  }
+
 
   update() {
     if (this.sceneDisadvantage) {

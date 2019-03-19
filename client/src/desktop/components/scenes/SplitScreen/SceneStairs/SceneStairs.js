@@ -20,13 +20,12 @@ export default class SceneStairs {
     this.player = player
     this.store = store
     this.needUpdate = true
+    this.needResize = false
+    this.moveSplitScreen = true
     this.status = this.store.users.find(user => user.id === this.player).status
-    // let pct = this.store.users.find(user => user.id === "player1").splitScreenPercentage
     this.initialPrct = player === 'player1' ? 0.1 : 1 
     this.renderer2D = renderer2D
-    // if (this.player === 'player1') {
     this.initBackgroundSound()
-    // }
     this.init()
   }
 
@@ -62,7 +61,7 @@ export default class SceneStairs {
     let width = window.innerWidth
     let height = window.innerHeight
     this.initSceneThree()
-    this.marge = 3
+    this.marge = 1.5
     this.containerSize = {width: width * this.initialPrct, height:height}
     this.mask = new PIXI.Graphics().beginFill(0x8bc5ff).drawRect(0,0, this.containerSize.width - this.marge, this.containerSize.height).endFill()
     this.container = new PIXI.Container()
@@ -103,7 +102,7 @@ export default class SceneStairs {
   }
 
   initSceneThree() {
-    this.sceneThree = new SceneTest(this.status, this.player, this.dispatch, this.stairsSound)
+    this.sceneThree = new SceneTest(this.status, this.player, this.dispatch, this.stairsSound, this.moveSplitScreen)
   }
 
   splitScreen(pct) {
@@ -155,7 +154,9 @@ export default class SceneStairs {
   }
   
   resize() {
-
+    let width = window.innerWidth
+    this.containerSize.width = width * this.initialPrct
+    setFullScreen(this.spriteStairs, this.spriteStairs.width, this.spriteStairs.height, this.containerSize.width)
   }
 
 }

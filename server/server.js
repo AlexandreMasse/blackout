@@ -42,7 +42,6 @@ server.listen(app.get('port'), function () {
         if (data.type === 'mobile') {
           const user = new User()
           user.connect(io, socket)
-          // user reconnection
           user.reconnect(io, socket)
           user.disconnect(io, socket)
           user.showDanger(io, socket)

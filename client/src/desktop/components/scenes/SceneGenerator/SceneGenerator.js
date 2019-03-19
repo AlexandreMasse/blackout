@@ -22,7 +22,8 @@ export default class SceneGenerator {
   constructor({dispatch, store}) {
     this.dispatch = dispatch
     this.store = store
-    this.needUpdate = true;
+    this.needUpdate = true
+    this.needResize = true
     this.firstTouchPL1 = true 
     this.firstTouchPL2 = true
     this.player1Ready = false
@@ -349,6 +350,10 @@ export default class SceneGenerator {
     this.container.addChild(this.button1anim)
     this.container.addChild(this.button2anim)
     this.container.addChild(this.button3anim)
+  }
+
+  resize() {
+    setFullScreen(this.sprite, this.spriteSize.width, this.spriteSize.height)
   }
 
   update() {

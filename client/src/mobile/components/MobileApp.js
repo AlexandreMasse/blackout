@@ -32,6 +32,7 @@ class MobileApp extends Component {
     }
 
     this.props.wsEmitDeviceType('mobile')
+    this.reconnect()
 
     getPhoneData().then(data => {
       this.props.setPhoneData(data)
@@ -70,10 +71,7 @@ class MobileApp extends Component {
     let cookieRoomID = getCookie('room')
     let cookieUserId = getCookie('userId')
     if (cookieRoomID && cookieUserId) {
-      socket.emit('reco', {
-        userId: cookieUserId,
-        roomId: cookieRoomID
-      })
+      this.props.wsEmitReconnection(cookieUserId, cookieRoomID)
     }
   }
 

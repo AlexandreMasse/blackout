@@ -72,6 +72,8 @@ class SceneManager extends Component {
     this.firstSplitAppear = true
     this.soundHandle = true
     this.setMargeSplitScreen()
+
+    window.addEventListener('resize', this.onWindowResize)
   }
 
   initPIXI() {
@@ -123,8 +125,14 @@ class SceneManager extends Component {
   }
 
   onWindowResize = () => {
+    console.log('yes')
     const {parentRef} = this.props
     this.renderer2D.resize(parentRef.clientWidth, parentRef.clientHeight)
+    this.currentSceneInstanceArray.forEach(currentSceneInstance => {
+      if (currentSceneInstance.needResize) {
+        currentSceneInstance.resize()
+      }
+    })
   }
 
   calculWidthScene(pct) {
@@ -141,6 +149,14 @@ class SceneManager extends Component {
       this.margeSplitScreen.alpha = 1
       this.firstSplitAppear = false
     } else {
+      // if (scenePlayer1 && scenePlayer1.sceneThree.moveSplitScreen && scenePlayer2.sceneThree.moveSplitScreen) {
+      //   scenePlayer1.splitScreen(pct)
+      // }
+
+      // if (scenePlayer1.sceneThree.moveSplitScreen && scenePlayer2.sceneThree.moveSplitScreen) {
+      //   scenePlayer2.splitScreen(1 - pct)
+      // }
+
       if (scenePlayer1) {
         scenePlayer1.splitScreen(pct)
       }
@@ -152,8 +168,6 @@ class SceneManager extends Component {
     TweenMax.to(this, 1, {
       player1SplitScreenPourcentage: pct,
       onUpdate: () => {
-        // this.refScene1.style.width = `calc(${this.player1SplitScreenPourcentage * window.innerWidth}px - 3px)`
-        // this.refScene2.style.width = `${(1 - this.player1SplitScreenPourcentage) * window.innerWidth}px`
         TweenMax.set(this.refScene1, {scaleX: this.player1SplitScreenPourcentage, x: -3})
         if(this.player1SplitScreenPourcentage > 0) {
           TweenMax.set(this.refScene1.querySelector(".scene-manager__player1__wrapper"), {scaleX: 1 / this.player1SplitScreenPourcentage})
@@ -176,7 +190,7 @@ class SceneManager extends Component {
   setMargeSplitScreen() {
     this.margeSplitScreen = new PIXI.Graphics()
     this.margeSplitScreen.beginFill(0xffffff)
-    this.margeSplitScreen.drawRect(0, 0, 6, window.innerHeight)
+    this.margeSplitScreen.drawRect(0, 0, 3, window.innerHeight)
     this.margeSplitScreen.endFill()
     this.margeSplitScreen.visible = false
     this.margeSplitScreen.alpha = 0
@@ -279,7 +293,6 @@ class SceneManager extends Component {
         requestTimeout(() => {
           this.isConclusion = true
         }, 2000)
-
       }
     } else {
       this.splitScreenPercentageBeforeHandle = this.props.store.users.find(user => user.id === "player1").splitScreenPercentage

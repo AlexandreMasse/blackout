@@ -17,6 +17,7 @@ export default class SceneKinematic {
         this.dispatch = dispatch
         this.store = store
         this.needUpdate = true
+        this.needResize = true
         this.canStop = true
 
         this.init()
@@ -88,6 +89,9 @@ export default class SceneKinematic {
        this.pauseVideo()
     }
 
+    resize() {
+        setFullScreen(this.sprite, this.textureVid.width, this.textureVid.height)
+    }
     update() {
         // console.log("scene kinematic update");
     }

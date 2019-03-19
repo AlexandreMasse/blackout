@@ -16,10 +16,11 @@ import stepsMobile from '../../../../../../mobile/components/steps'
 import {map} from '../../../utils'
 
 export default class SceneTest {
-    constructor(status, player, dispatch, bgSound) {
+    constructor(status, player, dispatch, bgSound, moveSplitScreen) {
         this.bgSound = bgSound
         this.status = status
         this.player = player
+        this.moveSplitScreen = moveSplitScreen
         this.dispatch = dispatch
         this.getGltfScene()
         this.set()
@@ -128,6 +129,7 @@ export default class SceneTest {
                 userId: player,
                 isActive: false
             }))
+            this.moveSplitScreen = false
             dispatch(setUserCurrentScene({userId: player, currentScene:scenes.SCENEDOOR.name}))
             dispatch(wsEmitUserCurrentStep({userId: player, currentStep:stepsMobile.FINGERPRINT.name}))
 		})

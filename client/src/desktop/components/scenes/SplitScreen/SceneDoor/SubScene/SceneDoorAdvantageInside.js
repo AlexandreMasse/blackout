@@ -33,7 +33,6 @@ export default class SceneDoorAdvantageInside {
           height: this.insideSprite.height
         }
 
-        this.initAlertOverlay()
         this.initBidulesSpriteSheet()
         this.addToScene()
 
@@ -41,15 +40,6 @@ export default class SceneDoorAdvantageInside {
         this.rt = new PIXI.RenderTexture(this.brt)
         this.spriteInside = new PIXI.Sprite(this.rt) 
         this.spriteInside.alpha = 0
-    }
-
-    initAlertOverlay() {
-        this.alertOverlay = new PIXI.Graphics()
-        this.alertOverlay.beginFill(0xE82E2E)
-        this.alertOverlay.drawRect(0, 0, this.spriteSize.width, this.spriteSize.height)
-        this.alertOverlay.endFill()
-        this.alertOverlay.blendMode = PIXI.BLEND_MODES.MULTIPLY
-        this.alertOverlay.alpha = 0
     }
 
     initBidulesSpriteSheet() {
@@ -97,6 +87,5 @@ export default class SceneDoorAdvantageInside {
         this.container.addChild(this.doorSprite)
         this.container.addChild(this.insideSprite)
         this.container.addChild(this.bidulesAnim)
-        this.container.addChild(this.alertOverlay)
     }
 }

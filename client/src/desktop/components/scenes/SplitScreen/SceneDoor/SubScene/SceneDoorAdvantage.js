@@ -1,7 +1,5 @@
-import {AssetsManager} from "../../../../../../managers";
-import * as PIXI from "pixi.js";
-import {TweenMax} from 'gsap'
-import {map, setFullScreen} from '../../../utils'
+import {AssetsManager} from "../../../../../../managers"
+import * as PIXI from "pixi.js"
 import * as dat from 'dat.gui'
 
 export default class SceneDoorAdvantage {
@@ -26,33 +24,18 @@ export default class SceneDoorAdvantage {
         let textureDoor = new PIXI.Texture(baseTextureDoor)
         this.doorSprite = new PIXI.Sprite(textureDoor)
 
-
-        // let outsideImg = AssetsManager.get('outsideTest')
-        // let baseTexture = new PIXI.BaseTexture(outsideImg)
-        // let texture = new PIXI.Texture(baseTexture)
-        // this.outsideSprite = new PIXI.Sprite(texture)
         this.containerSize = {width:width * this.initialPct, height:height}
         this.spriteSize = {
           width: this.outsideSprite.width,
           height: this.outsideSprite.height
         }
 
-        // this.initAlertOverlay()
         this.initFingerPrintSpriteSheet()
         this.addToScene()
 
         this.brt = new PIXI.BaseRenderTexture(this.spriteSize.width, this.spriteSize.height, PIXI.SCALE_MODES.LINEAR, 1)
         this.rt = new PIXI.RenderTexture(this.brt)
         this.spriteOutside = new PIXI.Sprite(this.rt) 
-    }
-
-    initAlertOverlay() {
-        this.alertOverlay = new PIXI.Graphics()
-        this.alertOverlay.beginFill(0xE82E2E)
-        this.alertOverlay.drawRect(0, 0, this.spriteSize.width, this.spriteSize.height)
-        this.alertOverlay.endFill()
-        this.alertOverlay.blendMode = PIXI.BLEND_MODES.MULTIPLY
-        this.alertOverlay.alpha = 0
     }
 
     initFingerPrintSpriteSheet() {
@@ -94,7 +77,6 @@ export default class SceneDoorAdvantage {
         f1.add(fillBoxPos, 'width', 0, 200, 0.1).onChange(fillBoxChanger)
         f1.add(fillBoxPos, 'height', 0, 2000, 0.1).onChange(fillBoxChanger)
     
-    
         this.gui.close()
       }
 
@@ -103,6 +85,5 @@ export default class SceneDoorAdvantage {
         this.container.addChild(this.outsideSprite)
         this.container.addChild(this.doorSprite)
         this.container.addChild(this.empreinteAnim)
-        // this.container.addChild(this.alertOverlay)
     }
 }

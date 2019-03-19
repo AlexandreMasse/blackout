@@ -24,7 +24,8 @@ export default class SceneFlashlight {
   constructor({dispatch, store}) {
     this.dispatch = dispatch
     this.store = store
-    this.needUpdate = true;
+    this.needUpdate = true
+    this.needResize = true
     this.isSoundStart = true
     this.isOff = true
     this.isOff2 = true
@@ -650,8 +651,10 @@ export default class SceneFlashlight {
     this.container.addChild(this.spriteFlashOff_2)
     this.container.addChild(this.spriteOutline_2)
     this.container.addChild(this.fillbox)
+  }
 
-
+  resize() {
+    setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height)
   }
 
   initGUI() {
