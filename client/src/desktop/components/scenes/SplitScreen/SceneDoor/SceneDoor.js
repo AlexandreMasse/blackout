@@ -29,6 +29,7 @@ export default class SceneDoor {
         this.setSoundDisadvantage()
         this.initSceneDisadvantage()
         this.isUserAdvantage = false
+        this.moveSplitScreen = true
         break;
       case 'superior':
       this.setSceneSoundAdv()
@@ -36,13 +37,13 @@ export default class SceneDoor {
       this.initSceneAdvantage()
       this.initSceneAdvantageInside()
       this.isUserAdvantage = true
+      this.moveSplitScreen = true
         break;
       default:
         console.log('Sorry, we are out of ' + this.status + '.')
     }
     this.initFingerPrintSound()
     this.init()
-
   }
 
   //required
@@ -116,7 +117,7 @@ export default class SceneDoor {
     let width = window.innerWidth
     let height = window.innerHeight
     this.container = new PIXI.Container()
-    this.marge = 1.5
+    this.marge = 3
     this.containerSize = {width: width * this.initialPrct, height:height}
     this.mask = new PIXI.Graphics().beginFill(0x8bc5ff).drawRect(0,0, this.containerSize.width - this.marge, this.containerSize.height).endFill()
     this.addToScene()

@@ -81,7 +81,7 @@ export default class User {
                 console.log(size)
                 if (size > 1) {
                     socket.join(data.roomId)
-                    io.to(roomId).emit('connectToRoom', {
+                    io.to(data.roomId).emit('connectToRoom', {
                         roomId: data.roomId,
                         userId: data.userId
                     })
@@ -101,8 +101,8 @@ export default class User {
             password.activePasswordObj[ code ] = `${socket.room}_${socket.username}`
             password.passwordArr.push(code)
             io.to(socket.room).emit('disconnectToRoom', {
-            roomId: socket.room,
-            userId: socket.username
+                roomId: socket.room,
+                userId: socket.username
             })
             console.log(`user ${socket.username} mobile disconnected`)
         })

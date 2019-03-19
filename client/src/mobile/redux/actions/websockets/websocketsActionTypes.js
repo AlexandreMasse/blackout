@@ -22,4 +22,5 @@ export const websocketsOnActionTypes = {
     WEBSOCKET_ON_PHONE_DATA: "phoneData",
     WEBSOCKET_ON_CURRENT_STEP: "currentStep",
     WEBSOCKET_ON_SHOW_DANGER: "showDanger",
+    WEBSOCKET_ON_ROOM_DISCONNECT: "userDisconnected",
 }

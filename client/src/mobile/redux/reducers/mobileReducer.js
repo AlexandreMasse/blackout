@@ -124,6 +124,14 @@ export default (state = initialState, action) => {
                 showDanger:showDanger
             }
         }
+       
+        case websocketsOnActionTypes.WEBSOCKET_ON_ROOM_DISCONNECT: {
+            return {
+                ...state,
+                roomId:null,
+                isConnected: false
+            }
+        }
 
         default: {
             return state

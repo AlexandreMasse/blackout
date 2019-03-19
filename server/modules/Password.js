@@ -10,15 +10,8 @@ export default class Password {
     static passwordArr = passwordArr
     static activePasswordObj = activePasswordObj
 
-    constructor() {
-    }
-    // static addPassword() {
-    //     passwordArr.pus
-    // }
-
     createPassword() {
         let code = Password.passwordArr.splice(Math.floor(Password.passwordArr.length*Math.random()), 1)
-        // let code = passwordArr.splice(Math.floor(passwordArr.length*Math.random()), 1)
         console.log(code)
         return code.length ? code[0] : null
     }

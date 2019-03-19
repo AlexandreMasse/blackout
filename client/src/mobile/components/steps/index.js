@@ -8,6 +8,14 @@ import {
   onExitTimeout as IntroStepOnExitTimeout
 } from './IntroStep/transition'
 
+import { default as DisconnectStep} from './DisconnectStep/DisconnectStep'
+import {
+  onEnter as DisconnectStepOnEnter,
+  onExit as DisconnectStepOnExit,
+  onEnterTimeout as DisconnectStepOnEnterTimeout,
+  onExitTimeout as DisconnectStepOnExitTimeout
+} from './DisconnectStep/transition'
+
 import {default as LunchStep} from './LunchStep/LunchStep'
 import {
   onEnter as LunchStepOnEnter,
@@ -92,6 +100,14 @@ export default {
     timeout: {enter: IntroStepOnEnterTimeout, exit: IntroStepOnExitTimeout},
     onEnter: IntroStepOnEnter,
     onExit: IntroStepOnExit
+  },
+  DISCONNECT: {
+    name: 'DISCONNECT',
+    component: <DisconnectStep/>,
+    classNames: "",
+    timeout: {enter: DisconnectStepOnEnterTimeout, exit: DisconnectStepOnExitTimeout},
+    onEnter: DisconnectStepOnEnter,
+    onExit: DisconnectStepOnExit
   },
   LUNCH: {
     name: 'LUNCH',

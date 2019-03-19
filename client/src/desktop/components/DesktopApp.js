@@ -82,13 +82,13 @@ class DesktopApp extends Component {
           <Loading/>
         ) : (
           <>
-            {/* {!isPlayer1Connected && currentStep === 'SCENE' &&
+            {!isPlayer1Connected && currentStep === 'SCENE' &&
               <Deconnection player={"player 1"} />
             }
 
             {!isPlayer2Connected && currentStep === 'SCENE' &&
               <Deconnection player={"player 2"} />
-            } */}
+            }
             <p className={"dev-toggle"} onClick={() => {
               this.setState({showDevButton: !this.state.showDevButton})
             }}>TOGGLE DEV</p>

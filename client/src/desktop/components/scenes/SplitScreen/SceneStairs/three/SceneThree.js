@@ -16,11 +16,11 @@ import stepsMobile from '../../../../../../mobile/components/steps'
 import {map} from '../../../utils'
 
 export default class SceneTest {
-    constructor(status, player, dispatch, bgSound, moveSplitScreen) {
+    constructor(status, player, dispatch, bgSound) {
         this.bgSound = bgSound
         this.status = status
         this.player = player
-        this.moveSplitScreen = moveSplitScreen
+        this.moveSplitScreen = true
         this.dispatch = dispatch
         this.getGltfScene()
         this.set()

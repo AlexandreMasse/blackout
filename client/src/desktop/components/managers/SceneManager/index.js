@@ -149,19 +149,13 @@ class SceneManager extends Component {
       this.margeSplitScreen.alpha = 1
       this.firstSplitAppear = false
     } else {
-      // if (scenePlayer1 && scenePlayer1.sceneThree.moveSplitScreen && scenePlayer2.sceneThree.moveSplitScreen) {
-      //   scenePlayer1.splitScreen(pct)
-      // }
-
-      // if (scenePlayer1.sceneThree.moveSplitScreen && scenePlayer2.sceneThree.moveSplitScreen) {
-      //   scenePlayer2.splitScreen(1 - pct)
-      // }
-
+      // if (scenePlayer1.sceneThree.moveSplitScreen || scenePlayer1.moveSplitScreen) {
       if (scenePlayer1) {
         scenePlayer1.splitScreen(pct)
       }
-
+      console.log('scene222', scenePlayer2)
       if (scenePlayer2) {
+      // if (scenePlayer2.sceneThree.moveSplitScreen || scenePlayer2.moveSplitScreen) {
         scenePlayer2.splitScreen(1 - pct)
       }
 
@@ -190,7 +184,7 @@ class SceneManager extends Component {
   setMargeSplitScreen() {
     this.margeSplitScreen = new PIXI.Graphics()
     this.margeSplitScreen.beginFill(0xffffff)
-    this.margeSplitScreen.drawRect(0, 0, 3, window.innerHeight)
+    this.margeSplitScreen.drawRect(0, 0, 6, window.innerHeight)
     this.margeSplitScreen.endFill()
     this.margeSplitScreen.visible = false
     this.margeSplitScreen.alpha = 0

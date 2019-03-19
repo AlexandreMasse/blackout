@@ -14,7 +14,7 @@ import {StepManager} from "./managers";
 //Step
 import steps from './steps'
 //Lib
-import { getCookie, getPhoneData } from '../../utils'
+import { getCookie, getPhoneData, requestTimeout } from '../../utils'
 //Style
 import './MobileApp.scss'
 //Assets loading
@@ -32,7 +32,7 @@ class MobileApp extends Component {
     }
 
     this.props.wsEmitDeviceType('mobile')
-    this.reconnect()
+    // this.reconnect()
 
     getPhoneData().then(data => {
       this.props.setPhoneData(data)
@@ -61,7 +61,6 @@ class MobileApp extends Component {
   }
 
   componentDidMount() {
-    this.disconnected()
     const app = document.querySelector(".mobile-app")
 
     disableBodyScroll(app)
@@ -91,10 +90,11 @@ class MobileApp extends Component {
           '; path=/'
   }
   
-  disconnected = () => {
-    socket.on('userDisconnected', (data) => {
-      console.log(data)
-    })
+  disconnectedToRomm = () => {
+    this.props.setCurrentStep(steps.DISCONNECT.name)        
+    requestTimeout(() => {
+      this.props.setCurrentStep(steps.INTRO.name)
+    }, 7000)
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -102,10 +102,16 @@ class MobileApp extends Component {
     if(nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
       this.setCookie(nextProps.userId, nextProps.roomId)
     }
+
+    if(this.props.roomId !== nextProps.roomId) {
+      if(nextProps.roomId === null) {
+        this.disconnectedToRomm()
+      }
+    }
   }
 
   render() {
-    const {currentStep, isLoaded} = this.props;
+    const {currentStep, isLoaded, roomId} = this.props;
     return (
       <div className="app mobile-app">
         {isLoaded ? (

@@ -18,7 +18,7 @@ class Handle extends Component {
 
     this.isDragging = false
 
-    this.lapsNumber = 8
+    this.lapsNumber = 20
 
     this.state = {
       progression: 0

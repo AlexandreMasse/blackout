@@ -1,0 +1,21 @@
+@import "../../../../stylesheets/global";
+
+.disconnect-step {
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+
+  &__text {
+    text-align: center;
+    width: calc(74vw + 2px);
+    font-size: 2.5rem;
+    line-height: 3.5rem;
+    margin: 0;
+  }
+}
