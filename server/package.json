@@ -8,10 +8,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "babel . --out-dir server --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log  --source-maps inline",
+    "build": "babel . --out-dir build --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log  --source-maps inline",
     "server": "nodemon --exec babel-node server.js",
-    "start": "node server.js",
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
+    "start": "node build/server.js",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
