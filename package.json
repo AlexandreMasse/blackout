@@ -1,7 +1,7 @@
 {
   "name": "root",
   "scripts": {
-    "client": "cd client && npm start-dev",
+    "client": "cd client && npm start",
     "server": "cd server && yarn server",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "dev:server": "cd packages/client && npm build && cd .. && npm start"
