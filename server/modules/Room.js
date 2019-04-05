@@ -15,7 +15,7 @@ export default class Room {
     var randomRoom = Rooms.roomArr[randomIndex];
 
     let roomId = `room-${randomRoom}`;
-    socket.join(randomRoom);
+    socket.join(roomId);
     Rooms.activeRoom.push(randomRoom);
     Rooms.roomArrId.push(socket.id);
     this.users.desktop = socket.id;
