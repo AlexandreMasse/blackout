@@ -16,7 +16,7 @@ export default class Room {
 
     let roomId = `room-${randomRoom}`;
     socket.join(randomRoom);
-    // Rooms.roomArr.push(roomId);
+    Rooms.activeRoom.push(randomRoom);
     Rooms.roomArrId.push(socket.id);
     this.users.desktop = socket.id;
     socket.room = roomId;
@@ -36,6 +36,12 @@ export default class Room {
       let roomId = socket.room;
       var ret = roomId.replace(/room-/g, '');
       Rooms.roomArr.push(ret);
+
+      var index = Rooms.activeRoom.indexOf(ret);
+      if (index > -1) {
+        Rooms.activeRoom.splice(index, 1);
+      }
+
       io.to(roomId).emit('userDisconnected', 'perte de la connection');
       io.of('/')
         .in(roomId)

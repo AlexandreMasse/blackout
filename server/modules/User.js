@@ -6,10 +6,11 @@ export default class User {
     this.phoneDataObject = {};
   }
 
-  getRoomInstance(roomId) {
-    const parts = roomId.split('-', 2);
-    const roomIndex = parseInt(parts[1]);
-    this.roomInstance = Rooms.roomArrInstance[roomIndex - 1];
+  getRoomInstance() {
+    this.roomInstance = Rooms.roomArrInstance[Rooms.roomIndex - 1];
+    // console.log(Rooms.roomIndex)
+    // console.log(Rooms.roomArrInstance[Rooms.roomIndex - 1])
+    // console.log(Rooms.roomArrInstance)
   }
 
   connect = (io, socket) => {
@@ -20,8 +21,9 @@ export default class User {
         const roomNameData = password.activePasswordObj[code];
         const parts = roomNameData.split('_', 2);
         const roomId = parts[0];
+        console.log('ROOM ID:',roomId)
         const userId = parts[1];
-        this.getRoomInstance(roomId);
+        // this.getRoomInstance();
         socket.username = userId;
         socket.room = roomId;
         socket.code = code;
@@ -32,15 +34,15 @@ export default class User {
           password: code
         });
 
-        this.roomInstance.users[userId] = {
-          socketId: socket.id,
-          phoneDataObject: this.phoneDataObject
-        };
+        // this.roomInstance.users[userId] = {
+        //   socketId: socket.id,
+        //   phoneDataObject: this.phoneDataObject
+        // };
 
-        console.log(
-          'Instance de la room après connexion : ',
-          this.roomInstance
-        );
+        // console.log(
+        //   'Instance de la room après connexion : ',
+        //   this.roomInstance
+        // );
         console.log(
           "Nombre d'utilisateur : ",
           Object.keys(this.roomInstance.users).length
