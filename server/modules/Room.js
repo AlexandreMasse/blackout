@@ -21,7 +21,7 @@ export default class Room {
     this.users.desktop = socket.id;
     socket.room = roomId;
     this.password.createUsersPassword(roomId, socket);
-
+ 
     // remove id from avaible room
     if (randomIndex > -1) {
       Rooms.roomArr.splice(randomIndex, 1);

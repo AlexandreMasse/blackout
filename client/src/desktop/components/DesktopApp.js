@@ -59,7 +59,7 @@ class DesktopApp extends Component {
   };
 
   componentWillMount() {
-    this.assetLoaded();
+      this.assetLoaded();
     // Indication.initTimeline()
   }
 
