@@ -1,4 +1,5 @@
-import arrowDonw from './img/arrow-down.png'
+import arrowDonwWhite from './img/arrow-down-white.png'
+import arrowDonwBlack from './img/arrow-down-black.png'
 import map from './img/map.jpg'
 import logotype from './video/logotype.mp4'
 import trame from './img/trame.jpg'
@@ -13,7 +14,8 @@ import sendNotif from './sounds/sendNotif.mp3'
 import codeSound from './sounds/codeSound.mp3'
 
 export const assetsToLoad = {
-    arrowDonw: {url:arrowDonw, name: "arrowDonw", type:"image"},
+    arrowDonwWhite: {url: arrowDonwWhite, name: "arrowDonwWhite", type:"image"},
+    arrowDonwBlack: {url: arrowDonwBlack, name: "arrowDonwBlack", type:"image"},
     map: {url:map, name: "map", type:"image"},
     trame: {url:trame, name: "trame", type:"image"},
     logotype: {url:logotype, name: "logotype", type:"video"},

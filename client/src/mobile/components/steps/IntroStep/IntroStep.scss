@@ -10,18 +10,8 @@
   position: relative;
   z-index: 1;
 
-  // provisoir
-  > button {
-    color: red;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    background-color: #85fff0;
-    display: none;
-  }
-
   &__infos {
+    overflow: hidden;
     position: relative;
     height: 83vh;
     width: 100%;
@@ -30,12 +20,15 @@
     padding-right:13.33%; 
     background: $white;
     text-align-last: left;
-    isolation: isolate;
 
     video {
       margin-bottom: 1.8rem;
       position: relative;
       left: -0.6rem;
+
+      &::-internal-media-controls-overlay-cast-button {
+        display: none;
+      }
     }
 
     &__logo {
@@ -66,19 +59,12 @@
       transform: translateX(-50%);
     }
 
-    &__viewmoreIcon {
+    &__viewmoreArrow {
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%) translateY(60%);
-      width: 12%;
-      mix-blend-mode: difference;
-      background-color: transparent;
-
-      img {
-        width: 100%;
-        background-color: transparent;
-      }
+      width: 11vw;
     }
 
     &__arrow {
@@ -87,11 +73,21 @@
   }
 
   &__form {
+    overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     //margin-top: 24.3vw;
     padding-top: 24.3vw;
+
+    &__viewmoreArrow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-40%);
+      width: 11vw;
+    }
 
     &__numbers {
       display: flex;

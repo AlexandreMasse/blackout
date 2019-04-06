@@ -143,9 +143,6 @@ class IntroStep extends Component {
 
     return (
       <div className="intro-step" ref={(ref) => this.ref = ref}>
-        <button onClick={() => this.props.setCurrentStep(steps.LUNCH.name)}>
-          Step suivant
-        </button>
         <div className='intro-step__infos'>
           <video width="80%" autoPlay playsInline loop muted ref={(ref) => this.video = ref}>
             <source src={logotype} type="video/mp4"/>
@@ -158,11 +155,10 @@ class IntroStep extends Component {
             Pour lancer une partie, rendez-vous sur <span className="bold">blackout.io</span> à partir d’un ordinateur.
           </p>
           <span className="intro-step__infos__viewmore">Entrez le code</span>
-          <div className="intro-step__infos__viewmoreIcon">
-            <img src={AssetsManager.get(assetsToLoad.arrowDonw.name).src} alt=""/>
-          </div>
+          <img className="intro-step__infos__viewmoreArrow" src={AssetsManager.get(assetsToLoad.arrowDonwBlack.name).src} alt=""/>
         </div>
         <div className='intro-step__form'>
+          <img className="intro-step__form__viewmoreArrow" src={AssetsManager.get(assetsToLoad.arrowDonwWhite.name).src} alt=""/>
           <div className="intro-step__form__numbers">
             <p className="intro-step__form__numbers__1">{password.substring(0, 1)}</p>
             <p className="intro-step__form__numbers__2">{password.substring(1, 2)}</p>
