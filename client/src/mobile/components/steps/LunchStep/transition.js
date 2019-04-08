@@ -9,13 +9,19 @@ export const onEnter = (html) => {
 
   const tl = new TimelineMax({delay: onEnterDelay})
 
-  tl.fromTo(html.querySelector(".lunch-step__text"), 1.5, {
+  tl.fromTo(html.querySelector(".lunch-step__substep1__text1"), 1.5, {
     opacity: 0
   }, {
     ease: Power2.easeInOut,
     opacity: 1
   }, "+=0")
-  tl.fromTo(html.querySelector(".lunch-step__box"), 1.5, {
+  tl.fromTo(html.querySelector(".lunch-step__substep1__text2"), 1.5, {
+    opacity: 0
+  }, {
+    ease: Power2.easeInOut,
+    opacity: 1
+  }, "-=1.25")
+  tl.fromTo(html.querySelector(".lunch-step__substep1__button"), 1.5, {
     opacity: 0
   }, {
     ease: Power2.easeInOut,

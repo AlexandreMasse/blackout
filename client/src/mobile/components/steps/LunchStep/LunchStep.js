@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 //redux
 import {connect} from 'react-redux';
 import {wsEmitIntroProgression} from "../../../redux/actions/websockets/websocketsAction";
 import {setCurrentStep} from "../../../redux/actions/mobileAction";
-//components
-//step
 //lib
 import GyroNorm from  'gyronorm';
 import {TweenMax} from 'gsap'
 import {Howl} from 'howler'
 import {AssetsManager} from "./../../../../managers"
+import {Transition} from "react-transition-group"
 //css
 import './LunchStep.scss'
+import {assetsToLoad} from "../../../assets/asset-list";
 
 class LunchStep extends Component {
 
@@ -19,16 +19,18 @@ class LunchStep extends Component {
     super(props)
 
     this.state = {
-      finish: false
+      finish: false,
+      substep: 1,
     }
 
     this.lastBeta = null
     this.currentDirection = null
 
-    this.listenDeviceOrientation()
-
     this.initSound()
 
+    this.substep1ExitDuration = 1
+    this.substep2EnterDuration = 1.5
+    this.substep2EnterDelay = 0.3
   }
 
 
@@ -48,7 +50,7 @@ class LunchStep extends Component {
     this.gn.init(args).then(() => {
       this.gn.start((data) => {
         const minBeta = 0
-        const maxBeta = 90
+        const maxBeta = 85
         const progression = (data.do.beta - minBeta) / (maxBeta - minBeta)
         const progressionClamped = Math.min(Math.max(progression, 0), 1);
         const progressionRounded = Number(progressionClamped.toPrecision(4))
@@ -78,14 +80,17 @@ class LunchStep extends Component {
         // }
         // this.lastBeta = data.do.beta
 
-        if(!this.state.finish) {
-          this.updateProgression(progressionRounded)
-          this.props.wsEmitIntroProgression(progressionRounded)
-        } else {
-          this.updateProgression(1)
-          this.props.wsEmitIntroProgression(1)
-          this.gn.stop()
+        if(this.state.substep === 2) {
+          if (!this.state.finish) {
+            this.updateProgression(progressionRounded)
+            this.props.wsEmitIntroProgression(progressionRounded)
+          } else {
+            this.updateProgression(1)
+            this.props.wsEmitIntroProgression(1)
+            this.gn.stop()
+          }
         }
+
       });
     }).catch((e) => {
       console.error(e);
@@ -93,8 +98,9 @@ class LunchStep extends Component {
   }
 
   updateProgression = (progression) => {
-    if(this.progression){
+    if(this.progression && this.arrow){
       TweenMax.to(this.progression, 0.1, {scaleY: progression})
+      TweenMax.to(this.arrow, 0.1, {transform: `rotate(180deg) translateY(${progression * 14}rem)` })
       if(progression >= 1 && !this.state.finish) {
         this.setState({finish: true})
       }
@@ -135,23 +141,79 @@ class LunchStep extends Component {
   }
 
   componentDidMount() {
-    this.progression = this.ref.querySelector(".lunch-step__box__progression")
   }
 
+  substep2OnEnter = (el) => {
 
+    this.arrow = el.querySelector(".lunch-step__substep2__arrow")
+    this.progression = el.querySelector(".lunch-step__substep2__box__progression")
+    this.listenDeviceOrientation()
+
+    TweenMax.set(el, {
+      opacity: 0
+    })
+    TweenMax.to(el, this.substep2EnterDuration,{
+      opacity: 1,
+      delay: 0.3
+    })
+  }
+
+  substep1OnExit = (el) => {
+    TweenMax.to(el, this.substep1ExitDuration,{
+      opacity: 0,
+    })
+  }
+
+  onButtonClick = () => {
+    this.setState({
+      substep: 0
+    })
+  }
 
 
   render() {
     const {isConnected} = this.props
-    const {password} = this.state
+    const {substep} = this.state
 
     return (
       <div className="lunch-step" ref={(ref) => {this.ref = ref}}>
-        <p className={"lunch-step__text"}>Ce smartphone sera votre manette lors de l’expérience.<br/>Ne le verrouillez pas et ne quittez pas la page.</p>
-        <div className={"lunch-step__box"}>
-          <div className="lunch-step__box__progression"/>
-          <p>Pour commencer, maintenez-le à la verticale.</p>
-        </div>
+
+        <Transition
+          in={substep === 1}
+          timeout={this.substep1ExitDuration * 1000}
+          appear={true}
+          mountOnEnter={true}
+          unmountOnExit={true}
+          onExit={this.substep1OnExit}
+          onExited={() => this.setState({substep: 2})}
+        >
+          <div className="lunch-step__substep1">
+            <p className={"lunch-step__substep1__text1"}>Ce smartphone sera votre manette lors de l’expérience.</p>
+            <p className={"lunch-step__substep1__text2"}>Montez le son et ne verrouillez pas votre téléphone.</p>
+            <button className="lunch-step__substep1__button" onClick={this.onButtonClick}>
+              <span>{"> OK <"}</span>
+            </button>
+          </div>
+        </Transition>
+
+        <Transition
+          in={substep === 2}
+          timeout={(this.substep1ExitDuration + this.substep2EnterDuration + this.substep2EnterDelay ) * 1000}
+          appear={true}
+          mountOnEnter={true}
+          unmountOnExit={true}
+          onEnter={this.substep2OnEnter}
+        >
+          <div className="lunch-step__substep2">
+            <img className="lunch-step__substep2__arrow"
+                 src={AssetsManager.get(assetsToLoad.arrowDonwWhite.name).src} alt=""/>
+            <div className={"lunch-step__substep2__box"}>
+              <div className="lunch-step__substep2__box__progression"/>
+              <p>Pour commencer, maintenez-le à la verticale.</p>
+            </div>
+          </div>
+        </Transition>
+
       </div>
     )
   }

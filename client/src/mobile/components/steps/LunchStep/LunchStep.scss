@@ -10,37 +10,91 @@
   z-index: 1;
   height: 100vh;
 
-  &__text {
-    text-align: center;
-    width: calc(74vw + 2px);
-    font-size: 2.5rem;
-    line-height: 3.5rem;
-    margin: 0;
+  &__substep1 {
+    &__text1 {
+      text-align: center;
+      width: 74vw;
+      font-size:3rem;
+      line-height: 3.5rem;
+      margin: 0;
+      font-variation-settings: $medium;
+    }
+
+    &__text2 {
+      text-align: center;
+      width: 74vw;
+      font-size: 2.4rem;
+      line-height: 3.5rem;
+      font-variation-settings: $light;
+      margin: 4rem 0 6rem 0;
+    }
+
+    &__button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      width: 100%;
+      height: 18.5vw;
+      border: 0;
+      background: $red;
+      font-size: 2.5rem;
+      font-family: $font-scopevariable;
+      font-variation-settings: $medium;
+      outline: none;
+
+      &:active {
+        background: $white;
+        color: $red;
+      }
+    }
   }
 
-  &__box {
-    position: relative;
-    width: calc(74vw + 2px);
-    font-size: 2.4rem;
-    border: solid 1px white;
-    &__progression {
-      position: absolute;
-      background-color: white;
-      width: 100%;
-      height: 100%;
-      transform: scaleY(0);
-      transform-origin: bottom;
-      left: 0;
-      bottom: 0;
-    }
-    p {
+
+
+  &__substep2 {
+
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &__arrow {
       position: relative;
-      text-align: center;
-      width: 100%;
-      margin: 0;
-      padding: 5rem 2.5rem;
-      mix-blend-mode: difference;
+      transform: rotate(180deg);
+      width: 12vw;
+    }
+    &__box {
+      margin-top: 5rem;
+      position: relative;
+      width: calc(74vw + 2px);
+      font-size: 2.4rem;
+      border: solid 1px white;
+      background-color: black;
+
+      &__progression {
+        position: absolute;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        transform: scaleY(0);
+        transform-origin: bottom;
+        left: 0;
+        bottom: 0;
+      }
+
+      p {
+        position: relative;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+        padding: 5rem 2.5rem;
+        mix-blend-mode: difference;
+      }
     }
   }
+
 
 }
