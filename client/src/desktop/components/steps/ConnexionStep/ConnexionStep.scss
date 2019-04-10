@@ -69,7 +69,6 @@
       font-variation-settings: $light;
 
       &__1, &__2{
-        opacity: 0;
         height: 1.4em;
       }
     }
@@ -172,7 +171,6 @@
 
 
         &__1, &__2 {
-          opacity: 0;
           height: 1.4em;
         }
       }
@@ -181,7 +179,6 @@
         margin: 0;
         text-align: center;
         width: 25rem;
-      // opacity: 0;
         
 
         &.connected &__password {
@@ -196,7 +193,6 @@
         }
 
         &__password {
-          opacity: 0;
           transition: text-shadow 1s ease;
           text-shadow: none;
           font-size: 7rem;

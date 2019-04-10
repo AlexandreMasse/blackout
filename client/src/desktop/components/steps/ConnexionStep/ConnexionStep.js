@@ -78,7 +78,7 @@ class ConnexionStep extends Component {
   componentDidMount() {
     this.setSound()
     this.setStartTimeline()
-    this.fullscreen = document.querySelector('.connexion-step__intro__fullscreen')
+    this.fullscreen = this.ref.querySelector('.connexion-step__intro__fullscreen')
     this.tl = new TimelineMax({
       delay: onEnterDelay
     })
@@ -86,7 +86,7 @@ class ConnexionStep extends Component {
     this.tl.delay(0.5)
     //video
     this.tl.addLabel("video")
-    this.tl.to(this.ref.querySelector("video"), 1.5, {
+    this.tl.to(this.video, 1.5, {
       opacity: 1,
     }, "video")
     this.tl.add(() => {this.video.play()}, "video+=0.5")
@@ -94,13 +94,8 @@ class ConnexionStep extends Component {
     //baseline
     this.tl.addLabel("baseline", "-=1.3")
     this.tl.add(() => {this.wordBaseline1.start()}, "baseline")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__1"), 0, {
-      opacity: 1
-    }, "baseline")
     this.tl.add(() => {this.wordBaseline2.start()}, "baseline+=0.3")
-    this.tl.to(this.ref.querySelector(".connexion-step__intro__baseline__2"), 0, {
-      opacity: 1
-    }, "baseline+=0.3")
+
     // button
     this.tl.addLabel("button", "baseline+=.8")
     this.tl.to(this.button,.8, {opacity:1}, "button")
@@ -131,24 +126,12 @@ class ConnexionStep extends Component {
     //instructions
     this.startTl.addLabel("instructions", "button+=0.7")
     this.startTl.add(() => {this.wordInstructions1.start()}, "instructions")
-    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__1"), 0, {
-      opacity: 1
-    }, "instructions")
     this.startTl.add(() => {this.wordInstructions2.start()}, "instructions+=0.3")
-    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__instructions__2"), 0, {
-      opacity: 1
-    }, "instructions+=0.3")
 
     //Player1
     this.startTl.addLabel("player1", "instructions+=0.7")
     this.startTl.add(() => {this.wordPlayer1Password.start()}, "player1")
-    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__password"), 0, {
-      opacity: 1
-    }, "player1")
     this.startTl.add(() => {this.wordPlayer1Name.start()}, "player1+=0.3")
-    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player1__name"), 0, {
-      opacity: 1
-    }, "player1+=0.3")
     this.startTl.add(() => {
       this.wordPlayer1Status.start()
       this.wordPlayer1Status.parent.parentNode.style.opacity = 1
@@ -156,15 +139,8 @@ class ConnexionStep extends Component {
 
     //Player2
     this.startTl.addLabel("player2", "instructions+=0.7")
-    this.startTl.add(() => {
-      this.wordPlayer2Password.start()}, "player2")
-    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__password"), 0, {
-      opacity: 1
-    }, "player2")
+    this.startTl.add(() => {this.wordPlayer2Password.start()}, "player2")
     this.startTl.add(() => {this.wordPlayer2Name.start()}, "player2+=0.3")
-    this.startTl.to(this.ref.querySelector(".connexion-step__intro__codes__player2__name"), 0, {
-      opacity: 1
-    }, "player2+=0.3")
     this.startTl.add(() => {
       this.wordPlayer2Status.start()
       this.wordPlayer2Status.parent.parentNode.style.opacity = 1
