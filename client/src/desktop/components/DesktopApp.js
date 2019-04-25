@@ -22,13 +22,12 @@ import { Loading, Indication, Deconnection } from './components';
 import { StepManager } from './managers';
 import steps from './steps';
 //utils
-import { requestTimeout, toggleFullscreen } from '../../utils';
+import { toggleFullscreen } from '../../utils';
 import classNames from 'classnames';
 // style
 import './DesktopApp.scss';
 //scenes
 import scenes from './scenes';
-import { TimelineMax } from 'gsap';
 
 class DesktopApp extends Component {
   constructor(props) {
@@ -43,7 +42,9 @@ class DesktopApp extends Component {
 
     this.state = {
       showDevButton: true,
-      splitScreenPercentage: 50
+      splitScreenPercentage: 50,
+      isAssetsLoaded: false,
+      isServerReady: false
     };
   }
 
@@ -58,20 +59,35 @@ class DesktopApp extends Component {
     document.querySelector('html').style.fontSize = 10 * ratio + 'px';
   };
 
-  componentWillMount() {
-      this.assetLoaded();
-    // Indication.initTimeline()
-  }
-
   assetLoaded = () => {
     load
       .any(assetsToLoad, ev => {})
       .then(assets => {
         window.assets = assets;
-        console.log(assets);
-        this.props.setAppLoaded();
+        this.setState({
+          isAssetsLoaded: true
+        })
       });
   };
+
+  componentWillMount() {
+    this.assetLoaded();
+    // Indication.initTimeline()
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // assets loaded + server ready = app loaded
+    if((!prevState.isAssetsLoaded || !prevState.isServerReady) && (this.state.isAssetsLoaded && this.state.isServerReady)) {
+      this.props.setAppLoaded();
+    }
+
+    // receive roomId = server ready
+    if(this.props.roomId !== null && prevProps.roomId !== this.props.roomId) {
+      this.setState({
+        isServerReady: true
+      })
+    }
+  }
 
   render() {
     const {
@@ -250,6 +266,7 @@ class DesktopApp extends Component {
 const mapStateToProps = state => {
   return {
     isLoaded: state.desktop.app.isLoaded,
+    roomId: state.desktop.roomId,
     currentStep: state.desktop.currentStep,
     isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1')
       .isConnected,
