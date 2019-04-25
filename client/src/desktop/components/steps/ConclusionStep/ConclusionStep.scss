@@ -212,6 +212,14 @@
                 .conclusion-step__substep__text {
                     margin: 0;
 
+                    &.operator {
+                        display: flex;
+                        overflow: auto;
+                        max-width: 6.7vw;
+                        margin-right: 5px;
+                        margin-left: 5px;
+                    }
+
                     &.textAnimation {
                         opacity: 1;
                     }

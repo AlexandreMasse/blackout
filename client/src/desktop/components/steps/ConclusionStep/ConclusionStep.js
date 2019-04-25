@@ -1,23 +1,21 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {AssetsManager} from "../../../../managers"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { AssetsManager } from '../../../../managers'
 import steps from '..'
 import stepsMobile from '../../../../mobile/components/steps'
-import {wsEmitCurrentStep} from '../../../redux/actions/websockets/websocketsAction'
-import {SentenceAppear} from './components'
-import {TimelineMax, TweenMax} from 'gsap'
-import {TextAnimation} from '../../components'
+import { wsEmitCurrentStep } from '../../../redux/actions/websockets/websocketsAction'
+import { SentenceAppear } from './components'
+import { TimelineMax, TweenMax } from 'gsap'
+import { TextAnimation } from '../../components'
 import { Howl } from 'howler'
 
-import {requestTimeout} from '../../../../utils'
+import { requestTimeout } from '../../../../utils'
 //transition
-import {onEnterDelay} from './transition'
+import { onEnterDelay } from './transition'
 // style
 import './ConclusionStep.scss'
 
-
-class ConclusionStep extends Component {  
-  
+class ConclusionStep extends Component {
   componentDidMount() {
     this.initBackgroundSound()
     this.setTimeLineConclusion()
@@ -25,10 +23,8 @@ class ConclusionStep extends Component {
     this.substeps = document.querySelectorAll('.conclusion-step__substep')
   }
 
-  wordSplit = () => {
-    
-  }
-  
+  wordSplit = () => {}
+
   setTimeLineConclusion = () => {
     this.timeLineStep6()
     this.timeLineStep5()
@@ -42,7 +38,7 @@ class ConclusionStep extends Component {
     const conclusionSoundAsset = AssetsManager.get('conclusion')
     this.conclusionSound = new Howl({
       src: conclusionSoundAsset.src,
-      volume: .5,
+      volume: 0.5,
       html5: true,
       preload: true,
       autoplay: false,
@@ -50,8 +46,8 @@ class ConclusionStep extends Component {
       format: ['mp3']
     })
     this.conclusionSound.play()
-    this.conclusionSound.fade(0, .5, 500)
-  } 
+    this.conclusionSound.fade(0, 0.5, 500)
+  }
 
   timeLineStep1 = () => {
     const parent = document.querySelector('.conclusion-step__substep--1')
@@ -61,35 +57,48 @@ class ConclusionStep extends Component {
       // delay: onEnterDelay
       delay: 2
     })
-    this.tl.add(() => {this.sentenceAppear.start($wordSplit[0])}, 0)
-    this.tl.add(() => {this.sentenceAppear.start($wordSplit[1])}, 0)
-    this.tl.add(() => {this.textAnim(parent, $textOver)}, 0)
+    this.tl.add(() => {
+      this.sentenceAppear.start($wordSplit[0])
+    }, 0)
+    this.tl.add(() => {
+      this.sentenceAppear.start($wordSplit[1])
+    }, 0)
+    this.tl.add(() => {
+      this.textAnim(parent, $textOver)
+    }, 0)
   }
   textAnim = (parent, textOver) => {
-    const Timeline = new TimelineMax({repeat: 35, onComplete: () => {
-      parent.classList.remove('is-active')
-      this.substeps[1].classList.add('is-active')
-      this.tlStep2.play()
-      console.log("complete")
-      }})
-    Timeline
-      .addCallback(() => {
-        textOver.classList.add("hide")
-      },`+=${0.055}`)
-      .addCallback(() => {
-        textOver.classList.remove("hide")
-      }, `+=${0.055}`)
+    const Timeline = new TimelineMax({
+      repeat: 35,
+      onComplete: () => {
+        parent.classList.remove('is-active')
+        this.substeps[1].classList.add('is-active')
+        this.tlStep2.play()
+        console.log('complete')
+      }
+    })
+    Timeline.addCallback(() => {
+      textOver.classList.add('hide')
+    }, `+=${0.055}`).addCallback(() => {
+      textOver.classList.remove('hide')
+    }, `+=${0.055}`)
   }
 
   timeLineStep2 = () => {
     const parent = document.querySelector('.conclusion-step__substep--2')
     const $wordSplit = parent.querySelectorAll('.wordSplit')
     this.tlStep2 = new TimelineMax({
-      paused:true,
+      paused: true
     })
-    this.tlStep2.add(() => {this.sentenceAppear.start($wordSplit[0])}, 0)
-    this.tlStep2.add(() => {this.playerAnimation.start()}, .5)
-    this.tlStep2.add(() => {this.sentenceAppear.start($wordSplit[1], 80)}, 1)
+    this.tlStep2.add(() => {
+      this.sentenceAppear.start($wordSplit[0])
+    }, 0)
+    this.tlStep2.add(() => {
+      this.playerAnimation.start()
+    }, 0.5)
+    this.tlStep2.add(() => {
+      this.sentenceAppear.start($wordSplit[1], 80)
+    }, 1)
     this.tlStep2.add(() => {
       parent.classList.remove('is-active')
       this.substeps[2].classList.add('is-active')
@@ -97,22 +106,27 @@ class ConclusionStep extends Component {
     }, 3)
   }
 
-
   timeLineStep3 = () => {
     const parent = document.querySelector('.conclusion-step__substep--3')
     const $wordSplit = parent.querySelectorAll('.wordSplit')
     const $largeWord = parent.querySelector('.largeWord')
     this.tlStep3 = new TimelineMax({
-      delay:.4,
-      paused:true,
+      delay: 0.4,
+      paused: true
     })
-   this.tlStep3.add(() => {this.sentenceAppear.start($wordSplit[0], 130)}, 0)
-   this.tlStep3.add(() => {$largeWord.classList.add('show')}, .8)
-   this.tlStep3.add(() => {this.sentenceAppear.start($wordSplit[1], 130)}, 1)
-   this.tlStep3.add(() => {
-    parent.classList.remove('is-active')
-    this.substeps[3].classList.add('is-active')
-    this.tlStep4.play()
+    this.tlStep3.add(() => {
+      this.sentenceAppear.start($wordSplit[0], 130)
+    }, 0)
+    this.tlStep3.add(() => {
+      $largeWord.classList.add('show')
+    }, 0.8)
+    this.tlStep3.add(() => {
+      this.sentenceAppear.start($wordSplit[1], 130)
+    }, 1)
+    this.tlStep3.add(() => {
+      parent.classList.remove('is-active')
+      this.substeps[3].classList.add('is-active')
+      this.tlStep4.play()
     }, 3)
   }
 
@@ -121,19 +135,27 @@ class ConclusionStep extends Component {
     const $wordSplit = parent.querySelectorAll('.wordSplit')
     const $largeWord = parent.querySelector('.largeWord')
     this.tlStep4 = new TimelineMax({
-      delay:.4,
-      paused:true,
+      delay: 0.4,
+      paused: true
     })
 
-    this.tlStep4.add(() => {this.sentenceAppear.start($wordSplit[0], 180)}, 0)
-    this.tlStep4.add(() => {this.sentenceAppear.start($wordSplit[1], 180)}, 1.2)
-    this.tlStep4.add(() => {this.sentenceAppear.start($wordSplit[2], 180)}, 2.8)
-    this.tlStep4.add(() => {$largeWord.classList.add('show')}, 5)
+    this.tlStep4.add(() => {
+      this.sentenceAppear.start($wordSplit[0], 180)
+    }, 0)
+    this.tlStep4.add(() => {
+      this.sentenceAppear.start($wordSplit[1], 180)
+    }, 1.2)
+    this.tlStep4.add(() => {
+      this.sentenceAppear.start($wordSplit[2], 180)
+    }, 2.8)
+    this.tlStep4.add(() => {
+      $largeWord.classList.add('show')
+    }, 5)
 
     this.tlStep4.add(() => {
-    parent.classList.remove('is-active')
-    this.substeps[4].classList.add('is-active')
-    this.tlStep5.play()
+      parent.classList.remove('is-active')
+      this.substeps[4].classList.add('is-active')
+      this.tlStep5.play()
     }, 9.3)
   }
 
@@ -149,54 +171,107 @@ class ConclusionStep extends Component {
     const $largeWordR = blockRight.querySelectorAll('.largeWord')
     const $scoreBlockR = blockRight.querySelector('.conclusion-step__substep__score')
 
-
     this.tlStep5 = new TimelineMax({
-      delay:.5,
-      paused:true,
+      delay: 0.5,
+      paused: true
     })
-    
-    this.tlStep5.add(() => {$largeWord[0].classList.add('show')}, 0)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplit[0], 200)}, .6)
-    this.tlStep5.add(() => {this.osAnimation.start()}, .8)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplit[1], 200)}, 1)
-
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplit[2], 200)}, 1.2)
-    this.tlStep5.add(() => {this.resAnimation.start()}, 1.4)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplit[3], 200)}, 1.6)
-
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplit[4], 200)}, 1.8)
-    this.tlStep5.add(() => {this.operatorAnimation.start()}, 2)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplit[5], 200)}, 2.2)
-    
-    this.tlStep5.add(() => {$largeWord[1].classList.add('show')}, 2.4)
-    this.tlStep5.add(() => {$scoreBlock.classList.add('show')}, 2.6)
-    this.tlStep5.add(() => {this.scoreAnimation.start()}, 3)
-
-
-    // Right
-    this.tlStep5.add(() => {$largeWordR[0].classList.add('show')}, 0)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplitR[0], 120)}, .6)
-    this.tlStep5.add(() => {this.osAnimation2.start()}, .8)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplitR[1], 120)}, 1)
-
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplitR[2], 120)}, 1.2)
-    this.tlStep5.add(() => {this.resAnimation2.start()}, 1.4)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplitR[3], 120)}, 1.6)
-
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplitR[4], 120)}, 1.8)
-    this.tlStep5.add(() => {this.operatorAnimation2.start()}, 2)
-    this.tlStep5.add(() => {this.sentenceAppear.start($wordSplitR[5], 120)}, 2.2)
-    
-    this.tlStep5.add(() => {$largeWordR[1].classList.add('show')}, 2.4)
-    this.tlStep5.add(() => {$scoreBlockR.classList.add('show')}, 2.6)
-    this.tlStep5.add(() => {this.scoreAnimation2.start()}, 3)
 
     this.tlStep5.add(() => {
-    this.substeps[5].classList.add('is-active')
-    TweenMax.to(parent, .5, {opacity:0, onComplete:() => {
-      parent.classList.remove('is-active')
-      this.tlStep6.play()
-    }})
+      $largeWord[0].classList.add('show')
+    }, 0)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplit[0], 200)
+    }, 0.6)
+    this.tlStep5.add(() => {
+      this.osAnimation.start()
+    }, 0.8)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplit[1], 200)
+    }, 1)
+
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplit[2], 200)
+    }, 1.2)
+    this.tlStep5.add(() => {
+      this.resAnimation.start()
+    }, 1.4)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplit[3], 200)
+    }, 1.6)
+
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplit[4], 200)
+    }, 1.8)
+    this.tlStep5.add(() => {
+      this.operatorAnimation.start()
+    }, 2)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplit[5], 200)
+    }, 2.2)
+
+    this.tlStep5.add(() => {
+      $largeWord[1].classList.add('show')
+    }, 2.4)
+    this.tlStep5.add(() => {
+      $scoreBlock.classList.add('show')
+    }, 2.6)
+    this.tlStep5.add(() => {
+      this.scoreAnimation.start()
+    }, 3)
+
+    // Right
+    this.tlStep5.add(() => {
+      $largeWordR[0].classList.add('show')
+    }, 0)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplitR[0], 120)
+    }, 0.6)
+    this.tlStep5.add(() => {
+      this.osAnimation2.start()
+    }, 0.8)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplitR[1], 120)
+    }, 1)
+
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplitR[2], 120)
+    }, 1.2)
+    this.tlStep5.add(() => {
+      this.resAnimation2.start()
+    }, 1.4)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplitR[3], 120)
+    }, 1.6)
+
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplitR[4], 120)
+    }, 1.8)
+    this.tlStep5.add(() => {
+      this.operatorAnimation2.start()
+    }, 2)
+    this.tlStep5.add(() => {
+      this.sentenceAppear.start($wordSplitR[5], 120)
+    }, 2.2)
+
+    this.tlStep5.add(() => {
+      $largeWordR[1].classList.add('show')
+    }, 2.4)
+    this.tlStep5.add(() => {
+      $scoreBlockR.classList.add('show')
+    }, 2.6)
+    this.tlStep5.add(() => {
+      this.scoreAnimation2.start()
+    }, 3)
+
+    this.tlStep5.add(() => {
+      this.substeps[5].classList.add('is-active')
+      TweenMax.to(parent, 0.5, {
+        opacity: 0,
+        onComplete: () => {
+          parent.classList.remove('is-active')
+          this.tlStep6.play()
+        }
+      })
     }, 8.5)
   }
 
@@ -205,19 +280,28 @@ class ConclusionStep extends Component {
     const texts = parent.querySelectorAll('.conclusion-step__substep__text')
     const icon = parent.querySelector('.conclusion-step__substep__icon')
     this.tlStep6 = new TimelineMax({
-      paused:true,
+      paused: true
     })
-    
-    this.tlStep6.add(() => {texts[0].classList.add('show')}, 0)
-    this.tlStep6.add(() => {texts[1].classList.add('show')}, 3)
-    this.tlStep6.add(() => {texts[2].classList.add('show')}, 6)
-    this.tlStep6.add(() => {icon.classList.add('show')}, 8)
-    this.tlStep6.add(() => {this.props.wsEmitCurrentStep(stepsMobile.CONCLUSION.name)}, 8)
+
+    this.tlStep6.add(() => {
+      texts[0].classList.add('show')
+    }, 0)
+    this.tlStep6.add(() => {
+      texts[1].classList.add('show')
+    }, 3)
+    this.tlStep6.add(() => {
+      texts[2].classList.add('show')
+    }, 6)
+    this.tlStep6.add(() => {
+      icon.classList.add('show')
+    }, 8)
+    this.tlStep6.add(() => {
+      this.props.wsEmitCurrentStep(stepsMobile.CONCLUSION.name)
+    }, 8)
   }
 
-
   render() {
-    const {player1PhoneData, player2PhoneData, player1Status} = this.props
+    const { player1PhoneData, player2PhoneData, player1Status } = this.props
     console.log(player1PhoneData)
     const osUser1 = `${player1PhoneData.os} ${player1PhoneData.osVersionNumber}`
     const osUser2 = `${player2PhoneData.os} ${player2PhoneData.osVersionNumber}`
@@ -230,19 +314,30 @@ class ConclusionStep extends Component {
     return (
       <div className="conclusion-step step">
         <div className="conclusion-step__substep conclusion-step__substep--1 is-active">
-            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white wordSplit">Vous avez échoué.</p>
-            <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white text-over wordSplit">Vous avez échoué.</p>
+          <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white wordSplit">
+            Vous avez échoué.
+          </p>
+          <p className="conclusion-step__substep__text conclusion-step__substep__text--title conclusion-step__substep__text--white text-over wordSplit">
+            Vous avez échoué.
+          </p>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--2">
           <div className="conclusion-step__substep__wrapper">
             <p className="conclusion-step__substep__text wordSplit">Seul</p>
-            <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={300} letterMinSpeed={10} letterMaxSpeed={60} text={player1Status === 'superior' ? 'JOUEUR-1' : 'JOUEUR-2'} handleWord={word => this.playerAnimation = word}/>
+            <TextAnimation
+              className="conclusion-step__substep__text conclusion-step__substep__text--white"
+              letterDuration={300}
+              letterMinSpeed={10}
+              letterMaxSpeed={60}
+              text={player1Status === 'superior' ? 'JOUEUR-1' : 'JOUEUR-2'}
+              handleWord={word => (this.playerAnimation = word)}
+            />
             <p className="conclusion-step__substep__text wordSplit">a pu se mettre à l’abri.</p>
           </div>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--3">
-        <div className="conclusion-step__substep__wrapper">
-        <p className="conclusion-step__substep__text wordSplit">Votre destin était</p>
+          <div className="conclusion-step__substep__wrapper">
+            <p className="conclusion-step__substep__text wordSplit">Votre destin était</p>
             <p className="conclusion-step__substep__text largeWord">
               <span>p</span>
               <span>o</span>
@@ -254,13 +349,15 @@ class ConclusionStep extends Component {
               <span>t</span>
             </p>
             <p className="conclusion-step__substep__text wordSplit">entre vos mains.</p>
-        </div>
+          </div>
         </div>
         <div className="conclusion-step__substep conclusion-step__substep--4">
           <div className="conclusion-step__substep__wrapper">
-          <p className="conclusion-step__substep__text wordSplit">Dans <span className="bold">Black|out,</span> le modèle de votre</p>
+            <p className="conclusion-step__substep__text wordSplit">
+              Dans <span className="bold">Black|out,</span> le modèle de votre
+            </p>
             <p className="conclusion-step__substep__text wordSplit">smartphone vous attribue un rôle et</p>
-            <p className="conclusion-step__substep__text wordSplit">définit dès le départ vos chances  de</p>
+            <p className="conclusion-step__substep__text wordSplit">définit dès le départ vos chances de</p>
             <p className="conclusion-step__substep__text largeWord">
               <span>s</span>
               <span>u</span>
@@ -287,19 +384,40 @@ class ConclusionStep extends Component {
             <div className="conclusion-step__substep__description">
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--1">
                 <p className="conclusion-step__substep__text wordSplit first">Votre smartphone</p>
-                <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={400} letterMinSpeed={10} letterMaxSpeed={40} text={osUser1} handleWord={word => this.osAnimation = word}/>
+                <TextAnimation
+                  className="conclusion-step__substep__text conclusion-step__substep__text--white"
+                  letterDuration={400}
+                  letterMinSpeed={10}
+                  letterMaxSpeed={40}
+                  text={osUser1}
+                  handleWord={word => (this.osAnimation = word)}
+                />
                 <p className="conclusion-step__substep__text wordSplit">de</p>
               </div>
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--2">
                 <p className="conclusion-step__substep__text wordSplit first">résolution</p>
-                <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={360} letterMinSpeed={10} letterMaxSpeed={40} text={resolutionUSer1} handleWord={word => this.resAnimation = word}/>
+                <TextAnimation
+                  className="conclusion-step__substep__text conclusion-step__substep__text--white"
+                  letterDuration={360}
+                  letterMinSpeed={10}
+                  letterMaxSpeed={40}
+                  text={resolutionUSer1}
+                  handleWord={word => (this.resAnimation = word)}
+                />
                 <p className="conclusion-step__substep__text wordSplit last"> connecté au</p>
               </div>
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--3">
                 <p className="conclusion-step__substep__text first wordSplit">réseau</p>
-                <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={340} letterMinSpeed={10} letterMaxSpeed={40} text={'SFR'} handleWord={word => this.operatorAnimation = word}/>
+                <TextAnimation
+                  className="conclusion-step__substep__text conclusion-step__substep__text--white operator"
+                  letterDuration={340}
+                  letterMinSpeed={10}
+                  letterMaxSpeed={40}
+                  text={operator1}
+                  handleWord={word => (this.operatorAnimation = word)}
+                />
                 <p className="conclusion-step__substep__text last wordSplit">vous a attribué le</p>
-              </div>            
+              </div>
               <p className="conclusion-step__substep__text largeWord">
                 <span>s</span>
                 <span>c</span>
@@ -309,10 +427,17 @@ class ConclusionStep extends Component {
               </p>
             </div>
             <div className="conclusion-step__substep__score">
-              <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={240} letterMinSpeed={10} letterMaxSpeed={40} text={score1.toFixed(1)} handleWord={word => this.scoreAnimation = word}/>
+              <TextAnimation
+                className="conclusion-step__substep__text conclusion-step__substep__text--white"
+                letterDuration={240}
+                letterMinSpeed={10}
+                letterMaxSpeed={40}
+                text={score1.toFixed(1)}
+                handleWord={word => (this.scoreAnimation = word)}
+              />
             </div>
           </div>
-          
+
           <div className="conclusion-step__substep__wrapper conclusion-step__substep__wrapper--right">
             <p className="conclusion-step__substep__text title largeWord">
               <span>J</span>
@@ -327,19 +452,40 @@ class ConclusionStep extends Component {
             <div className="conclusion-step__substep__description">
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--1">
                 <p className="conclusion-step__substep__text wordSplit first">Votre smartphone</p>
-                <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={400} letterMinSpeed={10} letterMaxSpeed={40} text={osUser2} handleWord={word => this.osAnimation2 = word}/>
+                <TextAnimation
+                  className="conclusion-step__substep__text conclusion-step__substep__text--white"
+                  letterDuration={400}
+                  letterMinSpeed={10}
+                  letterMaxSpeed={40}
+                  text={osUser2}
+                  handleWord={word => (this.osAnimation2 = word)}
+                />
                 <p className="conclusion-step__substep__text wordSplit">de</p>
               </div>
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--2">
                 <p className="conclusion-step__substep__text wordSplit first">résolution</p>
-                <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={360} letterMinSpeed={10} letterMaxSpeed={40} text={resolutionUSer2} handleWord={word => this.resAnimation2 = word}/>
+                <TextAnimation
+                  className="conclusion-step__substep__text conclusion-step__substep__text--white"
+                  letterDuration={360}
+                  letterMinSpeed={10}
+                  letterMaxSpeed={40}
+                  text={resolutionUSer2}
+                  handleWord={word => (this.resAnimation2 = word)}
+                />
                 <p className="conclusion-step__substep__text wordSplit last"> connecté au</p>
               </div>
               <div className="conclusion-step__substep__wrapperDescription conclusion-step__substep__wrapperDescription--3">
                 <p className="conclusion-step__substep__text first wordSplit">réseau</p>
-                <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={340} letterMinSpeed={10} letterMaxSpeed={40} text={'SFR'} handleWord={word => this.operatorAnimation2 = word}/>
+                <TextAnimation
+                  className="conclusion-step__substep__text conclusion-step__substep__text--white operator"
+                  letterDuration={340}
+                  letterMinSpeed={10}
+                  letterMaxSpeed={40}
+                  text={operator2}
+                  handleWord={word => (this.operatorAnimation2 = word)}
+                />
                 <p className="conclusion-step__substep__text last wordSplit">vous a attribué le</p>
-              </div>            
+              </div>
               <p className="conclusion-step__substep__text largeWord">
                 <span>s</span>
                 <span>c</span>
@@ -349,22 +495,32 @@ class ConclusionStep extends Component {
               </p>
             </div>
             <div className="conclusion-step__substep__score">
-              <TextAnimation className='conclusion-step__substep__text conclusion-step__substep__text--white' letterDuration={240} letterMinSpeed={10} letterMaxSpeed={40} text={score2.toFixed(1)} handleWord={word => this.scoreAnimation2 = word}/>
+              <TextAnimation
+                className="conclusion-step__substep__text conclusion-step__substep__text--white"
+                letterDuration={240}
+                letterMinSpeed={10}
+                letterMaxSpeed={40}
+                text={score2.toFixed(1)}
+                handleWord={word => (this.scoreAnimation2 = word)}
+              />
             </div>
           </div>
         </div>
-        
+
         <div className="conclusion-step__substep conclusion-step__substep--6">
           <p className="conclusion-step__substep__text">Dans un jeu, les règles devraient être les mêmes pour tous.</p>
-          <p className="conclusion-step__substep__text conclusion-step__substep__text--red">Sur Internet, c’est le principe de neutralité du net.</p>
-          <p className="conclusion-step__substep__text conclusion-step__substep__text--red">Pourtant, il pourrait disparaître.</p>
+          <p className="conclusion-step__substep__text conclusion-step__substep__text--red">
+            Sur Internet, c’est le principe de neutralité du net.
+          </p>
+          <p className="conclusion-step__substep__text conclusion-step__substep__text--red">
+            Pourtant, il pourrait disparaître.
+          </p>
           <span className="conclusion-step__substep__icon">
             <svg viewBox="0 0 16 32">
-            <use xlinkHref="#icon-mobile-2"/>
+              <use xlinkHref="#icon-mobile-2" />
             </svg>
           </span>
         </div>
-
       </div>
     )
   }
@@ -372,18 +528,21 @@ class ConclusionStep extends Component {
 
 const mapStateToProps = state => {
   return {
-    player1Status: state.desktop.users.find(user => user.id === "player1").status,
-    player1PhoneData: state.desktop.users.find(user => user.id === "player1").phoneData,
-    player2PhoneData: state.desktop.users.find(user => user.id === "player2").phoneData,
+    player1Status: state.desktop.users.find(user => user.id === 'player1').status,
+    player1PhoneData: state.desktop.users.find(user => user.id === 'player1').phoneData,
+    player2PhoneData: state.desktop.users.find(user => user.id === 'player2').phoneData
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     // setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
-    wsEmitCurrentStep: (currentStep) => dispatch(wsEmitCurrentStep({currentStep}))
+    wsEmitCurrentStep: currentStep => dispatch(wsEmitCurrentStep({ currentStep }))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConclusionStep)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConclusionStep)
 // export default connect(mapStateToProps)(ConclusionStep)
