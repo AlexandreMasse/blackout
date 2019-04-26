@@ -6,14 +6,14 @@ import {
   wsEmitPassword,
   wsEmitIntroProgression
 } from "../../../redux/actions/websockets/websocketsAction";
-import {setCurrentStep, setPassword} from "../../../redux/actions/mobileAction";
+import {setCurrentStep, setPassword, setPasswordError} from "../../../redux/actions/mobileAction";
 //components
 import {Keyboard} from "../../components";
 //step
 import steps from '..'
 //lib
 import NoSleep from "nosleep.js";
-import {TweenMax, Power1} from 'gsap'
+import {TweenMax, Power1, TimelineLite} from 'gsap'
 //css
 import './IntroStep.scss'
 //asset
@@ -43,8 +43,7 @@ class IntroStep extends Component {
     noSleep.enable()
   }
 
-  submit = (e) => {
-    e.preventDefault()
+  submit = () => {
     let password = this.state.password
     if (password !== null && password !== '' && password.length === 4) {
       // this.setFullscreen()
@@ -113,6 +112,28 @@ class IntroStep extends Component {
     this.yDown = null;
   };
 
+  passwordErrorAnimation = () => {
+    const passwordNumbers = this.ref.querySelectorAll('.intro-step__form__numbers p')
+    const addError = () => {
+      passwordNumbers.forEach(n => n.classList.add('error'))
+    }
+    const removeError = () => {
+      passwordNumbers.forEach(n => n.classList.remove('error'))
+    }
+
+    const tl = new TimelineLite({
+      onComplete: () => {
+        removeError()
+        this.props.setPasswordError(false)
+      }
+    })
+
+    tl.add(() => {addError()})
+    tl.add(() => {removeError()}, "+=0.4")
+    tl.add(() => {addError()}, "+=0.4")
+    tl.add(() => {}, "+=0.4")
+  }
+
 
   componentDidMount() {
     this.ref.addEventListener('touchstart', this.handleTouchStart, false);
@@ -129,11 +150,14 @@ class IntroStep extends Component {
     this.ref.removeEventListener('touchmove', this.handleTouchMove, false);
   }
 
-  //TODO: just for test
   componentWillReceiveProps(nextProps, nextContext) {
     // change step after connexion
     if (nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
       this.props.setCurrentStep(steps.LUNCH.name)
+    }
+
+    if(nextProps.passwordError && !this.props.passwordError) {
+      this.passwordErrorAnimation()
     }
   }
 
@@ -166,6 +190,7 @@ class IntroStep extends Component {
             <p className="intro-step__form__numbers__4">{password.substring(3, 4)}</p>
           </div>
           <Keyboard
+            isSumitActived={this.state.password.length === 4}
             handleKeyPress={this.handleKeyBoardPress}
             handleDelete={this.handleKeyBoardPressDelete}
             handleSubmit={this.submit}
@@ -180,6 +205,7 @@ class IntroStep extends Component {
 const mapStateToProps = state => {
   return {
     isConnected: state.mobile.isConnected,
+    passwordError: state.mobile.passwordError,
   }
 }
 
@@ -190,6 +216,7 @@ const mapDispatchToProps = dispatch => {
     wsEmitIntroProgression: (progression) => dispatch(wsEmitIntroProgression({progression})),
     setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
     setPassword: (password) => dispatch(setPassword({password})),
+    setPasswordError: (value) => dispatch(setPasswordError(value)),
   }
 }
 

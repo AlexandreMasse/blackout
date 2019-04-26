@@ -106,6 +106,10 @@
         font-size: 3.5rem;
         font-variation-settings: "wght" 60, "wdth" 600;
         font-family: $font-scopevariable;
+
+        &.error {
+          color: $red;
+        }
       }
     }
   }

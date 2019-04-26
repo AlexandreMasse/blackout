@@ -68,8 +68,8 @@ export default class User {
         // })
         delete password.activePasswordObj[code];
       } else {
-        console.log('mdp nom définit');
-        socket.emit('connectToRoom', "Une erreur s'est produite");
+        console.log('mdp nom définit -> emit passwordError');
+        socket.emit('passwordError');
       }
     });
   };

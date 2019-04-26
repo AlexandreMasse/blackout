@@ -17,6 +17,7 @@ export const websocketsEmitActionTypes = {
 
 export const websocketsOnActionTypes = {
     WEBSOCKET_ON_CONNECT_TO_ROOM: "connectToRoom",
+    WEBSOCKET_ON_PASSWORD_ERROR: "passwordError",
     WEBSOCKET_ON_USER_TYPE: "userType",
     WEBSOCKET_ON_DISCONNECT_TO_ROOM: "disconnectToRoom",
     WEBSOCKET_ON_PHONE_DATA: "phoneData",

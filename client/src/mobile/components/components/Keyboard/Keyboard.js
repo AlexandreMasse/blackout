@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropType from 'prop-types'
+import Classnames from 'classnames'
 
 //css
 import './Keyboard.scss'
@@ -9,9 +11,16 @@ class Keyboard extends Component {
     this.props.handleKeyPress(key)
   }
 
+  handleSubmit = () => {
+    const {handleSubmit, isSumitActived} = this.props
+    if(isSumitActived) {
+      handleSubmit()
+    }
+  }
+
   render() {
 
-    const {handleDelete, handleSubmit} = this.props
+    const {handleDelete, isSumitActived} = this.props
 
     return (
       <div className="keyboard">
@@ -43,9 +52,7 @@ class Keyboard extends Component {
           <div className="keyboard__board__key" onClick={() => this.handleKeyPress("9")}>
             <p>9</p>
           </div>
-          <div className="keyboard__board__key">
-            <p></p>
-          </div>
+          <div className="keyboard__board__key"/>
           <div className="keyboard__board__key" onClick={() => this.handleKeyPress("0")}>
             <p>0</p>
           </div>
@@ -55,12 +62,22 @@ class Keyboard extends Component {
               </svg>
           </div>
         </div>
-        <button className="keyboard__button button" onClick={handleSubmit}>
+        <button className={Classnames("keyboard__button", {'active' : isSumitActived})} onClick={this.handleSubmit}>
            <span>{'> Valider <'}</span>
         </button>
       </div>
     );
   }
+}
+
+Keyboard.propTypes = {
+  handleSubmit: PropType.func,
+  handleDelete: PropType.func,
+  isSumitActived: PropType.bool
+}
+
+Keyboard.defaultProps = {
+  isSumitActived: true
 }
 
 export default Keyboard

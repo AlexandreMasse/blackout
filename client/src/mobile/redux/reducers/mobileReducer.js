@@ -6,6 +6,7 @@ const initialState = {
     userId: null,
     isConnected: false,
     password: null,
+    passwordError: false,
     currentStep: null,
     showDanger: null,
     phoneData: null,
@@ -48,6 +49,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 password
+            }
+        }
+
+        case mobileActionTypes.SET_PASSWORD_ERROR: {
+            return {
+                ...state,
+                passwordError: action.payload
             }
         }
 
@@ -109,6 +117,14 @@ export default (state = initialState, action) => {
                 }),
             }
         }
+
+        case websocketsOnActionTypes.WEBSOCKET_ON_PASSWORD_ERROR: {
+            return {
+                ...state,
+                passwordError: true
+            }
+        }
+
         case websocketsOnActionTypes.WEBSOCKET_ON_CURRENT_STEP: {
             const {step} = action.payload
             return {
