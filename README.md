@@ -48,7 +48,7 @@ Made with :heart: and :
 
 ### Client / Server
 
-> Optional : If you want to run client and server with one command follow this step
+> Optional : If you want to run client and server with one command follow these steps
 
 1. Go to `/` folder
 
@@ -91,9 +91,15 @@ Made with :heart: and :
 
 4. Go to `/` folder
 
-5. Push build folder to heroku
+5. Push to heroku
 
     ``` bash
-    git subtree push --prefix server/build heroku master
+    git subtree push --prefix server heroku master
     ```
+    
+    > If your are [this issue](https://stackoverflow.com/questions/13756055/git-subtree-subtree-up-to-date-but-cant-push) try this :
+
+     ``` bash
+     git push heroku `git subtree split --prefix server master`:master --force
+     ```
     
