@@ -1,37 +1,35 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
 //redux
-import {connect} from 'react-redux';
+import { connect } from 'react-redux'
 import {
   wsEmitDeviceType,
   wsEmitPassword,
   wsEmitIntroProgression
-} from "../../../redux/actions/websockets/websocketsAction";
-import {setCurrentStep, setPassword, setPasswordError} from "../../../redux/actions/mobileAction";
+} from '../../../redux/actions/websockets/websocketsAction'
+import { setCurrentStep, setPassword, setPasswordError } from '../../../redux/actions/mobileAction'
 //components
-import {Keyboard} from "../../components";
+import { Keyboard } from '../../components'
 //step
 import steps from '..'
 //lib
-import NoSleep from "nosleep.js";
-import {TweenMax, Power1, TimelineLite} from 'gsap'
+import NoSleep from 'nosleep.js'
+import { TweenMax, Power1, TimelineLite } from 'gsap'
 //css
 import './IntroStep.scss'
 //asset
-import {AssetsManager} from "./../../../../managers"
-import {assetsToLoad} from "../../../assets/asset-list"
-// utils 
-import {toggleFullscreen} from '../../../../utils'
-import logotype from "../../../../assets/global/video/logotype.mp4";
+import { AssetsManager } from './../../../../managers'
+import { assetsToLoad } from '../../../assets/asset-list'
+// utils
+import { toggleFullscreen } from '../../../../utils'
+import logotype from '../../../../assets/global/video/logotype.mp4'
 
 class IntroStep extends Component {
-
   constructor(props) {
     super(props)
 
     this.state = {
-      password: '',
+      password: ''
     }
-
   }
 
   setFullscreen = () => {
@@ -46,7 +44,7 @@ class IntroStep extends Component {
   submit = () => {
     let password = this.state.password
     if (password !== null && password !== '' && password.length === 4) {
-      // this.setFullscreen()
+      this.setFullscreen()
       this.setNoSleep()
       this.props.setPassword(password)
       this.props.wsEmitPassword(password)
@@ -55,42 +53,43 @@ class IntroStep extends Component {
     }
   }
 
-  handleKeyBoardPress = (key) => {
+  handleKeyBoardPress = key => {
     if (this.state.password.length < 4) {
       this.setState({
         password: this.state.password + key
-      });
+      })
     }
   }
 
-  handleKeyBoardPressDelete = (key) => {
+  handleKeyBoardPressDelete = key => {
     this.setState({
       password: this.state.password.substring(0, this.state.password.length - 1)
-    });
+    })
   }
 
-  getTouches = (evt) => {
+  getTouches = evt => {
     return evt.touches
   }
 
-  handleTouchStart = (evt) => {
-    const firstTouch = this.getTouches(evt)[0];
-    this.xDown = firstTouch.clientX;
-    this.yDown = firstTouch.clientY;
-  };
+  handleTouchStart = evt => {
+    const firstTouch = this.getTouches(evt)[0]
+    this.xDown = firstTouch.clientX
+    this.yDown = firstTouch.clientY
+  }
 
-  handleTouchMove = (evt) => {
+  handleTouchMove = evt => {
     if (!this.xDown || !this.yDown) {
-      return;
+      return
     }
 
-    let xUp = evt.touches[0].clientX;
-    let yUp = evt.touches[0].clientY;
+    let xUp = evt.touches[0].clientX
+    let yUp = evt.touches[0].clientY
 
-    let xDiff = this.xDown - xUp;
-    let yDiff = this.yDown - yUp;
+    let xDiff = this.xDown - xUp
+    let yDiff = this.yDown - yUp
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      /*most significant*/
       if (xDiff > 0) {
         /* left swipe */
       } else {
@@ -99,18 +98,18 @@ class IntroStep extends Component {
     } else {
       if (yDiff > 0) {
         /* up swipe */
-        const formHeight = this.ref.querySelector(".intro-step__form").clientHeight
-        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut,y: `-${formHeight * 0.9}px`})
+        const formHeight = this.ref.querySelector('.intro-step__form').clientHeight
+        TweenMax.to(this.ref, 0.8, { ease: Power1.easeInOut, y: `-${formHeight * 0.9}px` })
       } else {
         /* down swipe */
         window.scrollTo(0, 0) // for safari top bar
-        TweenMax.to(this.ref, 0.8, {ease: Power1.easeInOut, y: this.ref._gsTransform.y - this.ref._gsTransform.y})
+        TweenMax.to(this.ref, 0.8, { ease: Power1.easeInOut, y: this.ref._gsTransform.y - this.ref._gsTransform.y })
       }
     }
     /* reset values */
-    this.xDown = null;
-    this.yDown = null;
-  };
+    this.xDown = null
+    this.yDown = null
+  }
 
   passwordErrorAnimation = () => {
     const passwordNumbers = this.ref.querySelectorAll('.intro-step__form__numbers p')
@@ -128,26 +127,31 @@ class IntroStep extends Component {
       }
     })
 
-    tl.add(() => {addError()})
-    tl.add(() => {removeError()}, "+=0.4")
-    tl.add(() => {addError()}, "+=0.4")
-    tl.add(() => {}, "+=0.4")
+    tl.add(() => {
+      addError()
+    })
+    tl.add(() => {
+      removeError()
+    }, '+=0.4')
+    tl.add(() => {
+      addError()
+    }, '+=0.4')
+    tl.add(() => {}, '+=0.4')
   }
 
-
   componentDidMount() {
-    this.ref.addEventListener('touchstart', this.handleTouchStart, false);
-    this.ref.addEventListener('touchmove', this.handleTouchMove, false);
+    this.ref.addEventListener('touchstart', this.handleTouchStart, false)
+    this.ref.addEventListener('touchmove', this.handleTouchMove, false)
 
-    this.xDown = null;
-    this.yDown = null;
-    
-    TweenMax.set(this.ref, {y: 0})
+    this.xDown = null
+    this.yDown = null
+
+    TweenMax.set(this.ref, { y: 0 })
   }
 
   componentWillUnmount() {
-    this.ref.removeEventListener('touchstart', this.handleTouchStart, false);
-    this.ref.removeEventListener('touchmove', this.handleTouchMove, false);
+    this.ref.removeEventListener('touchstart', this.handleTouchStart, false)
+    this.ref.removeEventListener('touchmove', this.handleTouchMove, false)
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -156,33 +160,41 @@ class IntroStep extends Component {
       this.props.setCurrentStep(steps.LUNCH.name)
     }
 
-    if(nextProps.passwordError && !this.props.passwordError) {
+    if (nextProps.passwordError && !this.props.passwordError) {
       this.passwordErrorAnimation()
     }
   }
 
   render() {
-    const {isConnected} = this.props
-    const {password} = this.state
+    const { isConnected } = this.props
+    const { password } = this.state
 
     return (
-      <div className="intro-step" ref={(ref) => this.ref = ref}>
-        <div className='intro-step__infos'>
-          <video width="80%" autoPlay playsInline loop muted ref={(ref) => this.video = ref}>
-            <source src={logotype} type="video/mp4"/>
+      <div className="intro-step" ref={ref => (this.ref = ref)}>
+        <div className="intro-step__infos">
+          <video width="80%" autoPlay playsInline loop muted ref={ref => (this.video = ref)}>
+            <source src={logotype} type="video/mp4" />
           </video>
-          <p className='intro-step__infos__paragraph'>
+          <p className="intro-step__infos__paragraph">
             <span className="bold">Blackout</span> est une expérience de survie collabortive, dans un univers alternatif
             régit par la technologie.
           </p>
-          <p className='intro-step__infos__paragraph'>
+          <p className="intro-step__infos__paragraph">
             Pour lancer une partie, rendez-vous sur <span className="bold">blackout.io</span> à partir d’un ordinateur.
           </p>
           <span className="intro-step__infos__viewmore">Entrez le code</span>
-          <img className="intro-step__infos__viewmoreArrow" src={AssetsManager.get(assetsToLoad.arrowDonwBlack.name).src} alt=""/>
+          <img
+            className="intro-step__infos__viewmoreArrow"
+            src={AssetsManager.get(assetsToLoad.arrowDonwBlack.name).src}
+            alt=""
+          />
         </div>
-        <div className='intro-step__form'>
-          <img className="intro-step__form__viewmoreArrow" src={AssetsManager.get(assetsToLoad.arrowDonwWhite.name).src} alt=""/>
+        <div className="intro-step__form">
+          <img
+            className="intro-step__form__viewmoreArrow"
+            src={AssetsManager.get(assetsToLoad.arrowDonwWhite.name).src}
+            alt=""
+          />
           <div className="intro-step__form__numbers">
             <p className="intro-step__form__numbers__1">{password.substring(0, 1)}</p>
             <p className="intro-step__form__numbers__2">{password.substring(1, 2)}</p>
@@ -197,27 +209,29 @@ class IntroStep extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
-
 
 const mapStateToProps = state => {
   return {
     isConnected: state.mobile.isConnected,
-    passwordError: state.mobile.passwordError,
+    passwordError: state.mobile.passwordError
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    wsEmitPassword: (code) => dispatch(wsEmitPassword({code})),
-    wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),
-    wsEmitIntroProgression: (progression) => dispatch(wsEmitIntroProgression({progression})),
-    setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
-    setPassword: (password) => dispatch(setPassword({password})),
-    setPasswordError: (value) => dispatch(setPasswordError(value)),
+    wsEmitPassword: code => dispatch(wsEmitPassword({ code })),
+    wsEmitDeviceType: type => dispatch(wsEmitDeviceType({ type })),
+    wsEmitIntroProgression: progression => dispatch(wsEmitIntroProgression({ progression })),
+    setCurrentStep: currentStep => dispatch(setCurrentStep(currentStep)),
+    setPassword: password => dispatch(setPassword({ password })),
+    setPasswordError: value => dispatch(setPasswordError(value))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(IntroStep);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IntroStep)

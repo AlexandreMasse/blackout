@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js'
 import { Howl } from 'howler'
 import { AssetsManager } from '../../../../managers'
 import { TweenMax, RoughEase, TimelineMax } from 'gsap'
+
 //redux
 import {
   setCurrentScene,
@@ -25,8 +26,9 @@ import { requestTimeout, clearRequestTimeout } from '../../../../utils'
 //transition
 import { onEnterTimeout } from './transition'
 
-export default class SceneFlashlight {
-  constructor({ dispatch, store }) {
+class SceneFlashlight {
+  constructor({ dispatch, store, formatMessage }) {
+    this.formatMessage = formatMessage
     this.dispatch = dispatch
     this.store = store
     this.needUpdate = true
@@ -220,13 +222,13 @@ export default class SceneFlashlight {
     this.dispatch(
       setUserIndicationTitle({
         userId: 'player1',
-        title: ' Retrouvez le générateur'
+        title: this.formatMessage({ id: 'app.indication.dynamo' })
       })
     )
     this.dispatch(
       setUserIndicationDescription({
         userId: 'player1',
-        description: 'Visez tous les deux vers l’appareil.'
+        description: this.formatMessage({ id: 'app.indication.dynamo.sentence' })
       })
     )
 
@@ -271,13 +273,13 @@ export default class SceneFlashlight {
     this.dispatch(
       setUserIndicationTitle({
         userId: 'player2',
-        title: ' Retrouvez le générateur'
+        title: this.formatMessage({ id: 'app.indication.dynamo' })
       })
     )
     this.dispatch(
       setUserIndicationDescription({
         userId: 'player2',
-        description: 'Visez tous les deux vers l’appareil.'
+        description: this.formatMessage({ id: 'app.indication.dynamo.sentence' })
       })
     )
 
@@ -359,7 +361,7 @@ export default class SceneFlashlight {
 
     const tl = new TimelineMax({
       onComplete: () => {
-        console.log('vers la scène suivante mané')
+        // console.log('vers la scène suivante mané')
         this.flashSound.fade(1, 0, 2000)
         this.flashSound.once('fade', () => {
           this.flashSound.stop()
@@ -825,7 +827,7 @@ export default class SceneFlashlight {
     if (this.currentH > this.maxH) {
       this.currentH = this.maxH
       if (!this.isDiscover) {
-        console.log('DONE')
+        // console.log('DONE')
         clearRequestTimeout(this.timeOutId)
         this.nextScene()
         this.isDiscover = true
@@ -839,3 +841,5 @@ export default class SceneFlashlight {
     this.fillbox2.height = this.currentH
   }
 }
+
+export default SceneFlashlight
