@@ -853,7 +853,7 @@ export default class SceneFlashlight {
       this.height = 0;
     }
 
-    this.currentH += (this.height - this.currentH) * 0.008;
+    this.currentH += (this.height - this.currentH) * 0.08;
 
     if (this.currentH >= this.maxH) {
       this.currentH = this.maxH;
