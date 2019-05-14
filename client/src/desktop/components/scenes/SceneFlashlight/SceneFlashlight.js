@@ -853,10 +853,12 @@ export default class SceneFlashlight {
       this.height = 0;
     }
 
-    this.currentH += (this.height - this.currentH) * 0.08;
+    this.currentH += (this.height - this.currentH) * 0.05;
 
-    if (this.currentH >= this.maxH) {
+    console.log("ici yoyoyoyo", this.currentH);
+    if (this.currentH >= this.maxH - 1) {
       this.currentH = this.maxH;
+      console.log("ici", this.currentH);
       if (!this.isDiscover) {
         console.log("DONE");
         clearRequestTimeout(this.timeOutId);
