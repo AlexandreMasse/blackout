@@ -1,90 +1,90 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 //redux
-import { connect } from 'react-redux'
-import { setCurrentStep, setUserIndicationActive, setUserIndicationOpen } from '../../../redux/actions/desktopAction'
+import { connect } from 'react-redux';
+import { setCurrentStep, setUserIndicationActive, setUserIndicationOpen } from '../../../redux/actions/desktopAction';
 //lib
-import classNames from 'classnames'
-import { TimelineMax } from 'gsap'
-import { injectIntl } from 'react-intl'
+import classNames from 'classnames';
+import { TimelineMax } from 'gsap';
+import { injectIntl } from 'react-intl';
 
 //asset
-import logotype from '../../../../assets/global/video/logotype.mp4'
+import logotype from '../../../../assets/global/video/logotype.mp4';
 // style
-import './ConnexionStep.scss'
+import './ConnexionStep.scss';
 //steps
-import steps from '..'
+import steps from '..';
 //components
-import { LottieAnimation, TextAnimation } from '../../components'
-import { Howl } from 'howler'
-import { AssetsManager } from '../../../../managers'
+import { LottieAnimation, TextAnimation } from '../../components';
+import { Howl } from 'howler';
+import { AssetsManager } from '../../../../managers';
 //LottieAnimation
-import animations from '../../components/LottieAnimation/animations'
-import { onEnterDelay } from '../ConnexionStep/transition'
-import { wsEmitCurrentStep } from '../../../redux/actions/websockets/websocketsAction'
+import animations from '../../components/LottieAnimation/animations';
+import { onEnterDelay } from '../ConnexionStep/transition';
+import { wsEmitCurrentStep } from '../../../redux/actions/websockets/websocketsAction';
 
 class ConnexionStep extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       cityLeftProgression: 0,
       cityRightProgression: 0,
       isCityLeftReady: false,
       isCityRightReady: false
-    }
+    };
   }
 
   handleWordBaseline1 = word => {
-    this.wordBaseline1 = word
-  }
+    this.wordBaseline1 = word;
+  };
 
   handleWordBaseline2 = word => {
-    this.wordBaseline2 = word
-  }
+    this.wordBaseline2 = word;
+  };
 
   handleWordInstructions1 = word => {
-    this.wordInstructions1 = word
-  }
+    this.wordInstructions1 = word;
+  };
 
   handleWordInstructions2 = word => {
-    this.wordInstructions2 = word
-  }
+    this.wordInstructions2 = word;
+  };
 
   handleWordPlayer1Password = word => {
-    this.wordPlayer1Password = word
-  }
+    this.wordPlayer1Password = word;
+  };
 
   handleWordPlayer2Password = word => {
-    this.wordPlayer2Password = word
-  }
+    this.wordPlayer2Password = word;
+  };
 
   handleWordPlayer1Name = word => {
-    this.wordPlayer1Name = word
-  }
+    this.wordPlayer1Name = word;
+  };
 
   handleWordPlayer2Name = word => {
-    this.wordPlayer2Name = word
-  }
+    this.wordPlayer2Name = word;
+  };
 
   handleWordPlayer1Status = word => {
-    this.wordPlayer1Status = word
-  }
+    this.wordPlayer1Status = word;
+  };
 
   handleWordPlayer2Status = word => {
-    this.wordPlayer2Status = word
-  }
+    this.wordPlayer2Status = word;
+  };
 
   componentDidMount() {
-    this.setSound()
-    this.setStartTimeline()
-    this.fullscreen = this.ref.querySelector('.connexion-step__intro__fullscreen')
+    this.setSound();
+    this.setStartTimeline();
+    this.fullscreen = this.ref.querySelector('.connexion-step__intro__fullscreen');
     this.tl = new TimelineMax({
       delay: onEnterDelay
-    })
+    });
 
-    this.tl.delay(0.5)
+    this.tl.delay(0.5);
     //video
-    this.tl.addLabel('video')
+    this.tl.addLabel('video');
     this.tl.to(
       this.video,
       1.5,
@@ -92,96 +92,96 @@ class ConnexionStep extends Component {
         opacity: 1
       },
       'video'
-    )
+    );
     this.tl.add(() => {
-      this.video.play()
-    }, 'video+=0.5')
+      this.video.play();
+    }, 'video+=0.5');
 
     //baseline
-    this.tl.addLabel('baseline', '-=1.3')
+    this.tl.addLabel('baseline', '-=1.3');
     this.tl.add(() => {
-      this.wordBaseline1.start()
-    }, 'baseline')
+      this.wordBaseline1.start();
+    }, 'baseline');
     this.tl.add(() => {
-      this.wordBaseline2.start()
-    }, 'baseline+=0.3')
+      this.wordBaseline2.start();
+    }, 'baseline+=0.3');
 
     // button
-    this.tl.addLabel('button', 'baseline+=.8')
-    this.tl.to(this.button, 0.8, { opacity: 1 }, 'button')
+    this.tl.addLabel('button', 'baseline+=.8');
+    this.tl.to(this.button, 0.8, { opacity: 1 }, 'button');
     // fullscren instruction
-    this.tl.addLabel('fullscreen', 'button+=.4')
-    this.tl.to(this.fullscreen, 0.8, { opacity: 1 }, 'fullscreen')
+    this.tl.addLabel('fullscreen', 'button+=.4');
+    this.tl.to(this.fullscreen, 0.8, { opacity: 1 }, 'fullscreen');
     // Credits
-    this.tl.addLabel('credits', 'fullscreen+=0.7')
-    this.tl.to(this.credits, 0.8, { opacity: 1 }, 'credits')
+    this.tl.addLabel('credits', 'fullscreen+=0.7');
+    this.tl.to(this.credits, 0.8, { opacity: 1 }, 'credits');
     // // Icon
-    this.tl.addLabel('icon', 'fullscreen+=0.7')
-    this.tl.to(this.icon, 0.8, { opacity: 1 }, 'icon')
+    this.tl.addLabel('icon', 'fullscreen+=0.7');
+    this.tl.to(this.icon, 0.8, { opacity: 1 }, 'icon');
   }
 
   setStartTimeline = () => {
-    this.button = document.querySelector('.connexion-step__intro__start')
-    this.icon = document.querySelector('.connexion-step__icon')
-    this.credits = document.querySelector('.connexion-step__credits')
+    this.button = document.querySelector('.connexion-step__intro__start');
+    this.icon = document.querySelector('.connexion-step__icon');
+    this.credits = document.querySelector('.connexion-step__credits');
 
     this.startTl = new TimelineMax({
       // delay: onEnterDelay
       paused: true
-    })
+    });
     // button
-    this.startTl.addLabel('button')
-    this.startTl.to(this.button, 0.8, { opacity: 0 }, 'button')
+    this.startTl.addLabel('button');
+    this.startTl.to(this.button, 0.8, { opacity: 0 }, 'button');
     this.startTl.add(() => {
-      this.button.classList.add('disabled')
-    }, 'button')
+      this.button.classList.add('disabled');
+    }, 'button');
     //instructions
-    this.startTl.addLabel('instructions', 'button+=0.7')
+    this.startTl.addLabel('instructions', 'button+=0.7');
     this.startTl.add(() => {
-      this.wordInstructions1.start()
-    }, 'instructions')
+      this.wordInstructions1.start();
+    }, 'instructions');
     this.startTl.add(() => {
-      this.wordInstructions2.start()
-    }, 'instructions+=0.3')
+      this.wordInstructions2.start();
+    }, 'instructions+=0.3');
 
     //Player1
-    this.startTl.addLabel('player1', 'instructions+=0.7')
+    this.startTl.addLabel('player1', 'instructions+=0.7');
     this.startTl.add(() => {
-      this.wordPlayer1Password.start()
-    }, 'player1')
+      this.wordPlayer1Password.start();
+    }, 'player1');
     this.startTl.add(() => {
-      this.wordPlayer1Name.start()
-    }, 'player1+=0.3')
+      this.wordPlayer1Name.start();
+    }, 'player1+=0.3');
     this.startTl.add(() => {
-      this.wordPlayer1Status.start()
-      this.wordPlayer1Status.parent.parentNode.style.opacity = 1
-    }, 'player1+=0.6')
+      this.wordPlayer1Status.start();
+      this.wordPlayer1Status.parent.parentNode.style.opacity = 1;
+    }, 'player1+=0.6');
 
     //Player2
-    this.startTl.addLabel('player2', 'instructions+=0.7')
+    this.startTl.addLabel('player2', 'instructions+=0.7');
     this.startTl.add(() => {
-      this.wordPlayer2Password.start()
-    }, 'player2')
+      this.wordPlayer2Password.start();
+    }, 'player2');
     this.startTl.add(() => {
-      this.wordPlayer2Name.start()
-    }, 'player2+=0.3')
+      this.wordPlayer2Name.start();
+    }, 'player2+=0.3');
     this.startTl.add(() => {
-      this.wordPlayer2Status.start()
-      this.wordPlayer2Status.parent.parentNode.style.opacity = 1
-    }, 'player2+=0.6')
-  }
+      this.wordPlayer2Status.start();
+      this.wordPlayer2Status.parent.parentNode.style.opacity = 1;
+    }, 'player2+=0.6');
+  };
 
   startExperience = () => {
-    this.startTl.play()
-    this.doorOpen.play()
-    this.introSound.play()
-    this.introSound.fade(0, 1, 4000)
-  }
+    this.startTl.play();
+    this.doorOpen.play();
+    this.introSound.play();
+    this.introSound.fade(0, 1, 4000);
+  };
 
   setSound = () => {
-    const introSoundAsset = AssetsManager.get('introductionSound')
-    const doorOpenAsset = AssetsManager.get('doorOpen')
-    const playerReadyAsset = AssetsManager.get('playerReady')
+    const introSoundAsset = AssetsManager.get('introductionSound');
+    const doorOpenAsset = AssetsManager.get('doorOpen');
+    const playerReadyAsset = AssetsManager.get('playerReady');
 
     this.doorOpen = new Howl({
       src: doorOpenAsset.src,
@@ -191,7 +191,7 @@ class ConnexionStep extends Component {
       autoplay: false,
       loop: false,
       format: ['mp3']
-    })
+    });
 
     this.introSound = new Howl({
       src: introSoundAsset.src,
@@ -201,7 +201,7 @@ class ConnexionStep extends Component {
       autoplay: false,
       loop: true,
       format: ['mp3']
-    })
+    });
 
     this.playerReady = new Howl({
       src: playerReadyAsset.src,
@@ -211,19 +211,19 @@ class ConnexionStep extends Component {
       autoplay: false,
       loop: false,
       format: ['mp3']
-    })
-  }
+    });
+  };
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (!this.state.isCityLeftReady && nextProps.player1IntroProgression >= 1) {
-      console.log('city left ready !')
-      this.playerReady.play()
-      this.setState({ isCityLeftReady: true })
+      console.log('city left ready !');
+      this.playerReady.play();
+      this.setState({ isCityLeftReady: true });
     }
     if (!this.state.isCityRightReady && nextProps.player2IntroProgression >= 1) {
-      console.log('city right ready !')
-      this.playerReady.play()
-      this.setState({ isCityRightReady: true })
+      console.log('city right ready !');
+      this.playerReady.play();
+      this.setState({ isCityRightReady: true });
     }
   }
 
@@ -232,13 +232,13 @@ class ConnexionStep extends Component {
       (!prevState.isCityLeftReady || !prevState.isCityRightReady) &&
       (this.state.isCityLeftReady && this.state.isCityRightReady)
     ) {
-      console.log('city left and right ready -> analysis')
-      this.introSound.fade(1, 0, 4000)
+      console.log('city left and right ready -> analysis');
+      this.introSound.fade(1, 0, 4000);
       this.introSound.once('fade', () => {
-        this.introSound.stop()
-      })
-      this.props.setCurrentStep(steps.ANALYSIS.name)
-      this.props.wsEmitCurrentStep(null)
+        this.introSound.stop();
+      });
+      this.props.setCurrentStep(steps.ANALYSIS.name);
+      this.props.wsEmitCurrentStep(null);
     }
   }
 
@@ -251,9 +251,9 @@ class ConnexionStep extends Component {
       isPlayer2Connected,
       player1IntroProgression,
       player2IntroProgression
-    } = this.props
+    } = this.props;
 
-    const { isCityLeftReady, isCityRightReady } = this.state
+    const { isCityLeftReady, isCityRightReady } = this.state;
 
     return (
       <div className="connexion-step step" ref={ref => (this.ref = ref)}>
@@ -263,7 +263,7 @@ class ConnexionStep extends Component {
           style={{ display: 'none', zIndex: '10', width: '30%', position: 'absolute', top: '0' }}
           type="range"
           onChange={e => {
-            this.setState({ cityLeftProgression: e.target.value })
+            this.setState({ cityLeftProgression: e.target.value });
           }}
           value={this.state.cityLeftProgression}
           step={0.001}
@@ -312,13 +312,16 @@ class ConnexionStep extends Component {
             <TextAnimation
               letterDuration={200}
               className={'connexion-step__intro__baseline__1'}
-              text={formatMessage({ id: 'app.title' })}
+              text={formatMessage({ id: 'app.title', defaultMessage: 'A collaborative survival experience' })}
               handleWord={this.handleWordBaseline1}
             />
             <TextAnimation
               letterDuration={200}
               className={'connexion-step__intro__baseline__2'}
-              text="dans un univers alternatif régit par la technologie."
+              text={formatMessage({
+                id: 'app.subtitle',
+                defaultMessage: 'in an alternative universe governed by technology.'
+              })}
               handleWord={this.handleWordBaseline2}
             />
           </div>
@@ -376,22 +379,28 @@ class ConnexionStep extends Component {
               <TextAnimation
                 letterDuration={200}
                 className={'connexion-step__intro__codes__instructions__1'}
-                text="Lancez Blackout.io sur votre smartphone et entrez"
+                text={formatMessage({
+                  id: 'app.launch.1',
+                  defaultMessage: 'Launch Blackout.io on your smartphone and enter'
+                })}
                 handleWord={this.handleWordInstructions1}
               />
               <TextAnimation
                 letterDuration={200}
                 className={'connexion-step__intro__codes__instructions__2'}
-                text=" un des codes pour démarrer."
+                text={formatMessage({ id: 'app.launch.2', defaultMessage: ' un des codes pour démarrer.' })}
                 handleWord={this.handleWordInstructions2}
               />
               <button className="connexion-step__intro__start" onClick={() => this.startExperience()}>
-                {formatMessage({ id: 'app.startbtn' })}
+                {formatMessage({ id: 'app.startbtn', defaultMessage: 'start the experience' })}
               </button>
               <p className="connexion-step__intro__fullscreen">
-                {formatMessage({ id: 'app.spaceinstruction.1' })}
-                <span className="spacebar"> {formatMessage({ id: 'app.spaceinstruction.2' })}</span>
-                {formatMessage({ id: 'app.spaceinstruction.3' })}
+                {formatMessage({ id: 'app.spaceinstruction.1', defaultMessage: 'push ' })}
+                <span className="spacebar">
+                  {' '}
+                  {formatMessage({ id: 'app.spaceinstruction.2', defaultMessage: 'space' })}
+                </span>
+                {formatMessage({ id: 'app.spaceinstruction.3', defaultMessage: ' key to get on fullscreen ' })}
               </p>
             </div>
 
@@ -407,7 +416,7 @@ class ConnexionStep extends Component {
               <TextAnimation
                 letterDuration={200}
                 className={'connexion-step__intro__codes__player2__name'}
-                text={`${formatMessage({ id: 'app.player' })} 2`}
+                text={`${formatMessage({ id: 'app.player', defaultMessage: 'PLAYER' })} 2`}
                 handleWord={this.handleWordPlayer2Name}
               />
 
@@ -416,7 +425,7 @@ class ConnexionStep extends Component {
                   <TextAnimation
                     key={1}
                     letterDuration={200}
-                    text={formatMessage({ id: 'app.status.free' })}
+                    text={formatMessage({ id: 'app.status.free', defaultMessage: 'FREE' })}
                     className={'connexion-step__intro__codes__player2__status__free'}
                     handleWord={this.handleWordPlayer2Status}
                     autoPlay={true}
@@ -426,7 +435,7 @@ class ConnexionStep extends Component {
                   <TextAnimation
                     key={2}
                     letterDuration={200}
-                    text={formatMessage({ id: 'app.status.connected' })}
+                    text={formatMessage({ id: 'app.status.connected', defaultMessage: 'CONNECTED' })}
                     className={'connexion-step__intro__codes__player2__status__connected'}
                     autoPlay={true}
                   />
@@ -435,7 +444,7 @@ class ConnexionStep extends Component {
                   <TextAnimation
                     key={3}
                     letterDuration={200}
-                    text={formatMessage({ id: 'app.status.ready' })}
+                    text={formatMessage({ id: 'app.status.ready', defaultMessage: 'READY' })}
                     className={'connexion-step__intro__codes__player2__status__ready'}
                     autoPlay={true}
                   />
@@ -458,11 +467,11 @@ class ConnexionStep extends Component {
         </div>
         <div className="connexion-step__credits">
           <p>
-            {formatMessage({ id: 'app.typo.made' })}{' '}
+            {formatMessage({ id: 'app.typo.made', defaultMessage: 'Written in' })}{' '}
             <a href="http://scope-typeface.com/" target="blank">
               Scope
             </a>
-            , {formatMessage({ id: 'app.typo.by' })}{' '}
+            , {formatMessage({ id: 'app.typo.by', defaultMessage: 'by' })}{' '}
             <a href="http://jonaspelzer.com/" target="blank">
               Jonas Pelzer.
             </a>
@@ -486,7 +495,7 @@ class ConnexionStep extends Component {
           </p>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -498,8 +507,8 @@ const mapStateToProps = state => {
     isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2').isConnected,
     player1IntroProgression: state.desktop.users.find(user => user.id === 'player1').introProgression,
     player2IntroProgression: state.desktop.users.find(user => user.id === 'player2').introProgression
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -507,10 +516,10 @@ const mapDispatchToProps = dispatch => {
     setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({ userId, isActive })),
     setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({ userId, isOpen })),
     wsEmitCurrentStep: currentStep => dispatch(wsEmitCurrentStep({ currentStep }))
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(injectIntl(ConnexionStep))
+)(injectIntl(ConnexionStep));

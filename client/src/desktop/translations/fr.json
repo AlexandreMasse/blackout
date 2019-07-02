@@ -1,9 +1,12 @@
 {
     "app.title": "Une expérience de survie collaborative,",
+    "app.subtitle": "dans un univers alternatif régit par la technologie.",
     "app.startbtn": "Démarrez l'expérience",
     "app.spaceinstruction.1": "Appuyez sur la touche ",
     "app.spaceinstruction.2": "espace",
     "app.spaceinstruction.3": " pour passer en plein écran",
+    "app.launch.1":"Lancez Blackout.io sur votre smartphone et entrez",
+    "app.launch.2":" un des codes pour démarrer.",
     "app.player": "JOUEUR",
     "app.status.free": "LIBRE",
     "app.status.connected": "CONNECTÉ",
