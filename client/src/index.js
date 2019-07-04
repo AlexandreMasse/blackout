@@ -34,7 +34,7 @@ const App =
       <MobileApp />
     </IntlProvider>
   ) : (
-    <IntlProvider locale={'en'} messages={messages['en']}>
+    <IntlProvider locale={language} messages={messages[language]}>
       <DesktopApp />
     </IntlProvider>
   );
