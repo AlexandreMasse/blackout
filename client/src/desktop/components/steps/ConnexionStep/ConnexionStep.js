@@ -250,7 +250,8 @@ class ConnexionStep extends Component {
       isPlayer1Connected,
       isPlayer2Connected,
       player1IntroProgression,
-      player2IntroProgression
+      player2IntroProgression,
+      lang
     } = this.props;
 
     const { isCityLeftReady, isCityRightReady } = this.state;
@@ -378,7 +379,7 @@ class ConnexionStep extends Component {
             <div className="connexion-step__intro__codes__instructions">
               <TextAnimation
                 letterDuration={200}
-                className={'connexion-step__intro__codes__instructions__1'}
+                className={`connexion-step__intro__codes__instructions__1`}
                 text={formatMessage({
                   id: 'app.launch.1',
                   defaultMessage: 'Launch Blackout.io on your smartphone and enter'
@@ -387,7 +388,7 @@ class ConnexionStep extends Component {
               />
               <TextAnimation
                 letterDuration={200}
-                className={'connexion-step__intro__codes__instructions__2'}
+                className={`connexion-step__intro__codes__instructions__2 connexion-step__intro__codes__instructions__2__${lang}`}
                 text={formatMessage({ id: 'app.launch.2', defaultMessage: ' un des codes pour démarrer.' })}
                 handleWord={this.handleWordInstructions2}
               />
@@ -501,6 +502,7 @@ class ConnexionStep extends Component {
 
 const mapStateToProps = state => {
   return {
+    lang: state.desktop.lang,
     password1: state.desktop.password1,
     password2: state.desktop.password2,
     isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1').isConnected,

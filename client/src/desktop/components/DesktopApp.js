@@ -1,94 +1,116 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 //redux
-import { connect } from 'react-redux'
-import { Provider } from 'react-redux'
-import configureStore from '../redux/store'
-import { injectIntl } from 'react-intl'
-import { wsEmitDeviceType } from '../redux/actions/websockets/websocketsAction'
+import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
+import configureStore from '../redux/store';
+import { wsEmitDeviceType } from '../redux/actions/websockets/websocketsAction';
 import {
   setAppLoaded,
   setCurrentScene,
   setCurrentStep,
+  setUserIndicationTitle,
+  setUserIndicationDescription,
   setUserIndicationActive,
   setUserIndicationOpen,
   setSplitScreen,
   setUserCurrentScene,
-  setPlayer1SplitScreenPercentage
-} from '../redux/actions/desktopAction'
+  setPlayer1SplitScreenPercentage,
+  setLang
+} from '../redux/actions/desktopAction';
 //assets
-import load from '../../vendors/assets-loader'
-import { assetsToLoad } from '../assets/asset-list'
-import { Loading, Indication, Deconnection } from './components'
+import load from '../../vendors/assets-loader';
+import { assetsToLoad } from '../assets/asset-list';
+import { Loading, Indication, Deconnection } from './components';
 //steps
-import { StepManager } from './managers'
-import steps from './steps'
+import { StepManager } from './managers';
+import steps from './steps';
 //utils
-import { toggleFullscreen } from '../../utils'
-import classNames from 'classnames'
+import { toggleFullscreen } from '../../utils';
+import classNames from 'classnames';
+// libs
+import { injectIntl } from 'react-intl';
 // style
-import './DesktopApp.scss'
+import './DesktopApp.scss';
 //scenes
-import scenes from './scenes'
-
-// const messages = defineMessages({
-//   title: {
-//     id: 'app.title',
-//     defaultMessage: 'Welcome to React'
-//   },
-//   content1: {
-//     id: 'app.content1',
-//     defaultMessage: 'To get started, edit'
-//   },
-//   content2: {
-//     id: 'app.content2',
-//     defaultMessage: 'and save to reload.'
-//   }
-// })
+import scenes from './scenes';
 
 class DesktopApp extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.props.wsEmitDeviceType('desktop')
-    this.props.setCurrentStep(steps.CONNEXION.name)
+    this.props.wsEmitDeviceType('desktop');
+    const language = navigator.language.split(/[-_]/)[0]; // language without region code
+    this.props.setLang(language);
+    this.props.setCurrentStep(steps.CONNEXION.name);
 
-    window.addEventListener('resize', this.handleWindowResize)
-    window.addEventListener('keydown', this.handleWindowKeydown)
-    this.handleWindowResize()
+    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('keydown', this.handleWindowKeydown);
+    this.handleWindowResize();
 
     this.state = {
       showDevButton: true,
       splitScreenPercentage: 50,
       isAssetsLoaded: false,
       isServerReady: false
-    }
+    };
   }
 
   handleWindowKeydown = e => {
     if (e.key === 'f' || e.code === 'Space') {
-      toggleFullscreen()
+      toggleFullscreen();
     }
-  }
+  };
 
   handleWindowResize = e => {
-    const ratio = window.innerWidth / 1920
-    document.querySelector('html').style.fontSize = 10 * ratio + 'px'
-  }
+    const ratio = window.innerWidth / 1920;
+    document.querySelector('html').style.fontSize = 10 * ratio + 'px';
+  };
+
+  setfirstIndication = () => {
+    this.props.setUserIndicationTitle(
+      'player1',
+      this.props.intl.formatMessage({ id: 'app.flash.on', defaultMessage: 'Turn on your flashlight' })
+    );
+
+    this.props.setUserIndicationDescription(
+      'player1',
+      this.props.intl.formatMessage({
+        id: 'app.on.indication.1',
+        defaultMessage: 'Aim at the left + and press the button.'
+      })
+    );
+
+    this.props.setUserIndicationTitle(
+      'player2',
+      this.props.intl.formatMessage({ id: 'app.flash.on', defaultMessage: 'Turn on your flashlight' })
+    );
+
+    this.props.setUserIndicationDescription(
+      'player2',
+      this.props.intl.formatMessage({
+        id: 'app.on.indication.2',
+        defaultMessage: 'Aim at the right + and press the button.'
+      })
+    );
+  };
 
   assetLoaded = () => {
     load
       .any(assetsToLoad, ev => {})
       .then(assets => {
-        window.assets = assets
+        window.assets = assets;
         this.setState({
           isAssetsLoaded: true
-        })
-      })
-  }
+        });
+      });
+  };
 
   componentWillMount() {
-    this.assetLoaded()
+    this.assetLoaded();
     // Indication.initTimeline()
+  }
+  componentDidMount() {
+    this.setfirstIndication();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -97,14 +119,14 @@ class DesktopApp extends Component {
       (!prevState.isAssetsLoaded || !prevState.isServerReady) &&
       (this.state.isAssetsLoaded && this.state.isServerReady)
     ) {
-      this.props.setAppLoaded()
+      this.props.setAppLoaded();
     }
 
     // receive roomId = server ready
     if (this.props.roomId !== null && prevProps.roomId !== this.props.roomId) {
       this.setState({
         isServerReady: true
-      })
+      });
     }
   }
 
@@ -115,7 +137,7 @@ class DesktopApp extends Component {
       currentStep,
       isPlayer1Connected,
       isPlayer2Connected
-    } = this.props
+    } = this.props;
 
     return (
       <div className="app desktop-app">
@@ -134,7 +156,7 @@ class DesktopApp extends Component {
             <p
               className={'dev-toggle'}
               onClick={() => {
-                this.setState({ showDevButton: !this.state.showDevButton })
+                this.setState({ showDevButton: !this.state.showDevButton });
               }}
             >
               TOGGLE DEV
@@ -153,7 +175,7 @@ class DesktopApp extends Component {
               <hr />
               <p
                 onClick={() => {
-                  this.props.setSplitScreen(true)
+                  this.props.setSplitScreen(true);
                 }}
               >
                 SplitScreen : true
@@ -181,8 +203,8 @@ class DesktopApp extends Component {
               <h1 className="App-title">{formatMessage({ id: 'app.title' })}</h1>
               <input
                 onChange={e => {
-                  this.props.setPlayer1SplitScreenPercentage(Number(e.target.value) / 100)
-                  this.setState({ splitScreenPercentage: e.target.value })
+                  this.props.setPlayer1SplitScreenPercentage(Number(e.target.value) / 100);
+                  this.setState({ splitScreenPercentage: e.target.value });
                 }}
                 className="range"
                 type="range"
@@ -194,7 +216,7 @@ class DesktopApp extends Component {
 
               <input
                 onChange={e => {
-                  this.setState({ durationOverlay: Number(e.target.value) })
+                  this.setState({ durationOverlay: Number(e.target.value) });
                 }}
                 className="range"
                 type="range"
@@ -210,7 +232,7 @@ class DesktopApp extends Component {
           </>
         )}
       </div>
-    )
+    );
   }
 }
 
@@ -221,13 +243,17 @@ const mapStateToProps = state => {
     currentStep: state.desktop.currentStep,
     isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1').isConnected,
     isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2').isConnected
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
+    setLang: lang => dispatch(setLang(lang)),
     wsEmitDeviceType: type => dispatch(wsEmitDeviceType({ type })),
     setAppLoaded: () => dispatch(setAppLoaded()),
+    setUserIndicationTitle: (userId, title) => dispatch(setUserIndicationTitle({ userId, title })),
+    setUserIndicationDescription: (userId, description) =>
+      dispatch(setUserIndicationDescription({ userId, description })),
     setCurrentStep: currentStep => dispatch(setCurrentStep(currentStep)),
     setCurrentScene: currentScene => dispatch(setCurrentScene(currentScene)),
     setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({ userId, isActive })),
@@ -236,16 +262,16 @@ const mapDispatchToProps = dispatch => {
     setSplitScreen: isSplitScreen => dispatch(setSplitScreen({ isSplitScreen })),
     setPlayer1SplitScreenPercentage: splitScreenPercentage =>
       dispatch(setPlayer1SplitScreenPercentage({ splitScreenPercentage }))
-  }
-}
+  };
+};
 
 const DesktopAppConnected = connect(
   mapStateToProps,
   mapDispatchToProps
-)(injectIntl(DesktopApp))
+)(injectIntl(DesktopApp));
 
 export default () => (
   <Provider store={configureStore()}>
     <DesktopAppConnected />
   </Provider>
-)
+);

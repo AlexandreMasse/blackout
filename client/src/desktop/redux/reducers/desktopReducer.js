@@ -8,6 +8,7 @@ const initialState = {
     isLoaded: false
   },
   currentStep: null,
+  lang: 'en',
   currentScene: scenes.SCENEKINEMATIC.name,
   isSplitScreen: false,
   roomId: null,
@@ -51,8 +52,7 @@ const initialState = {
         isActive: false,
         isOpen: false,
         title: 'Allumez votre lampe',
-        description:
-          'Pointez votre téléphone vers le + à gauche et appuyez sur le boutton',
+        description: 'Pointez votre téléphone vers le + à gauche et appuyez sur le boutton',
         theme: 'white'
       }
     },
@@ -92,8 +92,7 @@ const initialState = {
         isActive: false,
         isOpen: false,
         title: 'Allumez votre lampe',
-        description:
-          'Pointez votre téléphone vers le + à droite et appuyez sur le boutton',
+        description: 'Pointez votre téléphone vers le + à droite et appuyez sur le boutton',
         theme: 'white'
       }
     }
@@ -110,6 +109,13 @@ export default (state = initialState, action) => {
         app: {
           isLoaded: true
         }
+      };
+    }
+
+    case desktopActionTypes.SET_LANG: {
+      return {
+        ...state,
+        lang: action.lang
       };
     }
 
@@ -341,9 +347,7 @@ export default (state = initialState, action) => {
                 ...user,
                 status: (() => {
                   const currentScore = phoneData.phoneData.score;
-                  const otherScore = phoneDataArray.find(
-                    pd => pd.userId !== user.id
-                  ).phoneData.score;
+                  const otherScore = phoneDataArray.find(pd => pd.userId !== user.id).phoneData.score;
                   if (currentScore > otherScore) {
                     return 'superior';
                   } else if (currentScore === otherScore) {
