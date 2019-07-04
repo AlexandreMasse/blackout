@@ -1,92 +1,93 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 //redux
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import {
   wsEmitDeviceType,
   wsEmitPassword,
   wsEmitIntroProgression
-} from '../../../redux/actions/websockets/websocketsAction'
-import { setCurrentStep, setPassword, setPasswordError } from '../../../redux/actions/mobileAction'
+} from '../../../redux/actions/websockets/websocketsAction';
+import { setCurrentStep, setPassword, setPasswordError } from '../../../redux/actions/mobileAction';
 //components
-import { Keyboard } from '../../components'
+import { Keyboard } from '../../components';
 //step
-import steps from '..'
+import steps from '..';
 //lib
-import NoSleep from 'nosleep.js'
-import { TweenMax, Power1, TimelineLite } from 'gsap'
+import NoSleep from 'nosleep.js';
+import { TweenMax, Power1, TimelineLite } from 'gsap';
+import { injectIntl } from 'react-intl';
 //css
-import './IntroStep.scss'
+import './IntroStep.scss';
 //asset
-import { AssetsManager } from './../../../../managers'
-import { assetsToLoad } from '../../../assets/asset-list'
+import { AssetsManager } from './../../../../managers';
+import { assetsToLoad } from '../../../assets/asset-list';
 // utils
-import { toggleFullscreen } from '../../../../utils'
-import logotype from '../../../../assets/global/video/logotype.mp4'
+import { toggleFullscreen } from '../../../../utils';
+import logotype from '../../../../assets/global/video/logotype.mp4';
 
 class IntroStep extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       password: ''
-    }
+    };
   }
 
   setFullscreen = () => {
-    toggleFullscreen()
-  }
+    toggleFullscreen();
+  };
 
   setNoSleep = () => {
-    const noSleep = new NoSleep()
-    noSleep.enable()
-  }
+    const noSleep = new NoSleep();
+    noSleep.enable();
+  };
 
   submit = () => {
-    let password = this.state.password
+    let password = this.state.password;
     if (password !== null && password !== '' && password.length === 4) {
-      this.setFullscreen()
-      this.setNoSleep()
-      this.props.setPassword(password)
-      this.props.wsEmitPassword(password)
+      this.setFullscreen();
+      this.setNoSleep();
+      this.props.setPassword(password);
+      this.props.wsEmitPassword(password);
     } else {
-      console.log('le password est invalide')
+      console.log('le password est invalide');
     }
-  }
+  };
 
   handleKeyBoardPress = key => {
     if (this.state.password.length < 4) {
       this.setState({
         password: this.state.password + key
-      })
+      });
     }
-  }
+  };
 
   handleKeyBoardPressDelete = key => {
     this.setState({
       password: this.state.password.substring(0, this.state.password.length - 1)
-    })
-  }
+    });
+  };
 
   getTouches = evt => {
-    return evt.touches
-  }
+    return evt.touches;
+  };
 
   handleTouchStart = evt => {
-    const firstTouch = this.getTouches(evt)[0]
-    this.xDown = firstTouch.clientX
-    this.yDown = firstTouch.clientY
-  }
+    const firstTouch = this.getTouches(evt)[0];
+    this.xDown = firstTouch.clientX;
+    this.yDown = firstTouch.clientY;
+  };
 
   handleTouchMove = evt => {
     if (!this.xDown || !this.yDown) {
-      return
+      return;
     }
 
-    let xUp = evt.touches[0].clientX
-    let yUp = evt.touches[0].clientY
+    let xUp = evt.touches[0].clientX;
+    let yUp = evt.touches[0].clientY;
 
-    let xDiff = this.xDown - xUp
-    let yDiff = this.yDown - yUp
+    let xDiff = this.xDown - xUp;
+    let yDiff = this.yDown - yUp;
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       /*most significant*/
@@ -98,76 +99,79 @@ class IntroStep extends Component {
     } else {
       if (yDiff > 0) {
         /* up swipe */
-        const formHeight = this.ref.querySelector('.intro-step__form').clientHeight
-        TweenMax.to(this.ref, 0.8, { ease: Power1.easeInOut, y: `-${formHeight * 0.9}px` })
+        const formHeight = this.ref.querySelector('.intro-step__form').clientHeight;
+        TweenMax.to(this.ref, 0.8, { ease: Power1.easeInOut, y: `-${formHeight * 0.9}px` });
       } else {
         /* down swipe */
-        window.scrollTo(0, 0) // for safari top bar
-        TweenMax.to(this.ref, 0.8, { ease: Power1.easeInOut, y: this.ref._gsTransform.y - this.ref._gsTransform.y })
+        window.scrollTo(0, 0); // for safari top bar
+        TweenMax.to(this.ref, 0.8, { ease: Power1.easeInOut, y: this.ref._gsTransform.y - this.ref._gsTransform.y });
       }
     }
     /* reset values */
-    this.xDown = null
-    this.yDown = null
-  }
+    this.xDown = null;
+    this.yDown = null;
+  };
 
   passwordErrorAnimation = () => {
-    const passwordNumbers = this.ref.querySelectorAll('.intro-step__form__numbers p')
+    const passwordNumbers = this.ref.querySelectorAll('.intro-step__form__numbers p');
     const addError = () => {
-      passwordNumbers.forEach(n => n.classList.add('error'))
-    }
+      passwordNumbers.forEach(n => n.classList.add('error'));
+    };
     const removeError = () => {
-      passwordNumbers.forEach(n => n.classList.remove('error'))
-    }
+      passwordNumbers.forEach(n => n.classList.remove('error'));
+    };
 
     const tl = new TimelineLite({
       onComplete: () => {
-        removeError()
-        this.props.setPasswordError(false)
+        removeError();
+        this.props.setPasswordError(false);
       }
-    })
+    });
 
     tl.add(() => {
-      addError()
-    })
+      addError();
+    });
     tl.add(() => {
-      removeError()
-    }, '+=0.4')
+      removeError();
+    }, '+=0.4');
     tl.add(() => {
-      addError()
-    }, '+=0.4')
-    tl.add(() => {}, '+=0.4')
-  }
+      addError();
+    }, '+=0.4');
+    tl.add(() => {}, '+=0.4');
+  };
 
   componentDidMount() {
-    this.ref.addEventListener('touchstart', this.handleTouchStart, false)
-    this.ref.addEventListener('touchmove', this.handleTouchMove, false)
+    this.ref.addEventListener('touchstart', this.handleTouchStart, false);
+    this.ref.addEventListener('touchmove', this.handleTouchMove, false);
 
-    this.xDown = null
-    this.yDown = null
+    this.xDown = null;
+    this.yDown = null;
 
-    TweenMax.set(this.ref, { y: 0 })
+    TweenMax.set(this.ref, { y: 0 });
   }
 
   componentWillUnmount() {
-    this.ref.removeEventListener('touchstart', this.handleTouchStart, false)
-    this.ref.removeEventListener('touchmove', this.handleTouchMove, false)
+    this.ref.removeEventListener('touchstart', this.handleTouchStart, false);
+    this.ref.removeEventListener('touchmove', this.handleTouchMove, false);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     // change step after connexion
     if (nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
-      this.props.setCurrentStep(steps.LUNCH.name)
+      this.props.setCurrentStep(steps.LUNCH.name);
     }
 
     if (nextProps.passwordError && !this.props.passwordError) {
-      this.passwordErrorAnimation()
+      this.passwordErrorAnimation();
     }
   }
 
   render() {
-    const { isConnected } = this.props
-    const { password } = this.state
+    const {
+      isConnected,
+      intl: { formatMessage }
+    } = this.props;
+    const { password } = this.state;
 
     return (
       <div className="intro-step" ref={ref => (this.ref = ref)}>
@@ -176,13 +180,29 @@ class IntroStep extends Component {
             <source src={logotype} type="video/mp4" />
           </video>
           <p className="intro-step__infos__paragraph">
-            <span className="bold">Blackout</span> est une expérience de survie collabortive, dans un univers alternatif
-            régit par la technologie.
+            <span className="bold">Blackout</span>
+            {formatMessage({
+              id: 'app.intro.1',
+              defaultMessage: ' a collaborative survival experience, in an alternate universe, rulled by technology.'
+            })}
           </p>
           <p className="intro-step__infos__paragraph">
-            Pour lancer une partie, rendez-vous sur <span className="bold">blackout.io</span> à partir d’un ordinateur.
+            {formatMessage({
+              id: 'app.intro.2',
+              defaultMessage: 'To launch the game, go to '
+            })}
+            <span className="bold">blackout.io</span>
+            {formatMessage({
+              id: 'app.intro.3',
+              defaultMessage: ' on a desktop.'
+            })}
           </p>
-          <span className="intro-step__infos__viewmore">Entrez le code</span>
+          <span className="intro-step__infos__viewmore">
+            {formatMessage({
+              id: 'app.intro.4',
+              defaultMessage: 'Enter the code'
+            })}
+          </span>
           <img
             className="intro-step__infos__viewmoreArrow"
             src={AssetsManager.get(assetsToLoad.arrowDonwBlack.name).src}
@@ -209,7 +229,7 @@ class IntroStep extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -217,8 +237,8 @@ const mapStateToProps = state => {
   return {
     isConnected: state.mobile.isConnected,
     passwordError: state.mobile.passwordError
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -228,10 +248,10 @@ const mapDispatchToProps = dispatch => {
     setCurrentStep: currentStep => dispatch(setCurrentStep(currentStep)),
     setPassword: password => dispatch(setPassword({ password })),
     setPasswordError: value => dispatch(setPasswordError(value))
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(IntroStep)
+)(injectIntl(IntroStep));

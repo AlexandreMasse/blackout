@@ -30,7 +30,7 @@ const language = navigator.language.split(/[-_]/)[0]; // language without region
 
 const App =
   isXs() && isMobile() ? (
-    <IntlProvider locale={language} messages={mobileMessages[language]}>
+    <IntlProvider locale={'en'} messages={mobileMessages['en']}>
       <MobileApp />
     </IntlProvider>
   ) : (
