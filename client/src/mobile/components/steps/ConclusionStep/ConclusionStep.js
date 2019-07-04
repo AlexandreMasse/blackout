@@ -1,31 +1,31 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 //redux
-import {connect} from 'react-redux';
-import {disableBodyScroll} from 'body-scroll-lock'
+import { connect } from 'react-redux';
+import { disableBodyScroll } from 'body-scroll-lock';
 
 //lib
-import {TweenMax, Power1, Power2, Back, TimelineMax} from 'gsap'
-import CustomEase from '../../../../vendors/gsap/CustomEase'
+import { TweenMax, Power1, Power2, Back, TimelineMax } from 'gsap';
+import CustomEase from '../../../../vendors/gsap/CustomEase';
+import { injectIntl } from 'react-intl';
 
 //css
-import './ConclusionStep.scss'
+import './ConclusionStep.scss';
 // utils
 
 class ConclusionStep extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.currentCard = 0
+    this.currentCard = 0;
   }
 
-  handleTouchStart = (evt) => {
+  handleTouchStart = evt => {
     const firstTouch = evt.touches[0];
     this.xDown = firstTouch.clientX;
     this.yDown = firstTouch.clientY;
   };
 
-  handleTouchMove = (evt) => {
+  handleTouchMove = evt => {
     if (!this.xDown || !this.yDown) {
       return;
     }
@@ -36,7 +36,8 @@ class ConclusionStep extends Component {
     let xDiff = this.xDown - xUp;
     let yDiff = this.yDown - yUp;
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      /*most significant*/
       if (xDiff > 0) {
         /* left swipe */
       } else {
@@ -45,19 +46,18 @@ class ConclusionStep extends Component {
     } else {
       if (yDiff > 0) {
         /* up swipe */
-        if(this.cards[this.currentCard + 1]) {
+        if (this.cards[this.currentCard + 1]) {
           //this.allowTransition = false
-          this.currentCard = this.currentCard + 1
-          this.nextCard(this.currentCard)
+          this.currentCard = this.currentCard + 1;
+          this.nextCard(this.currentCard);
         }
       } else {
         /* down swipe */
-        if(this.cards[this.currentCard - 1]) {
+        if (this.cards[this.currentCard - 1]) {
           //this.allowTransition = false
-          this.currentCard = this.currentCard - 1
-          this.prevCard(this.currentCard)
+          this.currentCard = this.currentCard - 1;
+          this.prevCard(this.currentCard);
         }
-
       }
     }
     /* reset values */
@@ -65,47 +65,47 @@ class ConclusionStep extends Component {
     this.yDown = null;
   };
 
-  nextCard = (index) => {
-    const tl = new TimelineMax()
+  nextCard = index => {
+    const tl = new TimelineMax();
 
     tl.to(this.cards[index], 0.5, {
       y: 0,
       ease: Power1.easeIn,
-      overwrite: "all",
-    })
+      overwrite: 'all'
+    });
 
-    if(this.cards[index + 1]) {
+    if (this.cards[index + 1]) {
       tl.to(this.cards[index + 1], 0.4, {
-        y: "85vh",
-        overwrite: "none",
+        y: '85vh',
+        overwrite: 'none',
         ease: Back.easeOut
-      })
+      });
     }
+  };
 
-  }
+  prevCard = index => {
+    const tl = new TimelineMax();
 
-  prevCard = (index) => {
-    const tl = new TimelineMax()
-
-    tl.set(this.cards[index],{
-      y: 0,
-    })
-    .to(this.cards[index + 1], 0.7, {
+    tl.set(this.cards[index], {
+      y: 0
+    }).to(this.cards[index + 1], 0.7, {
       y: `85vh`,
-      ease: CustomEase.create("custom", "M0,0 C0.344,0 0.327,1.031 0.702,1.032 0.796,1.032 0.882,1 1,1")
-    })
-      if(this.cards[index + 2]) {
-      tl.
-        to(this.cards[index + 2], 0.7, {
+      ease: CustomEase.create('custom', 'M0,0 C0.344,0 0.327,1.031 0.702,1.032 0.796,1.032 0.882,1 1,1')
+    });
+    if (this.cards[index + 2]) {
+      tl.to(
+        this.cards[index + 2],
+        0.7,
+        {
           y: `${85 * 2}vh`,
-          ease: CustomEase.create("custom", "M0,0 C0.344,0 0.327,1.031 0.702,1.032 0.796,1.032 0.882,1 1,1")
-        }, "-=0.7")
-          .set(this.cards[index + 2], {
-            y: "100vh",
-          })
-      }
-  }
-
+          ease: CustomEase.create('custom', 'M0,0 C0.344,0 0.327,1.031 0.702,1.032 0.796,1.032 0.882,1 1,1')
+        },
+        '-=0.7'
+      ).set(this.cards[index + 2], {
+        y: '100vh'
+      });
+    }
+  };
 
   componentDidMount() {
     this.ref.addEventListener('touchstart', this.handleTouchStart, false);
@@ -114,18 +114,18 @@ class ConclusionStep extends Component {
     this.xDown = null;
     this.yDown = null;
 
-    this.cardsContainer = this.ref.querySelectorAll(".conclusion-step__cards")
+    this.cardsContainer = this.ref.querySelectorAll('.conclusion-step__cards');
 
-    disableBodyScroll(this.cardsContainer)
+    disableBodyScroll(this.cardsContainer);
 
-    this.cards = this.ref.querySelectorAll(".conclusion-step__cards__card")
+    this.cards = this.ref.querySelectorAll('.conclusion-step__cards__card');
 
     TweenMax.set(this.cards[this.currentCard], {
-      y: 0,
-    })
+      y: 0
+    });
     TweenMax.set(this.cards[this.currentCard + 1], {
-      y: "85vh",
-    })
+      y: '85vh'
+    });
   }
 
   componentWillUnmount() {
@@ -134,16 +134,22 @@ class ConclusionStep extends Component {
   }
 
   render() {
+    const {
+      intl: { formatMessage }
+    } = this.props;
 
     return (
-      <div className="conclusion-step" ref={(ref) => this.ref = ref}>
+      <div className="conclusion-step" ref={ref => (this.ref = ref)}>
         <div className="conclusion-step__cards">
           <div className="conclusion-step__cards__card">
-            <p>Aujourd'hui en France, la loi empêche les opérateurs de bloquer l'accès à certains contenus sur internet. </p>
+            <p>
+              Aujourd'hui en France, la loi empêche les opérateurs de bloquer l'accès à certains contenus sur internet.{' '}
+            </p>
             <span className="conclusion-step__cards__number">1/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Elle garantit à toute personne une utilisation des réseaux numériques libre, égale et sans discrimination.
+            <p>
+              Elle garantit à toute personne une utilisation des réseaux numériques libre, égale et sans discrimination.
             </p>
             <span className="conclusion-step__cards__number">2/15</span>
           </div>
@@ -152,22 +158,45 @@ class ConclusionStep extends Component {
             <span className="conclusion-step__cards__number">3/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Sa disparition entraînerait la mise en place d’un réseau à deux vitesse où payer plus permet un meilleur accès.</p>
+            <p>
+              Sa disparition entraînerait la mise en place d’un réseau à deux vitesse où payer plus permet un meilleur
+              accès.
+            </p>
             <span className="conclusion-step__cards__number">4/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>“Ce serait la création d’un internet pour les riches et un internet pour les pauvres.”</p>
-            <p className={"source"}>→ Mounir Mahjoubi,<br/><span>Secrétaire d’état chargé du numérique,<br/> 7 septembre 2018</span></p>
+            <p className={'source'}>
+              → Mounir Mahjoubi,
+              <br />
+              <span>
+                Secrétaire d’état chargé du numérique,
+                <br /> 7 septembre 2018
+              </span>
+            </p>
             <span className="conclusion-step__cards__number">5/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Aux États-Unis, la neutralité du net a été supprimée le 11 juin 2018, contre l’avis de 86% des américains.</p>
-            <p className={"source"}><span>www.aclu.org<br/>6 juin 2018</span></p>
+            <p>
+              Aux États-Unis, la neutralité du net a été supprimée le 11 juin 2018, contre l’avis de 86% des américains.
+            </p>
+            <p className={'source'}>
+              <span>
+                www.aclu.org
+                <br />6 juin 2018
+              </span>
+            </p>
             <span className="conclusion-step__cards__number">6/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>Depuis, presque tous les opérateurs brident le débit de leurs utilisateurs sur Netflix et Youtube.</p>
-            <p className={"source"}><span>https://dd.meddle.mobi/USStats.html,<br/>11 novembre 2018</span></p>
+            <p className={'source'}>
+              <span>
+                https://dd.meddle.mobi/USStats.html,
+                <br />
+                11 novembre 2018
+              </span>
+            </p>
             <span className="conclusion-step__cards__number">7/15</span>
           </div>
           <div className="conclusion-step__cards__card">
@@ -180,7 +209,13 @@ class ConclusionStep extends Component {
           </div>
           <div className="conclusion-step__cards__card">
             <p>Par exemple, 74% des demandeurs d’emploi utilisent internet pour trouver du travail.</p>
-            <p className={"source"}><span>Baromètre CRÉDOC,<br/>juin 2018</span></p>
+            <p className={'source'}>
+              <span>
+                Baromètre CRÉDOC,
+                <br />
+                juin 2018
+              </span>
+            </p>
             <span className="conclusion-step__cards__number">10/15</span>
           </div>
           <div className="conclusion-step__cards__card">
@@ -189,12 +224,24 @@ class ConclusionStep extends Component {
           </div>
           <div className="conclusion-step__cards__card">
             <p>Une personne sur deux y fait des recherches en rapport à sa santé</p>
-            <p className={"source"}><span>Baromètre CRÉDOC,<br/>juin 2018</span></p>
+            <p className={'source'}>
+              <span>
+                Baromètre CRÉDOC,
+                <br />
+                juin 2018
+              </span>
+            </p>
             <span className="conclusion-step__cards__number">11/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>Et deux tiers des français font leurs démarches administratives en ligne.</p>
-            <p className={"source"}><span>Baromètre CRÉDOC,<br/>juin 2018</span></p>
+            <p className={'source'}>
+              <span>
+                Baromètre CRÉDOC,
+                <br />
+                juin 2018
+              </span>
+            </p>
             <span className="conclusion-step__cards__number">12/15</span>
           </div>
           <div className="conclusion-step__cards__card">
@@ -207,10 +254,14 @@ class ConclusionStep extends Component {
           </div>
           <div className="conclusion-step__cards__card">
             <div className="wrap">
-              <p>Préservons-la.<br/>Rendez-vous sur la Quadrature du Net.</p>
-                <a href="https://www.laquadrature.net" target="_blank">
-                  <p>www.laquadrature.net</p>
-                </a>
+              <p>
+                Préservons-la.
+                <br />
+                Rendez-vous sur la Quadrature du Net.
+              </p>
+              <a href="https://www.laquadrature.net" target="_blank">
+                <p>www.laquadrature.net</p>
+              </a>
             </div>
             <span className="conclusion-step__cards__number">15/15</span>
           </div>
@@ -220,14 +271,15 @@ class ConclusionStep extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
-  return {
-  }
-}
+  return {};
+};
 
 const mapDispatchToProps = dispatch => {
-  return {}
-}
+  return {};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConclusionStep);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(ConclusionStep));
