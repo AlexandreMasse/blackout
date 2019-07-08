@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as PIXI from 'pixi.js';
+import { injectIntl } from 'react-intl';
 // import * as THREE from 'three'
 //redux
 import {
@@ -39,24 +40,21 @@ class SceneManager extends Component {
       return this.scenesArray.find(scene => scene.name === currentScene);
     });
 
-    this.currentSceneInstanceArray = this.currentSceneObjectArray.map(
-      (currentSceneObject, index) => {
-        return new currentSceneObject.scene({
-          dispatch: props.dispatch,
-          store: props.store,
-          player: this.players[index],
-          renderer2D: this.renderer2D
-        });
-      }
-    );
+    this.currentSceneInstanceArray = this.currentSceneObjectArray.map((currentSceneObject, index) => {
+      return new currentSceneObject.scene({
+        dispatch: props.dispatch,
+        formatMessage: props.intl.formatMessage,
+        store: props.store,
+        player: this.players[index],
+        renderer2D: this.renderer2D
+      });
+    });
 
     this.nextSceneObjectArray = [null, null];
 
     this.nextSceneInstanceArray = [null, null];
 
-    this.player1SplitScreenPourcentage = props.store.users.find(
-      user => user.id === 'player1'
-    ).splitScreenPercentage;
+    this.player1SplitScreenPourcentage = props.store.users.find(user => user.id === 'player1').splitScreenPercentage;
 
     this.splitScreenPercentageBeforeHandle = null;
     this.handlePourcentage = null;
@@ -85,15 +83,11 @@ class SceneManager extends Component {
   }
 
   initPIXI() {
-    this.renderer2D = new PIXI.autoDetectRenderer(
-      this.canvasObj.width,
-      this.canvasObj.height,
-      {
-        backgroundColor: 0x000000,
-        view: this.canvasObj.el,
-        resolution: window.devicePixelRatio
-      }
-    );
+    this.renderer2D = new PIXI.autoDetectRenderer(this.canvasObj.width, this.canvasObj.height, {
+      backgroundColor: 0x000000,
+      view: this.canvasObj.el,
+      resolution: window.devicePixelRatio
+    });
     this.stage = new PIXI.Container();
     this.ticker = new PIXI.ticker.Ticker();
     this.ticker.start();
@@ -119,10 +113,7 @@ class SceneManager extends Component {
 
   renderScene = time => {
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
-      this.renderer2D.render(
-        currentSceneInstance.container,
-        currentSceneInstance.rt
-      );
+      this.renderer2D.render(currentSceneInstance.container, currentSceneInstance.rt);
       if (currentSceneInstance.needUpdate) {
         currentSceneInstance.update(time);
       }
@@ -131,10 +122,7 @@ class SceneManager extends Component {
     // required only if nextScene enter before currentScene exited
     this.nextSceneInstanceArray.forEach(nextSceneInstance => {
       if (nextSceneInstance) {
-        this.renderer2D.render(
-          nextSceneInstance.container,
-          nextSceneInstance.rt
-        );
+        this.renderer2D.render(nextSceneInstance.container, nextSceneInstance.rt);
         if (nextSceneInstance.needUpdate) {
           nextSceneInstance.update();
         }
@@ -145,7 +133,6 @@ class SceneManager extends Component {
   };
 
   onWindowResize = () => {
-    console.log('yes');
     const { parentRef } = this.props;
     this.renderer2D.resize(parentRef.clientWidth, parentRef.clientHeight);
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
@@ -187,10 +174,9 @@ class SceneManager extends Component {
             x: -3
           });
           if (this.player1SplitScreenPourcentage > 0) {
-            TweenMax.set(
-              this.refScene1.querySelector('.scene-manager__player1__wrapper'),
-              { scaleX: 1 / this.player1SplitScreenPourcentage }
-            );
+            TweenMax.set(this.refScene1.querySelector('.scene-manager__player1__wrapper'), {
+              scaleX: 1 / this.player1SplitScreenPourcentage
+            });
           }
 
           TweenMax.set(this.refScene2, {
@@ -198,10 +184,9 @@ class SceneManager extends Component {
             scaleX: 1 - this.player1SplitScreenPourcentage
           });
           if (this.player1SplitScreenPourcentage < 1) {
-            TweenMax.set(
-              this.refScene2.querySelector('.scene-manager__player2__wrapper'),
-              { scaleX: 1 / (1 - this.player1SplitScreenPourcentage) }
-            );
+            TweenMax.set(this.refScene2.querySelector('.scene-manager__player2__wrapper'), {
+              scaleX: 1 / (1 - this.player1SplitScreenPourcentage)
+            });
           }
         }
       });
@@ -226,27 +211,24 @@ class SceneManager extends Component {
     // check to prevent split screen activation error
     //if current scene index exist do transition
     if (this.currentSceneObjectArray[index]) {
-      this.currentSceneObjectArray[index]
-        .onExit(this.currentSceneInstanceArray[index])
-        .then(() => {
-          if (nextScene) {
-            this.nextScene(nextScene, index);
-          } else {
-            //if scene doesn't exist destroy and pop last scene
-            this.currentSceneObjectArray.pop();
-            this.currentSceneInstanceArray[index].sprite.destroy();
-            this.currentSceneInstanceArray.pop();
-          }
-        });
+      this.currentSceneObjectArray[index].onExit(this.currentSceneInstanceArray[index]).then(() => {
+        if (nextScene) {
+          this.nextScene(nextScene, index);
+        } else {
+          //if scene doesn't exist destroy and pop last scene
+          this.currentSceneObjectArray.pop();
+          this.currentSceneInstanceArray[index].sprite.destroy();
+          this.currentSceneInstanceArray.pop();
+        }
+      });
     } else {
       // if scene index doesn't exist : create object and instance of missing scene
       this.currentSceneObjectArray[index] = this.scenesArray.find(
         scene => scene.name === this.props.currentScene[index]
       );
-      this.currentSceneInstanceArray[index] = new this.currentSceneObjectArray[
-        index
-      ].scene({
+      this.currentSceneInstanceArray[index] = new this.currentSceneObjectArray[index].scene({
         dispatch: this.props.dispatch,
+        formatMessage: this.props.intl.formatMessage,
         store: this.props.store,
         player: this.players[index],
         renderer2D: this.renderer2D
@@ -257,19 +239,23 @@ class SceneManager extends Component {
   }
 
   nextScene = (nextScene, index) => {
-    const { dispatch, store } = this.props;
+    const {
+      dispatch,
+      store,
+      intl: { formatMessage }
+    } = this.props;
     const player = this.players[index];
 
-    this.nextSceneObjectArray[index] = this.scenesArray.find(
-      scene => scene.name === nextScene
-    );
-    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[
-      index
-    ].scene({ dispatch, store, player, renderer2D: this.renderer2D });
+    this.nextSceneObjectArray[index] = this.scenesArray.find(scene => scene.name === nextScene);
+    this.nextSceneInstanceArray[index] = new this.nextSceneObjectArray[index].scene({
+      dispatch,
+      formatMessage,
+      store,
+      player,
+      renderer2D: this.renderer2D
+    });
     this.stage.addChild(this.nextSceneInstanceArray[index].sprite);
-    this.nextSceneObjectArray[index]
-      .onEnter(this.nextSceneInstanceArray[index])
-      .then(() => {});
+    this.nextSceneObjectArray[index].onEnter(this.nextSceneInstanceArray[index]).then(() => {});
     this.currentSceneInstanceArray[index].sprite.destroy();
     this.currentSceneInstanceArray[index] = this.nextSceneInstanceArray[index];
     this.nextSceneInstanceArray[index] = null;
@@ -285,28 +271,20 @@ class SceneManager extends Component {
   };
 
   onStairProgression1 = stairProgressionPlayer1 => {
-    let stairProgressionPlayer2 = this.props.store.users.find(
-      user => user.id === 'player2'
-    ).stairsProgression;
+    let stairProgressionPlayer2 = this.props.store.users.find(user => user.id === 'player2').stairsProgression;
     let advantage = stairProgressionPlayer1 - stairProgressionPlayer2;
     // console.log('ADVANTAGE ===', advantage)
     let currentSplitScreenPercentage = 0.5;
     const splitScreenPercentage = currentSplitScreenPercentage + advantage;
-    this.props.dispatch(
-      setPlayer1SplitScreenPercentage({ splitScreenPercentage })
-    );
+    this.props.dispatch(setPlayer1SplitScreenPercentage({ splitScreenPercentage }));
   };
 
   onStairProgression2 = stairProgressionPlayer2 => {
-    let stairProgressionPlayer1 = this.props.store.users.find(
-      user => user.id === 'player1'
-    ).stairsProgression;
+    let stairProgressionPlayer1 = this.props.store.users.find(user => user.id === 'player1').stairsProgression;
     let advantage = stairProgressionPlayer1 - stairProgressionPlayer2;
     let currentSplitScreenPercentage = 0.5;
     const splitScreenPercentage = currentSplitScreenPercentage + advantage;
-    this.props.dispatch(
-      setPlayer1SplitScreenPercentage({ splitScreenPercentage })
-    );
+    this.props.dispatch(setPlayer1SplitScreenPercentage({ splitScreenPercentage }));
   };
 
   // handle
@@ -321,9 +299,7 @@ class SceneManager extends Component {
       const splitScreenPercentage = isPlayer1
         ? this.splitScreenPercentageBeforeHandle + handlePourcentage
         : this.splitScreenPercentageBeforeHandle - handlePourcentage;
-      this.props.dispatch(
-        setPlayer1SplitScreenPercentage({ splitScreenPercentage })
-      );
+      this.props.dispatch(setPlayer1SplitScreenPercentage({ splitScreenPercentage }));
 
       // TODO: play sound when handle is 80%
       if (handle >= 0.98) {
@@ -362,9 +338,7 @@ class SceneManager extends Component {
     const app = window.document.querySelector('.desktop-app');
 
     const duration =
-      (this.overlayMaxDuration - this.overlayMinDuration) *
-        (1 - this.handlePourcentage) +
-      this.overlayMinDuration;
+      (this.overlayMaxDuration - this.overlayMinDuration) * (1 - this.handlePourcentage) + this.overlayMinDuration;
 
     root.classList.add('overlay');
     app.classList.add('overlay');
@@ -483,35 +457,23 @@ class SceneManager extends Component {
       prevProps.store.users.find(user => user.id === 'player1').handle !==
       this.props.store.users.find(user => user.id === 'player1').handle
     ) {
-      this.onReceiveHandle(
-        this.props.store.users.find(user => user.id === 'player1').handle,
-        'player1'
-      );
+      this.onReceiveHandle(this.props.store.users.find(user => user.id === 'player1').handle, 'player1');
     }
     // player 2 handle change
     if (
       prevProps.store.users.find(user => user.id === 'player2').handle !==
       this.props.store.users.find(user => user.id === 'player2').handle
     ) {
-      this.onReceiveHandle(
-        this.props.store.users.find(user => user.id === 'player2').handle,
-        'player2'
-      );
+      this.onReceiveHandle(this.props.store.users.find(user => user.id === 'player2').handle, 'player2');
     }
 
     // stair progression Player1
     if (
-      prevProps.store.users.find(user => user.id === 'player1')
-        .stairsProgression !==
-      this.props.store.users.find(user => user.id === 'player1')
-        .stairsProgression
+      prevProps.store.users.find(user => user.id === 'player1').stairsProgression !==
+      this.props.store.users.find(user => user.id === 'player1').stairsProgression
     ) {
-      let stairsProgression1 = this.props.store.users.find(
-        user => user.id === 'player1'
-      ).stairsProgression;
-      let stairsProgression2 = this.props.store.users.find(
-        user => user.id === 'player2'
-      ).stairsProgression;
+      let stairsProgression1 = this.props.store.users.find(user => user.id === 'player1').stairsProgression;
+      let stairsProgression2 = this.props.store.users.find(user => user.id === 'player2').stairsProgression;
       if (stairsProgression1 < 0.34 && stairsProgression2 < 0.34) {
         this.onStairProgression1(stairsProgression1);
       }
@@ -519,17 +481,11 @@ class SceneManager extends Component {
 
     // stair progression Player2
     if (
-      prevProps.store.users.find(user => user.id === 'player2')
-        .stairsProgression !==
-      this.props.store.users.find(user => user.id === 'player2')
-        .stairsProgression
+      prevProps.store.users.find(user => user.id === 'player2').stairsProgression !==
+      this.props.store.users.find(user => user.id === 'player2').stairsProgression
     ) {
-      let stairsProgression2 = this.props.store.users.find(
-        user => user.id === 'player2'
-      ).stairsProgression;
-      let stairsProgression1 = this.props.store.users.find(
-        user => user.id === 'player1'
-      ).stairsProgression;
+      let stairsProgression2 = this.props.store.users.find(user => user.id === 'player2').stairsProgression;
+      let stairsProgression1 = this.props.store.users.find(user => user.id === 'player1').stairsProgression;
       if (stairsProgression1 < 0.34 && stairsProgression2 < 0.34) {
         this.onStairProgression2(stairsProgression2);
       }
@@ -537,23 +493,16 @@ class SceneManager extends Component {
 
     // update player 1 scene split screen percentage
     if (
-      prevProps.store.users.find(user => user.id === 'player1')
-        .splitScreenPercentage !==
-      this.props.store.users.find(user => user.id === 'player1')
-        .splitScreenPercentage
+      prevProps.store.users.find(user => user.id === 'player1').splitScreenPercentage !==
+      this.props.store.users.find(user => user.id === 'player1').splitScreenPercentage
     ) {
-      this.calculWidthScene(
-        this.props.store.users.find(user => user.id === 'player1')
-          .splitScreenPercentage
-      );
+      this.calculWidthScene(this.props.store.users.find(user => user.id === 'player1').splitScreenPercentage);
     }
 
     if (
       prevProps.store.users.find(user => user.id === 'player1').isConnected !==
-        this.props.store.users.find(user => user.id === 'player1')
-          .isConnected &&
-      this.props.store.users.find(user => user.id === 'player1').isConnected ===
-        false
+        this.props.store.users.find(user => user.id === 'player1').isConnected &&
+      this.props.store.users.find(user => user.id === 'player1').isConnected === false
     ) {
       this.ticker.stop();
       this.currentSceneInstanceArray.forEach(currentSceneInstance => {
@@ -565,10 +514,8 @@ class SceneManager extends Component {
 
     if (
       prevProps.store.users.find(user => user.id === 'player2').isConnected !==
-        this.props.store.users.find(user => user.id === 'player2')
-          .isConnected &&
-      this.props.store.users.find(user => user.id === 'player2').isConnected ===
-        false
+        this.props.store.users.find(user => user.id === 'player2').isConnected &&
+      this.props.store.users.find(user => user.id === 'player2').isConnected === false
     ) {
       this.ticker.stop();
       this.currentSceneInstanceArray.forEach(currentSceneInstance => {
@@ -620,11 +567,7 @@ class SceneManager extends Component {
               onEnter={this.onEnterRollingNumber}
               onExit={this.onExitRollingNumber}
             >
-              <RollingNumber
-                className={'desktop'}
-                numbers={player1.code}
-                isMobile={false}
-              />
+              <RollingNumber className={'desktop'} numbers={player1.code} isMobile={false} />
             </Transition>
 
             <Transition
@@ -690,11 +633,7 @@ class SceneManager extends Component {
               onEnter={this.onEnterRollingNumber}
               onExit={this.onExitRollingNumber}
             >
-              <RollingNumber
-                className={'desktop'}
-                numbers={player2.code}
-                isMobile={false}
-              />
+              <RollingNumber className={'desktop'} numbers={player2.code} isMobile={false} />
             </Transition>
 
             <Transition
@@ -738,4 +677,4 @@ SceneManager.propTypes = {
 };
 SceneManager.defaultProps = {};
 
-export default SceneManager;
+export default injectIntl(SceneManager);

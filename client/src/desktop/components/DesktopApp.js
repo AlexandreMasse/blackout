@@ -8,11 +8,14 @@ import {
   setAppLoaded,
   setCurrentScene,
   setCurrentStep,
+  setUserIndicationTitle,
+  setUserIndicationDescription,
   setUserIndicationActive,
   setUserIndicationOpen,
   setSplitScreen,
   setUserCurrentScene,
-  setPlayer1SplitScreenPercentage
+  setPlayer1SplitScreenPercentage,
+  setLang
 } from '../redux/actions/desktopAction';
 //assets
 import load from '../../vendors/assets-loader';
@@ -24,6 +27,8 @@ import steps from './steps';
 //utils
 import { toggleFullscreen } from '../../utils';
 import classNames from 'classnames';
+// libs
+import { injectIntl } from 'react-intl';
 // style
 import './DesktopApp.scss';
 //scenes
@@ -34,6 +39,8 @@ class DesktopApp extends Component {
     super(props);
 
     this.props.wsEmitDeviceType('desktop');
+    const language = navigator.language.split(/[-_]/)[0]; // language without region code
+    this.props.setLang(language);
     this.props.setCurrentStep(steps.CONNEXION.name);
 
     window.addEventListener('resize', this.handleWindowResize);
@@ -59,6 +66,34 @@ class DesktopApp extends Component {
     document.querySelector('html').style.fontSize = 10 * ratio + 'px';
   };
 
+  setfirstIndication = () => {
+    this.props.setUserIndicationTitle(
+      'player1',
+      this.props.intl.formatMessage({ id: 'app.flash.on', defaultMessage: 'Turn on your flashlight' })
+    );
+
+    this.props.setUserIndicationDescription(
+      'player1',
+      this.props.intl.formatMessage({
+        id: 'app.flash.on.indication.1',
+        defaultMessage: 'Aim at the left + and press the button.'
+      })
+    );
+
+    this.props.setUserIndicationTitle(
+      'player2',
+      this.props.intl.formatMessage({ id: 'app.flash.on', defaultMessage: 'Turn on your flashlight' })
+    );
+
+    this.props.setUserIndicationDescription(
+      'player2',
+      this.props.intl.formatMessage({
+        id: 'app.flash.on.indication.2',
+        defaultMessage: 'Aim at the right + and press the button.'
+      })
+    );
+  };
+
   assetLoaded = () => {
     load
       .any(assetsToLoad, ev => {})
@@ -66,7 +101,7 @@ class DesktopApp extends Component {
         window.assets = assets;
         this.setState({
           isAssetsLoaded: true
-        })
+        });
       });
   };
 
@@ -74,28 +109,36 @@ class DesktopApp extends Component {
     this.assetLoaded();
     // Indication.initTimeline()
   }
+  componentDidMount() {
+    this.setfirstIndication();
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // assets loaded + server ready = app loaded
-    if((!prevState.isAssetsLoaded || !prevState.isServerReady) && (this.state.isAssetsLoaded && this.state.isServerReady)) {
+    if (
+      (!prevState.isAssetsLoaded || !prevState.isServerReady) &&
+      (this.state.isAssetsLoaded && this.state.isServerReady)
+    ) {
       this.props.setAppLoaded();
     }
 
     // receive roomId = server ready
-    if(this.props.roomId !== null && prevProps.roomId !== this.props.roomId) {
+    if (this.props.roomId !== null && prevProps.roomId !== this.props.roomId) {
       this.setState({
         isServerReady: true
-      })
+      });
     }
   }
 
   render() {
     const {
+      intl: { formatMessage },
       isLoaded,
       currentStep,
       isPlayer1Connected,
       isPlayer2Connected
     } = this.props;
+
     return (
       <div className="app desktop-app">
         {!isLoaded ? (
@@ -109,6 +152,7 @@ class DesktopApp extends Component {
             {!isPlayer2Connected && currentStep === 'SCENE' &&
               <Deconnection player={"player 2"} />
             } */}
+
             <p
               className={'dev-toggle'}
               onClick={() => {
@@ -122,32 +166,12 @@ class DesktopApp extends Component {
                 show: this.state.showDevButton
               })}
             >
-              <p
-                onClick={() => this.props.setCurrentStep(steps.CONCLUSION.name)}
-              >
-                Step : Conclusion
-              </p>
-              <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>
-                Step : analysis
-              </p>
-              <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>
-                Step : scene
-              </p>
+              <p onClick={() => this.props.setCurrentStep(steps.CONCLUSION.name)}>Step : Conclusion</p>
+              <p onClick={() => this.props.setCurrentStep(steps.ANALYSIS.name)}>Step : analysis</p>
+              <p onClick={() => this.props.setCurrentStep(steps.SCENE.name)}>Step : scene</p>
               <hr />
-              <p
-                onClick={() =>
-                  this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)
-                }
-              >
-                Scene : flashlight
-              </p>
-              <p
-                onClick={() =>
-                  this.props.setCurrentScene(scenes.SCENEKINEMATIC2.name)
-                }
-              >
-                Scene : kinematic 2
-              </p>
+              <p onClick={() => this.props.setCurrentScene(scenes.SCENEFLASHLIGHT.name)}>Scene : flashlight</p>
+              <p onClick={() => this.props.setCurrentScene(scenes.SCENEKINEMATIC2.name)}>Scene : kinematic 2</p>
               <hr />
               <p
                 onClick={() => {
@@ -156,81 +180,30 @@ class DesktopApp extends Component {
               >
                 SplitScreen : true
               </p>
-              <p
-                onClick={() =>
-                  this.props.setUserCurrentScene(
-                    'player1',
-                    scenes.SCENESTAIRS.name
-                  )
-                }
-              >
+              <p onClick={() => this.props.setUserCurrentScene('player1', scenes.SCENESTAIRS.name)}>
                 Player 1 Scene : stair
               </p>
-              <p
-                onClick={() =>
-                  this.props.setUserCurrentScene(
-                    'player2',
-                    scenes.SCENESTAIRS.name
-                  )
-                }
-              >
+              <p onClick={() => this.props.setUserCurrentScene('player2', scenes.SCENESTAIRS.name)}>
                 Player 2 Scene : stair
               </p>
-              <p
-                onClick={() =>
-                  this.props.setUserCurrentScene(
-                    'player1',
-                    scenes.SCENEDOOR.name
-                  )
-                }
-              >
+              <p onClick={() => this.props.setUserCurrentScene('player1', scenes.SCENEDOOR.name)}>
                 Player 1 Scene : Door
               </p>
-              <p
-                onClick={() =>
-                  this.props.setUserCurrentScene(
-                    'player2',
-                    scenes.SCENEDOOR.name
-                  )
-                }
-              >
+              <p onClick={() => this.props.setUserCurrentScene('player2', scenes.SCENEDOOR.name)}>
                 Player 2 Scene : Door
               </p>
               <hr />
-              <p
-                onClick={() =>
-                  this.props.setUserIndicationActive('player1', true)
-                }
-              >
-                Indication : player 1 active
-              </p>
-              <p
-                onClick={() =>
-                  this.props.setUserIndicationOpen('player1', false)
-                }
-              >
-                Indication : player 1 not open
-              </p>
-              <p
-                onClick={() =>
-                  this.props.setUserIndicationOpen('player1', true)
-                }
-              >
-                Indication : player 1 open
-              </p>
-              <p
-                onClick={() =>
-                  this.props.setUserIndicationActive('player1', false)
-                }
-              >
+              <p onClick={() => this.props.setUserIndicationActive('player1', true)}>Indication : player 1 active</p>
+              <p onClick={() => this.props.setUserIndicationOpen('player1', false)}>Indication : player 1 not open</p>
+              <p onClick={() => this.props.setUserIndicationOpen('player1', true)}>Indication : player 1 open</p>
+              <p onClick={() => this.props.setUserIndicationActive('player1', false)}>
                 Indication : player 1 not active
               </p>
               <hr />
+              <h1 className="App-title">{formatMessage({ id: 'app.title' })}</h1>
               <input
                 onChange={e => {
-                  this.props.setPlayer1SplitScreenPercentage(
-                    Number(e.target.value) / 100
-                  );
+                  this.props.setPlayer1SplitScreenPercentage(Number(e.target.value) / 100);
                   this.setState({ splitScreenPercentage: e.target.value });
                 }}
                 className="range"
@@ -268,27 +241,25 @@ const mapStateToProps = state => {
     isLoaded: state.desktop.app.isLoaded,
     roomId: state.desktop.roomId,
     currentStep: state.desktop.currentStep,
-    isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1')
-      .isConnected,
-    isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2')
-      .isConnected
+    isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1').isConnected,
+    isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2').isConnected
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setLang: lang => dispatch(setLang(lang)),
     wsEmitDeviceType: type => dispatch(wsEmitDeviceType({ type })),
     setAppLoaded: () => dispatch(setAppLoaded()),
+    setUserIndicationTitle: (userId, title) => dispatch(setUserIndicationTitle({ userId, title })),
+    setUserIndicationDescription: (userId, description) =>
+      dispatch(setUserIndicationDescription({ userId, description })),
     setCurrentStep: currentStep => dispatch(setCurrentStep(currentStep)),
     setCurrentScene: currentScene => dispatch(setCurrentScene(currentScene)),
-    setUserIndicationActive: (userId, isActive) =>
-      dispatch(setUserIndicationActive({ userId, isActive })),
-    setUserIndicationOpen: (userId, isOpen) =>
-      dispatch(setUserIndicationOpen({ userId, isOpen })),
-    setUserCurrentScene: (userId, currentScene) =>
-      dispatch(setUserCurrentScene({ userId, currentScene })),
-    setSplitScreen: isSplitScreen =>
-      dispatch(setSplitScreen({ isSplitScreen })),
+    setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({ userId, isActive })),
+    setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({ userId, isOpen })),
+    setUserCurrentScene: (userId, currentScene) => dispatch(setUserCurrentScene({ userId, currentScene })),
+    setSplitScreen: isSplitScreen => dispatch(setSplitScreen({ isSplitScreen })),
     setPlayer1SplitScreenPercentage: splitScreenPercentage =>
       dispatch(setPlayer1SplitScreenPercentage({ splitScreenPercentage }))
   };
@@ -297,7 +268,7 @@ const mapDispatchToProps = dispatch => {
 const DesktopAppConnected = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DesktopApp);
+)(injectIntl(DesktopApp));
 
 export default () => (
   <Provider store={configureStore()}>

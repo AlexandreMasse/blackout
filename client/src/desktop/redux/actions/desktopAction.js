@@ -1,85 +1,92 @@
-import desktopActionTypes from './desktopActionTypes'
+import desktopActionTypes from './desktopActionTypes';
 
-export const setAppLoaded = (payload) => (dispatch) => {
- dispatch({
-  type: desktopActionTypes.SET_APP_LOADED,
-  payload
- })
-}
+export const setAppLoaded = payload => dispatch => {
+  dispatch({
+    type: desktopActionTypes.SET_APP_LOADED,
+    payload
+  });
+};
 
-export const setCurrentStep = (currentStep) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_CURRENT_STEP,
-  currentStep
- })
-}
+export const setLang = lang => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_LANG,
+    lang
+  });
+};
 
-export const setCurrentScene = (currentScene) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_CURRENT_SCENE,
-  currentScene
- })
-}
+export const setCurrentStep = currentStep => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_CURRENT_STEP,
+    currentStep
+  });
+};
 
-export const setSplitScreen = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_SPLIT_SCREEN,
-  payload
- })
-}
+export const setCurrentScene = currentScene => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_CURRENT_SCENE,
+    currentScene
+  });
+};
 
-export const setUserCurrentScene = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_CURRENT_SCENE,
-  payload
- })
-}
+export const setSplitScreen = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_SPLIT_SCREEN,
+    payload
+  });
+};
 
-export const setUserIndicationActive = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_INDICATION_ACTIVE,
-  payload
- })
-}
+export const setUserCurrentScene = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_CURRENT_SCENE,
+    payload
+  });
+};
 
-export const setUserIndicationOpen = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_INDICATION_OPEN,
-  payload
- })
-}
+export const setUserIndicationActive = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_INDICATION_ACTIVE,
+    payload
+  });
+};
 
-export const setUserIndicationTitle = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_INDICATION_TITLE,
-  payload
- })
-}
+export const setUserIndicationOpen = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_INDICATION_OPEN,
+    payload
+  });
+};
 
-export const setUserIndicationDescription = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_INDICATION_DESCRIPTION,
-  payload
- })
-}
+export const setUserIndicationTitle = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_INDICATION_TITLE,
+    payload
+  });
+};
 
-export const setUserIndicationTheme = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_INDICATION_THEME,
-  payload
- })
-}
+export const setUserIndicationDescription = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_INDICATION_DESCRIPTION,
+    payload
+  });
+};
 
-export const setStairsProgression = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_USER_STAIRS_PROGRESSION,
-  payload
- })
-}
+export const setUserIndicationTheme = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_INDICATION_THEME,
+    payload
+  });
+};
 
-export const setPlayer1SplitScreenPercentage = (payload) => (dispatch, getState, {emit}) => {
- dispatch({
-  type: desktopActionTypes.SET_PLAYER1_SPLIT_SCREEN_PERCENTAGE,
-  payload
- })
-}
+export const setStairsProgression = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_USER_STAIRS_PROGRESSION,
+    payload
+  });
+};
+
+export const setPlayer1SplitScreenPercentage = payload => (dispatch, getState, { emit }) => {
+  dispatch({
+    type: desktopActionTypes.SET_PLAYER1_SPLIT_SCREEN_PERCENTAGE,
+    payload
+  });
+};

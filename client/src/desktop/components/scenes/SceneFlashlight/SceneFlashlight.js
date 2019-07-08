@@ -1,8 +1,8 @@
-import * as PIXI from "pixi.js";
+import * as PIXI from 'pixi.js';
 // import * as dat from 'dat.gui'
-import { Howl } from "howler";
-import { AssetsManager } from "../../../../managers";
-import { TweenMax, RoughEase, TimelineMax } from "gsap";
+import { Howl } from 'howler';
+import { AssetsManager } from '../../../../managers';
+import { TweenMax, RoughEase, TimelineMax } from 'gsap';
 //redux
 import {
   setCurrentScene,
@@ -11,22 +11,23 @@ import {
   setUserIndicationActive,
   setUserIndicationOpen,
   setUserIndicationTheme
-} from "../../../redux/actions/desktopAction";
-import { wsEmitCurrentStep } from "../../../redux/actions/websockets/websocketsAction";
+} from '../../../redux/actions/desktopAction';
+import { wsEmitCurrentStep } from '../../../redux/actions/websockets/websocketsAction';
 // components
-import { themes as IndicationThemes } from "../../components/Indication/Indication";
+import { themes as IndicationThemes } from '../../components/Indication/Indication';
 //scenes
-import scenes from "..";
-import stepsMobile from "../../../../mobile/components/steps";
+import scenes from '..';
+import stepsMobile from '../../../../mobile/components/steps';
 // scenes utils
-import { setFullScreen, collisionDetection } from "../utils";
+import { setFullScreen, collisionDetection } from '../utils';
 // general utils
-import { requestTimeout, clearRequestTimeout } from "../../../../utils";
+import { requestTimeout, clearRequestTimeout } from '../../../../utils';
 //transition
-import { onEnterTimeout } from "./transition";
+import { onEnterTimeout } from './transition';
 
-export default class SceneFlashlight {
-  constructor({ dispatch, store }) {
+class SceneFlashlight {
+  constructor({ dispatch, store, formatMessage }) {
+    this.formatMessage = formatMessage;
     this.dispatch = dispatch;
     this.store = store;
     this.needUpdate = true;
@@ -64,19 +65,11 @@ export default class SceneFlashlight {
 
   // required
   updateStore(newStore) {
-    this.currentPlayer1Position = this.store.users.find(
-      user => user.id === "player1"
-    ).position;
-    this.newPlayer1Position = newStore.users.find(
-      user => user.id === "player1"
-    ).position;
+    this.currentPlayer1Position = this.store.users.find(user => user.id === 'player1').position;
+    this.newPlayer1Position = newStore.users.find(user => user.id === 'player1').position;
 
-    this.currentPlayer1LightState = this.store.users.find(
-      user => user.id === "player1"
-    ).isLightOn;
-    this.newPlayer1LightState = newStore.users.find(
-      user => user.id === "player1"
-    ).isLightOn;
+    this.currentPlayer1LightState = this.store.users.find(user => user.id === 'player1').isLightOn;
+    this.newPlayer1LightState = newStore.users.find(user => user.id === 'player1').isLightOn;
 
     if (this.currentPlayer1LightState !== this.newPlayer1LightState) {
       if (this.newPlayer1LightState) {
@@ -96,19 +89,11 @@ export default class SceneFlashlight {
       }
     }
 
-    this.currentPlayer2Position = this.store.users.find(
-      user => user.id === "player2"
-    ).position;
-    this.newPlayer2Position = newStore.users.find(
-      user => user.id === "player2"
-    ).position;
+    this.currentPlayer2Position = this.store.users.find(user => user.id === 'player2').position;
+    this.newPlayer2Position = newStore.users.find(user => user.id === 'player2').position;
 
-    this.currentPlayer2LightState = this.store.users.find(
-      user => user.id === "player2"
-    ).isLightOn;
-    this.newPlayer2LightState = newStore.users.find(
-      user => user.id === "player2"
-    ).isLightOn;
+    this.currentPlayer2LightState = this.store.users.find(user => user.id === 'player2').isLightOn;
+    this.newPlayer2LightState = newStore.users.find(user => user.id === 'player2').isLightOn;
 
     if (this.currentPlayer2LightState !== this.newPlayer2LightState) {
       if (this.newPlayer2LightState) {
@@ -130,7 +115,7 @@ export default class SceneFlashlight {
   }
 
   initBackgroundSound() {
-    const flashSoundAsset = AssetsManager.get("flashSound");
+    const flashSoundAsset = AssetsManager.get('flashSound');
     this.flashSound = new Howl({
       src: flashSoundAsset.src,
       volume: 0.3,
@@ -138,32 +123,28 @@ export default class SceneFlashlight {
       preload: true,
       autoplay: false,
       loop: true,
-      format: ["mp3"]
+      format: ['mp3']
     });
   }
 
   getUsersStatus() {
-    this.statusUser1 = this.store.users.find(
-      user => user.id === "player1"
-    ).status;
-    this.statusUser2 = this.store.users.find(
-      user => user.id === "player2"
-    ).status;
+    this.statusUser1 = this.store.users.find(user => user.id === 'player1').status;
+    this.statusUser2 = this.store.users.find(user => user.id === 'player2').status;
 
-    console.log("status1", this.statusUser1);
-    console.log("status2", this.statusUser2);
+    console.log('status1', this.statusUser1);
+    console.log('status2', this.statusUser2);
   }
 
   deskLight() {
     this.isSoundStart = false;
-    const gresillementtAsset = AssetsManager.get("gresillement");
+    const gresillementtAsset = AssetsManager.get('gresillement');
     const gresillement = new Howl({
       src: gresillementtAsset.src,
       volume: 0.3,
       html5: true,
       preload: true,
       autoplay: false,
-      format: ["mp3"]
+      format: ['mp3']
     });
 
     const randomTime = () => {
@@ -177,7 +158,7 @@ export default class SceneFlashlight {
   }
 
   init() {
-    console.log("scene flashlight init");
+    console.log('scene flashlight init');
     this.container = new PIXI.Container();
     this.initBackgroundUser();
     this.initBackgroundUser2();
@@ -186,12 +167,7 @@ export default class SceneFlashlight {
     this.fillBox2();
     this.isDiscover = false;
     this.addToScene();
-    this.brt = new PIXI.BaseRenderTexture(
-      this.sceneWH.width,
-      this.sceneWH.height,
-      PIXI.SCALE_MODES.LINEAR,
-      1
-    );
+    this.brt = new PIXI.BaseRenderTexture(this.sceneWH.width, this.sceneWH.height, PIXI.SCALE_MODES.LINEAR, 1);
     this.rt = new PIXI.RenderTexture(this.brt);
     this.sprite = new PIXI.Sprite(this.rt);
     setFullScreen(this.sprite, this.sceneWH.width, this.sceneWH.height);
@@ -200,13 +176,13 @@ export default class SceneFlashlight {
     //indication
     this.dispatch(
       setUserIndicationTheme({
-        userId: "player1",
+        userId: 'player1',
         theme: IndicationThemes.white
       })
     );
     this.dispatch(
       setUserIndicationTheme({
-        userId: "player2",
+        userId: 'player2',
         theme: IndicationThemes.white
       })
     );
@@ -214,13 +190,13 @@ export default class SceneFlashlight {
     requestTimeout(() => {
       this.dispatch(
         setUserIndicationActive({
-          userId: "player1",
+          userId: 'player1',
           isActive: true
         })
       );
       this.dispatch(
         setUserIndicationActive({
-          userId: "player2",
+          userId: 'player2',
           isActive: true
         })
       );
@@ -244,21 +220,24 @@ export default class SceneFlashlight {
     this.isOff = false;
     this.dispatch(
       setUserIndicationTitle({
-        userId: "player1",
-        title: " Retrouvez le générateur"
+        userId: 'player1',
+        title: this.formatMessage({ id: 'app.indication.dynamo', defaultMessage: 'Find the dynamo' })
       })
     );
     this.dispatch(
       setUserIndicationDescription({
-        userId: "player1",
-        description: "Visez tous les deux vers l’appareil."
+        userId: 'player1',
+        description: this.formatMessage({
+          id: 'app.indication.dynamo.sentence',
+          defaultMessage: 'Both of you have to aim at the device.'
+        })
       })
     );
 
     requestTimeout(() => {
       this.dispatch(
         setUserIndicationOpen({
-          userId: "player1",
+          userId: 'player1',
           isOpen: false
         })
       );
@@ -295,21 +274,24 @@ export default class SceneFlashlight {
     this.isOff2 = false;
     this.dispatch(
       setUserIndicationTitle({
-        userId: "player2",
-        title: " Retrouvez le générateur"
+        userId: 'player2',
+        title: this.formatMessage({ id: 'app.indication.dynamo', defaultMessage: 'Find the dynamo' })
       })
     );
     this.dispatch(
       setUserIndicationDescription({
-        userId: "player2",
-        description: "Visez tous les deux vers l’appareil."
+        userId: 'player2',
+        description: this.formatMessage({
+          id: 'app.indication.dynamo.sentence',
+          defaultMessage: 'Both of you have to aim at the device.'
+        })
       })
     );
 
     requestTimeout(() => {
       this.dispatch(
         setUserIndicationOpen({
-          userId: "player2",
+          userId: 'player2',
           isOpen: false
         })
       );
@@ -370,23 +352,23 @@ export default class SceneFlashlight {
   nextScene() {
     this.dispatch(
       setUserIndicationActive({
-        userId: "player1",
+        userId: 'player1',
         isActive: false
       })
     );
 
     this.dispatch(
       setUserIndicationActive({
-        userId: "player2",
+        userId: 'player2',
         isActive: false
       })
     );
 
     const tl = new TimelineMax({
       onComplete: () => {
-        console.log("vers la scène suivante mané");
+        // console.log('vers la scène suivante mané')
         this.flashSound.fade(1, 0, 2000);
-        this.flashSound.once("fade", () => {
+        this.flashSound.once('fade', () => {
           this.flashSound.stop();
         });
         const currentStep = stepsMobile.SLIDER.name;
@@ -396,7 +378,7 @@ export default class SceneFlashlight {
     });
 
     // sprite 1 user 1
-    tl.addLabel("sp1user1");
+    tl.addLabel('sp1user1');
     tl.to(this.spriteBureau1, 0, { alpha: 0 }, 0.2);
     tl.to(this.spriteBureau1, 0, { alpha: 1 }, 0.4);
     tl.to(this.spriteBureau1, 0, { alpha: 0 }, 0.6);
@@ -404,7 +386,7 @@ export default class SceneFlashlight {
     tl.to(this.spriteBureau1, 0, { alpha: 0 }, 1);
 
     // sprite 2 user 1
-    tl.addLabel("sp2user1");
+    tl.addLabel('sp2user1');
     tl.to(this.spriteBureau2, 0, { alpha: 0 }, 0.2);
     tl.to(this.spriteBureau2, 0, { alpha: 1 }, 0.4);
     tl.to(this.spriteBureau2, 0, { alpha: 0 }, 0.6);
@@ -412,7 +394,7 @@ export default class SceneFlashlight {
     tl.to(this.spriteBureau2, 0, { alpha: 0 }, 1);
 
     // sprite 3 user 1
-    tl.addLabel("sp3user1");
+    tl.addLabel('sp3user1');
     tl.to(this.spriteBureau3, 0, { alpha: 0 }, 0.2);
     tl.to(this.spriteBureau3, 0, { alpha: 1 }, 0.4);
     tl.to(this.spriteBureau3, 0, { alpha: 0 }, 0.6);
@@ -420,7 +402,7 @@ export default class SceneFlashlight {
     tl.to(this.spriteBureau3, 0, { alpha: 0 }, 1);
 
     // sprite 1 user 2
-    tl.addLabel("sp1user2");
+    tl.addLabel('sp1user2');
     tl.to(this.spriteBureau1_2, 0, { alpha: 0 }, 0.2);
     tl.to(this.spriteBureau1_2, 0, { alpha: 1 }, 0.4);
     tl.to(this.spriteBureau1_2, 0, { alpha: 0 }, 0.6);
@@ -428,7 +410,7 @@ export default class SceneFlashlight {
     tl.to(this.spriteBureau1_2, 0, { alpha: 0 }, 1);
 
     // sprite 2 user 2
-    tl.addLabel("sp2user2");
+    tl.addLabel('sp2user2');
     tl.to(this.spriteBureau2_2, 0, { alpha: 0 }, 0.2);
     tl.to(this.spriteBureau2_2, 0, { alpha: 1 }, 0.4);
     tl.to(this.spriteBureau2_2, 0, { alpha: 0 }, 0.6);
@@ -436,7 +418,7 @@ export default class SceneFlashlight {
     tl.to(this.spriteBureau2_2, 0, { alpha: 0 }, 1);
 
     // sprite 3 user 2
-    tl.addLabel("sp3user2");
+    tl.addLabel('sp3user2');
     tl.to(this.spriteBureau3_2, 0, { alpha: 0 }, 0.2);
     tl.to(this.spriteBureau3_2, 0, { alpha: 1 }, 0.4);
     tl.to(this.spriteBureau3_2, 0, { alpha: 0 }, 0.6);
@@ -447,7 +429,7 @@ export default class SceneFlashlight {
   detectionBox() {
     // CIRCLE DETECTION
     this.circleDetection = new PIXI.Graphics();
-    this.circleDetection.beginFill("0xff0000");
+    this.circleDetection.beginFill('0xff0000');
     this.circleDetection.drawCircle(0, 0, 120);
     this.circleDetection.endFill();
 
@@ -458,7 +440,7 @@ export default class SceneFlashlight {
 
     // CIRCLE DETECTION 2
     this.circleDetection_2 = new PIXI.Graphics();
-    this.circleDetection_2.beginFill("0xff0000");
+    this.circleDetection_2.beginFill('0xff0000');
     this.circleDetection_2.drawCircle(0, 0, 120);
     this.circleDetection_2.endFill();
 
@@ -530,11 +512,11 @@ export default class SceneFlashlight {
 
   initBackgroundUser() {
     // get image from assets
-    const bureau1 = AssetsManager.get("bureau1");
-    const bureau2 = AssetsManager.get("bureau2");
-    const bureau3 = AssetsManager.get("bureau3");
-    const bureauLight = AssetsManager.get("bureauLight");
-    const outline = AssetsManager.get("outline");
+    const bureau1 = AssetsManager.get('bureau1');
+    const bureau2 = AssetsManager.get('bureau2');
+    const bureau3 = AssetsManager.get('bureau3');
+    const bureauLight = AssetsManager.get('bureauLight');
+    const outline = AssetsManager.get('outline');
 
     const baseTextureBureau1 = new PIXI.BaseTexture(bureau1);
     const baseTextureBureau2 = new PIXI.BaseTexture(bureau2);
@@ -570,11 +552,11 @@ export default class SceneFlashlight {
 
   initBackgroundUser2() {
     // get image from assets
-    const bureau1 = AssetsManager.get("bureau1");
-    const bureau2 = AssetsManager.get("bureau2");
-    const bureau3 = AssetsManager.get("bureau3");
-    const bureauLight = AssetsManager.get("bureauLight");
-    const outline = AssetsManager.get("outline");
+    const bureau1 = AssetsManager.get('bureau1');
+    const bureau2 = AssetsManager.get('bureau2');
+    const bureau3 = AssetsManager.get('bureau3');
+    const bureauLight = AssetsManager.get('bureauLight');
+    const outline = AssetsManager.get('outline');
 
     const baseTextureBureau1 = new PIXI.BaseTexture(bureau1);
     const baseTextureBureau2 = new PIXI.BaseTexture(bureau2);
@@ -603,37 +585,29 @@ export default class SceneFlashlight {
   }
 
   initFlashOff() {
-    const flashoff = AssetsManager.get("flashoff");
+    const flashoff = AssetsManager.get('flashoff');
     const baseTextureFlashOff = new PIXI.BaseTexture(flashoff);
     const tFlashOff = new PIXI.Texture(baseTextureFlashOff);
     this.spriteFlashOff = new PIXI.Sprite(tFlashOff);
 
-    this.spriteFlashOff.x =
-      this.sceneWH.width / 2 -
-      this.spriteFlashOff.width / 2 -
-      this.sceneWH.width / 4;
-    this.spriteFlashOff.y =
-      this.sceneWH.height / 2 - this.spriteFlashOff.height / 2;
+    this.spriteFlashOff.x = this.sceneWH.width / 2 - this.spriteFlashOff.width / 2 - this.sceneWH.width / 4;
+    this.spriteFlashOff.y = this.sceneWH.height / 2 - this.spriteFlashOff.height / 2;
   }
 
   initFlashOff2() {
-    const flashoff = AssetsManager.get("flashoff");
+    const flashoff = AssetsManager.get('flashoff');
     const baseTextureFlashOff = new PIXI.BaseTexture(flashoff);
     const tFlashOff = new PIXI.Texture(baseTextureFlashOff);
     this.spriteFlashOff_2 = new PIXI.Sprite(tFlashOff);
 
-    this.spriteFlashOff_2.x =
-      this.sceneWH.width / 2 -
-      this.spriteFlashOff_2.width / 2 +
-      this.sceneWH.width / 4;
-    this.spriteFlashOff_2.y =
-      this.sceneWH.height / 2 - this.spriteFlashOff_2.height / 2;
+    this.spriteFlashOff_2.x = this.sceneWH.width / 2 - this.spriteFlashOff_2.width / 2 + this.sceneWH.width / 4;
+    this.spriteFlashOff_2.y = this.sceneWH.height / 2 - this.spriteFlashOff_2.height / 2;
   }
 
   initMaskUser(statusUser1) {
     this.maskUSer = [];
 
-    if (statusUser1 === "superior") {
+    if (statusUser1 === 'superior') {
       var maskRadius1 = 240;
       var maskRadius2 = 200;
       var maskRadius3 = 160;
@@ -645,7 +619,7 @@ export default class SceneFlashlight {
 
     // CIRCLE MASK 1
     this.mask1 = new PIXI.Graphics();
-    this.mask1.beginFill("0xffffff");
+    this.mask1.beginFill('0xffffff');
     this.mask1.drawCircle(0, 0, maskRadius1);
     this.mask1.endFill();
 
@@ -658,7 +632,7 @@ export default class SceneFlashlight {
     this.maskUSer.push(this.mask1);
     // CIRCLE MASK 2
     this.mask2 = new PIXI.Graphics();
-    this.mask2.beginFill("0xffffff");
+    this.mask2.beginFill('0xffffff');
     this.mask2.drawCircle(0, 0, maskRadius2);
     this.mask2.endFill();
 
@@ -672,7 +646,7 @@ export default class SceneFlashlight {
 
     // CIRCLE MASK 3
     this.mask3 = new PIXI.Graphics();
-    this.mask3.beginFill("0xffffff");
+    this.mask3.beginFill('0xffffff');
     this.mask3.drawCircle(0, 0, maskRadius3);
     this.mask3.endFill();
 
@@ -693,7 +667,7 @@ export default class SceneFlashlight {
 
   initMaskUser2(statusUser2) {
     this.maskUSer2 = [];
-    if (statusUser2 === "superior") {
+    if (statusUser2 === 'superior') {
       var maskRadius1 = 240;
       var maskRadius2 = 200;
       var maskRadius3 = 160;
@@ -705,7 +679,7 @@ export default class SceneFlashlight {
 
     // CIRCLE MASK 1
     this.mask1_2 = new PIXI.Graphics();
-    this.mask1_2.beginFill("0xffffff");
+    this.mask1_2.beginFill('0xffffff');
     this.mask1_2.drawCircle(0, 0, maskRadius1);
     this.mask1_2.endFill();
 
@@ -718,7 +692,7 @@ export default class SceneFlashlight {
     this.maskUSer2.push(this.mask1_2);
     // CIRCLE MASK 2
     this.mask2_2 = new PIXI.Graphics();
-    this.mask2_2.beginFill("0xffffff");
+    this.mask2_2.beginFill('0xffffff');
     this.mask2_2.drawCircle(0, 0, maskRadius2);
     this.mask2_2.endFill();
 
@@ -732,7 +706,7 @@ export default class SceneFlashlight {
 
     // CIRCLE MASK 3
     this.mask3_2 = new PIXI.Graphics();
-    this.mask3_2.beginFill("0xffffff");
+    this.mask3_2.beginFill('0xffffff');
     this.mask3_2.drawCircle(0, 0, maskRadius3);
     this.mask3_2.endFill();
 
@@ -853,14 +827,11 @@ export default class SceneFlashlight {
       this.height = 0;
     }
 
-    this.currentH += (this.height - this.currentH) * 0.05;
+    this.currentH += (this.height - this.currentH) * 0.02;
 
-    console.log("ici yoyoyoyo", this.currentH);
     if (this.currentH >= this.maxH - 1) {
       this.currentH = this.maxH;
-      console.log("ici", this.currentH);
       if (!this.isDiscover) {
-        console.log("DONE");
         clearRequestTimeout(this.timeOutId);
         this.nextScene();
         this.isDiscover = true;
@@ -869,8 +840,9 @@ export default class SceneFlashlight {
       this.currentH = this.minH;
     }
 
-    // console.log('current Height : ', this.currentH)
     this.fillbox.height = this.currentH;
     this.fillbox2.height = this.currentH;
   }
 }
+
+export default SceneFlashlight;

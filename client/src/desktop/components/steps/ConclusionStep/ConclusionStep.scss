@@ -92,6 +92,7 @@
         }
 
         &--1 {
+
             .conclusion-step__substep__text--white {
                 margin: 0;
                 display: flex;
@@ -106,6 +107,15 @@
 
                     &.hide{
                         opacity: 0;
+                    }
+                }
+            }
+
+            &__en {
+                .conclusion-step__substep__text--white {
+                    width: 12vw;
+                    &.text-over{
+                        width: 12vw;
                     }
                 }
             }
