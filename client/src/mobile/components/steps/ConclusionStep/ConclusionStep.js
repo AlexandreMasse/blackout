@@ -143,98 +143,183 @@ class ConclusionStep extends Component {
         <div className="conclusion-step__cards">
           <div className="conclusion-step__cards__card">
             <p>
-              Aujourd'hui en France, la loi empêche les opérateurs de bloquer l'accès à certains contenus sur internet.{' '}
+              {formatMessage({
+                id: 'app.conclusion.1',
+                defaultMessage: 'Today in Europe, law forbids Internet Service Providers to block or filter content.'
+              })}
             </p>
             <span className="conclusion-step__cards__number">1/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
-              Elle garantit à toute personne une utilisation des réseaux numériques libre, égale et sans discrimination.
+              {formatMessage({
+                id: 'app.conclusion.2',
+                defaultMessage: 'It guarantees everyone free, equal and non-discriminatory use of (digital) networks.'
+              })}
             </p>
             <span className="conclusion-step__cards__number">2/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Ce principe, inexistant en Chine, est aussi remis en question dans certains pays occidentaux.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.3',
+                defaultMessage:
+                  'This principle, which is absent in China, is also under question in some Western countries.'
+              })}
+            </p>
             <span className="conclusion-step__cards__number">3/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
-              Sa disparition entraînerait la mise en place d’un réseau à deux vitesse où payer plus permet un meilleur
-              accès.
+              {formatMessage({
+                id: 'app.conclusion.4',
+                defaultMessage:
+                  'It abolition would lead to a two-speed network where paying more would allow a better access.'
+              })}
             </p>
             <span className="conclusion-step__cards__number">4/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>“Ce serait la création d’un internet pour les riches et un internet pour les pauvres.”</p>
+            <p>
+              “
+              {formatMessage({
+                id: 'app.conclusion.5-1',
+                defaultMessage:
+                  'It would involve the establishment of an Internet for the rich and an Internet for the poor.'
+              })}
+              ”
+            </p>
             <p className={'source'}>
               → Mounir Mahjoubi,
               <br />
               <span>
-                Secrétaire d’état chargé du numérique,
-                <br /> 7 septembre 2018
+                {formatMessage({
+                  id: 'app.conclusion.5-2',
+                  defaultMessage: 'Secretary of State for Digital Technology,'
+                })}
+                <br />{' '}
+                {formatMessage({
+                  id: 'app.conclusion.5-3',
+                  defaultMessage: '7 September 2018'
+                })}
               </span>
             </p>
             <span className="conclusion-step__cards__number">5/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
-              Aux États-Unis, la neutralité du net a été supprimée le 11 juin 2018, contre l’avis de 86% des américains.
+              {formatMessage({
+                id: 'app.conclusion.6-1',
+                defaultMessage:
+                  'In the United States, net neutrality was abolished on June 11, 2018, against the opinion of 86% of Americans.'
+              })}
             </p>
             <p className={'source'}>
               <span>
                 www.aclu.org
-                <br />6 juin 2018
+                <br />
+                {formatMessage({
+                  id: 'app.conclusion.6-2',
+                  defaultMessage: '6 juin 2018'
+                })}
               </span>
             </p>
             <span className="conclusion-step__cards__number">6/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Depuis, presque tous les opérateurs brident le débit de leurs utilisateurs sur Netflix et Youtube.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.7-1',
+                defaultMessage:
+                  'Since then, almost all operators have been restricting the speed of their users on Netflix and Youtube.'
+              })}
+            </p>
             <p className={'source'}>
               <span>
                 https://dd.meddle.mobi/USStats.html,
                 <br />
-                11 novembre 2018
+                {formatMessage({
+                  id: 'app.conclusion.7-2',
+                  defaultMessage: '11 November'
+                })}
               </span>
             </p>
             <span className="conclusion-step__cards__number">7/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Cette information à priori anodine démontre pourtant le pouvoir de censurer n'importe quel contenu.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.8',
+                defaultMessage:
+                  'This trivial information on the surface, demonstrates the power to censor any content.                '
+              })}
+            </p>
             <span className="conclusion-step__cards__number">8/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>C’est un risque considérable car aujourd’hui internet est un facteur majeur d’intégration sociale.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.9',
+                defaultMessage:
+                  'This is a considerable risk because the Internet is a major contributor to social integration.'
+              })}
+            </p>
             <span className="conclusion-step__cards__number">9/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Par exemple, 74% des demandeurs d’emploi utilisent internet pour trouver du travail.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.10-1',
+                defaultMessage: 'For example, in France 74% of job seekers use the Internet to find work.'
+              })}
+            </p>
             <p className={'source'}>
               <span>
                 Baromètre CRÉDOC,
                 <br />
-                juin 2018
+                {formatMessage({
+                  id: 'app.conclusion.10-2',
+                  defaultMessage: 'june 2018'
+                })}
               </span>
             </p>
             <span className="conclusion-step__cards__number">10/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>C’est aussi un bien nécessaire à la vie quotidienne :</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.10-3',
+                defaultMessage: 'It is also a necessary part of our daily lives:'
+              })}
+            </p>
             <span className="conclusion-step__cards__number">10/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Une personne sur deux y fait des recherches en rapport à sa santé</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.11',
+                defaultMessage: 'One in two people use it to get information about their health'
+              })}
+            </p>
             <p className={'source'}>
               <span>
                 Baromètre CRÉDOC,
                 <br />
-                juin 2018
+                {formatMessage({
+                  id: 'app.conclusion.10-2',
+                  defaultMessage: 'june 2018'
+                })}
               </span>
             </p>
             <span className="conclusion-step__cards__number">11/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Et deux tiers des français font leurs démarches administratives en ligne.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.12',
+                defaultMessage: 'And two thirds of the French do their administrative procedures online.'
+              })}
+            </p>
             <p className={'source'}>
               <span>
                 Baromètre CRÉDOC,
@@ -245,19 +330,35 @@ class ConclusionStep extends Component {
             <span className="conclusion-step__cards__number">12/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>En bref, Internet est un (potentiel) outil de lutte contre les inégalités.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.13',
+                defaultMessage: 'In a nutshell, the Internet is a (potential) tool to fight inequalities.'
+              })}
+            </p>
             <span className="conclusion-step__cards__number">13/15</span>
           </div>
           <div className="conclusion-step__cards__card">
-            <p>Pour garantir ce rôle, la neutralité du net est indispensable.</p>
+            <p>
+              {formatMessage({
+                id: 'app.conclusion.14',
+                defaultMessage: 'To guarantee this role, net neutrality is essential.'
+              })}
+            </p>
             <span className="conclusion-step__cards__number">14/15</span>
           </div>
           <div className="conclusion-step__cards__card">
             <div className="wrap">
               <p>
-                Préservons-la.
+                {formatMessage({
+                  id: 'app.conclusion.15-1',
+                  defaultMessage: "Let's preserve it."
+                })}
                 <br />
-                Rendez-vous sur la Quadrature du Net.
+                {formatMessage({
+                  id: 'app.conclusion.15-2',
+                  defaultMessage: 'Go to the Quadrature du Net.'
+                })}
               </p>
               <a href="https://www.laquadrature.net" target="_blank">
                 <p>www.laquadrature.net</p>
