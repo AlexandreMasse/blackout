@@ -51,7 +51,8 @@ class DesktopApp extends Component {
       showDevButton: true,
       splitScreenPercentage: 50,
       isAssetsLoaded: false,
-      isServerReady: false
+      isServerReady: false,
+      progress: null
     };
   }
 
@@ -96,7 +97,9 @@ class DesktopApp extends Component {
 
   assetLoaded = () => {
     load
-      .any(assetsToLoad, ev => {})
+      .any(assetsToLoad, ev => {
+        this.setState({ progress: ev.progress });
+      })
       .then(assets => {
         window.assets = assets;
         this.setState({
@@ -142,7 +145,7 @@ class DesktopApp extends Component {
     return (
       <div className="app desktop-app">
         {!isLoaded ? (
-          <Loading />
+          <Loading progress={this.state.progress} />
         ) : (
           <>
             {/* {!isPlayer1Connected && currentStep === 'SCENE' &&
