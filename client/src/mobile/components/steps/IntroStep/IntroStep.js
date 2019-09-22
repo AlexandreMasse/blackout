@@ -180,7 +180,7 @@ class IntroStep extends Component {
           <video width="80%" autoPlay playsInline loop muted ref={ref => (this.video = ref)}>
             <source src={logotype} type="video/mp4" />
           </video>
-          <a href={`/?${lang === 'fr' ? 'lang=en' : 'lang=fr'}`} className="intro-step__lang">{lang === 'fr' ? 'EN' : 'FR'}</a>
+    <div className="intro-step__lang">{lang === 'fr' ?<> <a href={"?lang=en"}>EN</a><span className="active">FR</span> </> : <><span className="active">EN</span><a href={"lang=fr"}>FR</a></>}</div>
           <p className="intro-step__infos__paragraph">
             <span className="bold">Blackout</span>
             {formatMessage({
