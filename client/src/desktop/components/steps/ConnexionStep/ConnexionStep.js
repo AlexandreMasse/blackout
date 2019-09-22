@@ -340,7 +340,7 @@ class ConnexionStep extends Component {
               <TextAnimation
                 letterDuration={200}
                 className={'connexion-step__intro__codes__player1__name'}
-                text={`${formatMessage({ id: 'app.player' })} 1`}
+                text={`${formatMessage({ id: 'app.player', defaultMessage: 'PLAYER' })} 1`}
                 handleWord={this.handleWordPlayer1Name}
               />
 
@@ -349,7 +349,7 @@ class ConnexionStep extends Component {
                   <TextAnimation
                     key={1}
                     letterDuration={200}
-                    text={formatMessage({ id: 'app.status.free' })}
+                    text={formatMessage({ id: 'app.status.free',  defaultMessage: 'FREE' })}
                     className={'connexion-step__intro__codes__player1__status__free'}
                     handleWord={this.handleWordPlayer1Status}
                     autoPlay={true}
@@ -454,6 +454,7 @@ class ConnexionStep extends Component {
             </div>
           </div>
         </div>
+        <a href={`/?${lang === 'fr' ? 'lang=en' : 'lang=fr'}`} className="connexion-step__lang">{lang === 'fr' ? 'EN' : 'FR'}</a>
         <div className="connexion-step__icon">
           <a href="https://www.gobelins.fr/" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.94 56.58">

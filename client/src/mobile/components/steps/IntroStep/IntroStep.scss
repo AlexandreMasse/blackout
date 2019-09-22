@@ -10,6 +10,15 @@
   position: relative;
   z-index: 1;
 
+  &__lang {
+    position: absolute;
+    top: 5rem;
+    right: 1.5rem;
+    font-size: 1.8rem;
+    color: #000;
+    text-decoration: none;
+  }
+
   &__infos {
     overflow: hidden;
     position: relative;

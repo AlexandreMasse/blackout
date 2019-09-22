@@ -28,13 +28,16 @@ const mobileMessages = {
 
 const language = navigator.language.split(/[-_]/)[0]; // language without region code
 
+const urlParams = new URLSearchParams(window.location.search)
+const langParam = urlParams.get('lang')
+
 const App =
   isXs() && isMobile() ? (
-    <IntlProvider locale={language} messages={mobileMessages[language]}>
+    <IntlProvider locale={langParam || language} messages={mobileMessages[langParam || language]}>
       <MobileApp />
     </IntlProvider>
   ) : (
-    <IntlProvider locale={language} messages={messages[language]}>
+    <IntlProvider locale={langParam || language} messages={messages[langParam || language]}>
       <DesktopApp />
     </IntlProvider>
   );

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import configureStore from '../redux/store'
 import { connect } from 'react-redux'
 import {wsEmitDeviceType, wsEmitPhoneData,wsEmitReconnection} from '../redux/actions/websockets/websocketsAction'
-import {setCurrentStep, setPhoneData, setAppLoaded} from '../redux/actions/mobileAction'
+import {setCurrentStep, setPhoneData, setAppLoaded, setLang} from '../redux/actions/mobileAction'
 import {socket} from '../redux/actions/websockets/websocketsAction'
 // Component
 import {BackgroundGrid, Loading} from './components'
@@ -41,6 +41,10 @@ class MobileApp extends Component {
 
     this.props.setCurrentStep(steps.INTRO.name)
     this.loadAssets()
+    const language = navigator.language.split(/[-_]/)[0]; // language without region code
+    const urlParams = new URLSearchParams(window.location.search)
+    const langParam = urlParams.get('lang') 
+    this.props.setLang(langParam || language);
 
     window.addEventListener('resize',this.handleResize)
     this.handleResize()
@@ -155,6 +159,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       setAppLoaded: () => dispatch(setAppLoaded()),
+      setLang: (lang) =>dispatch(setLang(lang)),
       setCurrentStep: (currentStep) => dispatch(setCurrentStep(currentStep)),
       setPhoneData: (phoneData) => dispatch(setPhoneData(phoneData)),
       wsEmitDeviceType: (type) => dispatch(wsEmitDeviceType({type})),

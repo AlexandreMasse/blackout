@@ -4,6 +4,7 @@ import {websocketsOnActionTypes} from "../actions/websockets/websocketsActionTyp
 const initialState = {
     roomId: null,
     userId: null,
+    lang: 'en',
     isConnected: false,
     password: null,
     passwordError: false,
@@ -36,6 +37,12 @@ export default (state = initialState, action) => {
                 isLoaded: true
             }
         }
+        case mobileActionTypes.SET_LANG: {
+            return {
+              ...state,
+              lang: action.lang
+            };
+          }
 
         case mobileActionTypes.SET_CURRENT_STEP: {
             return {

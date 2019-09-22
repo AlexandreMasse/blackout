@@ -169,6 +169,7 @@ class IntroStep extends Component {
   render() {
     const {
       isConnected,
+      lang,
       intl: { formatMessage }
     } = this.props;
     const { password } = this.state;
@@ -179,6 +180,7 @@ class IntroStep extends Component {
           <video width="80%" autoPlay playsInline loop muted ref={ref => (this.video = ref)}>
             <source src={logotype} type="video/mp4" />
           </video>
+          <a href={`/?${lang === 'fr' ? 'lang=en' : 'lang=fr'}`} className="intro-step__lang">{lang === 'fr' ? 'EN' : 'FR'}</a>
           <p className="intro-step__infos__paragraph">
             <span className="bold">Blackout</span>
             {formatMessage({
@@ -235,6 +237,7 @@ class IntroStep extends Component {
 
 const mapStateToProps = state => {
   return {
+    lang: state.mobile.lang,
     isConnected: state.mobile.isConnected,
     passwordError: state.mobile.passwordError
   };

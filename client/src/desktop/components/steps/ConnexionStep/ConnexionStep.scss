@@ -18,6 +18,18 @@
     bottom: 0;
   }
 
+  &__lang {
+    font-size: 2.1rem;
+    position: absolute;
+    top: 5rem;
+    right: 5rem;
+    cursor: pointer;
+    right: 4rem;
+    top: 2.5rem;
+    color:#000;
+    text-decoration: none;
+  }
+
   &__city {
     position: absolute;
     left: 0;

@@ -40,7 +40,9 @@ class DesktopApp extends Component {
 
     this.props.wsEmitDeviceType('desktop');
     const language = navigator.language.split(/[-_]/)[0]; // language without region code
-    this.props.setLang(language);
+    const urlParams = new URLSearchParams(window.location.search)
+    const langParam = urlParams.get('lang') 
+    this.props.setLang(langParam || language);
     this.props.setCurrentStep(steps.CONNEXION.name);
 
     window.addEventListener('resize', this.handleWindowResize);
