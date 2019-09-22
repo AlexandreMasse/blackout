@@ -19,15 +19,27 @@
   }
 
   &__lang {
-    font-size: 2.1rem;
     position: absolute;
-    top: 5rem;
-    right: 5rem;
-    cursor: pointer;
     right: 4rem;
-    top: 2.5rem;
-    color:#000;
+    top: 5rem;
+    font-size: 2.1rem;
+    color: #000;
     text-decoration: none;
+    display: block;
+    margin-bottom: .8rem;
+    line-height: 1em;
+    > span, a {
+      padding: .9rem 1.1rem;
+      color:#000;
+      border: 1px solid #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .active {
+      background:#000;
+      color:#fff;
+      pointer-events: none;
+    }
   }
 
   &__city {
