@@ -14,6 +14,12 @@ Made with :heart: and :
 
 ## Installation
 
+### Set node version
+
+``` bash
+  nvm use
+```
+
 ### Client
 
 1. Go to `client/` folder
