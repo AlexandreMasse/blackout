@@ -18,6 +18,16 @@ class ConclusionStep extends Component {
 
     this.currentCard = 0;
   }
+  handleWindowResize = () => {
+    this.cards = this.ref.querySelectorAll('.conclusion-step__cards__card');
+
+    TweenMax.set(this.cards[this.currentCard], {
+      y: 0
+    });
+    TweenMax.set(this.cards[this.currentCard + 1], {
+      y: '85vh'
+    });
+  }
 
   handleTouchStart = evt => {
     const firstTouch = evt.touches[0];
@@ -110,6 +120,8 @@ class ConclusionStep extends Component {
   componentDidMount() {
     this.ref.addEventListener('touchstart', this.handleTouchStart, false);
     this.ref.addEventListener('touchmove', this.handleTouchMove, false);
+    window.addEventListener('resize', this.handleWindowResize, false);
+    this.handleWindowResize();
 
     this.xDown = null;
     this.yDown = null;
@@ -131,7 +143,10 @@ class ConclusionStep extends Component {
   componentWillUnmount() {
     this.ref.removeEventListener('touchstart', this.handleTouchStart, false);
     this.ref.removeEventListener('touchmove', this.handleTouchMove, false);
+    window.removeEventListener('resize', this.handleWindowResize, false);
   }
+
+
 
   render() {
     const {

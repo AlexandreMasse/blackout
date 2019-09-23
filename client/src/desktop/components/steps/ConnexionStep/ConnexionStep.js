@@ -454,7 +454,7 @@ class ConnexionStep extends Component {
             </div>
           </div>
         </div>
-        <div className="connexion-step__lang">{lang === 'fr' ?<> <a href={"?lang=en"}>EN</a><span className="active">FR</span> </> : <><span className="active">EN</span><a href={"lang=fr"}>FR</a></>}</div>
+        <div className="connexion-step__lang">{lang === 'fr' ?<> <a href={"?lang=en"}>EN</a><span className="active">FR</span> </> : <><span className="active">EN</span><a href={"?lang=fr"}>FR</a></>}</div>
         <div className="connexion-step__icon">
           <a href="https://www.gobelins.fr/" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.94 56.58">
