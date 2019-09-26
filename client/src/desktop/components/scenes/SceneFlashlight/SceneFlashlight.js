@@ -835,6 +835,8 @@ class SceneFlashlight {
         clearRequestTimeout(this.timeOutId);
         this.nextScene();
         this.isDiscover = true;
+        // this.fillbox.height = 54;
+        // this.fillbox2.height = 54;
       }
     } else if (this.currentH < this.minH) {
       this.currentH = this.minH;

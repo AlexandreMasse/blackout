@@ -118,7 +118,7 @@ const withDeviceOrientation = WrappedComponent => {
         this.setState({
           positionListened: { x: this.position.x, y: this.position.y }
         })
-        this.loopUpdateTimer = setTimeout(this.update, 16)
+        this.loopUpdateTimer = setTimeout(this.update, 20)
       }
     }
 

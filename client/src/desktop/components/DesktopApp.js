@@ -152,9 +152,9 @@ class DesktopApp extends Component {
           <>
             {/* {!isPlayer1Connected && currentStep === 'SCENE' &&
               <Deconnection player={"player 1"} />
-            }
+            } */}
 
-            {!isPlayer2Connected && currentStep === 'SCENE' &&
+            {/* {!isPlayer2Connected && currentStep === 'SCENE' &&
               <Deconnection player={"player 2"} />
             } */}
 
