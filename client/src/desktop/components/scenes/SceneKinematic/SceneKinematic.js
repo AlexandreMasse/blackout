@@ -35,7 +35,11 @@ export default class SceneKinematic {
 
     init() {
         this.container = new PIXI.Container()
+        const video =  document.createElement('video')
+        video.crossOrigin = 'anonymous'
+        video.preload = ''
         const mouse = AssetsManager.get('cinematique')
+        video.src = mouse.src
         this.textureVid = PIXI.Texture.fromVideo(mouse)
         this.bg = new PIXI.Sprite(this.textureVid)
         this.video = this.textureVid.baseTexture.source 
@@ -44,9 +48,10 @@ export default class SceneKinematic {
         this.container.addChild(this.bg)
         this.brt = new PIXI.BaseRenderTexture(this.textureVid.width, this.textureVid.height, PIXI.SCALE_MODES.LINEAR, 1)
         this.rt = new PIXI.RenderTexture(this.brt)
-
-        this.sprite = new PIXI.Sprite(this.rt)
-        setFullScreen(this.sprite, this.textureVid.width, this.textureVid.height)
+        this.sprite = new PIXI.Sprite.from(video)
+        this.sprite.width = 1920
+        this.sprite.height = 1080
+        setFullScreen(this.sprite, 1920, 1080)
         this.isPlaying = false
         this.isStop = false
     }

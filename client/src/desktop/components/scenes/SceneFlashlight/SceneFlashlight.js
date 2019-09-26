@@ -40,7 +40,7 @@ class SceneFlashlight {
     this.player1Collision = false;
     this.currentH = 0;
     // FOR DEBUG
-    this.player2Collision = true;
+    this.player2Collision = false;
     // FOR DEBUG
     this.maxH = 54;
     this.minH = 0;
