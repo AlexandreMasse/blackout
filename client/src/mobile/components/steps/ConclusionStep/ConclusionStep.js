@@ -163,7 +163,7 @@ class ConclusionStep extends Component {
                 defaultMessage: 'Today in Europe, law forbids Internet Service Providers to block or filter content.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">1/15</span>
+            <span className="conclusion-step__cards__number">1/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -172,7 +172,7 @@ class ConclusionStep extends Component {
                 defaultMessage: 'It guarantees everyone free, equal and non-discriminatory use of (digital) networks.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">2/15</span>
+            <span className="conclusion-step__cards__number">2/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -182,7 +182,7 @@ class ConclusionStep extends Component {
                   'This principle, which is absent in China, is also under question in some Western countries.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">3/15</span>
+            <span className="conclusion-step__cards__number">3/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -192,7 +192,7 @@ class ConclusionStep extends Component {
                   'It abolition would lead to a two-speed network where paying more would allow a better access.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">4/15</span>
+            <span className="conclusion-step__cards__number">4/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -219,7 +219,7 @@ class ConclusionStep extends Component {
                 })}
               </span>
             </p>
-            <span className="conclusion-step__cards__number">5/15</span>
+            <span className="conclusion-step__cards__number">5/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -239,7 +239,7 @@ class ConclusionStep extends Component {
                 })}
               </span>
             </p>
-            <span className="conclusion-step__cards__number">6/15</span>
+            <span className="conclusion-step__cards__number">6/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -259,7 +259,7 @@ class ConclusionStep extends Component {
                 })}
               </span>
             </p>
-            <span className="conclusion-step__cards__number">7/15</span>
+            <span className="conclusion-step__cards__number">7/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -269,7 +269,7 @@ class ConclusionStep extends Component {
                   'This trivial information on the surface, demonstrates the power to censor any content.                '
               })}
             </p>
-            <span className="conclusion-step__cards__number">8/15</span>
+            <span className="conclusion-step__cards__number">8/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -279,7 +279,7 @@ class ConclusionStep extends Component {
                   'This is a considerable risk because the Internet is a major contributor to social integration.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">9/15</span>
+            <span className="conclusion-step__cards__number">9/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -298,7 +298,7 @@ class ConclusionStep extends Component {
                 })}
               </span>
             </p>
-            <span className="conclusion-step__cards__number">10/15</span>
+            <span className="conclusion-step__cards__number">10/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -307,7 +307,7 @@ class ConclusionStep extends Component {
                 defaultMessage: 'It is also a necessary part of our daily lives:'
               })}
             </p>
-            <span className="conclusion-step__cards__number">10/15</span>
+            <span className="conclusion-step__cards__number">11/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -326,7 +326,7 @@ class ConclusionStep extends Component {
                 })}
               </span>
             </p>
-            <span className="conclusion-step__cards__number">11/15</span>
+            <span className="conclusion-step__cards__number">12/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -342,7 +342,7 @@ class ConclusionStep extends Component {
                 juin 2018
               </span>
             </p>
-            <span className="conclusion-step__cards__number">12/15</span>
+            <span className="conclusion-step__cards__number">13/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -351,7 +351,7 @@ class ConclusionStep extends Component {
                 defaultMessage: 'In a nutshell, the Internet is a (potential) tool to fight inequalities.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">13/15</span>
+            <span className="conclusion-step__cards__number">14/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <p>
@@ -360,7 +360,7 @@ class ConclusionStep extends Component {
                 defaultMessage: 'To guarantee this role, net neutrality is essential.'
               })}
             </p>
-            <span className="conclusion-step__cards__number">14/15</span>
+            <span className="conclusion-step__cards__number">15/16</span>
           </div>
           <div className="conclusion-step__cards__card">
             <div className="wrap">
@@ -379,7 +379,7 @@ class ConclusionStep extends Component {
                 <p>www.laquadrature.net</p>
               </a>
             </div>
-            <span className="conclusion-step__cards__number">15/15</span>
+            <span className="conclusion-step__cards__number">16/16</span>
           </div>
         </div>
       </div>
