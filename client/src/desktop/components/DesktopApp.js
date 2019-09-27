@@ -50,7 +50,7 @@ class DesktopApp extends Component {
     this.handleWindowResize();
     this.toggleFromKey()
     this.state = {
-      showButton: false,
+      showButton: true,
       showDevButton: true,
       splitScreenPercentage: 50,
       isAssetsLoaded: false,
