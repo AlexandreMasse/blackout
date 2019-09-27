@@ -14,7 +14,6 @@
   }
 
   .dev-toggle {
-    // display: none;
     color: green;
     z-index: 100;
     position: absolute;
@@ -24,6 +23,9 @@
     font-size: 2.3rem;
     font-variation-settings: $bold;
     cursor: pointer;
+    &.hide{
+      display: none;
+    }
   }
 
   .dev-button {

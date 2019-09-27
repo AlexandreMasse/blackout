@@ -48,8 +48,9 @@ class DesktopApp extends Component {
     window.addEventListener('resize', this.handleWindowResize);
     window.addEventListener('keydown', this.handleWindowKeydown);
     this.handleWindowResize();
-
+    this.toggleFromKey()
     this.state = {
+      showButton: false,
       showDevButton: true,
       splitScreenPercentage: 50,
       isAssetsLoaded: false,
@@ -58,9 +59,29 @@ class DesktopApp extends Component {
     };
   }
 
+
+  /**
+   * Toggle dev tool from keyboard key
+   */
+  toggleFromKey() {
+    document.onkeyup = e => {
+      
+     
+    }
+  }
+
   handleWindowKeydown = e => {
     if (e.key === 'f' || e.code === 'Space') {
       toggleFullscreen();
+    }
+    // shortcut key 68 : 'D' key
+    if (e.which === 68) {
+      this.setState({showDevButton: !this.state.showDevButton})
+    }
+
+     // shortcut key 72 : 'H' key
+     if (e.which === 72) {
+      this.setState({ showButton: !this.state.showButton })
     }
   };
 
@@ -159,7 +180,9 @@ class DesktopApp extends Component {
             } */}
 
             <p
-              className={'dev-toggle'}
+              className={classNames('dev-toggle', {
+                hide: this.state.showButton
+              })}
               onClick={() => {
                 this.setState({ showDevButton: !this.state.showDevButton });
               }}
@@ -168,7 +191,7 @@ class DesktopApp extends Component {
             </p>
             <div
               className={classNames('dev-button', {
-                show: this.state.showDevButton
+                show: this.state.showDevButton,
               })}
             >
               <p onClick={() => this.props.setCurrentStep(steps.CONCLUSION.name)}>Step : Conclusion</p>
