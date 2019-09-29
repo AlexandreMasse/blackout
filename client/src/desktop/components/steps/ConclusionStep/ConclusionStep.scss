@@ -232,6 +232,7 @@
 
                     &.textAnimation {
                         opacity: 1;
+                        height: 30px;
                     }
                 }
             }
@@ -248,10 +249,11 @@
 
                 &--2 {
                     .first{
-                        width: 45%;
+                        width: 34%;
+                        line-height: 35px;
                     }
                     .last {
-                        width: 59%;
+                        width: 45%;
                         display: flex;
                         justify-content: space-between;
                     }
