@@ -225,9 +225,17 @@ class ConnexionStep extends Component {
       this.playerReady.play();
       this.setState({ isCityRightReady: true });
     }
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if(!this.props.isPlayer1Connected && this.state.isCityLeftReady) {
+      this.setState({isCityLeftReady : false})
+    }
+    if(!this.props.isPlayer2Connected && this.state.isCityRightReady) {
+      this.setState({isCityRightReady : false})
+    }
+
     if (
       (!prevState.isCityLeftReady || !prevState.isCityRightReady) &&
       (this.state.isCityLeftReady && this.state.isCityRightReady)
