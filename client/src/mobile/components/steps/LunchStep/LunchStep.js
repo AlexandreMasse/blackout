@@ -49,8 +49,8 @@ class LunchStep extends Component {
       .init(args)
       .then(() => {
         this.gn.start(data => {
-          const minBeta = 0;
-          const maxBeta = 85;
+          const minBeta = 20;
+          const maxBeta = 83;
           const progression = (data.do.beta - minBeta) / (maxBeta - minBeta);
           const progressionClamped = Math.min(Math.max(progression, 0), 1);
           const progressionRounded = Number(progressionClamped.toPrecision(4));
