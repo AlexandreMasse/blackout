@@ -143,7 +143,19 @@ class LunchStep extends Component {
   substep2OnEnter = el => {
     this.arrow = el.querySelector('.lunch-step__substep2__arrow');
     this.progression = el.querySelector('.lunch-step__substep2__box__progression');
-    this.listenDeviceOrientation();
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      // iOS 13+
+      DeviceOrientationEvent.requestPermission()
+      .then(response => {
+        if (response == 'granted') {
+          this.listenDeviceOrientation();
+        }
+      })
+      .catch(console.error)
+    } else {
+      // non iOS 13+
+      this.listenDeviceOrientation();
+    }
 
     TweenMax.set(el, {
       opacity: 0

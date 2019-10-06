@@ -131,8 +131,8 @@ class SceneFlashlight {
     this.statusUser1 = this.store.users.find(user => user.id === 'player1').status;
     this.statusUser2 = this.store.users.find(user => user.id === 'player2').status;
 
-    console.log('status1', this.statusUser1);
-    console.log('status2', this.statusUser2);
+    // console.log('status1', this.statusUser1);
+    // console.log('status2', this.statusUser2);
   }
 
   deskLight() {
@@ -158,7 +158,7 @@ class SceneFlashlight {
   }
 
   init() {
-    console.log('scene flashlight init');
+    // console.log('scene flashlight init');
     this.container = new PIXI.Container();
     this.initBackgroundUser();
     this.initBackgroundUser2();
@@ -827,7 +827,7 @@ class SceneFlashlight {
       this.height = 0;
     }
 
-    this.currentH += (this.height - this.currentH) * 0.02;
+    this.currentH += (this.height - this.currentH) * 0.033;
 
     if (this.currentH >= this.maxH - 1) {
       this.currentH = this.maxH;
@@ -835,8 +835,6 @@ class SceneFlashlight {
         clearRequestTimeout(this.timeOutId);
         this.nextScene();
         this.isDiscover = true;
-        // this.fillbox.height = 54;
-        // this.fillbox2.height = 54;
       }
     } else if (this.currentH < this.minH) {
       this.currentH = this.minH;

@@ -372,7 +372,8 @@ export default (state = initialState, action) => {
           if (user.id === action.payload.userId) {
             return {
               ...user,
-              isConnected: false
+              isConnected: false,
+              introProgression: 0
             };
           } else {
             return user;
