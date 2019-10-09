@@ -1,4 +1,3 @@
-import 'gyronorm/dist/gyronorm.complete.min.js'
 import { disableBodyScroll } from 'body-scroll-lock'
 import React,{ Component} from 'react'
 //Redux

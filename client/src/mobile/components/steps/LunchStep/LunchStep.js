@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { wsEmitIntroProgression } from '../../../redux/actions/websockets/websocketsAction';
 import { setCurrentStep } from '../../../redux/actions/mobileAction';
 //lib
-import GyroNorm from 'gyronorm';
 import { TweenMax } from 'gsap';
 import { Howl } from 'howler';
 import { AssetsManager } from './../../../../managers';
 import { Transition } from 'react-transition-group';
 import { injectIntl } from 'react-intl';
+import { throttle } from '../../../../utils';
 //css
 import './LunchStep.scss';
 import { assetsToLoad } from '../../../assets/asset-list';
@@ -20,7 +20,8 @@ class LunchStep extends Component {
 
     this.state = {
       finish: false,
-      substep: 1
+      substep: 1,
+      orientationActivated: false
     };
 
     this.lastBeta = null;
@@ -33,68 +34,31 @@ class LunchStep extends Component {
     this.substep2EnterDelay = 0.3;
   }
 
+  handleDeviceOrientation = (data) => {
+    console.log(data);
+
+    const minBeta = 20;
+    const maxBeta = 83;
+    const progression = (data.beta - minBeta) / (maxBeta - minBeta);
+    const progressionClamped = Math.min(Math.max(progression, 0), 1);
+    const progressionRounded = Number(progressionClamped.toPrecision(4));
+
+    if (this.state.substep === 2) {
+      if (!this.state.finish) {
+        this.updateProgression(progressionRounded);
+        this.props.wsEmitIntroProgression(progressionRounded);
+      } else {
+        this.updateProgression(1);
+        this.props.wsEmitIntroProgression(1);
+      }
+    }
+  }
+
+  handleDeviceOrientationThrottled = throttle(this.handleDeviceOrientation, 50)
+
   listenDeviceOrientation() {
-    this.gn = new GyroNorm();
-
-    const args = {
-      frequency: 50,
-      gravityNormalized: true,
-      orientationBase: GyroNorm.GAME,
-      decimalCount: 2,
-      logger: null,
-      screenAdjusted: false
-    };
-
-    this.gn
-      .init(args)
-      .then(() => {
-        this.gn.start(data => {
-          const minBeta = 20;
-          const maxBeta = 83;
-          const progression = (data.do.beta - minBeta) / (maxBeta - minBeta);
-          const progressionClamped = Math.min(Math.max(progression, 0), 1);
-          const progressionRounded = Number(progressionClamped.toPrecision(4));
-
-          // this.soundMobileUp.volume(progressionRounded)
-
-          // if(this.lastBeta) {
-          //   if(this.lastBeta < data.do.beta) {
-          //     if(this.currentDirection === "down" || this.currentDirection === null) {
-          //       console.log("up");
-          //       this.soundMobileUp.play()
-          //       this.soundMobileUp.fade(this.soundMobileUp.volume(), 1, 200)
-          //       //this.soundMobileDown.fade(this.soundMobileDown.volume(), 0, 200)
-          //
-          //       this.currentDirection = "up"
-          //     }
-          //   } else {
-          //     if (this.currentDirection === "up" || this.currentDirection === null) {
-          //       console.log("down");
-          //       // this.soundMobileDown.play()
-          //       // this.soundMobileDown.fade(this.soundMobileDown.volume(), 1, 200)
-          //       this.soundMobileUp.fade(this.soundMobileUp.volume(), 0, 200)
-          //       //
-          //       this.currentDirection = "down"
-          //     }
-          //   }
-          // }
-          // this.lastBeta = data.do.beta
-
-          if (this.state.substep === 2) {
-            if (!this.state.finish) {
-              this.updateProgression(progressionRounded);
-              this.props.wsEmitIntroProgression(progressionRounded);
-            } else {
-              this.updateProgression(1);
-              this.props.wsEmitIntroProgression(1);
-              this.gn.stop();
-            }
-          }
-        });
-      })
-      .catch(e => {
-        console.error(e);
-      });
+    window.addEventListener('deviceorientation', this.handleDeviceOrientationThrottled, false)
+    this.setState({ orientationActivated: true })
   }
 
   updateProgression = progression => {
@@ -134,28 +98,52 @@ class LunchStep extends Component {
   };
 
   componentWillUnmount() {
-    this.gn.end();
     this.soundMobileUp.stop();
+    window.removeEventListener('deviceorientation', this.handleDeviceOrientationThrottled, false)
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    window.addEventListener("focus", this.handleWindowFocus)
+  }
+
+  handleWindowFocus = (e) => {
+    if(!this.state.orientationActivated) {
+      this.requestListenOrientation()
+    }
+  }
+
+  requestListenOrientation = () => {
+    if (window.DeviceOrientationEvent) {
+      this.listenDeviceOrientation();
+      console.log("has orientation");
+    } else {
+      console.log("has no orientation");
+      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        console.log("has no orientation, can request (ios13+");
+        // iOS 13+
+        DeviceOrientationEvent.requestPermission()
+          .then(response => {
+            if (response == 'granted') {
+              console.log("orientation request -> granted");
+              this.listenDeviceOrientation();
+            } else {
+              console.log("orientation request -> denied");
+            }
+          })
+          .catch(console.error)
+      } else {
+        // non iOS 13+
+        console.log("has no orientation, can not request (non ios13+)");
+      }
+
+    }
+  }
 
   substep2OnEnter = el => {
     this.arrow = el.querySelector('.lunch-step__substep2__arrow');
     this.progression = el.querySelector('.lunch-step__substep2__box__progression');
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      // iOS 13+
-      DeviceOrientationEvent.requestPermission()
-      .then(response => {
-        if (response == 'granted') {
-          this.listenDeviceOrientation();
-        }
-      })
-      .catch(console.error)
-    } else {
-      // non iOS 13+
-      this.listenDeviceOrientation();
-    }
+
+    this.requestListenOrientation()
 
     TweenMax.set(el, {
       opacity: 0

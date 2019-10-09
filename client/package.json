@@ -15,7 +15,6 @@
     "dat.gui": "^0.7.5",
     "digit-roll-react": "^1.1.0",
     "gsap": "^2.0.2",
-    "gyronorm": "^2.0.6",
     "install": "^0.12.2",
     "is-promise": "^2.1.0",
     "lottie-web": "^5.4.3",
