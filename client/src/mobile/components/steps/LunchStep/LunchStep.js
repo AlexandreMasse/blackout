@@ -60,10 +60,12 @@ class LunchStep extends Component {
   listenDeviceOrientation() {
     // if after 1.5s we don't have any data from deviceorientation event, show error
     this.timeoutId = setTimeout(() => {
-      alert(this.props.intl.formatMessage({
-        id: "app.launch.orientation.help",
-        defaultMessage: 'Enable device orientation in Settings > Safari > Motion & Orientation Access'
-      }))
+      if(this.props.phoneData.os === "iOS") {
+        alert(this.props.intl.formatMessage({
+          id: "app.launch.orientation.help",
+          defaultMessage: 'Enable device orientation in Settings > Safari > Motion & Orientation Access'
+        }))
+      }
     }, 1500);
 
     window.addEventListener('deviceorientation', this.handleDeviceOrientationThrottled, false)
@@ -244,7 +246,8 @@ class LunchStep extends Component {
 
 const mapStateToProps = state => {
   return {
-    isConnected: state.mobile.isConnected
+    isConnected: state.mobile.isConnected,
+    phoneData: state.mobile.phoneData
   };
 };
 
