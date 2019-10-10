@@ -59,7 +59,7 @@ export default class SceneStairs {
   }
 
   init() {
-    console.log('scene stairs init');
+    // console.log('scene stairs init');
     let width = window.innerWidth;
     let height = window.innerHeight;
     this.initSceneThree();
@@ -187,6 +187,16 @@ export default class SceneStairs {
     this.container.addChild(this.spriteStairs);
   }
 
+  stopTicker = () => {
+    this.stairsSound.stop()
+  }
+  
+
+  startTicker = () => {
+    this.stairsSound.play()
+    this.stairsSound.fade(0, .5, 1000)
+  }
+
   update() {
     this.sceneThree.update();
     this.spriteStairs.texture.update();
@@ -195,6 +205,7 @@ export default class SceneStairs {
   resize() {
     let width = window.innerWidth;
     this.containerSize.width = width * this.initialPrct;
+    this.sceneThree.resize()
     setFullScreen(this.spriteStairs, this.spriteStairs.width, this.spriteStairs.height, this.containerSize.width);
   }
 }

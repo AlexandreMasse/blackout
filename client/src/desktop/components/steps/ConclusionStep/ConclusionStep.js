@@ -75,7 +75,7 @@ class ConclusionStep extends Component {
         parent.classList.remove('is-active');
         this.substeps[1].classList.add('is-active');
         this.tlStep2.play();
-        console.log('complete');
+        // console.log('complete');
       }
     });
     Timeline.addCallback(() => {

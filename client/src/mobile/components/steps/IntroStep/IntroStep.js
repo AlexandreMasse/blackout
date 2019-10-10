@@ -34,7 +34,7 @@ class IntroStep extends Component {
   }
 
   setFullscreen = () => {
-    toggleFullscreen();
+    // toggleFullscreen();
   };
 
   setNoSleep = () => {
@@ -50,7 +50,7 @@ class IntroStep extends Component {
       this.props.setPassword(password);
       this.props.wsEmitPassword(password);
     } else {
-      console.log('le password est invalide');
+      // console.log('le password est invalide');
     }
   };
 
@@ -157,9 +157,10 @@ class IntroStep extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     // change step after connexion
-    if (nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
-      this.props.setCurrentStep(steps.LUNCH.name);
-    }
+
+    // if (nextProps.isConnected && this.props.isConnected !== nextProps.isConnected) {
+    //   this.props.setCurrentStep(steps.LUNCH.name);
+    // }
 
     if (nextProps.passwordError && !this.props.passwordError) {
       this.passwordErrorAnimation();

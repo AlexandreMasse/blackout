@@ -5,7 +5,7 @@ export const onEnter = (instance) => (
   new Promise(resolve => {
     const timeline = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete : scene2 enter")
+        // console.log("onComplete : scene2 enter")
         resolve()
       }
     })
@@ -21,7 +21,7 @@ export const onExit = (instance) => (
   new Promise(resolve => {
     const timeline = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete");
+        // console.log("onComplete");
         resolve();
       }
     })

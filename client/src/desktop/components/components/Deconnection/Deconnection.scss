@@ -6,10 +6,57 @@
     width: 100%;
     height: 100%;
     z-index: 15;
-    background: black;
+    background: white;
     color: white;
     font-size: 10rem;
     text-align: center;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+
+    &__player {
+        height: 100vh;
+        display: flex;
+        background:black;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: calc(50% - 2px);
+
+        &__title {
+            font-size: 3.3rem;
+            font-variation-settings: $light;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        &__name {
+            font-size: 6rem;
+            font-variation-settings: $light;
+            margin-top: 0;
+            margin-bottom: .5rem;
+        }
+
+        &__code {
+            font-size: 6rem;
+            font-variation-settings: $light;
+            letter-spacing: 1.5rem;
+            padding-left: 1.5rem;
+            line-height: 4.6rem;
+            color:$red;
+            margin: 0;
+        }
+
+        &__status {
+            font-size: 2.4rem;
+            text-transform: uppercase;
+            font-variation-settings: $light;
+            line-height: 4.6rem;
+            margin: 0;
+        }
+
+        &--1 {
+            margin-right: auto;
+        }
+    }
 }

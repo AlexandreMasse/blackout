@@ -32,7 +32,7 @@ class Indication extends Component {
   }
 
   onActive = () => {
-    console.log("indication active !");
+    // console.log("indication active !");
     this.title.innerHTML = ""
     this.tlOnActive = new TimelineMax()
 
@@ -52,7 +52,7 @@ class Indication extends Component {
   }
 
   onNotActive = () => {
-    console.log("not active");
+    // console.log("not active");
     this.props.setUserIndicationOpen(this.props.player, false)
     TweenMax.to(this.ref, .6, {
       transform: 'translateY(30%)',

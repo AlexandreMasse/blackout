@@ -843,6 +843,16 @@ class SceneFlashlight {
     this.fillbox.height = this.currentH;
     this.fillbox2.height = this.currentH;
   }
+
+  stopTicker = () => {
+    // clearRequestTimeout(this.timeOutId)
+    this.flashSound.stop()
+  }
+
+  startTicker = () => {
+    this.flashSound.play()
+    this.flashSound.fade(0, 1, 4000)
+  }
 }
 
 export default SceneFlashlight;

@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types"
-
+// libs
+import TweenMax from 'gsap'
+// styles
 import './Deconnection.scss'
 
 import {connect} from "react-redux"
@@ -12,20 +14,58 @@ class Deconnection extends Component {
     }
 
     render() {
-
-        const {player} = this.props
+        const {isPlayer1Connected, isPlayer2Connected, password1, password2} = this.props
 
         return (
             <div className="deconnection">
-                <p>Deconnection du {player}</p>
+                <div className="deconnection__player deconnection__player--1">
+                {isPlayer1Connected ? (
+                    <>
+                    <p className="deconnection__player__name">Joueur 1</p>
+                    <p className="deconnection__player__status">connecté</p>
+                    </>
+                    ) : (
+                    <>
+                    <p className="deconnection__player__title">Connexion perdue</p>
+                    <p className="deconnection__player__name"> Joueur 1</p>
+                    <p className="deconnection__player__code">{password1}</p>
+                    </>
+                )}
+                </div>
+                <div className="deconnection__player deconnection__player--2">
+                {isPlayer2Connected ? (
+                    <>
+                    <p className="deconnection__player__name">Joueur 2</p>
+                    <p className="deconnection__player__status">connecté</p>
+                    </>
+                ) : (
+                    <>
+                    <p className="deconnection__player__title">Connexion perdue</p>
+                    <p className="deconnection__player__name"> Joueur 2</p>
+                    <p className="deconnection__player__code">{password2}</p>
+                    </>
+                )}
+                </div>
             </div>
         )
     }
 }
 
-Deconnection.propTypes = {
-    player: PropTypes.oneOf(["player 1", "player 2"]).isRequired,
+export const onExit = html => {
+    TweenMax.to(html, 0.4, {
+        opacity: 0,
+    })
 }
+
+export const onEnter = html => {
+    TweenMax.to(html, 0.4, {
+        opacity: 1,
+    })
+}
+
+// Deconnection.propTypes = {
+//     player: PropTypes.oneOf(["player 1", "player 2"]).isRequired,
+// }
 
 export default Deconnection
 

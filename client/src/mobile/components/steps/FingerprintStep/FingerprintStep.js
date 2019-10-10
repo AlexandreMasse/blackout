@@ -67,14 +67,14 @@ class FingerprintStep extends Component {
   }
 
   pressingDown = (e) => {
-    console.log("Pressing!");
+    // console.log("Pressing!");
     // Start the timer
     requestAnimationFrame(this.timer);
     e.preventDefault();
   }
 
   notPressingDown = (e) => {
-    console.log("Not pressing!");
+    // console.log("Not pressing!");
     // Stop the timer
     cancelAnimationFrame(this.timerID);
     this.counter = 0;
@@ -86,7 +86,7 @@ class FingerprintStep extends Component {
   timer = () => {
     const {playerStatus} = this.props
 
-    console.log("Timer!");
+    // console.log("Timer!");
     if (this.counter < this.pressHoldDuration * 60) {
       this.timerID = requestAnimationFrame(this.timer);
       this.counter++;

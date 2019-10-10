@@ -78,6 +78,18 @@ export default class SceneKinematic2 {
         })
     }
 
+    stopTicker = () => {
+        this.pauseVideo()
+        const video = this.sprite.texture.baseTexture.source 
+        video.pause()
+    }
+
+    startTicker = () => {
+        this.playVideo()
+        const video = this.sprite.texture.baseTexture.source 
+        video.play()
+    }
+
     resize() {
         setFullScreen(this.sprite, this.textureVid.width, this.textureVid.height) 
     }

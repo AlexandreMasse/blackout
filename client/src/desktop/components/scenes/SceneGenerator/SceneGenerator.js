@@ -107,7 +107,7 @@ export default class SceneGenerator {
   }
 
   init() {
-    console.log('scene generator init');
+    // console.log('scene generator init');
 
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -398,6 +398,15 @@ export default class SceneGenerator {
 
   resize() {
     setFullScreen(this.sprite, this.spriteSize.width, this.spriteSize.height);
+  }
+
+  startTicker = () => {
+    this.generatorSound.play()
+    this.generatorSound.fade(0, .2, 4000)
+  }
+
+  stopTicker = () => {
+    this.generatorSound.stop()
   }
 
   update() {

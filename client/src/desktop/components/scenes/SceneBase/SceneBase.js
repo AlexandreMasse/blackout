@@ -18,7 +18,7 @@ export default class SceneBase {
   }
 
   init() {
-    console.log("scene base init")
+    // console.log("scene base init")
 
     let width = window.innerWidth
     let height = window.innerHeight

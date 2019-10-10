@@ -135,11 +135,11 @@ export default class SceneTest {
 		})
 	}
 
-    resize(renderer) {
+    resize() {
         this.size = new THREE.Vector2(window.innerWidth, window.innerHeight)
         this.camera.aspect = this.size.x/this.size.y
         this.camera.updateProjectionMatrix()
-        renderer.setSize(this.size.x, this.size.y)
+        this.renderer.setSize(this.size.x, this.size.y)
     }
 
     addToScene() {

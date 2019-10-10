@@ -18,6 +18,7 @@ const initialState = {
     {
       id: 'player1',
       isConnected: false,
+      isConnectedOnce: false,
       status: 'inferior',
       introProgression: 0,
       phoneData: {
@@ -59,6 +60,7 @@ const initialState = {
     {
       id: 'player2',
       isConnected: false,
+      isConnectedOnce: false,
       status: 'superior',
       introProgression: 0,
       phoneData: {
@@ -327,7 +329,8 @@ export default (state = initialState, action) => {
           if (user.id === action.payload.userId) {
             return {
               ...user,
-              isConnected: true
+              isConnected: true,
+              isConnectedOnce: true
             };
           } else {
             return user;

@@ -12,7 +12,7 @@ export const onEnter = (instance) => (
 
     const timeline = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete")
+        // console.log("onComplete")
       
         resolve('resolved');
       }
@@ -33,7 +33,7 @@ export const onExit = (instance) => (
   new Promise(resolve => {
     const timeline = new TimelineMax({
       onComplete: () => {
-        console.log("onComplete flash");
+        // console.log("onComplete flash");
         resolve('resolved');
       }
     })

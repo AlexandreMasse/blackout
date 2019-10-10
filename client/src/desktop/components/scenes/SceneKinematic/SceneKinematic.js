@@ -91,7 +91,15 @@ export default class SceneKinematic {
     }
 
     stopTicker = () => {
-       this.pauseVideo()
+        this.pauseVideo()
+        const video = this.sprite.texture.baseTexture.source 
+        video.pause()
+    }
+
+    startTicker = () => {
+        this.playVideo()
+        const video = this.sprite.texture.baseTexture.source 
+        video.play()
     }
 
     resize() {

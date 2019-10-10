@@ -138,6 +138,7 @@ class SceneManager extends Component {
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
       if (currentSceneInstance.needResize) {
         currentSceneInstance.resize();
+        console.log('WESH')
       }
     });
   };
@@ -160,7 +161,7 @@ class SceneManager extends Component {
       if (scenePlayer1) {
         scenePlayer1.splitScreen(pct);
       }
-      console.log('scene222', scenePlayer2);
+      // console.log('scene222', scenePlayer2);
       if (scenePlayer2) {
         // if (scenePlayer2.sceneThree.moveSplitScreen || scenePlayer2.moveSplitScreen) {
         scenePlayer2.splitScreen(1 - pct);
@@ -524,6 +525,24 @@ class SceneManager extends Component {
         }
       });
     }
+    // Handle Reconnection
+    if (
+      prevProps.store.users.find(user => user.id === 'player2').isConnected !== 
+      this.props.store.users.find(user => user.id === 'player2').isConnected ||
+      prevProps.store.users.find(user => user.id === 'player1').isConnected !== 
+      this.props.store.users.find(user => user.id === 'player1').isConnected)  {
+        if(this.props.store.users.find(user => user.id === 'player2').isConnected === true &&
+          this.props.store.users.find(user => user.id === 'player1').isConnected === true) {
+          // do something when reconnect
+          this.ticker.start();
+          this.currentSceneInstanceArray.forEach(currentSceneInstance => {
+            if (currentSceneInstance.canStop) {
+              currentSceneInstance.startTicker();
+            }
+          });
+        }
+    }
+
   }
 
   render() {

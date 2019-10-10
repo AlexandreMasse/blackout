@@ -47,14 +47,14 @@ export const wsEmitDeviceType = (payload) => (dispatch, getState, {emit}) => {
 }
 
 export const wsEmitCurrentStep = (payload) => (dispatch, getState, {emit}) => {
-    console.log("wsEmitCurrentStep", payload)
+    // console.log("wsEmitCurrentStep", payload)
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_CURRENT_STEP, {
         step: payload.currentStep,
     })
 }
 
 export const wsEmitUserCurrentStep = (payload) => (dispatch, getState, {emit}) => {
-    console.log("wsEmitUserCurrentStep", payload)
+    // console.log("wsEmitUserCurrentStep", payload)
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_USER_CURRENT_STEP, {
         userId: payload.userId,
         step: payload.currentStep,
@@ -62,7 +62,7 @@ export const wsEmitUserCurrentStep = (payload) => (dispatch, getState, {emit}) =
 }
 
 export const wsEmitShowDanger = (payload) => (dispatch, getState, {emit}) => {
-    console.log("wsEmitShowDanger", payload)
+    // console.log("wsEmitShowDanger", payload)
     emit(websocketsEmitActionTypes.WEBSOCKET_EMIT_SHOW_DANGER, {
         userId: payload.userId,
         showDanger: payload.showDanger,

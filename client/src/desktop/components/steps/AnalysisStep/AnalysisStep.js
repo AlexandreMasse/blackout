@@ -70,7 +70,7 @@ class AnalysisStep extends Component {
   render() {
     const video = AssetsManager.get('analyse')
     const {player1PhoneData, player2PhoneData} = this.props
-    console.log(player1PhoneData)
+    // console.log(player1PhoneData)
     const osUser1 = `${player1PhoneData.os} ${player1PhoneData.osVersionNumber}`
     const osUser2 = `${player2PhoneData.os} ${player2PhoneData.osVersionNumber}`
     const resolutionUSer1 = `${player1PhoneData.width}x${player1PhoneData.height}`

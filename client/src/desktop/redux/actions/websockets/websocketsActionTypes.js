@@ -2,6 +2,7 @@ export const websocketsEmitActionTypes = {
     WEBSOCKET_EMIT_DEVICE_TYPE: "deviceType",
     WEBSOCKET_EMIT_CURRENT_STEP: "currentStep",
     WEBSOCKET_EMIT_USER_CURRENT_STEP: "userCurrentStep",
+    WEBSOCKET_EMIT_USER_STEP_RECONNECTION: "userStepReconnection",
     WEBSOCKET_EMIT_SHOW_DANGER: "showDanger",
 }
 

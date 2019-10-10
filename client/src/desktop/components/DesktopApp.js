@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import configureStore from '../redux/store';
-import { wsEmitDeviceType } from '../redux/actions/websockets/websocketsAction';
+import { wsEmitDeviceType, wsEmitUserCurrentStep } from '../redux/actions/websockets/websocketsAction';
 import {
   setAppLoaded,
   setCurrentScene,
@@ -21,14 +21,20 @@ import {
 import load from '../../vendors/assets-loader';
 import { assetsToLoad } from '../assets/asset-list';
 import { Loading, Indication, Deconnection } from './components';
+import {
+  onEnter as DeconnectionOnEnter,
+  onExit as DeconnectionOnExit,
+} from './components/Deconnection/Deconnection'
 //steps
 import { StepManager } from './managers';
 import steps from './steps';
+import stepsMobile from '../../mobile/components/steps';
 //utils
 import { toggleFullscreen } from '../../utils';
 import classNames from 'classnames';
 // libs
 import { injectIntl } from 'react-intl';
+import { Transition } from 'react-transition-group'
 // style
 import './DesktopApp.scss';
 //scenes
@@ -57,6 +63,14 @@ class DesktopApp extends Component {
       isServerReady: false,
       progress: null
     };
+
+    this.associativeSteps = [
+      {desktop: 'SCENEFLASHLIGHT', stepMobile: stepsMobile.CURSOR.name },
+      {desktop: 'SCENEGENERATOR', stepMobile: stepsMobile.SLIDER.name },
+      {desktop: 'SCENEKINEMATIC', stepMobile: null },
+      {desktop: 'SCENEKINEMATIC2', stepMobile: null },
+      {desktop: 'SCENESTAIRS', stepMobile: stepsMobile.STAIRS.name },
+    ]
   }
 
 
@@ -139,6 +153,8 @@ class DesktopApp extends Component {
     this.setfirstIndication();
   }
 
+
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     // assets loaded + server ready = app loaded
     if (
@@ -154,6 +170,56 @@ class DesktopApp extends Component {
         isServerReady: true
       });
     }
+
+    if (
+      (this.props.isPlayer1Connected !== prevProps.isPlayer1Connected) &&
+      this.props.isPlayer1Connected && (prevProps.isPlayer1AlreadyConnected === false || this.props.currentStep === "CONNEXION")
+      ) {
+        console.log('USER 1 CONNECTED')
+        this.props.wsEmitUserCurrentStep('player1', stepsMobile.LUNCH.name)
+    }
+
+    if (
+      (this.props.isPlayer2Connected !== prevProps.isPlayer2Connected) &&
+      this.props.isPlayer2Connected && (prevProps.isPlayer2AlreadyConnected === false || this.props.currentStep === "CONNEXION")
+      ) {
+        console.log('USER 2 CONNECTED')
+        // console.log(this.props.isPlayer2AlreadyConnected)
+        console.log(prevProps.isPlayer2AlreadyConnected)
+        this.props.wsEmitUserCurrentStep('player2', stepsMobile.LUNCH.name)
+    }
+
+
+    if (
+      (this.props.isPlayer2Connected !== prevProps.isPlayer2Connected) &&
+      this.props.isPlayer2Connected && (prevProps.isPlayer2AlreadyConnected && this.props.currentStep === "SCENE")
+      ) {
+        // console.log('USER 2 CONNECTED IN SCENE')
+        var currentStep = null        
+        if (this.props.currentUser2Scene === 'SCENEBASE') {
+          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
+        } else {
+          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser2Scene)
+        }
+        this.props.wsEmitUserCurrentStep('player2', currentStep.stepMobile)
+    }
+
+    if (
+      (this.props.isPlayer1Connected !== prevProps.isPlayer1Connected) &&
+      this.props.isPlayer1Connected && (prevProps.isPlayer1AlreadyConnected && this.props.currentStep === "SCENE")
+      ) {
+        // console.log('USER 1 CONNECTED IN SCENE')
+        var currentStep = null        
+        if (this.props.currentUser1Scene === 'SCENEBASE') {
+          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
+        } else {
+          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser1Scene)
+        }
+        this.props.wsEmitUserCurrentStep('player1', currentStep.stepMobile)
+    }
+
+
+
   }
 
   render() {
@@ -162,7 +228,9 @@ class DesktopApp extends Component {
       isLoaded,
       currentStep,
       isPlayer1Connected,
-      isPlayer2Connected
+      isPlayer2Connected,
+      password1,
+      password2
     } = this.props;
 
     return (
@@ -170,15 +238,19 @@ class DesktopApp extends Component {
         {!isLoaded ? (
           <Loading progress={this.state.progress} />
         ) : (
-          <>
-            {/* {!isPlayer1Connected && currentStep === 'SCENE' &&
-              <Deconnection player={"player 1"} />
-            } */}
-
-            {/* {!isPlayer2Connected && currentStep === 'SCENE' &&
-              <Deconnection player={"player 2"} />
-            } */}
-
+          <> 
+          <Transition
+              in={(!isPlayer1Connected || !isPlayer2Connected) && currentStep === 'SCENE'}
+              timeout={{ enter: 500, exit: 400 }}
+              appear={false}
+              mountOnEnter={true}
+              unmountOnExit={true}
+              onEnter={DeconnectionOnEnter}
+              onExit={DeconnectionOnExit}
+            >
+              <Deconnection isPlayer1Connected={isPlayer1Connected} isPlayer2Connected={isPlayer2Connected} password1={password1} password2={password2} />
+          </Transition> 
+             
             <p
               className={classNames('dev-toggle', {
                 hide: this.state.showButton
@@ -268,9 +340,16 @@ const mapStateToProps = state => {
   return {
     isLoaded: state.desktop.app.isLoaded,
     roomId: state.desktop.roomId,
+    password1: state.desktop.password1,
+    password2: state.desktop.password2,
     currentStep: state.desktop.currentStep,
+    currentScene: state.desktop.currentScene,
+    currentUser1Scene: state.desktop.users.find(user => user.id === 'player1').currentScene,
+    currentUser2Scene: state.desktop.users.find(user => user.id === 'player2').currentScene,
     isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1').isConnected,
-    isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2').isConnected
+    isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2').isConnected,
+    isPlayer1AlreadyConnected: state.desktop.users.find(user => user.id === 'player1').isConnectedOnce,
+    isPlayer2AlreadyConnected: state.desktop.users.find(user => user.id === 'player2').isConnectedOnce
   };
 };
 
@@ -284,6 +363,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(setUserIndicationDescription({ userId, description })),
     setCurrentStep: currentStep => dispatch(setCurrentStep(currentStep)),
     setCurrentScene: currentScene => dispatch(setCurrentScene(currentScene)),
+    wsEmitUserCurrentStep: (userId, currentStep) => dispatch(wsEmitUserCurrentStep({ userId, currentStep })),
     setUserIndicationActive: (userId, isActive) => dispatch(setUserIndicationActive({ userId, isActive })),
     setUserIndicationOpen: (userId, isOpen) => dispatch(setUserIndicationOpen({ userId, isOpen })),
     setUserCurrentScene: (userId, currentScene) => dispatch(setUserCurrentScene({ userId, currentScene })),

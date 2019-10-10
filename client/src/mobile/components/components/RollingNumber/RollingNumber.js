@@ -185,7 +185,7 @@ class RollingNumber extends Component {
       for (let carousel in this.carousels) {
         code[carousel] = this.carousels[carousel].currentPosition;
       }
-      console.log("emit code ", code.map(i => this.getIndexFromPosition(i)));
+      // console.log("emit code ", code.map(i => this.getIndexFromPosition(i)));
       this.props.wsEmitCode(code)
 
       //check if good code

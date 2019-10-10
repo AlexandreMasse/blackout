@@ -216,12 +216,12 @@ class ConnexionStep extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (!this.state.isCityLeftReady && nextProps.player1IntroProgression >= 1) {
-      console.log('city left ready !');
+      // console.log('city left ready !');
       this.playerReady.play();
       this.setState({ isCityLeftReady: true });
     }
     if (!this.state.isCityRightReady && nextProps.player2IntroProgression >= 1) {
-      console.log('city right ready !');
+      // console.log('city right ready !');
       this.playerReady.play();
       this.setState({ isCityRightReady: true });
     }
@@ -240,7 +240,7 @@ class ConnexionStep extends Component {
       (!prevState.isCityLeftReady || !prevState.isCityRightReady) &&
       (this.state.isCityLeftReady && this.state.isCityRightReady)
     ) {
-      console.log('city left and right ready -> analysis');
+      // console.log('city left and right ready -> analysis');
       this.introSound.fade(1, 0, 4000);
       this.introSound.once('fade', () => {
         this.introSound.stop();

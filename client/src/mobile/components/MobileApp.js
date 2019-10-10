@@ -56,7 +56,7 @@ class MobileApp extends Component {
 
   loadAssets = () => {
     load.any(assetsToLoad, ev => {
-      console.log(`Progress: ${ev.progress}`)
+      // console.log(`Progress: ${ev.progress}`)
     }).then(assets => {
       window.assets = assets
         this.props.setAppLoaded()
@@ -69,13 +69,13 @@ class MobileApp extends Component {
     disableBodyScroll(app)
   }
 
-  reconnect = () => {
-    let cookieRoomID = getCookie('room')
-    let cookieUserId = getCookie('userId')
-    if (cookieRoomID && cookieUserId) {
-      this.props.wsEmitReconnection(cookieUserId, cookieRoomID)
-    }
-  }
+  // reconnect = () => {
+  //   let cookieRoomID = getCookie('room')
+  //   let cookieUserId = getCookie('userId')
+  //   if (cookieRoomID && cookieUserId) {
+  //     this.props.wsEmitReconnection(cookieUserId, cookieRoomID)
+  //   }
+  // }
 
   setCookie = (userId, roomId) => {
       let now = new Date()
@@ -149,6 +149,7 @@ const mapStateToProps = state => {
     userId: state.mobile.userId,
     roomId: state.mobile.roomId,
     isConnected: state.mobile.isConnected,
+    isConnectedOnce: state.mobile.isConnectedOnce,
     currentStep: state.mobile.currentStep,
     phoneData: state.mobile.phoneData,
     isLoaded : state.mobile.isLoaded
