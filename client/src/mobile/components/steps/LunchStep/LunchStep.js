@@ -35,7 +35,8 @@ class LunchStep extends Component {
   }
 
   handleDeviceOrientation = (data) => {
-    console.log(data);
+    console.log('deviceorientation', data);
+    clearTimeout(this.timeoutId);
 
     const minBeta = 20;
     const maxBeta = 83;
@@ -57,6 +58,14 @@ class LunchStep extends Component {
   handleDeviceOrientationThrottled = throttle(this.handleDeviceOrientation, 50)
 
   listenDeviceOrientation() {
+    // if after 1.5s we don't have any data from deviceorientation event, show error
+    this.timeoutId = setTimeout(() => {
+      alert(this.props.intl.formatMessage({
+        id: "app.launch.orientation.help",
+        defaultMessage: 'Enable device orientation in Settings > Safari > Motion & Orientation Access'
+      }))
+    }, 1500);
+
     window.addEventListener('deviceorientation', this.handleDeviceOrientationThrottled, false)
     this.setState({ orientationActivated: true })
   }
@@ -102,48 +111,40 @@ class LunchStep extends Component {
     window.removeEventListener('deviceorientation', this.handleDeviceOrientationThrottled, false)
   }
 
-  componentDidMount() {
-    window.addEventListener("focus", this.handleWindowFocus)
-  }
-
-  handleWindowFocus = (e) => {
-    if(!this.state.orientationActivated) {
-      this.requestListenOrientation()
-    }
-  }
+  componentDidMount() {}
 
   requestListenOrientation = () => {
+
     if (window.DeviceOrientationEvent) {
-      this.listenDeviceOrientation();
-      console.log("has orientation");
-    } else {
-      console.log("has no orientation");
+      console.log("orientation: has orientation -> try activate");
       if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        console.log("has no orientation, can request (ios13+");
+        console.log("orientation: can request (ios13+");
         // iOS 13+
         DeviceOrientationEvent.requestPermission()
           .then(response => {
             if (response == 'granted') {
-              console.log("orientation request -> granted");
+              console.log("orientation: request -> granted");
               this.listenDeviceOrientation();
             } else {
-              console.log("orientation request -> denied");
+              console.log("orientation: request -> denied -> error");
+              alert("orientation error")
             }
           })
           .catch(console.error)
       } else {
         // non iOS 13+
-        console.log("has no orientation, can not request (non ios13+)");
+        console.log("orientation: can not request (non ios13+)");
+        this.listenDeviceOrientation();
       }
-
+    } else {
+      console.log("orientation: has no orientation -> error");
+      alert("orientation error")
     }
   }
 
   substep2OnEnter = el => {
     this.arrow = el.querySelector('.lunch-step__substep2__arrow');
     this.progression = el.querySelector('.lunch-step__substep2__box__progression');
-
-    this.requestListenOrientation()
 
     TweenMax.set(el, {
       opacity: 0
@@ -161,6 +162,9 @@ class LunchStep extends Component {
   };
 
   onButtonClick = () => {
+
+    this.requestListenOrientation()
+
     this.setState({
       substep: 0
     });
