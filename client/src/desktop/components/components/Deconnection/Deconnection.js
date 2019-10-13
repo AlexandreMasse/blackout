@@ -8,10 +8,24 @@ import './Deconnection.scss'
 import {connect} from "react-redux"
 
 class Deconnection extends Component {
-    
-    componentDidMount() {
+    // RESET WHEN TIME PAST
 
-    }
+    // componentDidMount() {
+    //     this.timeleft = 50
+    //     this.downloadTimer = setInterval(() => {
+    //     this.timeleft--;
+    //         if(this.timeleft <= 0) {
+    //             clearInterval(this.downloadTimer);
+    //             // console.log('EXECUTE')
+    //             // console.log(this.props.setCurrentStep('CONNEXION'))
+    //         }
+    //     },1000);
+    // }
+
+    // componentWillUnmount() {
+    //     this.timeleft = 0
+    //     clearInterval(this.downloadTimer);
+    // }
 
     render() {
         const {isPlayer1Connected, isPlayer2Connected, password1, password2} = this.props

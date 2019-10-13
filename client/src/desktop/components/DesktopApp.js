@@ -153,8 +153,6 @@ class DesktopApp extends Component {
     this.setfirstIndication();
   }
 
-
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     // assets loaded + server ready = app loaded
     if (
@@ -175,7 +173,7 @@ class DesktopApp extends Component {
       (this.props.isPlayer1Connected !== prevProps.isPlayer1Connected) &&
       this.props.isPlayer1Connected && (prevProps.isPlayer1AlreadyConnected === false || this.props.currentStep === "CONNEXION")
       ) {
-        console.log('USER 1 CONNECTED')
+        // console.log('USER 1 CONNECTED')
         this.props.wsEmitUserCurrentStep('player1', stepsMobile.LUNCH.name)
     }
 
@@ -183,25 +181,8 @@ class DesktopApp extends Component {
       (this.props.isPlayer2Connected !== prevProps.isPlayer2Connected) &&
       this.props.isPlayer2Connected && (prevProps.isPlayer2AlreadyConnected === false || this.props.currentStep === "CONNEXION")
       ) {
-        console.log('USER 2 CONNECTED')
-        // console.log(this.props.isPlayer2AlreadyConnected)
-        console.log(prevProps.isPlayer2AlreadyConnected)
+        // console.log('USER 2 CONNECTED')
         this.props.wsEmitUserCurrentStep('player2', stepsMobile.LUNCH.name)
-    }
-
-
-    if (
-      (this.props.isPlayer2Connected !== prevProps.isPlayer2Connected) &&
-      this.props.isPlayer2Connected && (prevProps.isPlayer2AlreadyConnected && this.props.currentStep === "SCENE")
-      ) {
-        // console.log('USER 2 CONNECTED IN SCENE')
-        var currentStep = null        
-        if (this.props.currentUser2Scene === 'SCENEBASE') {
-          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
-        } else {
-          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser2Scene)
-        }
-        this.props.wsEmitUserCurrentStep('player2', currentStep.stepMobile)
     }
 
     if (
@@ -212,14 +193,37 @@ class DesktopApp extends Component {
         var currentStep = null        
         if (this.props.currentUser1Scene === 'SCENEBASE') {
           currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
-        } else {
+        } else if(this.props.currentUser1Scene === 'SCENESTAIRS') {
           currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser1Scene)
+        } else if(this.props.currentUser1Scene === 'SCENEDOOR' && player1Fingerprint === false) {
+            currentStep = stepsMobile.FINGERPRINT.name
+        } else if (this.props.currentUser1Scene === 'SCENEDOOR' && player1Fingerprint && player1Status === 'inferior') {
+          currentStep = stepsMobile.CODE.name
+        } else {
+          currentStep = stepsMobile.HANDLE.name
         }
         this.props.wsEmitUserCurrentStep('player1', currentStep.stepMobile)
     }
 
-
-
+    if (
+      (this.props.isPlayer2Connected !== prevProps.isPlayer2Connected) &&
+      this.props.isPlayer2Connected && (prevProps.isPlayer2AlreadyConnected && this.props.currentStep === "SCENE")
+      ) {
+        // console.log('USER 2 CONNECTED IN SCENE')
+        var currentStep = null        
+        if (this.props.currentUser2Scene === 'SCENEBASE') {
+          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
+        } else if(this.props.currentUser2Scene === 'SCENESTAIRS') {
+          currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser2Scene)
+        } else if(this.props.currentUser2Scene === 'SCENEDOOR' && player2Fingerprint === false) {
+            currentStep = stepsMobile.FINGERPRINT.name
+        } else if (this.props.currentUser2Scene === 'SCENEDOOR' && player2Fingerprint && player2Status === 'inferior') {
+          currentStep = stepsMobile.CODE.name
+        } else {
+          currentStep = stepsMobile.HANDLE.name
+        }
+        this.props.wsEmitUserCurrentStep('player2', currentStep.stepMobile)
+    }
   }
 
   render() {
@@ -248,7 +252,7 @@ class DesktopApp extends Component {
               onEnter={DeconnectionOnEnter}
               onExit={DeconnectionOnExit}
             >
-              <Deconnection isPlayer1Connected={isPlayer1Connected} isPlayer2Connected={isPlayer2Connected} password1={password1} password2={password2} />
+              <Deconnection isPlayer1Connected={isPlayer1Connected} isPlayer2Connected={isPlayer2Connected} password1={password1} password2={password2} setCurrentStep={() => this.props.setCurrentStep()} />
           </Transition> 
              
             <p
@@ -349,7 +353,11 @@ const mapStateToProps = state => {
     isPlayer1Connected: state.desktop.users.find(user => user.id === 'player1').isConnected,
     isPlayer2Connected: state.desktop.users.find(user => user.id === 'player2').isConnected,
     isPlayer1AlreadyConnected: state.desktop.users.find(user => user.id === 'player1').isConnectedOnce,
-    isPlayer2AlreadyConnected: state.desktop.users.find(user => user.id === 'player2').isConnectedOnce
+    isPlayer2AlreadyConnected: state.desktop.users.find(user => user.id === 'player2').isConnectedOnce,
+    player1Status: state.desktop.users.find(user => user.id === 'player1').status,
+    player2Status: state.desktop.users.find(user => user.id === 'player2').status,
+    player1Fingerprint: state.desktop.users.find(user => user.id === 'player1').fingerprint,
+    player2Fingerprint: state.desktop.users.find(user => user.id === 'player2').fingerprint
   };
 };
 
