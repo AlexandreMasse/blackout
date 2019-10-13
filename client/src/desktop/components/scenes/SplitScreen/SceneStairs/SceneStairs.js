@@ -192,10 +192,10 @@ export default class SceneStairs {
   }
   
 
-  startTicker = () => {
-    this.stairsSound.play()
-    this.stairsSound.fade(0, .5, 1000)
-  }
+  // startTicker = () => {
+  //   this.stairsSound.play()
+  //   this.stairsSound.fade(0, .5, 1000)
+  // }
 
   update() {
     this.sceneThree.update();

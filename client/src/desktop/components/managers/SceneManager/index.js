@@ -138,7 +138,6 @@ class SceneManager extends Component {
     this.currentSceneInstanceArray.forEach(currentSceneInstance => {
       if (currentSceneInstance.needResize) {
         currentSceneInstance.resize();
-        console.log('WESH')
       }
     });
   };

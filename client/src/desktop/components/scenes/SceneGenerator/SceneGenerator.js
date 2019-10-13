@@ -400,10 +400,10 @@ export default class SceneGenerator {
     setFullScreen(this.sprite, this.spriteSize.width, this.spriteSize.height);
   }
 
-  startTicker = () => {
-    this.generatorSound.play()
-    this.generatorSound.fade(0, .2, 4000)
-  }
+  // startTicker = () => {
+  //   this.generatorSound.play()
+  //   this.generatorSound.fade(0, .2, 4000)
+  // }
 
   stopTicker = () => {
     this.generatorSound.stop()

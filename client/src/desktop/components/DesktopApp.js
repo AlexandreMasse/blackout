@@ -195,9 +195,9 @@ class DesktopApp extends Component {
           currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
         } else if(this.props.currentUser1Scene === 'SCENESTAIRS') {
           currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser1Scene)
-        } else if(this.props.currentUser1Scene === 'SCENEDOOR' && player1Fingerprint === false) {
+        } else if(this.props.currentUser1Scene === 'SCENEDOOR' && this.props.player1Fingerprint === false) {
             currentStep = stepsMobile.FINGERPRINT.name
-        } else if (this.props.currentUser1Scene === 'SCENEDOOR' && player1Fingerprint && player1Status === 'inferior') {
+        } else if (this.props.currentUser1Scene === 'SCENEDOOR' && this.props.player1Fingerprint && this.props.player1Status === 'inferior') {
           currentStep = stepsMobile.CODE.name
         } else {
           currentStep = stepsMobile.HANDLE.name
@@ -215,9 +215,9 @@ class DesktopApp extends Component {
           currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentScene)
         } else if(this.props.currentUser2Scene === 'SCENESTAIRS') {
           currentStep = this.associativeSteps.find(scene => scene.desktop === this.props.currentUser2Scene)
-        } else if(this.props.currentUser2Scene === 'SCENEDOOR' && player2Fingerprint === false) {
+        } else if(this.props.currentUser2Scene === 'SCENEDOOR' && this.props.player2Fingerprint === false) {
             currentStep = stepsMobile.FINGERPRINT.name
-        } else if (this.props.currentUser2Scene === 'SCENEDOOR' && player2Fingerprint && player2Status === 'inferior') {
+        } else if (this.props.currentUser2Scene === 'SCENEDOOR' && this.props.player2Fingerprint && this.props.player2Status === 'inferior') {
           currentStep = stepsMobile.CODE.name
         } else {
           currentStep = stepsMobile.HANDLE.name
@@ -357,7 +357,7 @@ const mapStateToProps = state => {
     player1Status: state.desktop.users.find(user => user.id === 'player1').status,
     player2Status: state.desktop.users.find(user => user.id === 'player2').status,
     player1Fingerprint: state.desktop.users.find(user => user.id === 'player1').fingerprint,
-    player2Fingerprint: state.desktop.users.find(user => user.id === 'player2').fingerprint
+    player2Fingerprint: state.desktop.users.find(user => user.id === 'player2').fingerprint 
   };
 };
 

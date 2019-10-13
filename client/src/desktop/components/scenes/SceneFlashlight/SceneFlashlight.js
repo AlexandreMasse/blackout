@@ -849,10 +849,10 @@ class SceneFlashlight {
     this.flashSound.stop()
   }
 
-  startTicker = () => {
-    this.flashSound.play()
-    this.flashSound.fade(0, 1, 4000)
-  }
+  // startTicker = () => {
+  //   this.flashSound.play()
+  //   this.flashSound.fade(0, 1, 4000)
+  // }
 }
 
 export default SceneFlashlight;
