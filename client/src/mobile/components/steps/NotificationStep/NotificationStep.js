@@ -59,7 +59,7 @@ class NotificationStep extends Component {
   };
 
   showAlert = () => {
-    console.log('Show alert');
+    // console.log('Show alert');
     const tl = new TimelineMax();
     tl.to(this.ref, 1, { opacity: 1 }, '+=0.2');
     this.notification.play();

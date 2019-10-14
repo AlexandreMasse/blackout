@@ -119,12 +119,12 @@ class Cursor extends Component {
 
   showLight = () => { 
     if(this.props.isPlayer1Connected) {
-      console.log('player 1')
+      // console.log('player 1')
       this.mask1.visible = true
     }
 
     if(this.props.isPlayer2Connected) {
-      console.log('player 2')
+      // console.log('player 2')
       this.mask2.visible = true
     }
   }
