@@ -194,7 +194,7 @@ class IntroStep extends Component {
               id: 'app.intro.2',
               defaultMessage: 'To launch the game, go to '
             })}
-            <span className="bold">blackout.io</span>
+            <span className="bold">black-out.io</span>
             {formatMessage({
               id: 'app.intro.3',
               defaultMessage: ' on a desktop.'

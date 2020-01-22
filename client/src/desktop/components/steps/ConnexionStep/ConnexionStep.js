@@ -390,7 +390,7 @@ class ConnexionStep extends Component {
                 className={`connexion-step__intro__codes__instructions__1`}
                 text={formatMessage({
                   id: 'app.launch.1',
-                  defaultMessage: 'Launch Black-out.io on your smartphone and enter'
+                  defaultMessage: 'Launch black-out.io on your smartphone and enter'
                 })}
                 handleWord={this.handleWordInstructions1}
               />
