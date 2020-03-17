@@ -186,7 +186,7 @@ class IntroStep extends Component {
             <span className="bold">Blackout</span>
             {formatMessage({
               id: 'app.intro.1',
-              defaultMessage: 'is a collaborative survival experience, in an alternate universe, rulled by technology.'
+              defaultMessage: ' is a collaborative survival experience, in an alternate universe, rulled by technology.'
             })}
           </p>
           <p className="intro-step__infos__paragraph">
