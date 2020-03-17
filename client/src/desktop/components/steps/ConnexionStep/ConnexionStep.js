@@ -404,7 +404,7 @@ class ConnexionStep extends Component {
                 {formatMessage({ id: 'app.startbtn', defaultMessage: 'start the experience' })}
               </button>
               <p className="connexion-step__intro__fullscreen">
-                {formatMessage({ id: 'app.spaceinstruction.1', defaultMessage: 'push ' })}
+                {formatMessage({ id: 'app.spaceinstruction.1', defaultMessage: 'press ' })}
                 <span className="spacebar">
                   {' '}
                   {formatMessage({ id: 'app.spaceinstruction.2', defaultMessage: 'space' })}
