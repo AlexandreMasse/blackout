@@ -34,7 +34,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.1.1",
-    "three": "^0.99.0",
+    "three": "^0.125.0",
     "three-effectcomposer-es6": "^0.0.4",
     "three-shader-fxaa": "^5.1.1",
     "xhr": "^2.4.1"
